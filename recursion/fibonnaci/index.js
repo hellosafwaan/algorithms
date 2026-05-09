@@ -4,4 +4,16 @@ function fibonnaci(n) {
     return fibonnaci(n - 1) + fibonnaci(n - 2)
 }
 
-console.log(fibonnaci(4))
+function fibonnaciOptimized(n, cache = {}) {
+    if(n < 2) return n
+    if(n in cache) return cache[n]
+    cache[n] = fibonnaciOptimized(n - 1, cache) + fibonnaciOptimized(n - 2, cache)
+    return cache[n]
+}
+
+console.time('naive');
+console.log(fibonnaci(35))
+console.timeEnd('naive');
+console.time('optimized');
+console.log(fibonnaciOptimized(35))
+console.timeEnd('optimized');
