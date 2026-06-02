@@ -5,7 +5,9 @@
  * The solution below is the naive approach
  */
 
-function setZeroes(matrix) {
+
+// Naive Solution
+ function setZeroes(matrix) {
     const m = matrix.length
     const n = matrix[0].length
     const zeroIndexes = []
@@ -37,4 +39,31 @@ function setZeroes(matrix) {
 
     }
 
+}
+
+// Little better solution
+function setZeroes2(matrix) {
+    const m = matrix.length
+    const n = matrix[0].length
+    const rows = new Set()
+    const columns = new Set()
+
+    // First pass to identify the rows and colums that needs to be zeroed.
+    for(let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if(matrix[i][j] === 0) {
+                rows.add(i)
+                columns.add(j)
+            }
+        }
+    }
+
+    // Second pass to actually update identified rows and columns with the zero value.
+    
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (rows.has(i)) matrix[i][j] = 0;
+            if (columns.has(j)) matrix[i][j] = 0;
+        }
+    }
 }
