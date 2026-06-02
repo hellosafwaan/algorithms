@@ -63,3 +63,11 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 - Proactively analyzing complexity without being prompted
 - Edge case enumeration before coding
 - Connecting new problems to previously learned patterns independently
+
+---
+
+### 6. Array assignment vs element assignment confusion
+- **Seen in:** Pascal's Triangle (2026-06-03)
+- **What happened:** Wrote `triangle[i] = [1]` for both the first and last element of each row — overwrites the whole row on the last step
+- **How it was caught:** Asked to trace through i=3, j=3 — he identified the issue himself after one targeted question
+- **Status:** Caught independently once prompted — watch for this in future 2D problems

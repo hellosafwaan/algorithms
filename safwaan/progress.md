@@ -12,6 +12,7 @@
 | Most Common Elements | Top K / Heap | ✅ |
 | Most Common Elements | Bucket Sort | ✅ |
 | Product Except Self | Prefix/Suffix Precomputation | ✅ |
+| Pascal's Triangle | 2D array construction / row-by-row DP | ✅ |
 
 ### Recursion & DP
 | Problem | Pattern | Status | Notes |
