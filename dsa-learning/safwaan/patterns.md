@@ -1,0 +1,65 @@
+# Safwaan — Patterns & Observations
+
+This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and learns. Updated after every session.
+
+---
+
+## Mistake Patterns
+
+### 1. Missing return on recursive call
+- **Seen in:** Sum 1 to N (Session 1)
+- **What happened:** Wrote `fibonacci(n-1) + fibonacci(n-2)` without returning it
+- **How it was caught:** Guided question — "what does your function return?"
+- **Status:** Hasn't recurred since
+
+### 2. Wrong base case value
+- **Seen in:** Sum 1 to N (Session 1), Fibonacci (Session 1)
+- **What happened:** Returned wrong value at base case (off-by-one on index)
+- **How it was caught:** Tracing through a concrete small example
+- **Status:** Improved — now checks by tracing before submitting
+
+### 3. Cache falsy check
+- **Seen in:** Fibonacci memoization (Session 1)
+- **What happened:** Used `if(cache[n])` which fails when cached value is 0
+- **How it was caught:** **He caught it himself** during implementation
+- **Status:** Internalized — unlikely to recur
+
+### 4. Skipping complexity analysis
+- **Seen in:** Reverse String (Session 2)
+- **What happened:** Completed the solution and documentation without complexity analysis until explicitly asked
+- **How it was caught:** He flagged it himself after the session and asked for it to always be included
+- **Status:** Self-aware about this now — still probe for it
+
+### 5. Wrong function name in recursive call
+- **Seen in:** Reverse String (Session 2)
+- **What happened:** Called the wrong function name inside the recursive case
+- **How it was caught:** He caught it himself when tests failed
+- **Status:** Caught independently — good sign
+
+---
+
+## Breakthrough Moments
+
+### DP Core Insight — Session 1
+Safwaan independently articulated: *"Store and reuse values instead of recomputing."* This came after seeing the Fibonacci call tree. He wasn't told this — he saw it. This is the foundation everything in DP builds on.
+
+### Real-world skepticism — Session 2
+After completing recursive string reversal, he unprompted pointed out it's O(n²) and impractical. Shows he's thinking beyond "does it work" to "should you use this." Strong interview instinct.
+
+### Self-correction pattern
+Across sessions, Safwaan consistently finds his own bugs when asked the right question rather than being told what's wrong. This is a strong signal — he has the debugging instinct, just needs the prompt to activate it.
+
+---
+
+## What's Solid
+
+- Base case identification — reliable now
+- Tracing through concrete examples — does this naturally
+- Questioning practicality of solutions — strong instinct
+- Self-correcting when guided — very consistent
+
+## What's Still Developing
+
+- Proactively analyzing complexity without being prompted
+- Edge case enumeration before coding
+- Connecting new problems to previously learned patterns independently
