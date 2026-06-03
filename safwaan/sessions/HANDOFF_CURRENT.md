@@ -1,37 +1,35 @@
-# Handoff — Post Pascal's Triangle II
+# Handoff — Post Next Permutation
 
 ## What Was Just Completed
 
-**Pascal's Triangle II (LeetCode 119)** — 2026-06-03
+**Next Permutation (LeetCode 31)** — 2026-06-03
 
-Wrote the naive solution immediately (mod of 118). For the optimised solution, landed on right-to-left iteration after one nudge, needed the three steps laid out. Found the off-by-one loop bug himself via tracing.
+Full guided walkthrough. Safwaan could not derive the descending suffix observation independently — this was expected given he has no two-pointer background yet. Understood each step when explained and was able to code the full solution with targeted prompting. Submitted and passed.
 
 ## Safwaan's Current State
 
 **Solid:**
-- Derives recurrence relationships without help
-- Traces through examples to find bugs — reliable habit
-- Complexity analysis: named both naive and optimised complexities without being prompted this session — improving significantly
-- Self-corrects with one targeted question
+- Reasoning through examples intuitively — correctly identified the next permutation in his head before understanding the algorithm
+- Coding loop structures (outer/inner/while) with the right direction and bounds once guided
+- Catching his own structural bugs (break placement, loop bounds) when asked the right question
+- Handles edge cases when prompted
 
 **Watch for:**
-- Off-by-one on loop bounds under pressure — surfaced twice now (base case, loop index)
-- Right-to-left in-place update is brand new — will need a reminder when it appears again
+- Sequential vs nested loops — called this O(n²) because there were two loops; needed explanation
+- Two-pointer technique is brand new — not internalized yet, needs palindrome check to build it
+- This problem was a full guided walkthrough — not independently solved
 
-## New Pattern Introduced
+## Explicit Plan Agreed With Safwaan
 
-Right-to-left in-place update to avoid overwriting values. Will recur in: Knapsack, Edit Distance, Coin Change. Flag it when it does.
+1. **Next: Palindrome Check** — builds two-pointer instinct (was already in progress, session 003 did intro but not full implementation)
+2. **Then: Redo Next Permutation fresh** — explicit agreement to come back and solve it more independently after building the prerequisite
 
 ## Suggested Next Problem
 
-Good candidates from the Arrays track:
-- **Two Sum** — hash map introduction, O(n) vs O(n²) trade-off
-- **Maximum Subarray** (Kadane's) — "carry forward or restart" DP pattern
-- **Contains Duplicate** — lighter problem, good warmup
-
-Ask Safwaan which direction he wants to go.
+**Palindrome Check** — two-pointer, in-place, O(n) time O(1) space. Directly prerequisites the reverse step used in Next Permutation.
 
 ## Coach Notes
 
-- Don't re-explain right-to-left — he owns it now, just remind him of the name if it appears
-- Probe complexity unprompted at the end — he's nearly doing it automatically
+- Don't re-explain the descending suffix insight at the start of the Next Permutation redo — let him struggle with it first
+- When the redo happens, probe complexity early: "before we code, what do you think the time complexity will be?"
+- Maximum Subarray is also on the list (Safwaan wants to do it as a fresh session, solved it 4 years ago but doesn't remember it)
