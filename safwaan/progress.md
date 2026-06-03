@@ -16,6 +16,7 @@
 | Pascal's Triangle II | In-place row update, right-to-left iteration | ✅ |
 | Next Permutation | Pivot + swap + two-pointer reverse | ⚠️ Guided walkthrough — revisit after palindrome check |
 | Two Sum (LC 1) | Hash map / complement lookup | ✅ 85th percentile runtime |
+| Two Sum II (LC 167) | Two pointers | ✅ 100th percentile runtime |
 
 ### Recursion & DP
 | Problem | Pattern | Status | Notes |

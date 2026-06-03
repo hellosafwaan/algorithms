@@ -11,4 +11,5 @@ Questions to probe at the start of the next session that uses the same pattern.
 | Regex basics in JavaScript — what it is, how to use it | Regex / string matching | 125 | open — hasn't used regex in a long time, treated it as a black box today |
 | LC 125 runtime is 5th percentile — why is regex slow? Rewrite with charCodeAt | Performance / string matching | 125 | open — explicit plan to revisit |
 | Recursive version of palindrome check | Two-pointer recursion | 125 | open — deferred by Safwaan, wants to internalize iterative first |
-| Why can't two pointers be used on LC 1 (unsorted)? What property does the array need for two pointers to work, and why does sorting first not count as a valid fix here? | Two-pointer prerequisites | 1 | open |
+| Why can't two pointers be used on LC 1 (unsorted)? What property does the array need for two pointers to work, and why does sorting first not count as a valid fix here? | Two-pointer prerequisites | 1 | answered — sorted guarantee makes pointer moves deterministic; unsorted = guessing |
+| Two-pointer pattern recognition — can he identify cold? | Two pointers | 167 | open — needs more reps (3Sum, Container With Most Water suggested) |

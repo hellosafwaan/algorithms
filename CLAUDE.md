@@ -98,6 +98,14 @@ Add any new concepts, patterns, or templates introduced in this session.
 **4b. Create `arrays/[problem-folder]/learnings.md`**
 Safwaan's personal reference card for the problem. Sections: Key Insight, Pattern Introduced, Watch Out For, Template, Complexity, Open Questions. Keep it in his voice — short, direct, no padding.
 
+At the top of the file, include a link to the session file: `Session: [session-file-name](../../safwaan/sessions/[session-file-name].md)`
+
+Before writing this file, ask Safwaan two questions:
+1. How did this problem feel? (difficulty, what clicked, what didn't)
+2. Explain the solution in your own words.
+
+Clean up his explanation and add it as a block under Key Insight. His reflection on how the problem felt goes in a "How It Felt" section at the top.
+
 **4c. Update `safwaan/carry-forward.md`**
 Add any unresolved questions or patterns to probe in future sessions. Mark items as answered when they come up.
 

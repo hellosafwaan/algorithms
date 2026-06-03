@@ -1,36 +1,36 @@
-# Handoff — Post Two Sum (LC 1)
+# Handoff — Post Two Sum II (LC 167)
 
 ## What Was Just Completed
 
-**Two Sum (LC 1)** — 2026-06-03
+**Two Sum II (LC 167)** — 2026-06-03
 
-Hash map / complement lookup. Brute force first (correct), then optimized. One typo caught via trace (`num[i]` → `nums[i]`). 63/63 test cases, 85th percentile runtime, 24th percentile memory — understood the time-space trade-off clearly.
+Two pointers. 100th percentile runtime. Safwaan did not identify the pattern cold — needed a nudge toward the sorted property — but once pointed there, derived the full algorithm independently. Articulated the core insight clearly: sorted order makes pointer moves deterministic; without it you're guessing.
 
 ## Safwaan's Current State
 
 **Solid:**
-- Hash map pattern: store complement→index, check before storing
-- Time-space trade-off reasoning — articulated it clearly
-- Self-correction via tracing — consistent habit now
-- Complexity analysis unprompted — gave O(n) time / O(n) space correctly
+- Two pointer mechanics — knows how the algorithm works and why
+- The sorted guarantee insight — owns this, articulated it himself
+- `else if` vs multiple `if` — noticed the performance difference himself and understood why
+- Self-correction via tracing — consistent
 
 **Watch for:**
-- Two pointers prerequisite gap — knows sorted arrays need them but hasn't fully reasoned through *why* unsorted breaks it
+- Two-pointer pattern recognition cold — not there yet, needs more reps
+- `const` vs `let` for pointers — minor but recurring
 - Regex / charCodeAt still unresolved from LC 125
 
 ## Explicit Plans Agreed With Safwaan
 
-1. **Two Sum II (LC 167)** — same problem, sorted array, two pointers apply → natural next step
-2. **Probe carry-forward:** why can't two pointers work on unsorted input?
-3. **Revisit LC 125** — charCodeAt rewrite (still outstanding)
-4. **Redo Next Permutation** — still outstanding
+1. More two-pointer problems to build cold recognition — 3Sum or Container With Most Water suggested
+2. Revisit LC 125 — charCodeAt rewrite (still outstanding)
+3. Redo Next Permutation — still outstanding
 
 ## Suggested Next Problem
 
-**Two Sum II (LC 167)** — sorted array, two pointers, O(n) time O(1) space. Direct follow-on. Opens the door to answering the carry-forward question naturally.
+**Container With Most Water (LC 11)** — two pointers, different condition logic, builds recognition. Or **3Sum (LC 15)** if he wants a harder challenge.
 
 ## Coach Notes
 
-- Don't re-explain Map.has/get/set — he has it
-- When starting LC 167, ask him to recall why two pointers are now valid (sorted) before he codes
-- The carry-forward question about unsorted arrays should come up organically — let him reason through it rather than explaining upfront
+- Don't explain the two-pointer pattern upfront — let him attempt naive first, then ask what the sorted property gives you
+- The carry-forward question about unsorted is now answered — don't re-probe
+- Watch for `const` on mutable variables — comes up quietly

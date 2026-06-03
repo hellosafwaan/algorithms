@@ -92,6 +92,14 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 
 ---
 
+### 10. const on mutable pointer variables
+- **Seen in:** Two Sum II (LC 167, 2026-06-03)
+- **What happened:** Declared `left` and `right` as `const` — can't decrement/increment them
+- **How it was caught:** Reminded to look at variable declarations
+- **Status:** Minor — watch for it on future two-pointer problems
+
+---
+
 ### 6. Array assignment vs element assignment confusion
 - **Seen in:** Pascal's Triangle (2026-06-03)
 - **What happened:** Wrote `triangle[i] = [1]` for both the first and last element of each row — overwrites the whole row on the last step
