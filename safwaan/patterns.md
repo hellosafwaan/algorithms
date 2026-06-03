@@ -64,6 +64,7 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 - Edge case enumeration before coding
 - Connecting new problems to previously learned patterns independently
 - Distinguishing sequential loops from nested loops when reasoning about complexity
+- Regex — hasn't used it in a long time, treated as a black box; cover charCodeAt as the practical alternative
 
 ---
 

@@ -26,7 +26,7 @@
 | Fibonacci (memoized) | Top-down DP / Memoization | ✅ | 1.6M× speedup demonstrated |
 | Count Digits | Division-based recursion | ✅ | |
 | Reverse a String | Index-based recursion | ✅ | |
-| Palindrome Check | Two-pointer recursion | 🔄 In Progress | |
+| Palindrome Check | Two-pointer iteration (LC 125) | ⚠️ Solved but slow (5th percentile runtime) — revisit with charCodeAt optimization | |
 | Problem 4 (TBD) | TBD | ⏳ | Final recursion mastery problem |
 | Climbing Stairs | DP reinforcement | ⏳ | First DP problem after recursion phase |
 | House Robber | 0/1 optimization DP | ⏳ | |

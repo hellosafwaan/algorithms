@@ -1,35 +1,38 @@
-# Handoff — Post Next Permutation
+# Handoff — Post Valid Palindrome (LC 125)
 
 ## What Was Just Completed
 
-**Next Permutation (LeetCode 31)** — 2026-06-03
+**Valid Palindrome (LeetCode 125)** — 2026-06-03
 
-Full guided walkthrough. Safwaan could not derive the descending suffix observation independently — this was expected given he has no two-pointer background yet. Understood each step when explained and was able to code the full solution with targeted prompting. Submitted and passed.
+Iterative two-pointer solution. Solved independently with targeted guidance on: skipping non-alphanumeric (if→while fix), bounds guard order, and using regex as a black box. Passed all 488 test cases. Runtime: 466ms / 5th percentile — regex is the bottleneck.
 
 ## Safwaan's Current State
 
 **Solid:**
-- Reasoning through examples intuitively — correctly identified the next permutation in his head before understanding the algorithm
-- Coding loop structures (outer/inner/while) with the right direction and bounds once guided
-- Catching his own structural bugs (break placement, loop bounds) when asked the right question
-- Handles edge cases when prompted
+- Two-pointer instinct: compare from both ends, move inward — got this naturally
+- Incremental problem-building: worked through edge cases step by step
+- Complexity analysis: correctly identified O(n) time, O(1) space unprompted
 
 **Watch for:**
-- Sequential vs nested loops — called this O(n²) because there were two loops; needed explanation
-- Two-pointer technique is brand new — not internalized yet, needs palindrome check to build it
-- This problem was a full guided walkthrough — not independently solved
+- Regex is a gap — treated as a black box, doesn't know charCodeAt alternative
+- `if` vs `while` for skipping — needed prompting, may recur in sliding window / two-pointer problems
+- Recursive version of palindrome deferred — his choice, come back to it after more two-pointer reps
 
-## Explicit Plan Agreed With Safwaan
+## Explicit Plans Agreed With Safwaan
 
-1. **Next: Palindrome Check** — builds two-pointer instinct (was already in progress, session 003 did intro but not full implementation)
-2. **Then: Redo Next Permutation fresh** — explicit agreement to come back and solve it more independently after building the prerequisite
+1. **Revisit LC 125** — rewrite with charCodeAt for better runtime, understand why regex is slow
+2. **Recursive palindrome** — deferred to a later session
+3. **Redo Next Permutation** — still on the list (from previous handoff)
 
 ## Suggested Next Problem
 
-**Palindrome Check** — two-pointer, in-place, O(n) time O(1) space. Directly prerequisites the reverse step used in Next Permutation.
+**Two Sum II (LeetCode 167)** — sorted array, two pointers, O(n) time O(1) space. Natural next step to reinforce the two-pointer pattern on a fresh problem before the palindrome revisit.
+
+Or go straight to the **charCodeAt revisit of LC 125** if that feels more satisfying.
 
 ## Coach Notes
 
-- Don't re-explain the descending suffix insight at the start of the Next Permutation redo — let him struggle with it first
-- When the redo happens, probe complexity early: "before we code, what do you think the time complexity will be?"
-- Maximum Subarray is also on the list (Safwaan wants to do it as a fresh session, solved it 4 years ago but doesn't remember it)
+- Don't re-explain the two-pointer setup — he has it now
+- When revisiting LC 125, ask him to hypothesize *why* regex might be slower before explaining charCodeAt
+- Regex carry-forward is logged — don't force it, surface it when it comes up naturally
+- Next Permutation redo is still outstanding — probe it after a couple more two-pointer problems
