@@ -1,38 +1,36 @@
-# Handoff — Post Valid Palindrome (LC 125)
+# Handoff — Post Two Sum (LC 1)
 
 ## What Was Just Completed
 
-**Valid Palindrome (LeetCode 125)** — 2026-06-03
+**Two Sum (LC 1)** — 2026-06-03
 
-Iterative two-pointer solution. Solved independently with targeted guidance on: skipping non-alphanumeric (if→while fix), bounds guard order, and using regex as a black box. Passed all 488 test cases. Runtime: 466ms / 5th percentile — regex is the bottleneck.
+Hash map / complement lookup. Brute force first (correct), then optimized. One typo caught via trace (`num[i]` → `nums[i]`). 63/63 test cases, 85th percentile runtime, 24th percentile memory — understood the time-space trade-off clearly.
 
 ## Safwaan's Current State
 
 **Solid:**
-- Two-pointer instinct: compare from both ends, move inward — got this naturally
-- Incremental problem-building: worked through edge cases step by step
-- Complexity analysis: correctly identified O(n) time, O(1) space unprompted
+- Hash map pattern: store complement→index, check before storing
+- Time-space trade-off reasoning — articulated it clearly
+- Self-correction via tracing — consistent habit now
+- Complexity analysis unprompted — gave O(n) time / O(n) space correctly
 
 **Watch for:**
-- Regex is a gap — treated as a black box, doesn't know charCodeAt alternative
-- `if` vs `while` for skipping — needed prompting, may recur in sliding window / two-pointer problems
-- Recursive version of palindrome deferred — his choice, come back to it after more two-pointer reps
+- Two pointers prerequisite gap — knows sorted arrays need them but hasn't fully reasoned through *why* unsorted breaks it
+- Regex / charCodeAt still unresolved from LC 125
 
 ## Explicit Plans Agreed With Safwaan
 
-1. **Revisit LC 125** — rewrite with charCodeAt for better runtime, understand why regex is slow
-2. **Recursive palindrome** — deferred to a later session
-3. **Redo Next Permutation** — still on the list (from previous handoff)
+1. **Two Sum II (LC 167)** — same problem, sorted array, two pointers apply → natural next step
+2. **Probe carry-forward:** why can't two pointers work on unsorted input?
+3. **Revisit LC 125** — charCodeAt rewrite (still outstanding)
+4. **Redo Next Permutation** — still outstanding
 
 ## Suggested Next Problem
 
-**Two Sum II (LeetCode 167)** — sorted array, two pointers, O(n) time O(1) space. Natural next step to reinforce the two-pointer pattern on a fresh problem before the palindrome revisit.
-
-Or go straight to the **charCodeAt revisit of LC 125** if that feels more satisfying.
+**Two Sum II (LC 167)** — sorted array, two pointers, O(n) time O(1) space. Direct follow-on. Opens the door to answering the carry-forward question naturally.
 
 ## Coach Notes
 
-- Don't re-explain the two-pointer setup — he has it now
-- When revisiting LC 125, ask him to hypothesize *why* regex might be slower before explaining charCodeAt
-- Regex carry-forward is logged — don't force it, surface it when it comes up naturally
-- Next Permutation redo is still outstanding — probe it after a couple more two-pointer problems
+- Don't re-explain Map.has/get/set — he has it
+- When starting LC 167, ask him to recall why two pointers are now valid (sorted) before he codes
+- The carry-forward question about unsorted arrays should come up organically — let him reason through it rather than explaining upfront

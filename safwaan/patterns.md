@@ -84,6 +84,14 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 
 ---
 
+### 9. Typo in variable name inside return statement
+- **Seen in:** Two Sum (LC 1, 2026-06-03)
+- **What happened:** Wrote `num[i]` instead of `nums[i]` inside the return statement — caught himself during trace
+- **How it was caught:** Asked to trace through a concrete example — spotted it himself
+- **Status:** Self-caught via tracing — consistent pattern
+
+---
+
 ### 6. Array assignment vs element assignment confusion
 - **Seen in:** Pascal's Triangle (2026-06-03)
 - **What happened:** Wrote `triangle[i] = [1]` for both the first and last element of each row — overwrites the whole row on the last step
