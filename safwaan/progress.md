@@ -13,6 +13,7 @@
 | Most Common Elements | Bucket Sort | ✅ |
 | Product Except Self | Prefix/Suffix Precomputation | ✅ |
 | Pascal's Triangle | 2D array construction / row-by-row DP | ✅ |
+| Pascal's Triangle II | In-place row update, right-to-left iteration | ✅ |
 
 ### Recursion & DP
 | Problem | Pattern | Status | Notes |

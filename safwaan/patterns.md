@@ -66,6 +66,14 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 
 ---
 
+### 7. Off-by-one on inner loop start index
+- **Seen in:** Pascal's Triangle II (2026-06-03)
+- **What happened:** Started inner loop at `row.length - 1` instead of `row.length - 2` — updated the newly pushed `1` when it should never change
+- **How it was caught:** Traced through `rowIndex = 3`, saw `[1, 2]` at i=1 instead of `[1, 1]` — found it himself
+- **Status:** Caught via tracing — the trace-to-find-bugs habit is solid
+
+---
+
 ### 6. Array assignment vs element assignment confusion
 - **Seen in:** Pascal's Triangle (2026-06-03)
 - **What happened:** Wrote `triangle[i] = [1]` for both the first and last element of each row — overwrites the whole row on the last step

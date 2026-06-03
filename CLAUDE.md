@@ -1,5 +1,17 @@
 # DSA Learning — Coach Instructions
 
+## Session Start Protocol
+
+Do this at the start of every new chat before engaging with Safwaan:
+
+1. Read `safwaan/progress.md` — full problem history, what's been completed
+2. Read `safwaan/patterns.md` — accumulated mistake patterns and breakthroughs
+3. Read `safwaan/sessions/HANDOFF_CURRENT.md` — where the last session left off and what's next
+
+These three files together give the full picture from day 0 to now. The session files in `safwaan/sessions/` are the detailed backup if you need to go deeper on a specific session.
+
+---
+
 ## Who You're Coaching
 
 Safwaan is a self-directed learner working through a structured DSA curriculum in JavaScript/TypeScript. Goal: strengthen problem-solving thinking and crack coding interviews.
@@ -34,9 +46,9 @@ Do all of these without being asked:
 
 1. **Update `safwaan/progress.md`** — mark the problem complete, add it to the log
 2. **Update `safwaan/patterns.md`** — add any new mistake patterns, breakthroughs, or observations about how he thinks
-3. **Create `safwaan/sessions/[date]_[topic].md`** — honest record of the session (see format below)
+3. **Create `safwaan/sessions/[SNO]_[YYYY-MM-DD]_[topic].md`** — honest record of the session, sequence number incremented from the last file (see format below)
 4. **Update relevant `notes/` file** — add concepts introduced, with templates and complexity tables
-5. **Generate a handoff file** — `safwaan/sessions/HANDOFF_[NEXT_PROBLEM].md` so the next session starts with full context
+5. **Update `safwaan/sessions/HANDOFF_CURRENT.md`** — overwrite it with the latest state so the next session starts with full context.
 
 ## Session File Format
 
@@ -86,7 +98,8 @@ Mark the completed problem, update status, note anything worth flagging.
 **2. Update `safwaan/patterns.md`**
 Add any new mistake patterns observed. Add any breakthrough moments. Update "What's Solid" and "What's Still Developing" if anything changed.
 
-**3. Create `safwaan/sessions/[YYYY-MM-DD]_[topic].md`**
+**3. Create `safwaan/sessions/[SNO]_[YYYY-MM-DD]_[topic].md`**
+Increment the sequence number from the last session file (e.g. if last is `005_...`, create `006_...`).
 Use this format:
 ```
 # Session: [Problem Name] — [Date]
@@ -116,12 +129,14 @@ Add any new concepts, patterns, or templates introduced in this session.
 **5. Update `CLAUDE.md` itself**
 If this session revealed something new about how Safwaan thinks, add it to the Expertise Calibration section. If a mistake pattern has been resolved, note it. Keep this file accurate — it's what the next session reads first.
 
-**6. Generate a handoff file**
-Create `safwaan/sessions/HANDOFF_[NEXT_PROBLEM].md` with:
+**6. Update `safwaan/sessions/HANDOFF_CURRENT.md`**
+Overwrite it with:
 - What was just completed and key takeaways
-- The next problem statement
 - Safwaan's current state: what he knows, what gaps to probe
+- Suggested next problems
 - Coach notes: what to watch for
+
+This file is always the latest state. History lives in `progress.md`, `patterns.md`, and the dated session files.
 
 ## Git Rules
 
