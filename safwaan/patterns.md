@@ -63,6 +63,7 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 - Proactively analyzing complexity without being prompted
 - Edge case enumeration before coding
 - Connecting new problems to previously learned patterns independently
+- Distinguishing sequential loops from nested loops when reasoning about complexity
 
 ---
 
@@ -71,6 +72,14 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 - **What happened:** Started inner loop at `row.length - 1` instead of `row.length - 2` — updated the newly pushed `1` when it should never change
 - **How it was caught:** Traced through `rowIndex = 3`, saw `[1, 2]` at i=1 instead of `[1, 1]` — found it himself
 - **Status:** Caught via tracing — the trace-to-find-bugs habit is solid
+
+---
+
+### 8. Time complexity on sequential loops mistaken for nested
+- **Seen in:** Next Permutation (2026-06-03)
+- **What happened:** Called the solution O(n²) because there were two loops, but they run sequentially (outer breaks after finding pivot), not nested for full n×n
+- **How it was caught:** Asked him to think about what the worst case actually looks like — needed the explanation given
+- **Status:** Understood once explained — probe again next time there are multiple loops
 
 ---
 
