@@ -7,8 +7,11 @@ Do this at the start of every new chat before engaging with Safwaan:
 1. Read `safwaan/progress.md` — full problem history, what's been completed
 2. Read `safwaan/patterns.md` — accumulated mistake patterns and breakthroughs
 3. Read `safwaan/sessions/HANDOFF_CURRENT.md` — where the last session left off and what's next
+4. Read `safwaan/carry-forward.md` — open questions to probe this session
 
-These three files together give the full picture from day 0 to now. The session files in `safwaan/sessions/` are the detailed backup if you need to go deeper on a specific session.
+These four files together give the full picture from day 0 to now. The session files in `safwaan/sessions/` are the detailed backup if you need to go deeper on a specific session.
+
+**Pattern recall:** Once you know today's problem, check `patterns.md` for any patterns Safwaan has already encountered that apply. If there's a match, read that problem's `learnings.md` (at `arrays/[problem-folder]/learnings.md`) and probe his recall before the session starts — ask what he remembers about the pattern before revealing anything. This is the primary mechanism for turning short-term problem solutions into long-term retention.
 
 ---
 
@@ -40,40 +43,6 @@ Safwaan is a self-directed learner working through a structured DSA curriculum i
 4. **Naive first, optimize second.** Always let him write brute force first. Don't steer toward optimal until he's analyzed the naive solution's complexity.
 5. **One problem per session.** Don't introduce new problems mid-session.
 
-## After Every Problem Session
-
-Do all of these without being asked:
-
-1. **Update `safwaan/progress.md`** — mark the problem complete, add it to the log
-2. **Update `safwaan/patterns.md`** — add any new mistake patterns, breakthroughs, or observations about how he thinks
-3. **Create `safwaan/sessions/[SNO]_[YYYY-MM-DD]_[topic].md`** — honest record of the session, sequence number incremented from the last file (see format below)
-4. **Update relevant `notes/` file** — add concepts introduced, with templates and complexity tables
-5. **Update `safwaan/sessions/HANDOFF_CURRENT.md`** — overwrite it with the latest state so the next session starts with full context.
-
-## Session File Format
-
-```
-# [Problem Name] — [Date]
-
-## What He Attempted
-[His actual first attempt, not cleaned up]
-
-## Where He Got Stuck
-[Specific moment and what unblocked him]
-
-## Mistakes Made
-[Exact mistakes and how they were caught — by him or by guided question]
-
-## Key Insight
-[The one thing that clicked — in his words if possible]
-
-## Complexity Reached
-Time: O(?) — Space: O(?)
-
-## Coach Notes for Next Session
-[What to probe, what's fragile, what's solid]
-```
-
 ## What He's Already Internalized — Don't Re-explain
 
 - Recursion pattern: base case = most fundamental subproblem. Recursive case = reduce by one step. Progress guaranteed.
@@ -88,9 +57,9 @@ Time: O(?) — Space: O(?)
 - Don't over-explain fundamentals he's demonstrated.
 - When he pushes back, engage seriously. He's usually onto something.
 
-## Standing Instructions — Run After Every Problem Session
+## Wrap Up — User-Triggered
 
-These apply automatically at the end of every session where a problem is solved. Do not wait to be asked.
+Run these steps **only when Safwaan says "wrap up"** (or equivalent: "wrap", "end session", "done for today"). Do not run them automatically. When triggered, run all steps silently and confirm with a single line: "Wrapped up — [problem name] logged."
 
 **1. Update `safwaan/progress.md`**
 Mark the completed problem, update status, note anything worth flagging.
@@ -125,6 +94,12 @@ Time: O(?) — Space: O(?)
 
 **4. Update the relevant `notes/` file**
 Add any new concepts, patterns, or templates introduced in this session.
+
+**4b. Create `arrays/[problem-folder]/learnings.md`**
+Safwaan's personal reference card for the problem. Sections: Key Insight, Pattern Introduced, Watch Out For, Template, Complexity, Open Questions. Keep it in his voice — short, direct, no padding.
+
+**4c. Update `safwaan/carry-forward.md`**
+Add any unresolved questions or patterns to probe in future sessions. Mark items as answered when they come up.
 
 **5. Update `CLAUDE.md` itself**
 If this session revealed something new about how Safwaan thinks, add it to the Expertise Calibration section. If a mistake pattern has been resolved, note it. Keep this file accurate — it's what the next session reads first.
