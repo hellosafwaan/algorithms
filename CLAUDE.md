@@ -119,7 +119,7 @@ Add the new problem to the relevant pattern section. If a new pattern was introd
 Add the new problem with a revisit date ~3 weeks out. Mark any problems as Done if they were successfully redone cold this session.
 
 **4f. Submission Links**
-If Safwaan provides LeetCode submission links, reference them directly in the problem's `learnings.md` under a "Submissions" section.
+**Before writing `learnings.md`**, ask Safwaan for submission links. Ask explicitly: "Do you have a LeetCode submission link for this problem?" Then reference any provided links in the `learnings.md` under the "Submissions" section. Do not write the file before asking.
 
 **5. Update `CLAUDE.md` itself**
 If this session revealed something new about how Safwaan thinks, add it to the Expertise Calibration section. If a mistake pattern has been resolved, note it. Keep this file accurate — it's what the next session reads first.

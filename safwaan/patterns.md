@@ -58,6 +58,14 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 - Questioning practicality of solutions — strong instinct
 - Self-correcting when guided — very consistent
 
+### 13. Pointer movement justification — reasoning gap (not code bug)
+- **Seen in:** LC 11 (2026-06-04)
+- **What happened:** Knew intuitively to move the shorter pointer but couldn't fully prove why discarding the taller pointer's position is safe without guided questioning
+- **How it was caught:** Socratic chain — "max possible height if you keep shorter fixed?" → "what happens to width?" → "so what happens to area?" — he concluded from there
+- **Status:** Gets there when guided — probe cold next session
+
+---
+
 ## What's Still Developing
 
 - Proactively analyzing complexity without being prompted

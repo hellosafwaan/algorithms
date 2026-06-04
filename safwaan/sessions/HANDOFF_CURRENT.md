@@ -1,40 +1,33 @@
-# Handoff — Post Squares of a Sorted Array (LC 977)
+# Handoff — Post Container With Most Water (LC 11)
 
 ## What Was Just Completed
 
-**Squares of a Sorted Array (LC 977)** — 2026-06-04
+**Container With Most Water (LC 11)** — 2026-06-04
 
-Two pointers, both ends, fill backwards. Needed a nudge to see that largest squares are always at the ends. Once there, derived the full algorithm independently. Key mistake: tried to place two elements per iteration — caught it himself by tracing. Loop condition `left < right` → `left <= right` needed an example to fix.
+Two pointers from both ends, move the shorter pointer inward. Safwaan identified the two-pointer approach independently. The hard part was justifying the pointer movement — needed a Socratic chain to fully conclude the proof. Once there, coded it cleanly. Caught width formula off-by-one himself when asked to trace. Loop condition (`left < right`) reasoned correctly and independently.
 
-Also this session: set up `revisit-queue.md`, `pattern-index.md`, and `assets/screenshots/` for long-term retention infrastructure.
+Also: Safwaan flagged that `learnings.md` files should include reasoning behind complexity values, not just the values themselves. Applied from this session forward.
 
 ## Safwaan's Current State
 
 **Solid:**
-- Two-pointer mechanics — knows how it works and why
-- Tracing through concrete examples to catch bugs — very consistent
-- Complexity reasoning — now reasoning from pointer movement, not loop syntax
-- Self-correction via tracing
+- Two-pointer mechanics — knows how it works
+- Tracing to catch bugs — very consistent
+- Loop condition reasoning (`<` vs `<=`) — independent and correct this session
+- Complexity reasoning — leads on it, just needs the probe
 
 **Watch for:**
-- Cold pattern recognition — getting more reps but not there yet
-- `const` vs `let` / missing declaration keywords on pointer variables — recurring
-- `left < right` vs `left <= right` — probe on next two-pointer problem
-- Two elements per iteration instinct — watch if it recurs
-
-## Explicit Plans Agreed With Safwaan
-
-1. More two-pointer reps for cold recognition
-2. Revisit LC 125 — charCodeAt rewrite (still outstanding)
-3. Redo Next Permutation — still outstanding
+- Pointer movement proof — can state the rule but can't fully prove it cold yet. The key chain: "fix shorter, move taller → height cap doesn't change, width shrinks → area can only decrease → moving taller is never useful"
+- `const` vs `let` on pointer variables — still recurring quietly
+- Cold pattern recognition — improving but still getting reps
 
 ## Suggested Next Problem
 
-**Container With Most Water (LC 11)** or **3Sum (LC 15)**. Both are two-pointer, different condition logic from what he's seen. Check `revisit-queue.md` first — if any problems are past their revisit date, start cold there instead.
+**3Sum (LC 15)** — two-pointer inside a loop. Different flavor: sort first, fix one element, two-pointer the rest. Or revisit LC 125 charCodeAt rewrite (still outstanding). Check `revisit-queue.md` first — no problems past due until 2026-06-24.
 
 ## Coach Notes
 
-- Don't explain the pattern upfront — let him attempt naive first
-- Probe: does he reach for two pointers without a hint?
-- Watch for `left < right` — ask him to think about edge cases on the loop condition before he finalizes
-- Complexity reasoning is improving — let him lead on it, only prompt if he skips it
+- Start by asking him to justify pointer movement from LC 11 cold — no hints
+- If he reaches for two pointers on 3Sum without prompting, that's a signal the pattern is internalizing
+- Probe: does he sort first on 3Sum, or does he try to apply two pointers to an unsorted array?
+- Complexity on 3Sum is O(n²) — there's a loop + two-pointer inside. Make sure he reasons from pointer movement, not just loop count
