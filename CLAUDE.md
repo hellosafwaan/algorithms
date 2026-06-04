@@ -8,10 +8,11 @@ Do this at the start of every new chat before engaging with Safwaan:
 2. Read `safwaan/patterns.md` — accumulated mistake patterns and breakthroughs
 3. Read `safwaan/sessions/HANDOFF_CURRENT.md` — where the last session left off and what's next
 4. Read `safwaan/carry-forward.md` — open questions to probe this session
+5. Check `safwaan/revisit-queue.md` — if any problems are past their revisit date, start the session with a cold attempt on one of them before introducing new material
 
 These four files together give the full picture from day 0 to now. The session files in `safwaan/sessions/` are the detailed backup if you need to go deeper on a specific session.
 
-**Pattern recall:** Once you know today's problem, check `patterns.md` for any patterns Safwaan has already encountered that apply. If there's a match, read that problem's `learnings.md` (at `arrays/[problem-folder]/learnings.md`) and probe his recall before the session starts — ask what he remembers about the pattern before revealing anything. This is the primary mechanism for turning short-term problem solutions into long-term retention.
+**Pattern recall:** Once you know today's problem, check `safwaan/pattern-index.md` for any patterns Safwaan has already encountered that apply. If there's a match, read that problem's `learnings.md` (at `arrays/[problem-folder]/learnings.md`) and probe his recall before the session starts — ask what he remembers about the pattern before revealing anything. This is the primary mechanism for turning short-term problem solutions into long-term retention.
 
 ---
 
@@ -96,7 +97,9 @@ Time: O(?) — Space: O(?)
 Add any new concepts, patterns, or templates introduced in this session.
 
 **4b. Create `arrays/[problem-folder]/learnings.md`**
-Safwaan's personal reference card for the problem. Sections: Key Insight, Pattern Introduced, Watch Out For, Template, Complexity, Open Questions. Keep it in his voice — short, direct, no padding.
+Safwaan's personal reference card for the problem. Sections: Key Insight, Pattern Introduced, Watch Out For, Template, Trace Through, Complexity, Submissions, Open Questions. Keep it in his voice — short, direct, no padding.
+
+Always include a Trace Through section. If Safwaan provided a trace during the session, use it verbatim (cleaned up formatting only). If he didn't, write one for the key example used in the session.
 
 At the top of the file, include a link to the session file: `Session: [session-file-name](../../safwaan/sessions/[session-file-name].md)`
 
@@ -108,6 +111,15 @@ Clean up his explanation and add it as a block under Key Insight. His reflection
 
 **4c. Update `safwaan/carry-forward.md`**
 Add any unresolved questions or patterns to probe in future sessions. Mark items as answered when they come up.
+
+**4d. Update `safwaan/pattern-index.md`**
+Add the new problem to the relevant pattern section. If a new pattern was introduced, add a new section with the core idea, when to reach for it, and the problem entry.
+
+**4e. Update `safwaan/revisit-queue.md`**
+Add the new problem with a revisit date ~3 weeks out. Mark any problems as Done if they were successfully redone cold this session.
+
+**4f. Submission Links**
+If Safwaan provides LeetCode submission links, reference them directly in the problem's `learnings.md` under a "Submissions" section.
 
 **5. Update `CLAUDE.md` itself**
 If this session revealed something new about how Safwaan thinks, add it to the Expertise Calibration section. If a mistake pattern has been resolved, note it. Keep this file accurate — it's what the next session reads first.

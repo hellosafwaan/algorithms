@@ -93,10 +93,22 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 ---
 
 ### 10. const on mutable pointer variables
-- **Seen in:** Two Sum II (LC 167, 2026-06-03)
-- **What happened:** Declared `left` and `right` as `const` — can't decrement/increment them
+- **Seen in:** Two Sum II (LC 167, 2026-06-03), LC 977 (2026-06-04)
+- **What happened:** Declared `left` and `right` as `const` — can't decrement/increment them. In 977, also declared `right` without any keyword (implicit global).
 - **How it was caught:** Reminded to look at variable declarations
-- **Status:** Minor — watch for it on future two-pointer problems
+- **Status:** Recurring quietly — keep watching
+
+### 11. Adding two elements per iteration in two-pointer fill
+- **Seen in:** LC 977 (2026-06-04)
+- **What happened:** Tried to place one element from each end per iteration — missed that the second largest might come from the same end
+- **How it was caught:** He traced through `[-6, -5, -1, 2, 4]` himself and saw the output order was wrong
+- **Status:** Caught via tracing — the habit is solid
+
+### 12. Off-by-one on while loop condition (< vs <=)
+- **Seen in:** LC 977 (2026-06-04)
+- **What happened:** Used `left < right` — misses the middle element on odd-length arrays
+- **How it was caught:** Needed a concrete example to see it
+- **Status:** Fixed once shown — probe on next two-pointer problem
 
 ---
 
