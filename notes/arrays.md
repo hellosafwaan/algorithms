@@ -143,3 +143,57 @@ var nextPermutation = function(nums) {
 - `break` after the swap in the inner loop — you only want the rightmost candidate
 - `break` after the reverse in the outer loop — you only process one pivot
 - Flag needed to distinguish "pivot found" from "no pivot" for the edge case
+
+---
+
+## 3Sum (LeetCode 15)
+
+**Pattern:** Two pointers *inside* a loop — k-sum reduction
+
+**Core idea:** Sort the array. Fix one element `nums[i]`, then run a converging two-pointer search on the rest for a pair summing to `-nums[i]`. This reduces "find 3 numbers" to "fix 1, two-sum the other 2" — O(n³) → O(n²).
+
+**Why sorting earns its keep twice:**
+1. Two-pointer movement becomes deterministic (sum too big → `right--`, too small → `left++`).
+2. Duplicate values become adjacent → duplicate triplets can be skipped **in place**, with no Set and no string-conversion dedup pass.
+
+**Template:**
+```js
+function threeSum(nums) {
+    nums.sort((a, b) => a - b)
+    const n = nums.length
+    const result = []
+    for (let i = 0; i < n; i++) {
+        if (nums[i] > 0) break                          // sorted: smallest positive → done
+        if (i > 0 && nums[i] === nums[i - 1]) continue  // skip duplicate i
+        let left = i + 1, right = n - 1
+        const target = -nums[i]
+        while (left < right) {
+            const sum = nums[left] + nums[right]
+            if (sum > target) right--
+            else if (sum < target) left++
+            else {
+                result.push([nums[i], nums[left], nums[right]])
+                left++; right--
+                while (left < right && nums[left] === nums[left - 1]) left++
+                while (left < right && nums[right] === nums[right + 1]) right--
+            }
+        }
+    }
+    return result
+}
+```
+
+**Complexity:**
+| | Time | Space |
+|--|------|-------|
+| Brute force (3 loops + Set) | O(n³) | O(n) |
+| Two pointers, no Set | O(n²) | O(1) extra |
+
+**Why O(n²):** Sort is O(n log n). Outer loop n times × inner two-pointer O(n) = O(n²), which dominates.
+
+**Watch out for:**
+- Don't `break`/stop at the first match — keep searching for more pairs for the same `i`; move *both* pointers inward.
+- Skip duplicates with `while`, not `if` — consecutive equal values need draining.
+- Neighbor direction after moving: `left` checks `left - 1`, `right` checks `right + 1`. (Trace it — easy to flip.)
+- A Set + string dedup works but is slow (5th pct). Sorting makes dedup free.
+- This shape generalizes: 4Sum = fix two elements, two-pointer the rest.

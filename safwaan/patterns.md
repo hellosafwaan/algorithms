@@ -49,6 +49,9 @@ After completing recursive string reversal, he unprompted pointed out it's O(n²
 ### Self-correction pattern
 Across sessions, Safwaan consistently finds his own bugs when asked the right question rather than being told what's wrong. This is a strong signal — he has the debugging instinct, just needs the prompt to activate it.
 
+### Independent k-sum decomposition — 3Sum (2026-06-04)
+Without prompting, he saw that the two-pointer optimization meant "fix one element, run a two-sum on the rest." That's *the* core insight of 3Sum and the bridge from "two pointers on an array" to "two pointers as a subroutine." He also independently flagged that a single `if` won't drain consecutive duplicates — a `while` is needed — *before* it was raised. And he correctly self-diagnosed that he was overthinking the pointer direction ("an inward pointer never suddenly goes outward"). The problem-solving *shape* is becoming interview-grade; the gaps now are detail-precision and library recall, not approach.
+
 ---
 
 ## What's Solid
@@ -68,11 +71,14 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 
 ## What's Still Developing
 
-- Proactively analyzing complexity without being prompted
+- Proactively analyzing complexity without being prompted — *improving; led on it unprompted in 3Sum (called O(n³) and O(n²) himself)*
 - Edge case enumeration before coding
-- Connecting new problems to previously learned patterns independently
+- Connecting new problems to previously learned patterns independently — *improving; reached for two pointers + k-sum decomposition cold in 3Sum*
 - Distinguishing sequential loops from nested loops when reasoning about complexity
 - Regex — hasn't used it in a long time, treated as a black box; cover charCodeAt as the practical alternative
+- **Subproblem completeness** — tends to stop at the first valid answer; must learn to ask "could there be more?" before closing a loop
+- **Index-detail precision** — `+1/-1` neighbor math is unreliable in his head but solid when he traces
+- **Toolkit/library recall** — `Set`, `Map`, `Array.from`, reference vs value equality not yet at his fingertips
 
 ---
 
@@ -125,3 +131,22 @@ Across sessions, Safwaan consistently finds his own bugs when asked the right qu
 - **What happened:** Wrote `triangle[i] = [1]` for both the first and last element of each row — overwrites the whole row on the last step
 - **How it was caught:** Asked to trace through i=3, j=3 — he identified the issue himself after one targeted question
 - **Status:** Caught independently once prompted — watch for this in future 2D problems
+
+---
+
+### 14. Closes a subproblem at first success ("found one → done")
+- **Seen in:** 3Sum (LC 15, 2026-06-04) — appeared THREE times in one session
+- **What happened:** (a) Saw the no-duplicates requirement up front but didn't build for it. (b) `break`'d after the first matching pair instead of finding all pairs for a fixed `i`. (c) Forgot more matches could come, so didn't reset the triplet between them.
+- **Root cause:** Mentally marks a subproblem complete after the first answer, when the task is "find *all*."
+- **How it was caught:** Tracing `[-2,0,1,1,2]` exposed the missing `[-2,1,1]`.
+- **Status:** Unifying meta-pattern across the session. Probe: before closing a loop, does he ask "could there be more?"
+
+### 15. Index-detail precision flips under abstract reasoning
+- **Seen in:** 3Sum (LC 15, 2026-06-04)
+- **What happened:** Duplicate-skip neighbor check — `nums[right - 1]` vs `nums[right + 1]`. Reasoned the sign wrong in his head every round; **got it right the moment he traced** ("I'm comparing the same element, I need the next one").
+- **Status:** Tracing is trustworthy, abstract index reasoning is not (yet). Push him to trace fiddly `+1/-1` decisions rather than reason them.
+
+### 16. Toolkit / library exposure gap (knowledge, not reasoning)
+- **Seen in:** 3Sum (LC 15, 2026-06-04)
+- **What happened:** `Set` didn't occur to him for dedup; didn't know a Set won't dedupe arrays (reference equality); string-conversion workaround had to be given; `Array.from` forgotten.
+- **Status:** Cheapest gap to close — it's recall, not thinking. Recommended a deliberate review of `Set`/`Map`/`Array.from`/reference-vs-value equality. Probe cold next session.

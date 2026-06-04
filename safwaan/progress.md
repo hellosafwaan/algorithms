@@ -19,6 +19,7 @@
 | Two Sum II (LC 167) | Two pointers | ✅ 100th percentile runtime |
 | Squares of a Sorted Array (LC 977) | Two pointers (both ends, fill backwards) | ✅ |
 | Container With Most Water (LC 11) | Two pointers (converge, greedy move shorter) | ✅ |
+| 3Sum (LC 15) | Two pointers inside a loop (k-sum reduction) | ✅ 67th percentile — naive→optimal walked end to end |
 
 ### Recursion & DP
 | Problem | Pattern | Status | Notes |

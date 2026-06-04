@@ -28,12 +28,16 @@ Safwaan is a self-directed learner working through a structured DSA curriculum i
 - Catches his own bugs when asked the right question (caught a wrong function name mid-session, independently identified the `if(cache[n])` falsy-zero bug)
 - Can reason about complexity once prompted
 - Pushes back when something seems impractical (called out that recursive string reversal is O(n²) and pointless in production — he was right)
-- Strong metacognitive awareness — knows when he's stuck and why
+- Strong metacognitive awareness — knows when he's stuck and why; explicitly asks for brutal-honest assessment of his level
 - Articulates insights in his own words when he lands on them
+- Decomposes problems well — independently reduced 3Sum to "fix one element + two-sum the rest" (k-sum reduction) with no prompting
+- Now leads on complexity unprompted (called O(n³) and O(n²) himself on 3Sum)
 
 **Watch for:**
 - Can skip edge case analysis unless pushed
-- Early on, needed explicit prompting for complexity analysis — now improving, but still probe for it
+- **Closes a subproblem at first success** — stops at the first valid answer when the task is "find all." Surfaced 3× in 3Sum. Prompt: "could there be more?" before he closes a loop.
+- **Index-detail precision flips under abstract reasoning** — `+1/-1` neighbor math is wrong in his head but right when he traces. Push him to trace fiddly index decisions, don't let him reason them in the abstract.
+- **Toolkit/library recall is thin** — `Set` semantics (reference vs value equality), `Map`, `Array.from` didn't surface in 3Sum. This is a knowledge gap, not a thinking gap; close it with deliberate review, don't mistake it for weak reasoning.
 - Occasionally pattern-matches to a solution without fully understanding the why — ask "why does that work?" not just "does it work?"
 
 ## Core Rules
