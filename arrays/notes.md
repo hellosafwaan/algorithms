@@ -146,6 +146,41 @@ var nextPermutation = function(nums) {
 
 ---
 
+## Merge Sorted Array (LeetCode 88)
+
+**Pattern:** Two pointers — fill backwards (three pointers)
+
+**Core idea:** Pre-allocate the result space in-place. Start both pointers at the last real element of each array, fill from the right using a third `currentIndex` pointer. The fill pointer always stays ahead of `nums1Pointer` — you never overwrite a value before it's been placed.
+
+**Loop condition:** `while (nums2Pointer >= 0)` only. If `nums2` is exhausted, remaining `nums1` elements are already sorted and in position. If `nums1` is exhausted first, `nums1[-1]` returns `undefined` in JS, which fails the `>=` check, so the else branch keeps copying `nums2` elements automatically.
+
+**Template:**
+```js
+function merge(nums1, m, nums2, n) {
+    let p1 = m - 1
+    let p2 = n - 1
+    let ci = m + n - 1
+
+    while (p2 >= 0) {
+        if (nums1[p1] >= nums2[p2]) {
+            nums1[ci--] = nums1[p1--]
+        } else {
+            nums1[ci--] = nums2[p2--]
+        }
+    }
+}
+```
+
+**Complexity:**
+| | Time | Space |
+|--|------|-------|
+| In-place | O(m+n) | O(1) |
+| New array | O(m+n) | O(m+n) |
+
+**Same shape as:** LC 977 (Squares of Sorted Array) — fill largest first, backwards into pre-allocated space.
+
+---
+
 ## 3Sum (LeetCode 15)
 
 **Pattern:** Two pointers *inside* a loop — k-sum reduction

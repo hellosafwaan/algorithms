@@ -12,10 +12,10 @@ Last updated: 2026-06-05
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 150 |
-| ✅ Complete | 11 |
+| Total problems | 151 |
+| ✅ Complete | 12 |
 | ⚠️ Needs revisit | 2 |
-| ⏳ Not started | 137 |
+| ⏳ Not started | 136 |
 
 ---
 
@@ -23,7 +23,7 @@ Last updated: 2026-06-05
 | # | Phase | Problems | Done | Target Date | Status |
 |---|-------|----------|------|-------------|--------|
 | 1 | Arrays & Hashing | 9 | 6 | 2026-06-05 | ⚠️ 3 need redo |
-| 2 | Two Pointers | 5 | 4 | 2026-06-02 | 🔄 1 remaining |
+| 2 | Two Pointers | 6 | 5 | 2026-06-02 | 🔄 1 remaining |
 | 3 | Sliding Window | 6 | 0 | 2026-06-08 | ⏳ |
 | 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
 | 5 | Binary Search | 7 | 0 | 2026-06-16 | ⏳ |
@@ -67,7 +67,8 @@ Last updated: 2026-06-05
 | 2 | Two Sum II | Medium | [#167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Two Pointers | ✅ 100th pct | [→](arrays/two-sum-ii/learnings.md) |
 | 3 | 3Sum | Medium | [#15](https://leetcode.com/problems/3sum/) | Two Pointers in Loop | ✅ 67th pct | [→](arrays/15-three-sum/learnings.md) |
 | 4 | Container With Most Water | Medium | [#11](https://leetcode.com/problems/container-with-most-water/) | Two Pointers | ✅ | [→](arrays/11-container-with-most-water/learnings.md) |
-| 5 | Trapping Rain Water | Hard | [#42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers | ⏳ Next | — |
+| 5 | Merge Sorted Array | Easy | [#88](https://leetcode.com/problems/merge-sorted-array/) | Two Pointers (fill backwards) | ✅ 100th pct | [→](arrays/88-merge-sorted-array/learnings.md) |
+| 6 | Trapping Rain Water | Hard | [#42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers | ⏳ | — |
 
 ## Phase 3 — Sliding Window ⏳
 

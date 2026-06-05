@@ -18,5 +18,7 @@ Questions to probe at the start of the next session that uses the same pattern.
 | Why is `if (nums[i] > 0) break` valid in 3Sum? | Two pointers / sorted-array reasoning | 15 | answered 2026-06-05 — derived correctly: sorted ascending, all elements right are larger, triplet sum must be positive |
 | Does he recall why a Set won't dedupe arrays (reference vs value equality)? Probe `Set`/`Map`/`Array.from` cold | Toolkit / JS collections | 15 | answered 2026-06-05 — reference equality explained correctly; broader toolkit review still open |
 | Before closing a loop, does he ask "could there be more?" | Subproblem completeness | 15 | open — stopped at first match 3× in one session |
+| Why can the fill pointer never overwrite a value still needed? (currentIndex >= nums1Pointer invariant) | Two pointers — fill backwards | 88 | open — understood "somewhat", probe cold next session |
+| Write the naive push+sort solution for LC 88 | Two pointers — fill backwards | 88 | open — deferred this session |
 | While loop condition `<` vs `<=` — can he identify the edge case without an example? | Two pointers | 977 | open — needed example this session |
 | Implicit global variable (`right` without declaration keyword) — does he catch it? | JS fundamentals | 977 | open — not caught this session |

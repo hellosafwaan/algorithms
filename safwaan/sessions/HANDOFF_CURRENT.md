@@ -1,45 +1,38 @@
-# Handoff — Post 3Sum (LC 15)
+# Handoff — Post Merge Sorted Array (LC 88)
 
 ## What Was Just Completed
 
-**3Sum (LC 15)** — 2026-06-04
+**Merge Sorted Array (LC 88)** — 2026-06-05
 
-Walked the full arc: brute force O(n³) + Set dedup (TLE), → two-pointer O(n²) with Set (5th pct, 1212ms), → two-pointer with in-place dedup, no Set (67th pct, 35ms). He independently identified the two-pointer optimization AND the "fix one element, two-sum the rest" decomposition — the core insight. Submission: https://leetcode.com/problems/3sum/submissions/2022539095/
+Solid session. Added LC 88 to the Phase 2 curriculum at his request. Long warm-up due to problem statement confusion (the placeholder zeros concept took several exchanges). Once cleared, he independently connected to the LC 977 fill-backwards pattern. Three-pointer setup derived cold. All bugs in first attempt caught by himself during trace. Submitted 100th percentile runtime.
 
-This was a long, honest session. He explicitly asked for a brutal assessment of where he stands for interviews. The headline: **his problem-solving *shape* is interview-ready; the gaps are detail-precision and library recall, not approach.**
+Also probed carry-forward items at the session start — 3Sum explanation, `if (nums[i] > 0) break` reasoning, Set reference equality — all answered correctly.
 
 ## Safwaan's Current State
 
 **Solid:**
-- Loop scaffolding + bounds — instant, independent
-- Complexity analysis — now leads unprompted (called O(n³), O(n²) himself)
-- k-sum decomposition — saw "fix one + two-sum the rest" cold
-- Tracing to find bugs — reliably rescues him
-- Metacognition — flagged the `while`-over-`if` need himself; self-diagnosed overthinking the pointer direction
+- Fill-backwards pattern — recalled and applied cold from LC 977
+- Self-correction via tracing — caught 4 bugs himself, zero hints needed for debugging
+- Loop condition reasoning — correctly identified `nums2Pointer >= 0` only and articulated why
+- Complexity — called O(m+n) time, O(1) space unprompted
 
-**Watch for (the three gaps):**
-1. **Closes subproblems at first success** — stopped at first match 3× this session (didn't build for dedup, `break`'d after one pair, didn't reset triplet). Prompt "could there be more?"
-2. **Index-detail precision** — `+1/-1` neighbor math flips in his head, correct when traced. Make him trace.
-3. **Toolkit recall** — `Set`/`Map`/`Array.from`/reference-equality not at fingertips. Knowledge gap, cheap to close.
+**Gaps still open (the three from 3Sum still apply):**
+1. **Closes subproblems at first success** — didn't surface this session (problem didn't trigger it)
+2. **Index-detail precision** — trace had one error (`nums1[2]=3` misread as `1`) but caught when asked
+3. **Toolkit recall** — not triggered this session
 
-## Carry-Forward — Do These Next Session
+**New carry-forward:**
+- Why can the fill pointer never overwrite a value still needed? (currentIndex >= nums1Pointer invariant) — probe cold
+- Naive push+sort solution for LC 88 — deferred, add to a future session
 
-- **ASK FIRST, before he re-reads the 3Sum learnings file:** "Explain the 3Sum optimized solution in your own words." He deferred it tonight (tired). Then clean up his explanation into the Key Insight block of `arrays/15-three-sum/learnings.md` (currently has a placeholder note).
-- Probe cold: why won't a Set dedupe arrays? (reference vs value equality)
-- Probe: why is `if (nums[i] > 0) break` valid in his saved 3Sum?
+## Suggested Next Problem
 
-## Suggested Next Problems (Two Pointers — in order)
+**Trapping Rain Water (LC 42)** — Phase 2 final problem. Hard. Two converging pointers, nuanced movement reasoning. He's well-warmed up on two pointers.
 
-1. **Is Subsequence (LC 392)** — same-direction two pointers, one on each string. Different flavor from everything so far (not converging).
-2. **Trapping Rain Water (LC 42)** — converging two pointers, nuanced movement reasoning. Harder.
-
-Then DP: Climbing Stairs → House Robber → Coin Change.
-
-No revisit-queue items are past due (earliest 2026-06-24).
+Before starting: probe the `currentIndex >= nums1Pointer` invariant cold (one question, no hints).
 
 ## Coach Notes
 
-- He responds extremely well to direct, specific honesty — he asked for it explicitly. Don't pad.
-- The single most leveraged habit to build: **"could there be more?" before closing any loop.** It's the root of three separate mistakes this session.
-- On fiddly index work, redirect him to trace instead of reason aloud — his tracing is trustworthy, his abstract index math isn't yet.
-- Recommend (don't force) a 30-min side review of JS collections so the toolkit gap stops costing him.
+- LC 88 confusion around problem statement was the C++/Java fixed-array artifact — not a recurring issue. Don't log as a pattern.
+- He's moving at good pace. Two problems flagged for tonight — LC 88 done. If he wants a second problem, Trapping Rain Water is next.
+- Pattern transfer from LC 977 → LC 88 happened with one prompt (recall question). The probing-before-problem protocol is working.

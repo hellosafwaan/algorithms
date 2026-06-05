@@ -2,7 +2,7 @@
 
 ## Current Phase
 **Phase 2 — Two Pointers** (finishing up)
-Next problem: Trapping Rain Water (LC #42)
+Next problem: Trapping Rain Water (LC #42) — Phase 2 final problem
 After that: Phase 3 — Sliding Window
 
 For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
@@ -10,6 +10,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Merge Sorted Array (LC #88) — 2026-06-05 — 100th percentile, two pointers fill backwards
 - 3Sum (LC #15) — 2026-06-04 — 67th percentile, two pointers + k-sum reduction
 - Container With Most Water (LC #11) — 2026-06-04
 - Squares of a Sorted Array (LC #977) — 2026-06-04

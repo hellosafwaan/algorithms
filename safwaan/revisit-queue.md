@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 88 — Merge Sorted Array | Two pointers — fill backwards | 2026-06-05 | 2026-06-26 | ⏳ |
 | LC 15 — 3Sum | Two pointers inside a loop (k-sum reduction) | 2026-06-04 | 2026-06-25 | ⏳ |
 | LC 977 — Squares of a Sorted Array | Two pointers (both ends, fill backwards) | 2026-06-04 | 2026-06-25 | ⏳ |
 | LC 11 — Container With Most Water | Two pointers (converge, greedy move shorter) | 2026-06-04 | 2026-06-25 | ⏳ |

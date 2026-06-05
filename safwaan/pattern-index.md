@@ -17,6 +17,7 @@ When starting a new problem, check here first. Find the pattern, recall what you
 | LC 125 — Valid Palindrome | Converge, skip non-alphanumeric | Compare chars from both ends, skip non-alphanumeric with charCodeAt |
 | LC 11 — Container With Most Water | Converge from both ends, greedy move | Move the shorter pointer — keeping shorter fixed and moving taller inward can only decrease area |
 | LC 15 — 3Sum | Two pointers *inside a loop* (k-sum reduction) | Sort, fix one element, two-pointer the rest for `-nums[i]`. Sorting also makes duplicates adjacent → skip in place, no Set |
+| LC 88 — Merge Sorted Array | Fill backwards, three pointers | Start both pointers at last real element of each array, fill nums1 from m+n-1 backwards. Loop while nums2Pointer >= 0 only |
 
 ---
 
