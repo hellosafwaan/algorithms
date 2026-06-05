@@ -2,6 +2,13 @@
 
 Last updated: 2026-06-05
 
+## Pace
+**Target:** 2 problems/day · 6 days/week · 12/week
+**Start date:** 2026-06-05
+**Target completion:** 2026-08-28 (~12 weeks)
+
+---
+
 ## Summary
 | Metric | Count |
 |--------|-------|
@@ -13,26 +20,26 @@ Last updated: 2026-06-05
 ---
 
 ## Phase Overview
-| # | Phase | Problems | Done | Status |
-|---|-------|----------|------|--------|
-| 1 | Arrays & Hashing | 9 | 6 | ⚠️ 3 need redo |
-| 2 | Two Pointers | 5 | 4 | 🔄 1 remaining |
-| 3 | Sliding Window | 6 | 0 | ⏳ |
-| 4 | Stack | 7 | 0 | ⏳ |
-| 5 | Binary Search | 7 | 0 | ⏳ |
-| 6 | Linked List | 11 | 0 | ⏳ |
-| 7 | 1D Dynamic Programming | 12 | 0 | ⏳ |
-| 8 | 2D Dynamic Programming | 11 | 0 | ⏳ |
-| 9 | Trees | 15 | 0 | ⏳ |
-| 10 | Tries | 3 | 0 | ⏳ |
-| 11 | Heap / Priority Queue | 7 | 0 | ⏳ |
-| 12 | Backtracking | 9 | 0 | ⏳ |
-| 13 | Graphs | 13 | 0 | ⏳ |
-| 14 | Advanced Graphs | 6 | 0 | ⏳ |
-| 15 | Greedy | 8 | 0 | ⏳ |
-| 16 | Intervals | 6 | 0 | ⏳ |
-| 17 | Math & Geometry | 8 | 0 | ⏳ |
-| 18 | Bit Manipulation | 7 | 0 | ⏳ |
+| # | Phase | Problems | Done | Target Date | Status |
+|---|-------|----------|------|-------------|--------|
+| 1 | Arrays & Hashing | 9 | 6 | 2026-06-09 | ⚠️ 3 need redo |
+| 2 | Two Pointers | 5 | 4 | 2026-06-06 | 🔄 1 remaining |
+| 3 | Sliding Window | 6 | 0 | 2026-06-12 | ⏳ |
+| 4 | Stack | 7 | 0 | 2026-06-16 | ⏳ |
+| 5 | Binary Search | 7 | 0 | 2026-06-20 | ⏳ |
+| 6 | Linked List | 11 | 0 | 2026-06-26 | ⏳ |
+| 7 | 1D Dynamic Programming | 12 | 0 | 2026-07-03 | ⏳ |
+| 8 | 2D Dynamic Programming | 11 | 0 | 2026-07-09 | ⏳ |
+| 9 | Trees | 15 | 0 | 2026-07-18 | ⏳ |
+| 10 | Tries | 3 | 0 | 2026-07-20 | ⏳ |
+| 11 | Heap / Priority Queue | 7 | 0 | 2026-07-24 | ⏳ |
+| 12 | Backtracking | 9 | 0 | 2026-07-29 | ⏳ |
+| 13 | Graphs | 13 | 0 | 2026-08-06 | ⏳ |
+| 14 | Advanced Graphs | 6 | 0 | 2026-08-10 | ⏳ |
+| 15 | Greedy | 8 | 0 | 2026-08-14 | ⏳ |
+| 16 | Intervals | 6 | 0 | 2026-08-18 | ⏳ |
+| 17 | Math & Geometry | 8 | 0 | 2026-08-22 | ⏳ |
+| 18 | Bit Manipulation | 7 | 0 | 2026-08-28 | ⏳ |
 
 ---
 
