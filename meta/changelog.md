@@ -12,6 +12,11 @@ Every improvement that was applied to the system — what changed, why, and when
 
 ---
 
+### 2026-06-05 — Pattern recall probe moved to after first attempt
+**Triggered by:** Safwaan feedback — probing recall before the attempt signals the pattern and removes the discovery step
+**What changed:** CLAUDE.md updated — check pattern-index.md at session start but don't probe recall until after his first attempt, or if he doesn't independently connect the dots
+**Impact:** Cold problem-solving is preserved; recall is still tested but without giving away the approach
+
 ### 2026-06-05 — Added Solution Walkthrough to all learnings.md files
 **Triggered by:** Safwaan feedback — notes were too dry, wanted conversational explanations
 **What changed:** Added Solution Walkthrough section to all existing learnings.md files. Added to CLAUDE.md wrap-up protocol as mandatory for all future problems.

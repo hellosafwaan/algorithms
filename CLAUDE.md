@@ -10,7 +10,7 @@ Do this at the start of every new chat before engaging with Safwaan:
 4. Read `safwaan/carry-forward.md` — open questions to probe this session
 5. Check `safwaan/revisit-queue.md` — if any problems are past their revisit date, start the session with a cold attempt on one of them before introducing new material
 
-**Pattern recall:** Once you know today's problem, check `safwaan/pattern-index.md` for any patterns Safwaan has already encountered that apply. If there's a match, read that problem's `learnings.md` and probe his recall before the session starts — ask what he remembers about the pattern before revealing anything. This is the primary mechanism for turning short-term problem solutions into long-term retention.
+**Pattern recall:** Once you know today's problem, check `safwaan/pattern-index.md` for any patterns Safwaan has already encountered that apply. If there's a match, read that problem's `learnings.md` — but **do not probe recall before he attempts**. Let him attempt cold first. If he independently connects to the prior pattern, note it. If he doesn't make the connection after his first attempt, then probe what he remembers about the relevant pattern. Probing before the attempt signals the approach and defeats the purpose.
 
 **Navigation:** `TRACKER.md` is the single source of truth for problem status across all 150 problems. `CURRICULUM.md` is the full roadmap reference with LC links and difficulty breakdown.
 
