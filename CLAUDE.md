@@ -199,8 +199,107 @@ Overwrite with:
 - Suggested next problems
 - Coach notes: what to watch for
 
-**11. Update `CLAUDE.md` itself**
+**11. Append to `safwaan/daily-log.jsonl`**
+Append one JSON object (single line) to the file. Use this schema exactly:
+
+```json
+{
+  "meta": {
+    "date": "YYYY-MM-DD",
+    "session_number": N,
+    "session_file": "NNN_YYYY-MM-DD_topic",
+    "week": N,
+    "day_of_week": "Monday",
+    "problems_today": N
+  },
+  "problem": {
+    "name": "Problem Name",
+    "lc": N,
+    "phase": N,
+    "phase_name": "Phase Name",
+    "topic": "arrays",
+    "difficulty": "Easy | Medium | Hard",
+    "is_revisit": false,
+    "original_solve_date": null
+  },
+  "pattern": {
+    "primary": "Pattern name",
+    "secondary": null,
+    "new_pattern": true
+  },
+  "performance": {
+    "time_mins": N,
+    "time_to_first_attempt_mins": N,
+    "attempts": N,
+    "hints_given": N,
+    "self_caught_bugs": N,
+    "reached_brute_force": true,
+    "reached_optimal": true,
+    "independently_identified_approach": true
+  },
+  "submission": {
+    "accepted": true,
+    "percentile": N,
+    "url": "https://leetcode.com/..."
+  },
+  "qualitative": {
+    "feel": "smooth | struggled | guided",
+    "confidence_after": N,
+    "mistakes": ["mistake 1", "mistake 2"],
+    "key_insight": "one line",
+    "coach_notes": "notable coaching moment if any"
+  },
+  "revisit": {
+    "is_revisit": false,
+    "solved_cold": null,
+    "hints_needed": null
+  },
+  "pace": {
+    "cumulative_solved": N,
+    "expected_by_today": N,
+    "on_pace": true,
+    "days_until_phase_deadline": N
+  }
+}
+```
+
+`week` = weeks elapsed since 2026-06-05. `expected_by_today` = days elapsed × (12/7), rounded down. Write the entire object on a single line — JSONL format.
+
+**12. Update `CLAUDE.md` itself**
 If this session revealed something new about how Safwaan thinks, update the Expertise Calibration section. Keep this file accurate — it's what the next session reads first.
+
+---
+
+## Self-Improvement System
+
+The system improves through natural conversation — no proposal cycles, no review overhead.
+
+### How it works
+
+**Mid-session feedback** — if Safwaan says something felt off ("that question was too leading", "you explained something I already know", "these notes are hard to read"), treat it as an immediate signal:
+1. Log it to `meta/improvement-log.md` with the date and what was observed
+2. If it should persist to future sessions, update CLAUDE.md right then
+3. Log the change in `meta/changelog.md`
+
+**Coach observation** — if something clearly didn't work (question pitched wrong, hint given too early, explanation missed the mark), log it to `meta/improvement-log.md` even without explicit feedback. Apply immediately if obvious, log it for the weekly review if uncertain.
+
+**Weekly agent** — every Friday, a scheduled agent checks `meta/improvement-log.md` for observations that haven't been actioned yet and sends a push: "X observations from this week haven't been addressed — want to action them?" This catches anything that slipped through.
+
+### What can be changed immediately (no review needed)
+- Coaching tone, question pacing, hint timing
+- CLAUDE.md expertise calibration
+- Notes format or content
+- Carry-forward entries
+
+### What requires Safwaan to explicitly confirm
+- Removing problems from TRACKER.md
+- Changing the NeetCode 150 problem order
+- Merging or deleting safwaan/ files
+- Any change that causes information loss
+
+### Files
+- `meta/improvement-log.md` — raw observations, newest first
+- `meta/changelog.md` — every applied change, with what triggered it
 
 ---
 

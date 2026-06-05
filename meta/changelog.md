@@ -1,0 +1,28 @@
+# Changelog
+
+Every improvement that was applied to the system — what changed, why, and when.
+
+---
+
+## Format
+### [YYYY-MM-DD] — [What Changed]
+**Triggered by:** [Safwaan feedback / coach observation]
+**What changed:** [exactly what was modified]
+**Impact:** [what this should improve]
+
+---
+
+### 2026-06-05 — Added Solution Walkthrough to all learnings.md files
+**Triggered by:** Safwaan feedback — notes were too dry, wanted conversational explanations
+**What changed:** Added Solution Walkthrough section to all existing learnings.md files. Added to CLAUDE.md wrap-up protocol as mandatory for all future problems.
+**Impact:** Notes now explain the *why* in plain language, not just the *what*
+
+### 2026-06-05 — Restructured repo around NeetCode 150 curriculum
+**Triggered by:** Safwaan decision to follow NeetCode roadmap strictly
+**What changed:** Created CURRICULUM.md, TRACKER.md, moved notes to topic folders, rewrote CLAUDE.md, added phase deadlines
+**Impact:** Single source of truth for progress, full 150-problem roadmap visible
+
+### 2026-06-05 — Added accountability system
+**Triggered by:** Safwaan request for external accountability (laid off, needs interview-ready fast)
+**What changed:** Daily morning agent (9am IST), EOD report agent (10pm IST), daily-log.md at wrap-up, phase deadlines in TRACKER.md
+**Impact:** Daily push notifications on pace, automatic tracking of progress
