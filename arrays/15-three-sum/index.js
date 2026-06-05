@@ -80,6 +80,7 @@ function threeSum(nums) {
     const n = nums.length;
     const result = []
     for (let i = 0; i < n; i++) {
+        if(nums[i] > 0) break;
         if(i > 0 && nums[i] === nums[i - 1]) continue;
         let left = i + 1
         let right = n - 1
