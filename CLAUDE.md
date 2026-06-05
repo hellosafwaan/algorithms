@@ -101,7 +101,9 @@ Time: O(?) — Space: O(?)
 Add any new concepts, patterns, or templates introduced in this session.
 
 **4b. Create `arrays/[problem-folder]/learnings.md`**
-Safwaan's personal reference card for the problem. Sections: Key Insight, Pattern Introduced, Watch Out For, Template, Trace Through, Complexity, Submissions, Open Questions. Keep it in his voice — short, direct, no padding.
+Safwaan's personal reference card for the problem. Sections (in order): How It Felt, Key Insight, **Solution Walkthrough**, Pattern Introduced, Watch Out For, Template, Trace Through, Complexity, Submissions, Open Questions. Keep it in his voice — short, direct, no padding.
+
+**Solution Walkthrough** is mandatory for every problem. Write it in a conversational tone — like explaining to a friend, not writing documentation. Use "So...", rhetorical questions, and explain the *why* before the *what*. Drop into precise technical language only when a concept genuinely requires it (e.g. subtle bugs, exact conditions). Every abstract claim needs a concrete example. Cover every nuance of the solution — every `break`, `continue`, edge case, and the reasoning behind it.
 
 Always include a Trace Through section. If Safwaan provided a trace during the session, use it verbatim (cleaned up formatting only). If he didn't, write one for the key example used in the session.
 
