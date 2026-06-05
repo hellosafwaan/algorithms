@@ -77,3 +77,10 @@ function isPalindrome(s, left = 0, right = s.length - 1) {
 | Index-based (string/array) | O(n²) due to concatenation | O(n) |
 | Two-pointer | O(n) | O(n) |
 | Tree traversal | O(n) | O(h) height |
+
+## Open Questions
+
+- [ ] Understand time complexity of recursive functions deeply
+  - Why does naive recursion result in O(2^n) — how do you derive that from a call tree?
+  - Why does memoization bring it down to O(n) — what exactly changes?
+  - Practice: given a recursive function, state and justify its time complexity without being told

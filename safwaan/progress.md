@@ -1,65 +1,44 @@
-# Safwaan — Progress Tracker
+# Safwaan — Progress
 
-## Current Phase: Recursion Mastery → Dynamic Programming
+## Current Phase
+**Phase 2 — Two Pointers** (finishing up)
+Next problem: Trapping Rain Water (LC #42)
+After that: Phase 3 — Sliding Window
+
+For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 
 ---
 
-## Completed
-
-### Arrays (Foundation)
-| Topic | Pattern | Status |
-|-------|---------|--------|
-| Most Common Elements | Top K / Heap | ✅ |
-| Most Common Elements | Bucket Sort | ✅ |
-| Product Except Self | Prefix/Suffix Precomputation | ✅ |
-| Pascal's Triangle | 2D array construction / row-by-row DP | ✅ |
-| Pascal's Triangle II | In-place row update, right-to-left iteration | ✅ |
-| Next Permutation | Pivot + swap + two-pointer reverse | ⚠️ Guided walkthrough — revisit after palindrome check |
-| Two Sum (LC 1) | Hash map / complement lookup | ✅ 85th percentile runtime |
-| Two Sum II (LC 167) | Two pointers | ✅ 100th percentile runtime |
-| Squares of a Sorted Array (LC 977) | Two pointers (both ends, fill backwards) | ✅ |
-| Container With Most Water (LC 11) | Two pointers (converge, greedy move shorter) | ✅ |
-| 3Sum (LC 15) | Two pointers inside a loop (k-sum reduction) | ✅ 67th percentile — naive→optimal walked end to end |
-
-### Recursion & DP
-| Problem | Pattern | Status | Notes |
-|---------|---------|--------|-------|
-| Sum 1 to N | Basic recursion | ✅ | 3 attempts to mastery |
-| Factorial | Basic recursion | ✅ | First attempt success |
-| Power of 2 | Basic recursion | ✅ | First attempt success |
-| Fibonacci (naive) | Recursion + call tree analysis | ✅ | Revealed overlapping subproblems |
-| Fibonacci (memoized) | Top-down DP / Memoization | ✅ | 1.6M× speedup demonstrated |
-| Count Digits | Division-based recursion | ✅ | |
-| Reverse a String | Index-based recursion | ✅ | |
-| Palindrome Check | Two-pointer iteration (LC 125) | ⚠️ Solved but slow (5th percentile runtime) — revisit with charCodeAt optimization | |
-| Problem 4 (TBD) | TBD | ⏳ | Final recursion mastery problem |
-| Climbing Stairs | DP reinforcement | ⏳ | First DP problem after recursion phase |
-| House Robber | 0/1 optimization DP | ⏳ | |
-| Coin Change | Choice DP | ⏳ | |
+## Recently Completed
+- 3Sum (LC #15) — 2026-06-04 — 67th percentile, two pointers + k-sum reduction
+- Container With Most Water (LC #11) — 2026-06-04
+- Squares of a Sorted Array (LC #977) — 2026-06-04
+- Two Sum II (LC #167) — 2026-06-03 — 100th percentile
+- Valid Palindrome (LC #125) — 2026-06-03 — 5th percentile (charCodeAt rewrite pending)
 
 ---
 
 ## Concepts Mastered
-
-- [x] Call stacks and function scope
-- [x] Base cases and recursive relationships
-- [x] Index-based vs division-based recursion
-- [x] Overlapping subproblems (call tree visualization)
+- [x] Hash map / complement lookup
+- [x] Two pointers — converging (sorted guarantee)
+- [x] Two pointers — both ends, fill backwards
+- [x] Two pointers — greedy move (Container With Most Water)
+- [x] Two pointers inside a loop (k-sum reduction)
+- [x] Right-to-left in-place update (Pascal's Triangle II)
+- [x] Recursion: base case + recursive case + guaranteed progress
 - [x] Memoization (top-down DP) — cache parameter, check, store
-- [x] Cache correctness: `if(n in cache)` vs `if(cache[n])`
-- [ ] Two-pointer recursion with early termination (in progress)
+- [x] Cache correctness: `if(n in cache)` not `if(cache[n])`
+- [ ] Two-pointer recursion with early termination
 - [ ] Bottom-up DP (tabulation)
-- [ ] 2D DP problems
+- [ ] Sliding Window
+- [ ] Stack / Monotonic Stack
 
 ---
 
-## Documents Created
+## Phase 1 — Arrays & Hashing
+3 problems need a redo (done before repo was set up, no solution on file):
+- Contains Duplicate (LC #217)
+- Valid Anagram (LC #242)
+- Group Anagrams (LC #49)
 
-- `recursion_sum_learning.md`
-- `recursion_factorial_learning.md`
-- `recursion_powerof2_learning.md`
-- `fibonacci_overlapping_subproblems.md`
-- `dp_memoization_speedup.md`
-- `dynamic_programming_cheat_sheet.md`
-- `count_digits_learning.md`
-- `reverse_string_learning.md`
+These will be revisited when we loop back to Phase 1 cleanup.

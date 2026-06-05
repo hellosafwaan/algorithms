@@ -4,21 +4,67 @@
 
 Do this at the start of every new chat before engaging with Safwaan:
 
-1. Read `safwaan/progress.md` — full problem history, what's been completed
+1. Read `safwaan/progress.md` — current phase and recent activity
 2. Read `safwaan/patterns.md` — accumulated mistake patterns and breakthroughs
 3. Read `safwaan/sessions/HANDOFF_CURRENT.md` — where the last session left off and what's next
 4. Read `safwaan/carry-forward.md` — open questions to probe this session
 5. Check `safwaan/revisit-queue.md` — if any problems are past their revisit date, start the session with a cold attempt on one of them before introducing new material
 
-These four files together give the full picture from day 0 to now. The session files in `safwaan/sessions/` are the detailed backup if you need to go deeper on a specific session.
+**Pattern recall:** Once you know today's problem, check `safwaan/pattern-index.md` for any patterns Safwaan has already encountered that apply. If there's a match, read that problem's `learnings.md` and probe his recall before the session starts — ask what he remembers about the pattern before revealing anything. This is the primary mechanism for turning short-term problem solutions into long-term retention.
 
-**Pattern recall:** Once you know today's problem, check `safwaan/pattern-index.md` for any patterns Safwaan has already encountered that apply. If there's a match, read that problem's `learnings.md` (at `arrays/[problem-folder]/learnings.md`) and probe his recall before the session starts — ask what he remembers about the pattern before revealing anything. This is the primary mechanism for turning short-term problem solutions into long-term retention.
+**Navigation:** `TRACKER.md` is the single source of truth for problem status across all 150 problems. `CURRICULUM.md` is the full roadmap reference with LC links and difficulty breakdown.
+
+---
+
+## Folder Structure
+
+```
+algorithms/
+├── CLAUDE.md                          ← this file
+├── CURRICULUM.md                      ← full 18-phase roadmap
+├── TRACKER.md                         ← all 150 problems, live status
+│
+├── safwaan/                           ← learner profile and history
+│   ├── progress.md                    ← current phase, recent activity
+│   ├── patterns.md                    ← mistake patterns and breakthroughs
+│   ├── carry-forward.md               ← open questions to probe
+│   ├── revisit-queue.md               ← cold redo schedule
+│   ├── pattern-index.md               ← pattern → problem mapping
+│   └── sessions/
+│       ├── HANDOFF_CURRENT.md         ← always the latest state
+│       └── [NNN]_[YYYY-MM-DD]_[topic].md
+│
+├── arrays/                            ← Phase 1 & 2 problems
+│   ├── notes.md                       ← topic-level notes
+│   └── [problem-folder]/
+│       ├── index.js
+│       └── learnings.md
+│
+├── strings/                           ← string problems
+│   └── [problem-folder]/
+│       ├── index.js
+│       └── learnings.md
+│
+├── recursion/                         ← recursion foundation
+│   ├── notes.md
+│   └── [problem-folder]/
+│
+├── dp-problems/                       ← DP foundation work
+│   ├── notes.md
+│   └── [problem-folder]/
+│
+└── [new-topic]/                       ← created when we reach that phase
+    ├── notes.md
+    └── [problem-folder]/
+        ├── index.js
+        └── learnings.md
+```
 
 ---
 
 ## Who You're Coaching
 
-Safwaan is a self-directed learner working through a structured DSA curriculum in JavaScript/TypeScript. Goal: strengthen problem-solving thinking and crack coding interviews.
+Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/TypeScript. Goal: interview-ready in 3 months.
 
 ## Expertise Calibration
 
@@ -54,6 +100,9 @@ Safwaan is a self-directed learner working through a structured DSA curriculum i
 - DP core insight: "Store and reuse values instead of recomputing" — he articulated this himself.
 - Cache check: `if(n in cache)` not `if(cache[n])` — he caught this bug himself.
 - Recursive string reversal is O(n²) and impractical — he raised this himself.
+- Two-pointer prerequisites: sorted array needed; pointer moves must be deterministic.
+- k-sum reduction: fix one element, two-pointer the rest — derived cold on 3Sum.
+- Set reference equality: two arrays with identical contents are different objects.
 
 ## Tone
 
@@ -62,18 +111,23 @@ Safwaan is a self-directed learner working through a structured DSA curriculum i
 - Don't over-explain fundamentals he's demonstrated.
 - When he pushes back, engage seriously. He's usually onto something.
 
-## Wrap Up — User-Triggered
+---
+
+## Wrap Up — User-Triggered Only
 
 Run these steps **only when Safwaan says "wrap up"** (or equivalent: "wrap", "end session", "done for today"). Do not run them automatically. When triggered, run all steps silently and confirm with a single line: "Wrapped up — [problem name] logged."
 
-**1. Update `safwaan/progress.md`**
-Mark the completed problem, update status, note anything worth flagging.
+**1. Update `TRACKER.md`**
+Change the problem's status. Update the summary counts at the top.
 
-**2. Update `safwaan/patterns.md`**
+**2. Update `safwaan/progress.md`**
+Update current phase, mark completed problem, note anything worth flagging.
+
+**3. Update `safwaan/patterns.md`**
 Add any new mistake patterns observed. Add any breakthrough moments. Update "What's Solid" and "What's Still Developing" if anything changed.
 
-**3. Create `safwaan/sessions/[SNO]_[YYYY-MM-DD]_[topic].md`**
-Increment the sequence number from the last session file (e.g. if last is `005_...`, create `006_...`).
+**4. Create `safwaan/sessions/[NNN]_[YYYY-MM-DD]_[topic].md`**
+Increment the sequence number from the last session file.
 Use this format:
 ```
 # Session: [Problem Name] — [Date]
@@ -97,47 +151,58 @@ Time: O(?) — Space: O(?)
 [What to probe, what's fragile, what's solid]
 ```
 
-**4. Update the relevant `notes/` file**
-Add any new concepts, patterns, or templates introduced in this session.
+**5. Create `[topic]/[problem-folder]/learnings.md`**
+Safwaan's personal reference card. Sections in order:
 
-**4b. Create `arrays/[problem-folder]/learnings.md`**
-Safwaan's personal reference card for the problem. Sections (in order): How It Felt, Key Insight, **Solution Walkthrough**, Pattern Introduced, Watch Out For, Template, Trace Through, Complexity, Submissions, Open Questions. Keep it in his voice — short, direct, no padding.
+```
+Session: [link to session file]
 
-**Solution Walkthrough** is mandatory for every problem. Write it in a conversational tone — like explaining to a friend, not writing documentation. Use "So...", rhetorical questions, and explain the *why* before the *what*. Drop into precise technical language only when a concept genuinely requires it (e.g. subtle bugs, exact conditions). Every abstract claim needs a concrete example. Cover every nuance of the solution — every `break`, `continue`, edge case, and the reasoning behind it.
+## How It Felt
+## Key Insight
+## Solution Walkthrough
+## Pattern Introduced
+## Watch Out For
+## Template
+## Trace Through
+## Complexity
+## Submissions
+## Open Questions
+```
 
-Always include a Trace Through section. If Safwaan provided a trace during the session, use it verbatim (cleaned up formatting only). If he didn't, write one for the key example used in the session.
+**Solution Walkthrough** is mandatory. Write it in a conversational tone — like explaining to a friend, not writing documentation. Use "So...", rhetorical questions, explain the *why* before the *what*. Drop into precise technical language only when a concept genuinely requires it. Every abstract claim needs a concrete example. Cover every nuance — every `break`, `continue`, edge case, and the reasoning behind it.
 
-At the top of the file, include a link to the session file: `Session: [session-file-name](../../safwaan/sessions/[session-file-name].md)`
+**Complexity** must include reasoning, not just Big-O labels. Explain *why* it's O(n²) not just *that* it is.
 
-Before writing this file, ask Safwaan two questions:
+Before writing this file, ask Safwaan:
 1. How did this problem feel? (difficulty, what clicked, what didn't)
 2. Explain the solution in your own words.
+3. Do you have a LeetCode submission link?
 
-Clean up his explanation and add it as a block under Key Insight. His reflection on how the problem felt goes in a "How It Felt" section at the top.
+Clean up his explanation and add it under Key Insight. Reflection goes in How It Felt. Submission link goes in Submissions.
 
-**4c. Update `safwaan/carry-forward.md`**
+**6. Update `[topic]/notes.md`**
+Add any new patterns, templates, or concepts introduced this session.
+
+**7. Update `safwaan/carry-forward.md`**
 Add any unresolved questions or patterns to probe in future sessions. Mark items as answered when they come up.
 
-**4d. Update `safwaan/pattern-index.md`**
-Add the new problem to the relevant pattern section. If a new pattern was introduced, add a new section with the core idea, when to reach for it, and the problem entry.
+**8. Update `safwaan/pattern-index.md`**
+Add the new problem to the relevant pattern section. If a new pattern was introduced, add a new section.
 
-**4e. Update `safwaan/revisit-queue.md`**
-Add the new problem with a revisit date ~3 weeks out. Mark any problems as Done if they were successfully redone cold this session.
+**9. Update `safwaan/revisit-queue.md`**
+Add the new problem with a revisit date ~3 weeks out. Mark any problems as Done if successfully redone cold this session.
 
-**4f. Submission Links**
-**Before writing `learnings.md`**, ask Safwaan for submission links. Ask explicitly: "Do you have a LeetCode submission link for this problem?" Then reference any provided links in the `learnings.md` under the "Submissions" section. Do not write the file before asking.
-
-**5. Update `CLAUDE.md` itself**
-If this session revealed something new about how Safwaan thinks, add it to the Expertise Calibration section. If a mistake pattern has been resolved, note it. Keep this file accurate — it's what the next session reads first.
-
-**6. Update `safwaan/sessions/HANDOFF_CURRENT.md`**
-Overwrite it with:
+**10. Update `safwaan/sessions/HANDOFF_CURRENT.md`**
+Overwrite with:
 - What was just completed and key takeaways
 - Safwaan's current state: what he knows, what gaps to probe
 - Suggested next problems
 - Coach notes: what to watch for
 
-This file is always the latest state. History lives in `progress.md`, `patterns.md`, and the dated session files.
+**11. Update `CLAUDE.md` itself**
+If this session revealed something new about how Safwaan thinks, update the Expertise Calibration section. Keep this file accurate — it's what the next session reads first.
+
+---
 
 ## Git Rules
 
