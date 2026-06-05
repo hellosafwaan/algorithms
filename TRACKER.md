@@ -4,8 +4,8 @@ Last updated: 2026-06-05
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
-**Start date:** 2026-06-05
-**Target completion:** 2026-08-28 (~12 weeks)
+**Start date:** 2026-06-01
+**Target completion:** 2026-08-22 (~12 weeks)
 
 ---
 
@@ -22,24 +22,24 @@ Last updated: 2026-06-05
 ## Phase Overview
 | # | Phase | Problems | Done | Target Date | Status |
 |---|-------|----------|------|-------------|--------|
-| 1 | Arrays & Hashing | 9 | 6 | 2026-06-09 | ⚠️ 3 need redo |
-| 2 | Two Pointers | 5 | 4 | 2026-06-06 | 🔄 1 remaining |
-| 3 | Sliding Window | 6 | 0 | 2026-06-12 | ⏳ |
-| 4 | Stack | 7 | 0 | 2026-06-16 | ⏳ |
-| 5 | Binary Search | 7 | 0 | 2026-06-20 | ⏳ |
-| 6 | Linked List | 11 | 0 | 2026-06-26 | ⏳ |
-| 7 | 1D Dynamic Programming | 12 | 0 | 2026-07-03 | ⏳ |
-| 8 | 2D Dynamic Programming | 11 | 0 | 2026-07-09 | ⏳ |
-| 9 | Trees | 15 | 0 | 2026-07-18 | ⏳ |
-| 10 | Tries | 3 | 0 | 2026-07-20 | ⏳ |
-| 11 | Heap / Priority Queue | 7 | 0 | 2026-07-24 | ⏳ |
-| 12 | Backtracking | 9 | 0 | 2026-07-29 | ⏳ |
-| 13 | Graphs | 13 | 0 | 2026-08-06 | ⏳ |
-| 14 | Advanced Graphs | 6 | 0 | 2026-08-10 | ⏳ |
-| 15 | Greedy | 8 | 0 | 2026-08-14 | ⏳ |
-| 16 | Intervals | 6 | 0 | 2026-08-18 | ⏳ |
-| 17 | Math & Geometry | 8 | 0 | 2026-08-22 | ⏳ |
-| 18 | Bit Manipulation | 7 | 0 | 2026-08-28 | ⏳ |
+| 1 | Arrays & Hashing | 9 | 6 | 2026-06-05 | ⚠️ 3 need redo |
+| 2 | Two Pointers | 5 | 4 | 2026-06-02 | 🔄 1 remaining |
+| 3 | Sliding Window | 6 | 0 | 2026-06-08 | ⏳ |
+| 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
+| 5 | Binary Search | 7 | 0 | 2026-06-16 | ⏳ |
+| 6 | Linked List | 11 | 0 | 2026-06-22 | ⏳ |
+| 7 | 1D Dynamic Programming | 12 | 0 | 2026-06-29 | ⏳ |
+| 8 | 2D Dynamic Programming | 11 | 0 | 2026-07-05 | ⏳ |
+| 9 | Trees | 15 | 0 | 2026-07-14 | ⏳ |
+| 10 | Tries | 3 | 0 | 2026-07-16 | ⏳ |
+| 11 | Heap / Priority Queue | 7 | 0 | 2026-07-20 | ⏳ |
+| 12 | Backtracking | 9 | 0 | 2026-07-25 | ⏳ |
+| 13 | Graphs | 13 | 0 | 2026-08-01 | ⏳ |
+| 14 | Advanced Graphs | 6 | 0 | 2026-08-05 | ⏳ |
+| 15 | Greedy | 8 | 0 | 2026-08-09 | ⏳ |
+| 16 | Intervals | 6 | 0 | 2026-08-13 | ⏳ |
+| 17 | Math & Geometry | 8 | 0 | 2026-08-17 | ⏳ |
+| 18 | Bit Manipulation | 7 | 0 | 2026-08-22 | ⏳ |
 
 ---
 
