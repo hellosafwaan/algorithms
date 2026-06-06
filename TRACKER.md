@@ -12,8 +12,8 @@ Last updated: 2026-06-06
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 153 |
-| ✅ Complete | 14 |
+| Total problems | 154 |
+| ✅ Complete | 15 |
 | ⚠️ Needs revisit | 2 |
 | ⏳ Not started | 135 |
 
@@ -23,7 +23,7 @@ Last updated: 2026-06-06
 | # | Phase | Problems | Done | Target Date | Status |
 |---|-------|----------|------|-------------|--------|
 | 1 | Arrays & Hashing | 9 | 6 | 2026-06-05 | ⚠️ 3 need redo |
-| 2 | Two Pointers | 8 | 7 | 2026-06-02 | 🔄 1 remaining (LC 42) |
+| 2 | Two Pointers | 9 | 8 | 2026-06-02 | 🔄 1 remaining (LC 42) |
 | 3 | Sliding Window | 6 | 0 | 2026-06-08 | ⏳ |
 | 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
 | 5 | Binary Search | 7 | 0 | 2026-06-16 | ⏳ |
@@ -70,7 +70,8 @@ Last updated: 2026-06-06
 | 5 | Merge Sorted Array | Easy | [#88](https://leetcode.com/problems/merge-sorted-array/) | Two Pointers (fill backwards) | ✅ 100th pct | [→](arrays/88-merge-sorted-array/learnings.md) |
 | 6 | Remove Element | Easy | [#27](https://leetcode.com/problems/remove-element/) | Two Pointers (read/write + swap) | ✅ 100th pct | [→](arrays/27-remove-element/learnings.md) |
 | 7 | Remove Duplicates from Sorted Array | Easy | [#26](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | Two Pointers | ✅ 100th pct | [→](arrays/26-remove-duplicate-elements-in-a-sorted-array/learnings.md) |
-| 8 | Trapping Rain Water | Hard | [#42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers | ⏳ | — |
+| 8 | Remove Duplicates from Sorted Array II | Medium | [#80](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | Two Pointers (read/write, look-back) | ✅ 46th pct | [→](arrays/80-remove-duplicates-from-a-sorted-array/learnings.md) |
+| 9 | Trapping Rain Water | Hard | [#42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers | ⏳ | — |
 
 ## Phase 3 — Sliding Window ⏳
 

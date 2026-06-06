@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 80 — Remove Duplicates from Sorted Array II | Two pointers — read/write, look-back | 2026-06-06 | 2026-06-27 | ⏳ |
 | LC 26 — Remove Duplicates from Sorted Array | Two pointers — read/write | 2026-06-06 | 2026-06-27 | ⏳ |
 | LC 27 — Remove Element | Two pointers — read/write + swap | 2026-06-06 | 2026-06-27 | ⏳ |
 | LC 88 — Merge Sorted Array | Two pointers — fill backwards | 2026-06-05 | 2026-06-26 | ⏳ |

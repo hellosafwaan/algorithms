@@ -151,6 +151,13 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 - **What happened:** `Set` didn't occur to him for dedup; didn't know a Set won't dedupe arrays (reference equality); string-conversion workaround had to be given; `Array.from` forgotten.
 - **Status:** Cheapest gap to close — it's recall, not thinking. Recommended a deliberate review of `Set`/`Map`/`Array.from`/reference-vs-value equality. Probe cold next session.
 
+### 18. Group thinking on in-place array problems
+- **Seen in:** LC 80 (2026-06-06)
+- **What happened:** Approached by tracking occurrence count per group and writing on group transition. The approach writes values only when encountering a new value — so the last element of each group is always missed. Each patch attempt added complexity without fixing the root cause.
+- **Root cause:** Thinks about consecutive runs as a unit rather than processing each element individually.
+- **How it was caught:** Full trace showed the second `2` in `[1,1,1,2,2,3]` never got written. Eventually scrapped the approach.
+- **Status:** Named and logged. Probe: if he reaches for occurrence counting on an in-place problem, ask "can you think about this one element at a time?"
+
 ### 17. Tracing with inputs that are too large
 - **Seen in:** LC 27 (2026-06-06)
 - **What happened:** Traced `[3, 2, 2, 3]` (length 4, 2 targets) to find a termination bug — took ~40 minutes. The same bug would have been exposed by `[3, 3, 2]` or `[3, 2]` in a fraction of the time.

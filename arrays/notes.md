@@ -254,6 +254,38 @@ return p1;
 
 ---
 
+## Remove Duplicates from Sorted Array II (LeetCode 80)
+
+**Pattern:** Two pointers — read/write with look-back condition
+
+**Generalizes LC 26.** Same read/write shape, but write condition checks two positions back.
+
+**Write condition:** Skip when `nums[p1 - 1] === val && nums[p1 - 2] === val` — you've already written 2 copies.  
+**Bootstrap:** Always write when `p1 < 2` (can't have 2 copies yet).  
+**Return:** `p1` (next-to-write position = count of valid elements).
+
+**Watch out for:** The instinct to track occurrence counts per group and write on transition. This approach writes values only when you see the next group — so the last element of each group is always missed. Think per-element, not per-group.
+
+**Generalization:** Allow at most k duplicates → skip when `nums[p2] === nums[p1 - k]`.
+
+```js
+function removeDuplicates(nums) {
+    let p1 = 0, p2 = 0;
+    while (p2 < nums.length) {
+        const val = nums[p2];
+        if (p1 < 2 || !(nums[p1 - 1] === val && nums[p1 - 2] === val)) {
+            nums[p1++] = val;
+        }
+        p2++;
+    }
+    return p1;
+}
+```
+
+**Complexity:** O(n) time, O(1) space
+
+---
+
 ## 3Sum (LeetCode 15)
 
 **Pattern:** Two pointers *inside* a loop — k-sum reduction

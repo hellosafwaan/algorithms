@@ -10,6 +10,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Remove Duplicates from Sorted Array II (LC #80) — 2026-06-06 — 46th percentile, read/write with look-back
 - Remove Duplicates from Sorted Array (LC #26) — 2026-06-06 — 100th percentile, read/write pointer
 - Remove Element (LC #27) — 2026-06-06 — 100th percentile, swap + read/write pointer approaches
 - Merge Sorted Array (LC #88) — 2026-06-05 — 100th percentile, two pointers fill backwards

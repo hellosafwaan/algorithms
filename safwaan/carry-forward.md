@@ -18,7 +18,9 @@ Questions to probe at the start of the next session that uses the same pattern.
 | Why is `if (nums[i] > 0) break` valid in 3Sum? | Two pointers / sorted-array reasoning | 15 | answered 2026-06-05 — derived correctly: sorted ascending, all elements right are larger, triplet sum must be positive |
 | Does he recall why a Set won't dedupe arrays (reference vs value equality)? Probe `Set`/`Map`/`Array.from` cold | Toolkit / JS collections | 15 | answered 2026-06-05 — reference equality explained correctly; broader toolkit review still open |
 | Before closing a loop, does he ask "could there be more?" | Subproblem completeness | 15 | open — stopped at first match 3× in one session |
-| Why can the fill pointer never overwrite a value still needed? (currentIndex >= nums1Pointer invariant) | Two pointers — fill backwards | 88 | open — deferred twice now (2026-06-05 and 2026-06-06), probe again |
+| Does he approach in-place array problems per-element rather than per-group? (LC 80: reached for occurrence tracking + write-on-transition) | Read/write shape recognition | 80 | open — probe on next in-place array problem |
+| k-generalization: "allow at most k duplicates" → skip when nums[p2] === nums[p1 - k]. Does k=1 reduce to LC 26? | Read/write generalization | 80 | open |
+| Why can the fill pointer never overwrite a value still needed? (gap starts at n, shrinks only when nums2 is consumed, hits 0 exactly when loop ends) | Two pointers — fill backwards | 88 | explained 2026-06-06 — probe cold on or after 2026-06-08 |
 | When would you reach for the swap approach vs the read/write approach in an interview? | Two pointers — read/write vs swap | 27 | open — he noticed the difference but hasn't articulated the decision rule |
 | When tracing a bug, use the smallest input that can expose it — did he apply this himself? | Debugging heuristic | 27 | open — heuristic taught 2026-06-06, probe next time he needs to trace |
 | Write the naive push+sort solution for LC 88 | Two pointers — fill backwards | 88 | open — deferred this session |
