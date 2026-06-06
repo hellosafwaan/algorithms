@@ -1,41 +1,35 @@
-# Handoff — Post Remove Element (LC 27)
+# Handoff — Post Remove Duplicates from Sorted Array (LC 26)
 
 ## What Was Just Completed
 
-**Remove Element (LC 27)** — 2026-06-06
+**Remove Duplicates from Sorted Array (LC 26)** — 2026-06-06
 
-Split session (started late 2026-06-05, continued 2026-06-06 morning). Safwaan independently designed a swap-to-back approach, which is the harder of the two common solutions. Multiple termination bugs required tracing to expose — the process took ~40 minutes for a length-4 trace. The read/write pointer approach was new to him; once the setup was given ("one reads, the other only writes") he derived it himself in one attempt. Both submissions: 100th percentile runtime.
-
-Key heuristic introduced: use the smallest input that can expose the bug when tracing.
+Quick session. Safwaan initially reached for a swap/move-to-end approach (pattern-matching from LC 27's swap variant) before recognising it doesn't apply here — no fixed end to target. Pivoted to read/write after guided questions isolated each pointer's job. Derived the write condition himself: p1 writes when nums[p2] !== nums[p1]. One const reassignment bug flagged by question, not self-caught. Submitted 100th percentile.
 
 ## Safwaan's Current State
 
 **Solid:**
-- Two-pointer problem decomposition — reached for converging pointers independently
-- Swap approach: designed it cold with no hints on the approach
-- Complexity — called O(n) time, O(1) space for both solutions unprompted
-- Self-correction via tracing — found termination and return value bugs himself
+- Read/write pointer pattern — now applied on two consecutive problems (LC 27, LC 26)
+- Complexity — called O(n) time O(1) space unprompted with correct reasoning
+- Self-correcting approach mid-session when he hit a dead end
 
 **Gaps still open:**
-1. **Closes subproblem at first success** — didn't surface this session
-2. **Index-detail precision** — saw this in the termination condition bugs; trace-first heuristic helps
+1. **Closes subproblem at first success** — not triggered this session
+2. **Index-detail precision** — not triggered this session
 3. **Toolkit/library recall** — not triggered this session
-4. **currentIndex >= nums1Pointer invariant from LC 88** — deferred twice now
-5. **Debugging heuristic (smallest input)** — taught but not yet applied cold
-
-**New this session:**
-- Read/Write pointer pattern — first exposure, got it in one attempt after setup
-- Still wants to understand: when do you reach for swap vs read/write in an interview?
+4. **currentIndex >= nums1Pointer invariant from LC 88** — deferred three times now (2026-06-05, 2026-06-06 ×2); probe before Trapping Rain Water
+5. **Swap vs read/write decision rule** — when do you reach for each in an interview? Still open.
+6. **const reassignment habit** — flagged when asked, not self-caught before running
+7. **Debugging heuristic (smallest input)** — taught 2026-06-06, not yet applied cold
 
 ## Suggested Next Problem
 
-**Trapping Rain Water (LC 42)** — Phase 2 final problem. Hard. Two converging pointers with nuanced movement reasoning. He's well-warmed up on two pointers.
+**Trapping Rain Water (LC 42)** — Phase 2 final problem. Hard. Two converging pointers with nuanced movement reasoning.
 
-Before starting: probe the `currentIndex >= nums1Pointer` invariant from LC 88 (third attempt — he's deferred twice).
+Before starting: probe the `currentIndex >= nums1Pointer` invariant from LC 88. Third attempt — don't let it defer again.
 
 ## Coach Notes
 
-- The swap approach instinct is strong. He reaches for the harder solution first, which is interview-confident behavior. Don't discourage it.
-- Tracing heuristic: next time he needs to trace, ask "what's the smallest input that would show this bug?" before he starts.
-- Read/Write pointer is now in his toolkit but hasn't been applied cold. It will come up again in Sliding Window — don't re-explain, just let him transfer.
-- Session timing feature request logged in improvement-log.md.
+- The swap instinct from LC 27 carried over immediately. That's good pattern memory, but watch that he learns to quickly evaluate whether the approach fits before committing to it.
+- const reassignment is a quiet recurring habit (seen in LC 167, LC 977, and now LC 26). Not causing test failures because LeetCode environments sometimes tolerate it, or he catches it before running. Worth a short note next time it comes up.
+- LC 26 and LC 27 are now both fresh. The read/write shape should be solid. Next interesting test is whether he reaches for it cold in Sliding Window.

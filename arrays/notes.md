@@ -185,6 +185,30 @@ function merge(nums1, m, nums2, n) {
 
 **Pattern:** Two pointers — same direction (read/write), or converging (swap to back)
 
+## Remove Duplicates from Sorted Array (LeetCode 26)
+
+**Pattern:** Two pointers — read/write (same direction)
+
+**Same shape as LC 27.** p2 reads every element; p1 only advances on a write. Write condition: `nums[p2] !== nums[p1]`. Return `p1 + 1`.
+
+**Why the sorted property matters:** Duplicates are always adjacent — so you never need to search backward. A single left-to-right pass is enough.
+
+```js
+let p1 = 0, p2 = 0;
+while (p2 < nums.length) {
+    if (nums[p2] !== nums[p1]) {
+        p1++;
+        nums[p1] = nums[p2];
+    }
+    p2++;
+}
+return p1 + 1;
+```
+
+**Complexity:** O(n) time, O(1) space
+
+---
+
 ### Read/Write (simpler — default to this)
 
 **Core idea:** One pointer reads every element; the other only advances when you write a valid element to it. The write pointer's final position equals the number of valid elements.

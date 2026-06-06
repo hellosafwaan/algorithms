@@ -28,7 +28,7 @@ Total: 18 phases, 150 problems
 ## Phase 2 — Two Pointers
 **Why this order:** Builds directly on arrays. Eliminates one dimension of looping — the first major optimization technique.
 **Interview weight:** 🔴 Very High
-**Problems:** 6 total (E: 2 / M: 3 / H: 1)
+**Problems:** 7 total (E: 3 / M: 3 / H: 1)
 
 | # | Problem | Difficulty | LeetCode | Pattern |
 |---|---------|------------|----------|---------|
@@ -37,7 +37,8 @@ Total: 18 phases, 150 problems
 | 3 | 3Sum | Medium | [LC #15](https://leetcode.com/problems/3sum/) | Two Pointers in Loop |
 | 4 | Container With Most Water | Medium | [LC #11](https://leetcode.com/problems/container-with-most-water/) | Two Pointers |
 | 5 | Merge Sorted Array | Easy | [LC #88](https://leetcode.com/problems/merge-sorted-array/) | Two Pointers (fill backwards) |
-| 6 | Trapping Rain Water | Hard | [LC #42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers |
+| 6 | Remove Duplicates from Sorted Array | Easy | [LC #26](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | Two Pointers |
+| 7 | Trapping Rain Water | Hard | [LC #42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers |
 
 ---
 

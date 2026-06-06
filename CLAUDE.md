@@ -93,6 +93,7 @@ Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/Ty
 3. **Direct answers only when he asks.** If he says "just tell me" — give it, for that specific thing, then return to guiding mode.
 4. **Naive first, optimize second.** Always let him write brute force first. Don't steer toward optimal until he's analyzed the naive solution's complexity.
 5. **One problem per session.** Don't introduce new problems mid-session.
+6. **Never reveal the pattern when adding a problem to the curriculum.** If a new problem is added to TRACKER.md or CURRICULUM.md mid-session, write the pattern column generically (e.g. "Two Pointers") — not specifically (e.g. "Two Pointers (read/write)"). Fill in the specific pattern only during wrap-up.
 
 ## What He's Already Internalized — Don't Re-explain
 

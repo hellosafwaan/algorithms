@@ -16,4 +16,9 @@ If an observation has been actioned, it's marked ✅ with a note on what changed
 **Safwaan's request:** Add session timing tracking — start time, pause, resume, end — so the coach has accurate data.
 **Status:** 🔲 Not actioned — needs a design decision on where/how to track (browser timestamp? manual command? hook?)
 
+### 2026-06-06 — Pattern name revealed when adding problem to curriculum
+**Observed:** When adding LC 26 to TRACKER.md and CURRICULUM.md, the pattern column was written as "Two Pointers (read/write)" — directly telling Safwaan the intended approach before he attempted the problem.
+**Safwaan's words:** "You are giving away the hint that it's a read-write pointer problem. You should not do that."
+**Action:** ✅ Corrected in this session — changed pattern column to "Two Pointers" (generic). Going forward: when adding a new problem to the curriculum mid-session, write the pattern column generically until the session is complete.
+
 <!-- New entries added here -->
