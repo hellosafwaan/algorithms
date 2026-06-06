@@ -93,6 +93,25 @@ function removeElement(nums, target) {
 }
 ```
 
+## Naive Approach
+
+Create a new array, push all non-target elements into it, copy back, return length. O(n) time, O(n) space.
+
+```js
+function removeElement(nums, target) {
+    const valid = [];
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] !== target) valid.push(nums[i]);
+    }
+    for (let i = 0; i < valid.length; i++) {
+        nums[i] = valid[i];
+    }
+    return valid.length;
+}
+```
+
+This violates the in-place constraint. There's no naive-then-optimize arc here — the read/write solution is already the simplest correct approach. The only reason to know the naive is to articulate *why* you're doing it in-place.
+
 ## Pattern Introduced
 
 **Read/Write Pointers (same direction)** — new pattern. One pointer reads every element, the other only advances on a write. The write pointer's final position is the answer. Safe to overwrite because write pointer never gets ahead of read pointer.
