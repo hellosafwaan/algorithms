@@ -1,38 +1,41 @@
-# Handoff — Post Merge Sorted Array (LC 88)
+# Handoff — Post Remove Element (LC 27)
 
 ## What Was Just Completed
 
-**Merge Sorted Array (LC 88)** — 2026-06-05
+**Remove Element (LC 27)** — 2026-06-06
 
-Solid session. Added LC 88 to the Phase 2 curriculum at his request. Long warm-up due to problem statement confusion (the placeholder zeros concept took several exchanges). Once cleared, he independently connected to the LC 977 fill-backwards pattern. Three-pointer setup derived cold. All bugs in first attempt caught by himself during trace. Submitted 100th percentile runtime.
+Split session (started late 2026-06-05, continued 2026-06-06 morning). Safwaan independently designed a swap-to-back approach, which is the harder of the two common solutions. Multiple termination bugs required tracing to expose — the process took ~40 minutes for a length-4 trace. The read/write pointer approach was new to him; once the setup was given ("one reads, the other only writes") he derived it himself in one attempt. Both submissions: 100th percentile runtime.
 
-Also probed carry-forward items at the session start — 3Sum explanation, `if (nums[i] > 0) break` reasoning, Set reference equality — all answered correctly.
+Key heuristic introduced: use the smallest input that can expose the bug when tracing.
 
 ## Safwaan's Current State
 
 **Solid:**
-- Fill-backwards pattern — recalled and applied cold from LC 977
-- Self-correction via tracing — caught 4 bugs himself, zero hints needed for debugging
-- Loop condition reasoning — correctly identified `nums2Pointer >= 0` only and articulated why
-- Complexity — called O(m+n) time, O(1) space unprompted
+- Two-pointer problem decomposition — reached for converging pointers independently
+- Swap approach: designed it cold with no hints on the approach
+- Complexity — called O(n) time, O(1) space for both solutions unprompted
+- Self-correction via tracing — found termination and return value bugs himself
 
-**Gaps still open (the three from 3Sum still apply):**
-1. **Closes subproblems at first success** — didn't surface this session (problem didn't trigger it)
-2. **Index-detail precision** — trace had one error (`nums1[2]=3` misread as `1`) but caught when asked
-3. **Toolkit recall** — not triggered this session
+**Gaps still open:**
+1. **Closes subproblem at first success** — didn't surface this session
+2. **Index-detail precision** — saw this in the termination condition bugs; trace-first heuristic helps
+3. **Toolkit/library recall** — not triggered this session
+4. **currentIndex >= nums1Pointer invariant from LC 88** — deferred twice now
+5. **Debugging heuristic (smallest input)** — taught but not yet applied cold
 
-**New carry-forward:**
-- Why can the fill pointer never overwrite a value still needed? (currentIndex >= nums1Pointer invariant) — probe cold
-- Naive push+sort solution for LC 88 — deferred, add to a future session
+**New this session:**
+- Read/Write pointer pattern — first exposure, got it in one attempt after setup
+- Still wants to understand: when do you reach for swap vs read/write in an interview?
 
 ## Suggested Next Problem
 
-**Trapping Rain Water (LC 42)** — Phase 2 final problem. Hard. Two converging pointers, nuanced movement reasoning. He's well-warmed up on two pointers.
+**Trapping Rain Water (LC 42)** — Phase 2 final problem. Hard. Two converging pointers with nuanced movement reasoning. He's well-warmed up on two pointers.
 
-Before starting: probe the `currentIndex >= nums1Pointer` invariant cold (one question, no hints).
+Before starting: probe the `currentIndex >= nums1Pointer` invariant from LC 88 (third attempt — he's deferred twice).
 
 ## Coach Notes
 
-- LC 88 confusion around problem statement was the C++/Java fixed-array artifact — not a recurring issue. Don't log as a pattern.
-- He's moving at good pace. Two problems flagged for tonight — LC 88 done. If he wants a second problem, Trapping Rain Water is next.
-- Pattern transfer from LC 977 → LC 88 happened with one prompt (recall question). The probing-before-problem protocol is working.
+- The swap approach instinct is strong. He reaches for the harder solution first, which is interview-confident behavior. Don't discourage it.
+- Tracing heuristic: next time he needs to trace, ask "what's the smallest input that would show this bug?" before he starts.
+- Read/Write pointer is now in his toolkit but hasn't been applied cold. It will come up again in Sliding Window — don't re-explain, just let him transfer.
+- Session timing feature request logged in improvement-log.md.

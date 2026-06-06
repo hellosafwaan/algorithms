@@ -10,6 +10,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Remove Element (LC #27) — 2026-06-06 — 100th percentile, swap + read/write pointer approaches
 - Merge Sorted Array (LC #88) — 2026-06-05 — 100th percentile, two pointers fill backwards
 - 3Sum (LC #15) — 2026-06-04 — 67th percentile, two pointers + k-sum reduction
 - Container With Most Water (LC #11) — 2026-06-04

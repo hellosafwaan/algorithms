@@ -181,6 +181,55 @@ function merge(nums1, m, nums2, n) {
 
 ---
 
+## Remove Element (LeetCode 27)
+
+**Pattern:** Two pointers — same direction (read/write), or converging (swap to back)
+
+### Read/Write (simpler — default to this)
+
+**Core idea:** One pointer reads every element; the other only advances when you write a valid element to it. The write pointer's final position equals the number of valid elements.
+
+**Why overwriting is safe:** The write pointer can never get ahead of the read pointer, so by the time you write to position `p1`, the read pointer has already read it and moved on.
+
+```js
+let p1 = 0;
+for (let p2 = 0; p2 < nums.length; p2++) {
+    if (nums[p2] !== target) {
+        nums[p1++] = nums[p2];
+    }
+}
+return p1;
+```
+
+### Swap to Back (fewer writes — use when writes are expensive)
+
+**Core idea:** p1 scans left for targets; swappableIndex scans right for valid elements. When they meet, swap target out. Stop when the pointers cross.
+
+**Termination:** `swappableIndex <= p1` — not `swappableIndex === 0`. Pointers crossing mid-array is the signal to stop.
+
+**Return value:** `p1`, not `n - swaps`. p1 is the exact count of valid elements in the first p1 positions.
+
+```js
+let p1 = 0, swappableIndex = nums.length - 1;
+while (p1 <= swappableIndex) {
+    if (nums[p1] === target) {
+        while (nums[swappableIndex] === target && swappableIndex > 0) swappableIndex--;
+        if (swappableIndex <= p1) break;
+        [nums[p1], nums[swappableIndex]] = [nums[swappableIndex], nums[p1]];
+    }
+    p1++;
+}
+return p1;
+```
+
+**Complexity (both):**
+| | Time | Space |
+|--|------|-------|
+| Read/Write | O(n) | O(1) |
+| Swap to back | O(n) | O(1) |
+
+---
+
 ## 3Sum (LeetCode 15)
 
 **Pattern:** Two pointers *inside* a loop — k-sum reduction

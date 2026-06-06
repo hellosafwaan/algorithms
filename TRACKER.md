@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-05
+Last updated: 2026-06-06
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-06-05
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 151 |
-| ✅ Complete | 12 |
+| Total problems | 152 |
+| ✅ Complete | 13 |
 | ⚠️ Needs revisit | 2 |
 | ⏳ Not started | 136 |
 
@@ -23,7 +23,7 @@ Last updated: 2026-06-05
 | # | Phase | Problems | Done | Target Date | Status |
 |---|-------|----------|------|-------------|--------|
 | 1 | Arrays & Hashing | 9 | 6 | 2026-06-05 | ⚠️ 3 need redo |
-| 2 | Two Pointers | 6 | 5 | 2026-06-02 | 🔄 1 remaining |
+| 2 | Two Pointers | 7 | 6 | 2026-06-02 | 🔄 1 remaining (LC 42) |
 | 3 | Sliding Window | 6 | 0 | 2026-06-08 | ⏳ |
 | 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
 | 5 | Binary Search | 7 | 0 | 2026-06-16 | ⏳ |
@@ -68,7 +68,8 @@ Last updated: 2026-06-05
 | 3 | 3Sum | Medium | [#15](https://leetcode.com/problems/3sum/) | Two Pointers in Loop | ✅ 67th pct | [→](arrays/15-three-sum/learnings.md) |
 | 4 | Container With Most Water | Medium | [#11](https://leetcode.com/problems/container-with-most-water/) | Two Pointers | ✅ | [→](arrays/11-container-with-most-water/learnings.md) |
 | 5 | Merge Sorted Array | Easy | [#88](https://leetcode.com/problems/merge-sorted-array/) | Two Pointers (fill backwards) | ✅ 100th pct | [→](arrays/88-merge-sorted-array/learnings.md) |
-| 6 | Trapping Rain Water | Hard | [#42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers | ⏳ | — |
+| 6 | Remove Element | Easy | [#27](https://leetcode.com/problems/remove-element/) | Two Pointers (read/write + swap) | ✅ 100th pct | [→](arrays/27-remove-element/learnings.md) |
+| 7 | Trapping Rain Water | Hard | [#42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers | ⏳ | — |
 
 ## Phase 3 — Sliding Window ⏳
 

@@ -150,3 +150,10 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 - **Seen in:** 3Sum (LC 15, 2026-06-04)
 - **What happened:** `Set` didn't occur to him for dedup; didn't know a Set won't dedupe arrays (reference equality); string-conversion workaround had to be given; `Array.from` forgotten.
 - **Status:** Cheapest gap to close — it's recall, not thinking. Recommended a deliberate review of `Set`/`Map`/`Array.from`/reference-vs-value equality. Probe cold next session.
+
+### 17. Tracing with inputs that are too large
+- **Seen in:** LC 27 (2026-06-06)
+- **What happened:** Traced `[3, 2, 2, 3]` (length 4, 2 targets) to find a termination bug — took ~40 minutes. The same bug would have been exposed by `[3, 3, 2]` or `[3, 2]` in a fraction of the time.
+- **Root cause:** Reaches for the first given example rather than shrinking the input to the minimum that reproduces the issue.
+- **How it was caught:** After finishing the trace, was told the heuristic: use the smallest input that can expose the bug.
+- **Status:** Heuristic taught — probe next time he needs to trace a bug.
