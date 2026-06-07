@@ -3,6 +3,8 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| "Set for membership, HashMap for key-value" — can he state this rule cold and apply it without prompting? | Hash Set vs HashMap | 217 | open |
+| Falsy-zero trap: `if(obj[key])` misses `0` — does he pre-empt this next time, or only catch it when prompted? | HashMap edge case | 217 | open |
 | Can you implement Pow(x, n) iteratively using the binary representation of n? | Exponentiation by Squaring | 50 | open |
 | `Math.floor(n/2)` vs `n >> 1` — same for non-negative integers. When would you use bit shifting in an interview? | JS / Bit Manipulation | 50 | open |
 | Boyer-Moore without a majority guarantee — how would you verify the candidate? | Boyer-Moore | 169 | open |

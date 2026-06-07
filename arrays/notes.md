@@ -286,6 +286,39 @@ function removeDuplicates(nums) {
 
 ---
 
+## Contains Duplicate (LeetCode 217)
+
+**Pattern:** Hash Set — membership tracking
+
+**Core idea:** Iterate once. Before recording each element, check if it's already in the Set. If yes → duplicate found. If you exhaust the array → no duplicates.
+
+**Set vs HashMap here:** Set is correct — you only need to know if a value was seen, not store anything alongside it. `has()` works on any value including `0` (no falsy trap). Plain object `seen[0]` returns `undefined` even after insertion, so `if(seen[0])` evaluates false incorrectly.
+
+**Four approaches (naive → optimal):**
+
+| Approach | Time | Space | Notes |
+|----------|------|-------|-------|
+| Nested loop | O(n²) | O(1) | Never use |
+| Sort + adjacent | O(n log n) | O(1) extra | Mutates input; iterate `i < n-1` |
+| HashMap | O(n) | O(n) | Use `num in seen`, not `if(seen[num])` |
+| Set | O(n) | O(n) | Default choice; `has()` has no edge case |
+
+**Template (Set):**
+```js
+function containsDuplicate(nums) {
+    const seen = new Set();
+    for (const num of nums) {
+        if (seen.has(num)) return true;
+        seen.add(num);
+    }
+    return false;
+}
+```
+
+**Watch out for:** `if(seen[x])` on plain objects — misses `0`. Use `x in seen` or switch to Set.
+
+---
+
 ## Majority Element (LeetCode 169)
 
 **Pattern:** HashMap counting OR Boyer-Moore Voting

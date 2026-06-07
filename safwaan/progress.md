@@ -10,6 +10,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Contains Duplicate (LC #217) — 2026-06-07 — 65th percentile, Hash Set (Phase 1 cleanup)
 - Pow(x, n) (LC #50) — 2026-06-07 — 100th percentile, Exponentiation by Squaring (detour into Phase 17)
 - Majority Element (LC #169) — 2026-06-07 — 100th percentile, Boyer-Moore Voting (bonus problem, not NeetCode 150)
 - Remove Duplicates from Sorted Array II (LC #80) — 2026-06-06 — 46th percentile, read/write with look-back

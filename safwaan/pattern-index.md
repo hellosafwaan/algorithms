@@ -24,6 +24,20 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Hash Set — Membership Tracking
+
+**Core idea:** When you only need to know whether something was seen (no value to store alongside it), use a Set. `has()` is O(1) and works cleanly on any value — no falsy-zero trap, no string key conversion.
+
+**When to reach for it:** "Does this element appear more than once?", "Have I seen this before?", any membership-only check.
+
+**Set vs HashMap:** Use Set when you track existence only. Use HashMap when you also need to store something (complement, count, index).
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 217 — Contains Duplicate | Membership tracking | Add each element to Set; `has()` before `add()`. No falsy-zero edge case. |
+
+---
+
 ## Hash Map / Complement Lookup
 
 **Core idea:** Store what you've seen so you can check for a complement in O(1) instead of searching.

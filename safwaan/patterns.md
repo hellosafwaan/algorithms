@@ -38,6 +38,15 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 22. Falsy-zero trap on plain objects — not pre-empted yet
+- **Seen in:** LC 217 (2026-06-07)
+- **What happened:** Used `if(seen[currentElement])` on a plain object — returns `undefined` (falsy) for unseen keys, but also evaluates to falsy for `seen[0]` even after adding `0`. Misses zero as a duplicate.
+- **How it was caught:** One prompt ("what does `seen[currentElement]` evaluate to when `currentElement` is `0`?") — caught immediately.
+- **Fix:** Use `num in seen`, `seen[num] !== undefined`, or switch to Set (`has()` has no falsy trap).
+- **Status:** Catches when prompted, doesn't pre-empt yet. Watch for this in future HashMap problems.
+
+---
+
 ## Breakthrough Moments
 
 ### DP Core Insight — Session 1
@@ -48,6 +57,9 @@ After completing recursive string reversal, he unprompted pointed out it's O(n²
 
 ### Self-correction pattern
 Across sessions, Safwaan consistently finds his own bugs when asked the right question rather than being told what's wrong. This is a strong signal — he has the debugging instinct, just needs the prompt to activate it.
+
+### HashMap/Set pattern recognition solidifying — LC 217 (2026-06-07)
+On Contains Duplicate, skipped brute force entirely and reached for HashMap directly — no prompting. Then independently identified that Set is cleaner than HashMap for membership-only problems: "when working with a duplicate problem, the Set solution should come first." This is a meaningful shift — he was previously going to nested loops by default.
 
 ### Independent optimal-split reasoning — Pow(x, n) (2026-06-07)
 After the exponentiation by squaring concept was introduced, Safwaan independently formulated `x^n = x^i * x^j where i+j=n` and reasoned that i=j=n/2 is the optimal split — because it's the only choice where both subproblems are identical, so you compute one and reuse it. Any other split gives two different subproblems. He arrived at *why* n/2 is right, not just *that* it is.

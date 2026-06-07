@@ -1,44 +1,42 @@
-# Handoff — Post Pow(x, n) (LC 50)
+# Handoff — Post Contains Duplicate (LC 217)
 
 ## What Was Just Completed
 
-**Pow(x, n) (LC #50)** — 2026-06-07 — detour into Phase 17 (Math & Geometry), 100th percentile
+**Contains Duplicate (LC #217)** — 2026-06-07 — Phase 1 cleanup, 65th percentile (Set solution)
 
-Safwaan worked through multiple iterations:
-1. Iterative brute force (O(n)) — correct but TLE on large n
-2. Recursive brute force (O(n) depth) — same problem
-3. Exponentiation by squaring — needed the pattern introduced from scratch
-
-The pattern was brand new to him. Once explained with a worked example, he implemented correctly with nudges on: storing the half-result (vs double-calling), Math.floor on n/2, and handling negative n at the top instead of inside the recursion.
+Two submissions this session:
+1. HashMap (plain object) — 13th percentile, had falsy-zero bug (`if(seen[0])` misses zero)
+2. Set — 65th percentile, clean, no edge case
 
 ## Safwaan's Current State
 
 **Solid:**
-- Brute force iteration and recursion — reaches for both independently
-- Edge case reasoning — missed n=0 and negative n on first attempts, but caught and self-corrected each time
-- Correctly diagnosed he'd hit his toolbox limit and asked for help — good metacognition
-- Math intuition is decent — independently formulated `x^n = x^i * x^j` and reasoned i=j=n/2 is optimal
+- HashMap/Set pattern recognition — reached for HashMap without considering brute force, then independently identified Set as cleaner. Pattern recognition for "have I seen this?" problems is now interview-grade.
+- Articulated the Set vs HashMap distinction himself: Set for membership tracking, HashMap when you need a stored value.
+- Complexity analysis — led on it without prompting.
 
 **Gaps still open:**
-1. **Exponentiation by squaring** — new pattern, understood but not internalized. Don't expect cold recall for ~3 weeks.
-2. **Math.floor on halving in recursion** — taught this session, general rule to carry forward
-3. **JS object iteration** — `for...in`, `Object.keys()`, `Object.entries()` — still open from LC 169
-4. **Boyer-Moore cold recall** — still open from LC 169
-5. **Group thinking** — not triggered this session
-6. **Closes subproblem at first success** — not triggered this session
-7. **Swap vs read/write decision rule** — open from LC 27
-8. **k-generalization (LC 80)** — open
-9. **LC 88 fill-backwards invariant** — probe cold (was due 2026-06-08)
-10. **JS toolkit** — `Set`, `Map`, `Array.from`, `Object.keys/entries`, reference vs value equality
+1. **Falsy-zero trap** — `if(obj[key])` misses `0`. Caught when prompted, not pre-empted. Watch for this in future HashMap problems.
+2. **Set vs HashMap rule cold** — self-articulated this session, probe whether it sticks cold.
+3. **Exponentiation by squaring** — new pattern, don't probe cold until 2026-06-28.
+4. **Boyer-Moore cold recall** — open from LC 169.
+5. **JS object iteration** — `for...in`, `Object.keys()`, `Object.entries()` — still open from LC 169.
+6. **Group thinking** — not triggered this session.
+7. **Closes subproblem at first success** — not triggered this session.
+8. **Swap vs read/write decision rule** — open from LC 27.
+9. **k-generalization (LC 80)** — open.
+10. **LC 88 fill-backwards invariant** — probe cold (was due 2026-06-08).
+11. **JS toolkit** — `Map`, `Array.from`, reference vs value equality.
 
 ## Suggested Next Problem
 
-**Trapping Rain Water (LC #42)** — Phase 2 final problem. Hard. This is the last problem before Sliding Window. Two converging pointers with nuanced movement reasoning.
+**Trapping Rain Water (LC #42)** — Phase 2 final problem. Hard. Two converging pointers with nuanced movement reasoning.
+
+Or continue Phase 1 cleanup: **Valid Anagram (LC #242)** (Easy) if another lighter session is needed.
 
 ## Coach Notes
 
-- This was a detour — Pow(x, n) is Phase 17, not Phase 2. It doesn't affect phase sequencing. Resume with LC 42 next session.
-- The "exhausted my toolbox" moment was honest and worth noting — he didn't thrash blindly, he recognized the wall and asked for help. That's good interview instinct.
-- Handle negative at top vs inside recursion — tripped him up badly when he tried to thread it through the recursion. Reinforce: guard clauses at the top, clean function body below.
-- The float issue (`n/2` without Math.floor) is a gotcha that will recur whenever halving appears in recursion. Log it as a recurring hazard.
-- Don't probe LC 50 cold for at least 3 weeks.
+- LC 217 was a redo — previously done before the repo was set up, no solution on file. Now properly documented with four approaches.
+- The HashMap/Set shift is real and worth reinforcing. He went from "default to nested loop" to "default to optimal data structure" — that's the interview instinct you want.
+- Don't re-explain Set vs HashMap on the next problem that calls for it — probe whether he applies it cold instead.
+- Next heavier session should be LC 42 (Trapping Rain Water). It's Hard and will require patience.

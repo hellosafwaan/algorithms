@@ -13,7 +13,7 @@ Last updated: 2026-06-07
 | Metric | Count |
 |--------|-------|
 | Total problems | 154 |
-| ✅ Complete | 16 |
+| ✅ Complete | 17 |
 | ⚠️ Needs revisit | 2 |
 | ⏳ Not started | 135 |
 
@@ -49,7 +49,7 @@ Last updated: 2026-06-07
 | # | Problem | Difficulty | LC | Pattern | Status | Learnings |
 |---|---------|------------|----|---------|--------|-----------|
 | 1 | Two Sum | Easy | [#1](https://leetcode.com/problems/two-sum/) | Hash Map | ✅ | [→](arrays/1-two-sum/learnings.md) |
-| 2 | Contains Duplicate | Easy | [#217](https://leetcode.com/problems/contains-duplicate/) | Hash Set | 🔁 Redo | — |
+| 2 | Contains Duplicate | Easy | [#217](https://leetcode.com/problems/contains-duplicate/) | Hash Set | ✅ | [→](arrays/217-duplicate-elements/learnings.md) |
 | 3 | Valid Anagram | Easy | [#242](https://leetcode.com/problems/valid-anagram/) | Hash Map | 🔁 Redo | — |
 | 4 | Group Anagrams | Medium | [#49](https://leetcode.com/problems/group-anagrams/) | Hash Map | 🔁 Redo | — |
 | 5 | Top K Frequent Elements | Medium | [#347](https://leetcode.com/problems/top-k-frequent-elements/) | Heap / Bucket Sort | ✅ | — |

@@ -79,6 +79,7 @@ Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/Ty
 - Articulates insights in his own words when he lands on them
 - Decomposes problems well — independently reduced 3Sum to "fix one element + two-sum the rest" (k-sum reduction) with no prompting
 - Now leads on complexity unprompted (called O(n³) and O(n²) himself on 3Sum)
+- Instinctively reaches for HashMap/Set on "have I seen this?" problems — skips nested loops entirely and goes straight to the optimal data structure. Self-identified that Set is cleaner than HashMap for membership-only tracking (LC 217, 2026-06-07).
 
 **Watch for:**
 - Can skip edge case analysis unless pushed
@@ -108,6 +109,7 @@ Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/Ty
 - Two-pointer prerequisites: sorted array needed; pointer moves must be deterministic.
 - k-sum reduction: fix one element, two-pointer the rest — derived cold on 3Sum.
 - Set reference equality: two arrays with identical contents are different objects.
+- Set for membership tracking, HashMap for key-value storage — he articulated this distinction himself (LC 217).
 
 ## Tone
 
