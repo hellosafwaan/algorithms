@@ -146,6 +146,12 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 - **What happened:** Duplicate-skip neighbor check — `nums[right - 1]` vs `nums[right + 1]`. Reasoned the sign wrong in his head every round; **got it right the moment he traced** ("I'm comparing the same element, I need the next one").
 - **Status:** Tracing is trustworthy, abstract index reasoning is not (yet). Push him to trace fiddly `+1/-1` decisions rather than reason them.
 
+### 19. JS object iteration not at fingertips
+- **Seen in:** LC 169 (2026-06-07)
+- **What happened:** Forgot `for...in` syntax for iterating over objects — had to look it up online. Also didn't immediately recall that `for...in` keys are always strings, not numbers.
+- **How it was caught:** Prompted "what type does `key` have in a `for...in` loop?" — immediately caught the string issue
+- **Status:** Knowledge gap, not reasoning. Part of the broader toolkit recall issue.
+
 ### 16. Toolkit / library exposure gap (knowledge, not reasoning)
 - **Seen in:** 3Sum (LC 15, 2026-06-04)
 - **What happened:** `Set` didn't occur to him for dedup; didn't know a Set won't dedupe arrays (reference equality); string-conversion workaround had to be given; `Array.from` forgotten.

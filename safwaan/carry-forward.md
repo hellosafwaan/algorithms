@@ -3,6 +3,9 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| Boyer-Moore without a majority guarantee — how would you verify the candidate? | Boyer-Moore | 169 | open |
+| Boyer-Moore generalisation: find element appearing > n/3 times — how many candidates do you need? | Boyer-Moore | 169 | open |
+| JS object iteration — `for...in`, `Object.keys()`, `Object.entries()` — drill these cold | Toolkit / JS | 169 | open |
 |----------|---------|---------|--------|
 | Where else does right-to-left in-place update appear? | Right-to-left update | 119 | open |
 | What's the formula for total cells in an n-row triangle? | 2D construction | 118 | open — said n(n-1)/2, correct is n(n+1)/2 |

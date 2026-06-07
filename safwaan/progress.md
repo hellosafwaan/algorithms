@@ -10,6 +10,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Majority Element (LC #169) — 2026-06-07 — 100th percentile, Boyer-Moore Voting (bonus problem, not NeetCode 150)
 - Remove Duplicates from Sorted Array II (LC #80) — 2026-06-06 — 46th percentile, read/write with look-back
 - Remove Duplicates from Sorted Array (LC #26) — 2026-06-06 — 100th percentile, read/write pointer
 - Remove Element (LC #27) — 2026-06-06 — 100th percentile, swap + read/write pointer approaches

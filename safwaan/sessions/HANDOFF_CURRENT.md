@@ -1,38 +1,40 @@
-# Handoff — Post Remove Duplicates from Sorted Array II (LC 80)
+# Handoff — Post Majority Element (LC 169)
 
 ## What Was Just Completed
 
-**Remove Duplicates from Sorted Array II (LC 80)** — 2026-06-06
+**Majority Element (LC 169)** — 2026-06-07 — bonus problem (not NeetCode 150), from Top Interview 150
 
-Long session. Started with the wrong approach (group-based: track occurrence count, write on transition). This took significant time to debug and ultimately abandon — the fundamental flaw is that it only writes when transitioning to a new group, so the last element of each group is always missed. After scrapping it, pivoted to read/write with look-back condition: skip when `nums[p1-1] === val && nums[p1-2] === val`. The `p1 < 2` bootstrap was Safwaan's own observation. Return value (`p1` not `p1+1`) was also self-reasoned. Submitted 46th percentile — algorithm is optimal.
+Two solutions built:
+1. **HashMap** (35th pct) — count map, return first key above `n/2`. Bug: `for...in` keys are strings; needed `Number(key)`. Self-caught after one prompt.
+2. **Boyer-Moore Voting** (100th pct) — candidate + count, decrement on mismatch, reset on zero. Derived correctly after the "candidate + votes" framing was given. Coded in one attempt.
 
-Also: LC 88 fill-backwards invariant was finally explained this session (third deferral). Probe on 2026-06-08.
+Session was short and clean. Safwaan pushed back on doing a written trace ("I traced it in my head, it works") — accepted it given the tests passed.
 
 ## Safwaan's Current State
 
 **Solid:**
-- Read/write pointer pattern — three consecutive problems (LC 27, LC 26, LC 80)
-- O(n)/O(1) complexity — called unprompted with correct reasoning
-- Return value reasoning — traced it himself correctly
+- HashMap counting pattern — reached for it immediately, built correctly
+- Boyer-Moore once framed — understood and implemented cleanly
+- O(n)/O(n) and O(n)/O(1) complexity — called correctly unprompted
+- Threshold reasoning (`> n/2` handles odd/even via float division) — got it himself
 
 **Gaps still open:**
-1. **Group thinking** — new named pattern. On LC 80, first instinct was to track groups and write on transition. If this appears again on an in-place problem, probe: "can you think about this one element at a time?"
-2. **Closes subproblem at first success** — not triggered this session
-3. **Index-detail precision** — not triggered this session
-4. **Toolkit/library recall** — not triggered this session
+1. **JS object iteration** — had to look up `for...in` syntax; didn't know keys are strings. Part of the broader toolkit gap.
+2. **Boyer-Moore cold recall** — correctly self-diagnosed he couldn't have reached for it without the intro. Not expected to derive it cold; know it exists and what to apply it to.
+3. **Group thinking** — not triggered this session
+4. **Closes subproblem at first success** — not triggered this session
 5. **Swap vs read/write decision rule** — still open
-6. **const reassignment habit** — not triggered this session
-7. **Debugging heuristic (smallest input)** — not yet applied cold
-8. **LC 88 invariant** — explained, probe cold on 2026-06-08
-9. **k-generalization** — "allow at most k duplicates" → `nums[p1 - k]`. Does k=1 reduce to LC 26? Open.
+6. **k-generalization (LC 80)** — still open
+7. **LC 88 invariant** — probe cold on 2026-06-08
+8. **JS toolkit** — `Set`, `Map`, `Array.from`, `Object.keys/entries`, reference vs value equality
 
 ## Suggested Next Problem
 
-**Trapping Rain Water (LC 42)** — Phase 2 final problem. Hard. Two converging pointers with nuanced movement reasoning.
+**Trapping Rain Water (LC 42)** — Phase 2 final problem. Hard. Two converging pointers with nuanced movement reasoning. Last problem before Sliding Window.
 
 ## Coach Notes
 
-- "Group thinking" is now a named mistake pattern. It surfaced strongly on LC 80 — Safwaan spent most of the session trying to patch an approach that was fundamentally misaligned. The pivot happened only after a full trace showed the root issue.
-- The session ran long and Safwaan hit a wall — asked for direct answers and traces a few times. Handled by just giving him the trace when genuinely exhausted, while holding the line on not giving the solution. This seemed right.
-- The `p1 < 2` bootstrap was independent — good instinct for edge cases.
-- Read/write is now applied on three consecutive problems. The shape should be solid going into Sliding Window.
+- The session split (started 1AM, continued morning) meant no wrap-up on the naive solution last night. Picked up cleanly.
+- Safwaan is comfortable pushing back now ("I don't want to trace manually, it takes time"). This is mostly fine — watch that he doesn't skip traces on problems where the nuance actually matters.
+- LC 169 is not NeetCode 150; it came from the Top Interview 150 study plan. Don't count it toward phase completion.
+- Tomorrow: probe the LC 88 fill-backwards invariant cold ("why can the fill pointer never overwrite a value still needed?").

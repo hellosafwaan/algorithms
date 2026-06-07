@@ -33,6 +33,19 @@ When starting a new problem, check here first. Find the pattern, recall what you
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 1 — Two Sum | Complement lookup | For each number, check if target - num is already in the map |
+| LC 169 — Majority Element | Count map | Store occurrence counts; return first key above n/2 threshold. Remember: `for...in` keys are strings → `Number(key)` |
+
+## Boyer-Moore Voting
+
+**Core idea:** Track one candidate and one vote count. Matching element = +1, different element = -1. When count hits 0, adopt the current element as the new candidate. Majority element survives because it can't be fully cancelled.
+
+**When to reach for it:** Find the element appearing more than n/2 times. Named algorithm — don't expect to derive cold.
+
+**Prerequisite:** Majority element must be **guaranteed to exist**. Without that guarantee, add a second verification pass.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 169 — Majority Element | Single candidate vote | Candidate survives cancellation because majority > n/2 — more than all others combined |
 
 ---
 

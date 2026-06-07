@@ -286,6 +286,32 @@ function removeDuplicates(nums) {
 
 ---
 
+## Majority Element (LeetCode 169)
+
+**Pattern:** HashMap counting OR Boyer-Moore Voting
+
+**Threshold:** `> n/2` — JS float division handles odd and even automatically.
+
+**HashMap approach** (O(n) time, O(n) space):
+Count occurrences in one pass, find first key above threshold. Remember: `for...in` keys are strings → `Number(key)`.
+
+**Boyer-Moore Voting** (O(n) time, O(1) space):
+Track one candidate and one count. Match → increment. Mismatch → decrement. Count hits 0 → new candidate is current element. Works because majority > n/2: it survives all cancellations.
+
+```js
+let candidate = nums[0], count = 1
+for (let i = 1; i < nums.length; i++) {
+    if (nums[i] === candidate) count++
+    else if (count > 0) count--
+    else { candidate = nums[i]; count = 1 }
+}
+return candidate
+```
+
+**Prerequisite:** Majority element must be guaranteed to exist. Without guarantee, add a second verification pass.
+
+---
+
 ## 3Sum (LeetCode 15)
 
 **Pattern:** Two pointers *inside* a loop — k-sum reduction
