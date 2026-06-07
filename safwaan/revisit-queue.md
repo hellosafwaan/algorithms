@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 50 — Pow(x, n) | Exponentiation by Squaring | 2026-06-07 | 2026-06-28 | ⏳ |
 | LC 169 — Majority Element | Boyer-Moore Voting | 2026-06-07 | 2026-06-28 | ⏳ |
 | LC 80 — Remove Duplicates from Sorted Array II | Two pointers — read/write, look-back | 2026-06-06 | 2026-06-27 | ⏳ |
 | LC 26 — Remove Duplicates from Sorted Array | Two pointers — read/write | 2026-06-06 | 2026-06-27 | ⏳ |

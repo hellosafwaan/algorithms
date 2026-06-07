@@ -49,6 +49,9 @@ After completing recursive string reversal, he unprompted pointed out it's O(n²
 ### Self-correction pattern
 Across sessions, Safwaan consistently finds his own bugs when asked the right question rather than being told what's wrong. This is a strong signal — he has the debugging instinct, just needs the prompt to activate it.
 
+### Independent optimal-split reasoning — Pow(x, n) (2026-06-07)
+After the exponentiation by squaring concept was introduced, Safwaan independently formulated `x^n = x^i * x^j where i+j=n` and reasoned that i=j=n/2 is the optimal split — because it's the only choice where both subproblems are identical, so you compute one and reuse it. Any other split gives two different subproblems. He arrived at *why* n/2 is right, not just *that* it is.
+
 ### Independent k-sum decomposition — 3Sum (2026-06-04)
 Without prompting, he saw that the two-pointer optimization meant "fix one element, run a two-sum on the rest." That's *the* core insight of 3Sum and the bridge from "two pointers on an array" to "two pointers as a subroutine." He also independently flagged that a single `if` won't drain consecutive duplicates — a `while` is needed — *before* it was raised. And he correctly self-diagnosed that he was overthinking the pointer direction ("an inward pointer never suddenly goes outward"). The problem-solving *shape* is becoming interview-grade; the gaps now are detail-precision and library recall, not approach.
 
@@ -145,6 +148,19 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 - **Seen in:** 3Sum (LC 15, 2026-06-04)
 - **What happened:** Duplicate-skip neighbor check — `nums[right - 1]` vs `nums[right + 1]`. Reasoned the sign wrong in his head every round; **got it right the moment he traced** ("I'm comparing the same element, I need the next one").
 - **Status:** Tracing is trustworthy, abstract index reasoning is not (yet). Push him to trace fiddly `+1/-1` decisions rather than reason them.
+
+### 20. Exponentiation by squaring — new pattern, not in toolbox
+- **Seen in:** Pow(x, n) (LC 50, 2026-06-07)
+- **What happened:** Exhausted both iterative and recursive O(n) approaches. Correctly identified he had no more tools. Couldn't derive the halving idea independently.
+- **Root cause:** Pattern genuinely new — he's never encountered divide-and-conquer on exponents before.
+- **How it was caught:** Had to introduce the concept from scratch with a worked example.
+- **Status:** Understood and implemented correctly after explanation. Schedule revisit in 3 weeks.
+
+### 21. n/2 float issue in recursion
+- **Seen in:** Pow(x, n) (LC 50, 2026-06-07)
+- **What happened:** Used `n/2` without `Math.floor` — for odd `n`, this gives a float (e.g., `5/2 = 2.5`), which never reaches `n === 0`, causing infinite recursion / Infinity.
+- **How it was caught:** Got Infinity for `myPow(2, 10)`. Asked "what does n/2 give you in JavaScript?" — immediately got it.
+- **Status:** Fixed with one question. General rule: always `Math.floor` when halving in recursion.
 
 ### 19. JS object iteration not at fingertips
 - **Seen in:** LC 169 (2026-06-07)

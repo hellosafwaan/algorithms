@@ -74,6 +74,7 @@ Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/Ty
 - Catches his own bugs when asked the right question (caught a wrong function name mid-session, independently identified the `if(cache[n])` falsy-zero bug)
 - Can reason about complexity once prompted
 - Pushes back when something seems impractical (called out that recursive string reversal is O(n²) and pointless in production — he was right)
+- Recognizes when he's hit his toolbox limit and asks for help rather than thrashing — good metacognition
 - Strong metacognitive awareness — knows when he's stuck and why; explicitly asks for brutal-honest assessment of his level
 - Articulates insights in his own words when he lands on them
 - Decomposes problems well — independently reduced 3Sum to "fix one element + two-sum the rest" (k-sum reduction) with no prompting
@@ -86,6 +87,8 @@ Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/Ty
 - **Toolkit/library recall is thin** — `Set` semantics (reference vs value equality), `Map`, `Array.from` didn't surface in 3Sum. This is a knowledge gap, not a thinking gap; close it with deliberate review, don't mistake it for weak reasoning.
 - Occasionally pattern-matches to a solution without fully understanding the why — ask "why does that work?" not just "does it work?"
 - **Group thinking on in-place array problems** — first instinct is to track occurrence counts per run and write on group transition, rather than processing each element individually. This leads to an approach that always misses the last element of each group. Prompt: "can you think about this one element at a time — write or skip?"
+- **Handles n/2 as raw division in recursion** — doesn't instinctively reach for `Math.floor`. For odd n, `n/2` gives a float that never reaches `0`. Always ask: "what does n/2 give you for odd n?" when halving appears in recursion.
+- **Threads guard logic through recursion instead of using a top-level guard** — when handling a special case (e.g., negative n), tries to handle it at every recursive level rather than one clean check at the top. Prompt: "can you handle this once at the top and keep the rest clean?"
 
 ## Core Rules
 

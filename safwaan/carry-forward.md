@@ -3,6 +3,8 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| Can you implement Pow(x, n) iteratively using the binary representation of n? | Exponentiation by Squaring | 50 | open |
+| `Math.floor(n/2)` vs `n >> 1` — same for non-negative integers. When would you use bit shifting in an interview? | JS / Bit Manipulation | 50 | open |
 | Boyer-Moore without a majority guarantee — how would you verify the candidate? | Boyer-Moore | 169 | open |
 | Boyer-Moore generalisation: find element appearing > n/3 times — how many candidates do you need? | Boyer-Moore | 169 | open |
 | JS object iteration — `for...in`, `Object.keys()`, `Object.entries()` — drill these cold | Toolkit / JS | 169 | open |

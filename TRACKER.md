@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-06
+Last updated: 2026-06-07
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,7 +13,7 @@ Last updated: 2026-06-06
 | Metric | Count |
 |--------|-------|
 | Total problems | 154 |
-| ✅ Complete | 15 |
+| ✅ Complete | 16 |
 | ⚠️ Needs revisit | 2 |
 | ⏳ Not started | 135 |
 
@@ -273,7 +273,7 @@ Last updated: 2026-06-06
 | 3 | Rotate Image | Medium | [#48](https://leetcode.com/problems/rotate-image/) | Matrix | ⏳ | — |
 | 4 | Spiral Matrix | Medium | [#54](https://leetcode.com/problems/spiral-matrix/) | Matrix | ⏳ | — |
 | 5 | Set Matrix Zeroes | Medium | [#73](https://leetcode.com/problems/set-matrix-zeroes/) | Matrix | ⏳ | — |
-| 6 | Pow(x, n) | Medium | [#50](https://leetcode.com/problems/powx-n/) | Math | ⏳ | — |
+| 6 | Pow(x, n) | Medium | [#50](https://leetcode.com/problems/powx-n/) | Exponentiation by Squaring | ✅ | [→](math/50-pow(x,n)/learnings.md) |
 | 7 | Multiply Strings | Medium | [#43](https://leetcode.com/problems/multiply-strings/) | Math | ⏳ | — |
 | 8 | Detect Squares | Medium | [#587](https://leetcode.com/problems/detect-squares/) | Math | ⏳ | — |
 

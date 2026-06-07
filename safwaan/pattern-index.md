@@ -49,6 +49,20 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Exponentiation by Squaring (Divide and Conquer)
+
+**Core idea:** Instead of reducing the exponent by 1 each step (O(n)), halve it each step (O(log n)). `x^n = x^(n/2) * x^(n/2)`. Store the half-result, square it. For odd n, multiply one extra `x`.
+
+**When to reach for it:** Computing a power where n can be large. Any problem where you can reduce by half rather than by one.
+
+**Always remember:** `Math.floor(n/2)` — raw `n/2` gives a float for odd n → infinite recursion. Handle negative n once at the top.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 50 — Pow(x, n) | Recursive halving | `x^n = x^(n/2) * x^(n/2)`; store half once; odd n adds one extra `x`; negative n → `1 / myPow(x, -n)` |
+
+---
+
 ## Prefix / Suffix Precomputation
 
 **Core idea:** Precompute running products/sums from both directions to answer queries in O(1).
