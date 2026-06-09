@@ -21,6 +21,7 @@ When starting a new problem, check here first. Find the pattern, recall what you
 | LC 27 — Remove Element | Read/Write (same direction) | p2 reads every element, p1 only advances on a write. Return p1. Also: swap-to-back variant — p1 left, swappableIndex right, break when they cross |
 | LC 26 — Remove Duplicates from Sorted Array | Read/Write (same direction) | Same shape as LC 27. p2 reads every element; p1 writes when nums[p2] !== nums[p1]. Return p1 + 1. Sorted array guarantees duplicates are adjacent. |
 | LC 80 — Remove Duplicates from Sorted Array II | Read/Write with look-back | Same shape as LC 26. Skip when nums[p1-1] === val && nums[p1-2] === val (already wrote 2 copies). Bootstrap: always write when p1 < 2. Return p1. |
+| LC 42 — Trapping Rain Water | Two pointers with running max | Process the bottleneck side (smaller running max). `leftMax <= rightMax` → process left, else process right. Update max then accumulate. |
 
 ---
 
@@ -79,11 +80,14 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ## Prefix / Suffix Precomputation
 
-**Core idea:** Precompute running products/sums from both directions to answer queries in O(1).
+**Core idea:** Precompute running products/sums/maxes from both directions so each index can be answered in O(1) without scanning.
+
+**When to reach for it:** Any problem where each index needs "the best value I've seen so far from the left" and/or "from the right."
 
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | Product Except Self | Left pass + right pass | Build left products forward, multiply by right products backward |
+| LC 42 — Trapping Rain Water | Left max pass + right max pass | `leftMaxHeights[i]` = max seen strictly left of i; `rightMaxHeights[i]` = max seen strictly right of i. Push before updating (left pass); assign by index (right pass). |
 
 ---
 

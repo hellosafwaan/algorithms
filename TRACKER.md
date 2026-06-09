@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-07
+Last updated: 2026-06-09
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-06-07
 | Metric | Count |
 |--------|-------|
 | Total problems | 154 |
-| ✅ Complete | 17 |
+| ✅ Complete | 18 |
 | ⚠️ Needs revisit | 2 |
-| ⏳ Not started | 135 |
+| ⏳ Not started | 134 |
 
 ---
 
@@ -23,7 +23,7 @@ Last updated: 2026-06-07
 | # | Phase | Problems | Done | Target Date | Status |
 |---|-------|----------|------|-------------|--------|
 | 1 | Arrays & Hashing | 9 | 6 | 2026-06-05 | ⚠️ 3 need redo |
-| 2 | Two Pointers | 9 | 8 | 2026-06-02 | 🔄 1 remaining (LC 42) |
+| 2 | Two Pointers | 9 | 9 | 2026-06-02 | ✅ Complete |
 | 3 | Sliding Window | 6 | 0 | 2026-06-08 | ⏳ |
 | 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
 | 5 | Binary Search | 7 | 0 | 2026-06-16 | ⏳ |
@@ -71,7 +71,7 @@ Last updated: 2026-06-07
 | 6 | Remove Element | Easy | [#27](https://leetcode.com/problems/remove-element/) | Two Pointers (read/write + swap) | ✅ 100th pct | [→](arrays/27-remove-element/learnings.md) |
 | 7 | Remove Duplicates from Sorted Array | Easy | [#26](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | Two Pointers | ✅ 100th pct | [→](arrays/26-remove-duplicate-elements-in-a-sorted-array/learnings.md) |
 | 8 | Remove Duplicates from Sorted Array II | Medium | [#80](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | Two Pointers (read/write, look-back) | ✅ 46th pct | [→](arrays/80-remove-duplicates-from-a-sorted-array/learnings.md) |
-| 9 | Trapping Rain Water | Hard | [#42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers | ⏳ | — |
+| 9 | Trapping Rain Water | Hard | [#42](https://leetcode.com/problems/trapping-rain-water/) | Prefix Max / Two Pointers | ✅ 100th pct | [→](arrays/42-trapping-rain-water/learnings.md) |
 
 ## Phase 3 — Sliding Window ⏳
 

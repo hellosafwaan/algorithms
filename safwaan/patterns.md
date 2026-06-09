@@ -58,6 +58,9 @@ After completing recursive string reversal, he unprompted pointed out it's O(n²
 ### Self-correction pattern
 Across sessions, Safwaan consistently finds his own bugs when asked the right question rather than being told what's wrong. This is a strong signal — he has the debugging instinct, just needs the prompt to activate it.
 
+### Prefix max derived cold — LC 42 (2026-06-09)
+After identifying the O(n²) bottleneck himself, he independently derived and built the prefix max approach — two precomputation passes, one accumulation pass — without any hints. Clean code, no bugs. This is exactly the kind of transfer you want to see: saw the bottleneck, knew what to precompute, knew how to do it.
+
 ### HashMap/Set pattern recognition solidifying — LC 217 (2026-06-07)
 On Contains Duplicate, skipped brute force entirely and reached for HashMap directly — no prompting. Then independently identified that Set is cleaner than HashMap for membership-only problems: "when working with a duplicate problem, the Set solution should come first." This is a meaningful shift — he was previously going to nested loops by default.
 

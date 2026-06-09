@@ -345,6 +345,47 @@ return candidate
 
 ---
 
+## Trapping Rain Water (LeetCode 42)
+
+**Pattern:** Prefix max arrays (O(n) time, O(n) space) OR Two pointers with running max (O(n) time, O(1) space)
+
+**Core formula:** `water[i] = Math.max(0, Math.min(maxLeft[i], maxRight[i]) - height[i])`
+
+**Three approaches:**
+
+| Approach | Time | Space |
+|----------|------|-------|
+| Brute force (inner scans) | O(n²) | O(1) |
+| Prefix max arrays | O(n) | O(n) |
+| Two pointers | O(n) | O(1) |
+
+**Prefix max pattern:**
+- Left pass: push `lastMax` *before* updating it — so `leftMaxHeights[i]` is the max strictly to the left of i.
+- Right pass: assign `rightMaxHeights[i] = lastMax` by index (not push) — iterate right-to-left.
+
+**Two-pointer key insight:**
+The condition is `leftMax <= rightMax` — not `height[left] < height[right]`. You compare **running maxes**, not current heights. When `leftMax <= rightMax`, the left side is the bottleneck regardless of the exact right-side value. Process the bottleneck side, move that pointer inward.
+
+```js
+while (left <= right) {
+    if (leftMax <= rightMax) {
+        leftMax = Math.max(leftMax, height[left]);
+        water += leftMax - height[left];
+        left++;
+    } else {
+        rightMax = Math.max(rightMax, height[right]);
+        water += rightMax - height[right];
+        right--;
+    }
+}
+```
+
+**Loop condition:** `<=` not `<` — process the index where both pointers meet.
+
+**Why accumulation never goes negative:** `leftMax` is updated to `Math.max(leftMax, height[left])` before the subtraction — so it's always ≥ `height[left]`.
+
+---
+
 ## 3Sum (LeetCode 15)
 
 **Pattern:** Two pointers *inside* a loop — k-sum reduction

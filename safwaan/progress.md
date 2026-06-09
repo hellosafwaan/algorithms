@@ -1,15 +1,16 @@
 # Safwaan — Progress
 
 ## Current Phase
-**Phase 2 — Two Pointers** (finishing up)
-Next problem: Trapping Rain Water (LC #42) — Phase 2 final problem
-After that: Phase 3 — Sliding Window
+**Phase 3 — Sliding Window**
+Phase 2 complete as of 2026-06-09 (LC #42 done)
+Next problem: Best Time to Buy and Sell Stock (LC #121)
 
 For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 
 ---
 
 ## Recently Completed
+- Trapping Rain Water (LC #42) — 2026-06-09 — 100th percentile (two-pointer), Phase 2 final
 - Contains Duplicate (LC #217) — 2026-06-07 — 65th percentile, Hash Set (Phase 1 cleanup)
 - Pow(x, n) (LC #50) — 2026-06-07 — 100th percentile, Exponentiation by Squaring (detour into Phase 17)
 - Majority Element (LC #169) — 2026-06-07 — 100th percentile, Boyer-Moore Voting (bonus problem, not NeetCode 150)
