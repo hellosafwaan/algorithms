@@ -51,6 +51,20 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Hash Map — Bijection (Two Maps)
+
+**Core idea:** When you need a consistent one-to-one mapping between two sets, use two maps — one per direction. A single map collapses both namespaces and produces false collisions when a letter appears on both sides.
+
+**Pattern:** Check for conflict, then set unconditionally. Setting the same value twice is harmless.
+
+**When to reach for it:** "Are these two strings isomorphic?", "Does this word pattern match?", any problem requiring a bijective mapping between two sequences.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 205 — Isomorphic Strings | Two-map bijection | `sToT` and `tToS` keep namespaces separate; check conflict, then set unconditionally |
+
+---
+
 ## Hash Map — Character Frequency
 
 **Core idea:** Build a frequency map (character → count) to compare string composition.

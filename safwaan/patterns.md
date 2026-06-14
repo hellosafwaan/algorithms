@@ -142,6 +142,14 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 
 ---
 
+### 26. One-map namespace collision on bijection problems
+- **Seen in:** LC 205 (2026-06-15)
+- **What happened:** Stored both `s[i]→t[i]` and `t[i]→s[i]` in one map. When `s[4]='r'` tried to map to `t[4]='e'`, the has-check fired on the s-side entry `e→l` — a false conflict. The same letter appeared as both an s-side key and a t-side target.
+- **Fix:** Two separate maps (`sToT`, `tToS`). Each map owns one namespace. Pattern: check for conflict first, then set unconditionally — setting the same value twice is harmless.
+- **Status:** Needed explanation and trace to see it. Probe cold at Word Pattern (LC 290).
+
+---
+
 ### 25. currentWindowSize computed before left updates
 - **Seen in:** LC 3 (2026-06-14)
 - **What happened:** Computed `currentWindowSize = i - left + 1` at the top of the loop, then updated `left` in the else branch. Value was stale — used old window bounds.

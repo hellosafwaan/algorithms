@@ -40,6 +40,27 @@
 
 ---
 
+### Bijection — Two Maps
+
+**When to reach for it:** "Are these two strings isomorphic?", "Does this word pattern match?" — any problem requiring a consistent one-to-one mapping between two sequences.
+
+**Why not one map?** A single map collapses both namespaces. The same letter can appear as an s-side key *and* a t-side target — a false has-check fires on the s-side entry when you're trying to check the t-side.
+
+**Pattern:** Check for conflict in both maps, then set both unconditionally. Setting the same key→value pair twice is harmless.
+
+```js
+if (sToT.has(sc) && sToT.get(sc) !== tc) return false;
+if (tToS.has(tc) && tToS.get(tc) !== sc) return false;
+sToT.set(sc, tc);
+tToS.set(tc, sc);
+```
+
+| Problem | Key Insight |
+|---------|-------------|
+| LC 205 — Isomorphic Strings | `sToT` and `tToS` keep namespaces separate; check conflict then set |
+
+---
+
 ### Two Pointers on Strings
 
 **When to reach for it:** Comparing characters from both ends, skipping non-alphanumeric characters.

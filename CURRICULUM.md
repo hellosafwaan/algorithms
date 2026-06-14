@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases, 154 problems + 5 bonus problems = 159 total (LC #383, #118, #119, #31, #169 are bonus)
+Total: 18 phases, 154 problems + 6 bonus problems = 160 total (LC #383, #205, #118, #119, #31, #169 are bonus)
 
 ---
 
@@ -23,6 +23,7 @@ Total: 18 phases, 154 problems + 5 bonus problems = 159 total (LC #383, #118, #1
 | 8 | Encode and Decode Strings | Medium | [LC #271](https://leetcode.com/problems/encode-and-decode-strings/) | String Encoding |
 | 9 | Longest Consecutive Sequence | Medium | [LC #128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash Set |
 | — | Ransom Note *(bonus — Hashmap sprint)* | Easy | [LC #383](https://leetcode.com/problems/ransom-note/) | Hash Map — frequency counting |
+| — | Isomorphic Strings *(bonus — Hashmap sprint)* | Easy | [LC #205](https://leetcode.com/problems/isomorphic-strings/) | Hash Map — Bijection |
 | — | Pascal's Triangle *(bonus)* | Easy | [LC #118](https://leetcode.com/problems/pascals-triangle/) | 2D Array Construction |
 | — | Pascal's Triangle II *(bonus)* | Easy | [LC #119](https://leetcode.com/problems/pascals-triangle-ii/) | Right-to-left In-place Update |
 

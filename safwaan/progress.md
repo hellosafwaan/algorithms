@@ -3,7 +3,7 @@
 ## Current Phase
 **Interview Sprint — 2026-06-14 to 2026-06-18 (interview Friday 2026-06-19)**
 Phase 2 complete as of 2026-06-09 (LC #42 done)
-Next problem: Longest Repeating Character Replacement (LC #424)
+Next problem: Word Pattern (LC #290)
 ⚠️ LC 42 two-pointer redo deferred until after the interview
 
 For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
@@ -11,6 +11,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Isomorphic Strings (LC #205) — 2026-06-15 — Hashmap sprint bonus, bijection (two maps), 90th percentile
 - Ransom Note (LC #383) — 2026-06-14 — Hashmap sprint bonus, frequency counting (increment/decrement), clean first-attempt solve
 - Longest Substring Without Repeating Characters (LC #3) — 2026-06-14 — 27th percentile, Sliding Window (HashMap + left pointer), Phase 3
 - Group Anagrams (LC #49) — 2026-06-14 — 45th percentile, sorted string as HashMap key, Phase 1 cleanup

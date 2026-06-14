@@ -3,6 +3,8 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| Can he write the clean two-line bijection pattern cold (`if has && get !== val → false; set unconditionally`)? | Hash Map — Bijection | 205 | open |
+| Can he explain cold why one map fails on isomorphic strings — construct the counterexample himself? | Hash Map — Bijection | 205 | open |
 | `left = Math.max(left, map[char] + 1)` — can he state this rule cold and explain why `Math.max` is needed? | Sliding Window | 3 | open |
 | Window size formula `i - left + 1` — does he remember the `+1` and why? | Sliding Window | 3 | open |
 | Set vs HashMap for sliding window — when does index tracking make HashMap the right choice? | Sliding Window / data structure choice | 3 | open |
