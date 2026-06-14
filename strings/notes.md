@@ -16,6 +16,7 @@
 |---------|---------|---------------|
 | LC 242 — Valid Anagram | Two-map or one-map | One-map: iterate `Object.keys()`, not just `s` |
 | LC 49 — Group Anagrams | Sorted string as key | Sort chars of each string → `split("").sort().join("")`; push original into map; return `Object.values()` |
+| LC 383 — Ransom Note | Increment/decrement | Count ransomNote, decrement with magazine. `counts.get(char) ?? 0` avoids has/else boilerplate. Early exit variant: track `remaining` counter. |
 
 **Sorted string as key:** When grouping strings by character composition, sort each string's characters and use the result as the HashMap key. All anagrams share the same sorted form. This avoids pairwise O(n²) comparison.
 

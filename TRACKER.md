@@ -12,18 +12,18 @@ Last updated: 2026-06-14
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 154 |
-| ✅ Complete | 22 |
+| Total problems | 159 |
+| ✅ Complete | 23 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 132 |
+| ⏳ Not started | 135 |
 
 ---
 
 ## Phase Overview
 | # | Phase | Problems | Done | Target Date | Status |
 |---|-------|----------|------|-------------|--------|
-| 1 | Arrays & Hashing | 9 | 7 | 2026-06-05 | 🔄 In Progress |
-| 2 | Two Pointers | 9 | 9 | 2026-06-02 | ✅ Complete |
+| 1 | Arrays & Hashing | 12 | 10 | 2026-06-05 | 🔄 In Progress |
+| 2 | Two Pointers | 10 | 10 | 2026-06-02 | ✅ Complete |
 | 3 | Sliding Window | 6 | 1 | 2026-06-08 | 🔄 In Progress |
 | 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
 | 5 | Binary Search | 7 | 0 | 2026-06-16 | ⏳ |
@@ -57,6 +57,9 @@ Last updated: 2026-06-14
 | 7 | Valid Sudoku | Medium | [#36](https://leetcode.com/problems/valid-sudoku/) | Hash Set | ⏳ | — |
 | 8 | Encode and Decode Strings | Medium | [#271](https://leetcode.com/problems/encode-and-decode-strings/) | String Encoding | ⏳ | — |
 | 9 | Longest Consecutive Sequence | Medium | [#128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash Set | ⏳ | — |
+| — | Ransom Note *(bonus — Hashmap sprint)* | Easy | [#383](https://leetcode.com/problems/ransom-note/) | Hash Map — frequency counting | ✅ | [→](strings/383-ransom-note/learnings.md) |
+| — | Pascal's Triangle *(bonus)* | Easy | [#118](https://leetcode.com/problems/pascals-triangle/) | 2D Array Construction | ✅ | [→](arrays/118-pascal's-triangle/learnings.md) |
+| — | Pascal's Triangle II *(bonus)* | Easy | [#119](https://leetcode.com/problems/pascals-triangle-ii/) | Right-to-left In-place Update | ✅ | [→](arrays/119-pascal's-triangle-two/learnings.md) |
 
 ## Phase 2 — Two Pointers 🔄
 > Notes: [arrays/notes.md](arrays/notes.md)
@@ -72,6 +75,7 @@ Last updated: 2026-06-14
 | 7 | Remove Duplicates from Sorted Array | Easy | [#26](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | Two Pointers | ✅ 100th pct | [→](arrays/26-remove-duplicate-elements-in-a-sorted-array/learnings.md) |
 | 8 | Remove Duplicates from Sorted Array II | Medium | [#80](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | Two Pointers (read/write, look-back) | ✅ 46th pct | [→](arrays/80-remove-duplicates-from-a-sorted-array/learnings.md) |
 | 9 | Trapping Rain Water | Hard | [#42](https://leetcode.com/problems/trapping-rain-water/) | Prefix Max / Two Pointers | ✅ 100th pct | [→](arrays/42-trapping-rain-water/learnings.md) |
+| — | Next Permutation *(bonus)* | Medium | [#31](https://leetcode.com/problems/next-permutation/) | Pivot + Swap + Two-pointer Reverse | ✅ | [→](arrays/31-next-permutation/learnings.md) |
 
 ## Phase 3 — Sliding Window ⏳
 
@@ -274,6 +278,7 @@ Last updated: 2026-06-14
 | 4 | Spiral Matrix | Medium | [#54](https://leetcode.com/problems/spiral-matrix/) | Matrix | ⏳ | — |
 | 5 | Set Matrix Zeroes | Medium | [#73](https://leetcode.com/problems/set-matrix-zeroes/) | Matrix | ⏳ | — |
 | 6 | Pow(x, n) | Medium | [#50](https://leetcode.com/problems/powx-n/) | Exponentiation by Squaring | ✅ | [→](math/50-pow(x,n)/learnings.md) |
+| — | Majority Element *(bonus — Top Interview 150)* | Easy | [#169](https://leetcode.com/problems/majority-element/) | Hash Map counting / Boyer-Moore Voting | ✅ 100th pct | [→](arrays/169-majority-element/learnings.md) |
 | 7 | Multiply Strings | Medium | [#43](https://leetcode.com/problems/multiply-strings/) | Math | ⏳ | — |
 | 8 | Detect Squares | Medium | [#587](https://leetcode.com/problems/detect-squares/) | Math | ⏳ | — |
 

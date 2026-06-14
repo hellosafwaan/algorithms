@@ -11,6 +11,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Ransom Note (LC #383) — 2026-06-14 — Hashmap sprint bonus, frequency counting (increment/decrement), clean first-attempt solve
 - Longest Substring Without Repeating Characters (LC #3) — 2026-06-14 — 27th percentile, Sliding Window (HashMap + left pointer), Phase 3
 - Group Anagrams (LC #49) — 2026-06-14 — 45th percentile, sorted string as HashMap key, Phase 1 cleanup
 - Valid Anagram (LC #242) — 2026-06-14 — two submissions (two-map + one-map), Phase 1 cleanup

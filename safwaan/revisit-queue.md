@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 383 — Ransom Note | Hash Map — frequency counting (increment/decrement) | 2026-06-14 | 2026-07-05 | ⏳ |
 | LC 3 — Longest Substring Without Repeating Characters | Sliding Window — HashMap + left pointer | 2026-06-14 | 2026-06-18 (Wednesday — cold redo planned) | ⏳ |
 | LC 49 — Group Anagrams | Hash Map — sorted string as key | 2026-06-14 | 2026-07-05 | ⏳ |
 | LC 242 — Valid Anagram | Hash Map — character frequency (two-map + one-map) | 2026-06-14 | 2026-07-05 | ⏳ |

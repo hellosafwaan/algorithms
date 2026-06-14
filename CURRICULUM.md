@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases, 150 problems
+Total: 18 phases, 154 problems + 5 bonus problems = 159 total (LC #383, #118, #119, #31, #169 are bonus)
 
 ---
 
@@ -22,13 +22,16 @@ Total: 18 phases, 150 problems
 | 7 | Valid Sudoku | Medium | [LC #36](https://leetcode.com/problems/valid-sudoku/) | Hash Set |
 | 8 | Encode and Decode Strings | Medium | [LC #271](https://leetcode.com/problems/encode-and-decode-strings/) | String Encoding |
 | 9 | Longest Consecutive Sequence | Medium | [LC #128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash Set |
+| — | Ransom Note *(bonus — Hashmap sprint)* | Easy | [LC #383](https://leetcode.com/problems/ransom-note/) | Hash Map — frequency counting |
+| — | Pascal's Triangle *(bonus)* | Easy | [LC #118](https://leetcode.com/problems/pascals-triangle/) | 2D Array Construction |
+| — | Pascal's Triangle II *(bonus)* | Easy | [LC #119](https://leetcode.com/problems/pascals-triangle-ii/) | Right-to-left In-place Update |
 
 ---
 
 ## Phase 2 — Two Pointers
 **Why this order:** Builds directly on arrays. Eliminates one dimension of looping — the first major optimization technique.
 **Interview weight:** 🔴 Very High
-**Problems:** 7 total (E: 3 / M: 3 / H: 1)
+**Problems:** 9 total (E: 4 / M: 4 / H: 1)
 
 | # | Problem | Difficulty | LeetCode | Pattern |
 |---|---------|------------|----------|---------|
@@ -37,8 +40,11 @@ Total: 18 phases, 150 problems
 | 3 | 3Sum | Medium | [LC #15](https://leetcode.com/problems/3sum/) | Two Pointers in Loop |
 | 4 | Container With Most Water | Medium | [LC #11](https://leetcode.com/problems/container-with-most-water/) | Two Pointers |
 | 5 | Merge Sorted Array | Easy | [LC #88](https://leetcode.com/problems/merge-sorted-array/) | Two Pointers (fill backwards) |
-| 6 | Remove Duplicates from Sorted Array | Easy | [LC #26](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | Two Pointers |
-| 7 | Trapping Rain Water | Hard | [LC #42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers |
+| 6 | Remove Element | Easy | [LC #27](https://leetcode.com/problems/remove-element/) | Two Pointers (read/write + swap) |
+| 7 | Remove Duplicates from Sorted Array | Easy | [LC #26](https://leetcode.com/problems/remove-duplicates-from-sorted-array/) | Two Pointers |
+| 8 | Remove Duplicates from Sorted Array II | Medium | [LC #80](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | Two Pointers (read/write, look-back) |
+| 9 | Trapping Rain Water | Hard | [LC #42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers |
+| — | Next Permutation *(bonus)* | Medium | [LC #31](https://leetcode.com/problems/next-permutation/) | Pivot + Swap + Two-pointer Reverse |
 
 ---
 
@@ -316,6 +322,7 @@ Total: 18 phases, 150 problems
 | 4 | Spiral Matrix | Medium | [LC #54](https://leetcode.com/problems/spiral-matrix/) | Matrix |
 | 5 | Set Matrix Zeroes | Medium | [LC #73](https://leetcode.com/problems/set-matrix-zeroes/) | Matrix |
 | 6 | Pow(x, n) | Medium | [LC #50](https://leetcode.com/problems/powx-n/) | Math |
+| — | Majority Element *(bonus — Top Interview 150)* | Easy | [LC #169](https://leetcode.com/problems/majority-element/) | Hash Map counting / Boyer-Moore Voting |
 | 7 | Multiply Strings | Medium | [LC #43](https://leetcode.com/problems/multiply-strings/) | Math |
 | 8 | Detect Squares | Medium | [LC #587](https://leetcode.com/problems/detect-squares/) | Math |
 

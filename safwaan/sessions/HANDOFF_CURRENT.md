@@ -1,23 +1,21 @@
-# Handoff — Interview Prep Sprint (Day 1 of 5, third problem done)
+# Handoff — Interview Prep Sprint (Day 1 of 5, four problems done)
 
 ## Context
 
-Safwaan has an interview on **Friday 2026-06-19**. Today (Sun 2026-06-14) he completed three problems: Valid Anagram (LC 242), Group Anagrams (LC 49), and Longest Substring Without Repeating Characters (LC 3).
+Safwaan has an interview on **Friday 2026-06-19**. Today (Sun 2026-06-14) he completed four problems: Valid Anagram (LC 242), Group Anagrams (LC 49), Longest Substring Without Repeating Characters (LC 3), and Ransom Note (LC 383).
+
+**Sprint pivot:** LC 424 and Josephus Problem are now deferred. Safwaan wants to work through the LeetCode Hashmap study plan problem set to solidify the pattern before the interview.
 
 ## What Was Just Completed
 
-**LC 3 — Longest Substring Without Repeating Characters**
+**LC 383 — Ransom Note**
 
-First proper sliding window problem. Started with a naive subString approach (O(n²)) — direction was right but reset logic discarded valid characters. Debugged to a working naive, then moved to the HashMap optimal with guidance.
+Fastest, cleanest solve in a while. First attempt, no hints, worked. He asked good conceptual questions (what is a ransom note, what does splice do, charCodeAt explanation) but the coding itself was frictionless. Explored five variations: his original Map solution, cleaned-up Map, early-exit with `remaining` counter, charCodeAt array, and naive splice approach.
 
-Key things that needed guidance:
-- The "window" concept needed a concrete visual trace before the code structure clicked
-- `left = Math.max(left, map[char] + 1)` — the `Math.max` guard was given (not derived)
-- Pulled a Set solution from online mid-session — redirected
-
-He correctly reasoned afterward why HashMap > Set for this problem (index tracking vs membership only).
-
-Wants to redo this problem cold within the week.
+New toolkit additions:
+- `splice(idx, 1)` — removes 1 element at index from an array (arrays only, not strings)
+- `charCodeAt(0) - 97` — maps 'a'→0, 'b'→1, ..., 'z'→25
+- `?? 0` vs `|| 0` — `??` only falls back on undefined/null; `||` treats 0 as falsy
 
 ## Remaining Sprint Plan
 
@@ -26,34 +24,41 @@ Wants to redo this problem cold within the week.
 | 1 | Valid Anagram (LC 242) | ✅ Done today |
 | 2 | Group Anagrams (LC 49) | ✅ Done today |
 | 3 | Longest Substring Without Repeating Characters (LC 3) | ✅ Done today |
-| 4 | Longest Repeating Character Replacement (LC 424) | Next |
-| 5 | Josephus Problem | — |
+| 4 | Ransom Note (LC 383) | ✅ Done today |
+| 5 | Isomorphic Strings (LC 205) | Next |
+| 6 | Word Pattern (LC 290) | — |
+| 7 | Happy Number (LC 202) | — |
+| 8 | Contains Duplicate II (LC 219) | — |
+| 9 | Longest Consecutive Sequence (LC 128) | — |
+
+LC 424, Josephus deferred to after interview.
+LC 3 cold redo still planned for Wednesday 2026-06-18.
 
 ## Next Session — Start Here
 
-**Start directly with LC 424.** Cold redo of LC 3 is planned for Wednesday 2026-06-18 — not this session.
+**Start with Isomorphic Strings (LC 205).** Cold attempt. This is a two-map bijection problem — different shape from frequency counting. He'll likely reach for frequency counting first; let him try before redirecting.
 
-**LC 424 — Longest Repeating Character Replacement.** This is a different shape of sliding window. The constraint isn't "no repeats" but "window length minus count of most frequent char ≤ k." That's a harder window validity check. Let him attempt cold.
-
-Key things to watch for LC 424:
-- Will he remember the `left = Math.max(left, ...)` guard?
-- The validity check `(windowSize - maxFreq) > k` is non-obvious — let him struggle with it
-- He'll need a frequency map for the window, not just a last-seen map
+Key things to watch:
+- Does he realize frequency counts alone aren't enough? (e.g., "egg" and "add" are isomorphic, but "badc" and "baba" are not — frequencies match but the mapping doesn't)
+- The key insight is bidirectional mapping: s→t AND t→s must both be consistent
 
 ## Safwaan's Current State
 
 **What he knows:**
+- HashMap frequency counting — increment/decrement pattern solid
+- `?? 0` shorthand for Map.get with default
+- `splice(idx, 1)` for array element removal
+- `charCodeAt(0) - 97` for letter → index mapping
 - Sliding window: expand right always, shrink left on invalid window
-- HashMap char → last index for O(1) left jump
-- Window size = `i - left + 1`
-- `Math.max(left, map[char]+1)` guard — given, not yet confirmed solid
+- `Math.max(left, map[char]+1)` guard — given in LC 3, probe cold at LC 424 (when we return to it)
 
 **Gaps to watch:**
-- `Math.max` guard — probe cold
-- Abstract-to-code bridge still thin on new pattern shapes — may need variable trace to unlock LC 424
+- `Math.max` guard in sliding window — not yet confirmed solid cold
+- Abstract-to-code bridge on new pattern shapes — may need variable trace
 
 ## Coach Notes
 
 - Move fast this week. Interview is Friday.
 - LC 42 two-pointer redo: still deferred to after the interview.
-- LC 3 revisit: scheduled for 2026-06-21 in revisit queue, but Safwaan wants it sooner — check at session start.
+- LC 3 revisit: scheduled for 2026-06-18 (Wednesday).
+- Ransom Note was the easiest problem in the sprint so far — don't expect that pace to continue on Isomorphic Strings.

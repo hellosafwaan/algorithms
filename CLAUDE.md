@@ -127,7 +127,15 @@ Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/Ty
 Run these steps **only when Safwaan says "wrap up"** (or equivalent: "wrap", "end session", "done for today"). Do not run them automatically. When triggered, run all steps silently and confirm with a single line: "Wrapped up — [problem name] logged."
 
 **1. Update `TRACKER.md`**
-Change the problem's status. Update the summary counts at the top.
+Two cases:
+
+- **Problem already in TRACKER** (standard curriculum problem): Change its status to ✅. Update summary counts: Complete +1, Not started -1.
+- **Bonus problem (not yet in TRACKER)**: Add a new row marked *(bonus)* in the closest phase, with status ✅. Update summary counts: Total +1, Complete +1. Not started stays the same — the problem is added and completed simultaneously, so it never enters the not-started pool.
+
+**1a. Update `CURRICULUM.md`**
+Same two cases:
+- **Problem already in CURRICULUM**: no change needed (status lives in TRACKER, not CURRICULUM).
+- **Bonus problem**: Add a new row marked *(bonus)* in the closest phase. Update the CURRICULUM header total count to match TRACKER.
 
 **2. Update `safwaan/progress.md`**
 Update current phase, mark completed problem, note anything worth flagging.

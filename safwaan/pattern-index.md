@@ -69,6 +69,7 @@ When starting a new problem, check here first. Find the pattern, recall what you
 |---------|--------|-------------|
 | LC 242 — Valid Anagram | Two-map or one-map | One-map: iterate `Object.keys()`, not just `s`; else-branch for t is `-1` not `1` |
 | LC 49 — Group Anagrams | Sorted string as key | Sort each string's chars → identical for all anagrams. Push original string into `map[sortedKey]`. Return `Object.values(map)`. |
+| LC 383 — Ransom Note | Increment/decrement | Build count map for ransomNote, decrement with magazine. Any positive count = magazine short. `?? 0` to default missing keys. |
 
 ---
 
