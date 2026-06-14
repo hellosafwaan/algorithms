@@ -106,6 +106,7 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 - **Subproblem completeness** — tends to stop at the first valid answer; must learn to ask "could there be more?" before closing a loop
 - **Index-detail precision** — `+1/-1` neighbor math is unreliable in his head but solid when he traces
 - **Toolkit/library recall** — `Set`, `Map`, `Array.from`, reference vs value equality not yet at his fingertips
+- **Abstract-to-code bridge on new patterns** — needs a concrete variable trace before the loop structure clicks; gave window visualization before LC 3 optimal unlocked
 
 ---
 
@@ -130,6 +131,22 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 - **What happened:** Wrote `num[i]` instead of `nums[i]` inside the return statement — caught himself during trace
 - **How it was caught:** Asked to trace through a concrete example — spotted it himself
 - **Status:** Self-caught via tracing — consistent pattern
+
+---
+
+### 24. Left pointer jumping backwards in sliding window
+- **Seen in:** LC 3 (2026-06-14)
+- **What happened:** Wrote `left = map[char] + 1` — when the duplicate was seen before the current window, this jumps left backwards, expanding the window to include characters already excluded.
+- **Fix:** Always `left = Math.max(left, map[char] + 1)`. Left only moves forward.
+- **Status:** Needed to be given. Probe cold at next sliding window problem.
+
+---
+
+### 25. currentWindowSize computed before left updates
+- **Seen in:** LC 3 (2026-06-14)
+- **What happened:** Computed `currentWindowSize = i - left + 1` at the top of the loop, then updated `left` in the else branch. Value was stale — used old window bounds.
+- **Fix:** Compute window size after updating left, not before.
+- **Status:** Caught via tracing.
 
 ---
 

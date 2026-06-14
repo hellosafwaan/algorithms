@@ -111,6 +111,24 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Sliding Window (Variable Size)
+
+**Core idea:** Two indices (`left` and `i`) mark the current valid window. Expand right on every step. Shrink left only when the window becomes invalid. Track the max size seen.
+
+**When to reach for it:** Longest/shortest substring satisfying some constraint. "No repeating characters", "at most k distinct", "contains all characters of t."
+
+**HashMap vs Set:** Use HashMap (`char → last seen index`) when you need to jump `left` directly — O(1) per shrink. Use Set when you're OK inching `left` forward with a while loop — also O(n) overall but more iterations.
+
+**Critical guard:** `left = Math.max(left, map[char] + 1)` — left never goes backwards. Without `Math.max`, a character seen before the current window can drag left backwards.
+
+**Window size:** `i - left + 1`. The `+1` because both ends are inclusive.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 3 — Longest Substring Without Repeating Characters | Variable window, HashMap | Store char → last index; jump left to `Math.max(left, map[char]+1)`; never reset to 0 |
+
+---
+
 ## Prefix / Suffix Precomputation
 
 **Core idea:** Precompute running products/sums/maxes from both directions so each index can be answered in O(1) without scanning.

@@ -21,6 +21,24 @@
 
 ---
 
+### Sliding Window — Variable Size
+
+**When to reach for it:** Longest/shortest substring satisfying some constraint (no repeats, at most k distinct chars, etc.)
+
+**Shape:** `left` and `i` mark the window. `i` always moves right. `left` only moves right when window is invalid.
+
+**HashMap flavor (O(1) shrink):** Store `char → last seen index`. On duplicate: `left = Math.max(left, map[char] + 1)`. Always update `map[char] = i` after the check. Window size: `i - left + 1`.
+
+**Set flavor (while-loop shrink):** On duplicate, `while (set.has(char)) { set.delete(s[left]); left++; }` then add char. Also O(n) overall but more iterations.
+
+**Critical rule:** `Math.max(left, ...)` — left never goes backwards. A char seen before the current window can drag left back without it.
+
+| Problem | Key Insight |
+|---------|-------------|
+| LC 3 — Longest Substring Without Repeating Characters | HashMap char → last index; jump left directly; `Math.max(left, map[char]+1)` |
+
+---
+
 ### Two Pointers on Strings
 
 **When to reach for it:** Comparing characters from both ends, skipping non-alphanumeric characters.

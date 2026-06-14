@@ -1,16 +1,23 @@
-# Handoff — Interview Prep Sprint (Day 1 of 5, second problem)
+# Handoff — Interview Prep Sprint (Day 1 of 5, third problem done)
 
 ## Context
 
-Safwaan has an interview on **Friday 2026-06-19**. Today (Sun 2026-06-14) he completed two problems: Valid Anagram (LC 242) and Group Anagrams (LC 49).
+Safwaan has an interview on **Friday 2026-06-19**. Today (Sun 2026-06-14) he completed three problems: Valid Anagram (LC 242), Group Anagrams (LC 49), and Longest Substring Without Repeating Characters (LC 3).
 
 ## What Was Just Completed
 
-**Group Anagrams (LC 49)** — needed guidance on the key insight. First instinct was pairwise O(n²) using Valid Anagram as a helper. After a few questions, landed on: sort each string's characters, use as HashMap key, push originals into the array at that key. Return `Object.values(map)`.
+**LC 3 — Longest Substring Without Repeating Characters**
 
-One bug: swapped if/else branches (caught with one prompt). Complexity arrived at correctly after prompting (O(n·k log k)).
+First proper sliding window problem. Started with a naive subString approach (O(n²)) — direction was right but reset logic discarded valid characters. Debugged to a working naive, then moved to the HashMap optimal with guidance.
 
-45th percentile runtime — expected for the sort-based approach.
+Key things that needed guidance:
+- The "window" concept needed a concrete visual trace before the code structure clicked
+- `left = Math.max(left, map[char] + 1)` — the `Math.max` guard was given (not derived)
+- Pulled a Set solution from online mid-session — redirected
+
+He correctly reasoned afterward why HashMap > Set for this problem (index tracking vs membership only).
+
+Wants to redo this problem cold within the week.
 
 ## Remaining Sprint Plan
 
@@ -18,35 +25,35 @@ One bug: swapped if/else branches (caught with one prompt). Complexity arrived a
 |---|---------|--------|
 | 1 | Valid Anagram (LC 242) | ✅ Done today |
 | 2 | Group Anagrams (LC 49) | ✅ Done today |
-| 3 | Longest Substring Without Repeating Characters (LC 3) | Next |
-| 4 | Josephus Problem | — |
+| 3 | Longest Substring Without Repeating Characters (LC 3) | ✅ Done today |
+| 4 | Longest Repeating Character Replacement (LC 424) | Next |
+| 5 | Josephus Problem | — |
 
 ## Next Session — Start Here
 
-**LC 3 — Longest Substring Without Repeating Characters.** Cold attempt immediately.
+**Start directly with LC 424.** Cold redo of LC 3 is planned for Wednesday 2026-06-18 — not this session.
 
-This is proper sliding window. Different shape from LC 121 (which was just "running min + single pass"). Here the window actually resizes — you expand right when the new character is unseen, shrink from the left when it's a duplicate.
+**LC 424 — Longest Repeating Character Replacement.** This is a different shape of sliding window. The constraint isn't "no repeats" but "window length minus count of most frequent char ≤ k." That's a harder window validity check. Let him attempt cold.
 
-Key things to watch:
-- He'll probably reach for a Set or HashMap correctly — the question is whether he knows HOW to shrink the window
-- The naive O(n²) is: for each left pointer, scan right until you hit a duplicate. Let him write this first.
-- The optimal insight: instead of restarting the window from the left, track WHERE each character was last seen (HashMap char → index), and jump the left pointer directly to lastSeen[char] + 1
-- Watch for off-by-one on the left pointer jump (should be `lastSeen[char] + 1`, not `lastSeen[char]`)
-- Also watch for: updating lastSeen for a character that's outside the current window — this is a subtle bug where an old position causes the left pointer to jump backwards
+Key things to watch for LC 424:
+- Will he remember the `left = Math.max(left, ...)` guard?
+- The validity check `(windowSize - maxFreq) > k` is non-obvious — let him struggle with it
+- He'll need a frequency map for the window, not just a last-seen map
 
 ## Safwaan's Current State
 
 **What he knows:**
-- HashMap for character tracking — solid
-- Sorted string as key (just learned today)
-- Running min / single pass (LC 121)
+- Sliding window: expand right always, shrink left on invalid window
+- HashMap char → last index for O(1) left jump
+- Window size = `i - left + 1`
+- `Math.max(left, map[char]+1)` guard — given, not yet confirmed solid
 
 **Gaps to watch:**
-- Doesn't instinctively find canonical keys for grouping — needed the sorted-key insight given
-- Abstract-to-code bridge on new patterns: needs a concrete trace of what variables look like after each step
+- `Math.max` guard — probe cold
+- Abstract-to-code bridge still thin on new pattern shapes — may need variable trace to unlock LC 424
 
 ## Coach Notes
 
 - Move fast this week. Interview is Friday.
-- If he gets the naive solution for LC 3, push directly to: "what if you could jump the left pointer instead of incrementing it one step at a time?"
 - LC 42 two-pointer redo: still deferred to after the interview.
+- LC 3 revisit: scheduled for 2026-06-21 in revisit queue, but Safwaan wants it sooner — check at session start.

@@ -13,7 +13,7 @@ Last updated: 2026-06-14
 | Metric | Count |
 |--------|-------|
 | Total problems | 154 |
-| ✅ Complete | 21 |
+| ✅ Complete | 22 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 132 |
 
@@ -78,7 +78,7 @@ Last updated: 2026-06-14
 | # | Problem | Difficulty | LC | Pattern | Status | Learnings |
 |---|---------|------------|----|---------|--------|-----------|
 | 1 | Best Time to Buy and Sell Stock | Easy | [#121](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | Running Min / Single Pass | ✅ 80th pct | [→](arrays/121-best-time-to-buy-and-sell-a-stock/learnings.md) |
-| 2 | Longest Substring Without Repeating Characters | Medium | [#3](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | Sliding Window | ⏳ | — |
+| 2 | Longest Substring Without Repeating Characters | Medium | [#3](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | Sliding Window — HashMap + left pointer | ✅ 27th pct | [→](strings/3-longest-substring-without-repeating-characters/learnings.md) |
 | 3 | Longest Repeating Character Replacement | Medium | [#424](https://leetcode.com/problems/longest-repeating-character-replacement/) | Sliding Window | ⏳ | — |
 | 4 | Permutation in String | Medium | [#567](https://leetcode.com/problems/permutation-in-string/) | Sliding Window | ⏳ | — |
 | 5 | Minimum Window Substring | Hard | [#76](https://leetcode.com/problems/minimum-window-substring/) | Sliding Window | ⏳ | — |
