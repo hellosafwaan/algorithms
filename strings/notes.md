@@ -15,6 +15,9 @@
 | Problem | Variant | Key Watch-out |
 |---------|---------|---------------|
 | LC 242 — Valid Anagram | Two-map or one-map | One-map: iterate `Object.keys()`, not just `s` |
+| LC 49 — Group Anagrams | Sorted string as key | Sort chars of each string → `split("").sort().join("")`; push original into map; return `Object.values()` |
+
+**Sorted string as key:** When grouping strings by character composition, sort each string's characters and use the result as the HashMap key. All anagrams share the same sorted form. This avoids pairwise O(n²) comparison.
 
 ---
 

@@ -3,7 +3,7 @@
 ## Current Phase
 **Interview Sprint — 2026-06-14 to 2026-06-18 (interview Friday 2026-06-19)**
 Phase 2 complete as of 2026-06-09 (LC #42 done)
-Next problem: Group Anagrams (LC #49)
+Next problem: Longest Substring Without Repeating Characters (LC #3)
 ⚠️ LC 42 two-pointer redo deferred until after the interview
 
 For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
@@ -11,6 +11,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Group Anagrams (LC #49) — 2026-06-14 — 45th percentile, sorted string as HashMap key, Phase 1 cleanup
 - Valid Anagram (LC #242) — 2026-06-14 — two submissions (two-map + one-map), Phase 1 cleanup
 - Best Time to Buy and Sell Stock (LC #121) — 2026-06-13 — 80th percentile, Running Min / Single Pass (Phase 3 start)
 - Trapping Rain Water (LC #42) — 2026-06-09 — 100th percentile (two-pointer), Phase 2 final

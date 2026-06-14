@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 49 — Group Anagrams | Hash Map — sorted string as key | 2026-06-14 | 2026-07-05 | ⏳ |
 | LC 242 — Valid Anagram | Hash Map — character frequency (two-map + one-map) | 2026-06-14 | 2026-07-05 | ⏳ |
 | LC 42 — Trapping Rain Water (two-pointer only) | Two pointers — running max / bottleneck processing | 2026-06-09 | after interview (2026-06-20+) | ⚠️ deferred |
 | LC 121 — Best Time to Buy and Sell Stock | Running min / single pass | 2026-06-13 | 2026-07-04 | ⏳ |

@@ -61,11 +61,14 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 **One-map variant:** Increment for string A, decrement for string B. All keys must be 0. Must iterate `Object.keys()` — not just characters from one string (characters only in B accumulate negative values that won't be checked if you only walk A).
 
+**Sorted-string key variant:** When grouping strings by character composition, sort each string's characters and use that as the key. All anagrams produce the same sorted form.
+
 **Space note:** O(1) when input is lowercase English letters — the map is bounded by 26 keys, not n.
 
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 242 — Valid Anagram | Two-map or one-map | One-map: iterate `Object.keys()`, not just `s`; else-branch for t is `-1` not `1` |
+| LC 49 — Group Anagrams | Sorted string as key | Sort each string's chars → identical for all anagrams. Push original string into `map[sortedKey]`. Return `Object.values(map)`. |
 
 ---
 

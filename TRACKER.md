@@ -13,8 +13,8 @@ Last updated: 2026-06-14
 | Metric | Count |
 |--------|-------|
 | Total problems | 154 |
-| ✅ Complete | 20 |
-| ⚠️ Needs revisit | 2 |
+| ✅ Complete | 21 |
+| ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 132 |
 
 ---
@@ -22,7 +22,7 @@ Last updated: 2026-06-14
 ## Phase Overview
 | # | Phase | Problems | Done | Target Date | Status |
 |---|-------|----------|------|-------------|--------|
-| 1 | Arrays & Hashing | 9 | 7 | 2026-06-05 | ⚠️ 2 need redo |
+| 1 | Arrays & Hashing | 9 | 7 | 2026-06-05 | 🔄 In Progress |
 | 2 | Two Pointers | 9 | 9 | 2026-06-02 | ✅ Complete |
 | 3 | Sliding Window | 6 | 1 | 2026-06-08 | 🔄 In Progress |
 | 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
@@ -51,7 +51,7 @@ Last updated: 2026-06-14
 | 1 | Two Sum | Easy | [#1](https://leetcode.com/problems/two-sum/) | Hash Map | ✅ | [→](arrays/1-two-sum/learnings.md) |
 | 2 | Contains Duplicate | Easy | [#217](https://leetcode.com/problems/contains-duplicate/) | Hash Set | ✅ | [→](arrays/217-duplicate-elements/learnings.md) |
 | 3 | Valid Anagram | Easy | [#242](https://leetcode.com/problems/valid-anagram/) | Hash Map — character frequency | ✅ | [→](strings/242-anagram/learnings.md) |
-| 4 | Group Anagrams | Medium | [#49](https://leetcode.com/problems/group-anagrams/) | Hash Map | 🔁 Redo | — |
+| 4 | Group Anagrams | Medium | [#49](https://leetcode.com/problems/group-anagrams/) | Hash Map — sorted string as key | ✅ | [→](strings/49-group-anagrams/learnings.md) |
 | 5 | Top K Frequent Elements | Medium | [#347](https://leetcode.com/problems/top-k-frequent-elements/) | Heap / Bucket Sort | ✅ | — |
 | 6 | Product of Array Except Self | Medium | [#238](https://leetcode.com/problems/product-of-array-except-self/) | Prefix / Suffix | ✅ | — |
 | 7 | Valid Sudoku | Medium | [#36](https://leetcode.com/problems/valid-sudoku/) | Hash Set | ⏳ | — |
