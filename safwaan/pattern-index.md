@@ -51,6 +51,24 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Hash Map — Character Frequency
+
+**Core idea:** Build a frequency map (character → count) to compare string composition.
+
+**When to reach for it:** "Do these strings have the same characters?", frequency comparisons, grouping by character signature.
+
+**Two-map variant:** One map per string, compare them. Safe to iterate only one map if lengths are equal — length check provides symmetry guarantee.
+
+**One-map variant:** Increment for string A, decrement for string B. All keys must be 0. Must iterate `Object.keys()` — not just characters from one string (characters only in B accumulate negative values that won't be checked if you only walk A).
+
+**Space note:** O(1) when input is lowercase English letters — the map is bounded by 26 keys, not n.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 242 — Valid Anagram | Two-map or one-map | One-map: iterate `Object.keys()`, not just `s`; else-branch for t is `-1` not `1` |
+
+---
+
 ## Hash Map / Complement Lookup
 
 **Core idea:** Store what you've seen so you can check for a complement in O(1) instead of searching.

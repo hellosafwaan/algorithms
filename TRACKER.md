@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-13
+Last updated: 2026-06-14
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,16 +13,16 @@ Last updated: 2026-06-13
 | Metric | Count |
 |--------|-------|
 | Total problems | 154 |
-| ✅ Complete | 19 |
+| ✅ Complete | 20 |
 | ⚠️ Needs revisit | 2 |
-| ⏳ Not started | 133 |
+| ⏳ Not started | 132 |
 
 ---
 
 ## Phase Overview
 | # | Phase | Problems | Done | Target Date | Status |
 |---|-------|----------|------|-------------|--------|
-| 1 | Arrays & Hashing | 9 | 6 | 2026-06-05 | ⚠️ 3 need redo |
+| 1 | Arrays & Hashing | 9 | 7 | 2026-06-05 | ⚠️ 2 need redo |
 | 2 | Two Pointers | 9 | 9 | 2026-06-02 | ✅ Complete |
 | 3 | Sliding Window | 6 | 1 | 2026-06-08 | 🔄 In Progress |
 | 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
@@ -50,7 +50,7 @@ Last updated: 2026-06-13
 |---|---------|------------|----|---------|--------|-----------|
 | 1 | Two Sum | Easy | [#1](https://leetcode.com/problems/two-sum/) | Hash Map | ✅ | [→](arrays/1-two-sum/learnings.md) |
 | 2 | Contains Duplicate | Easy | [#217](https://leetcode.com/problems/contains-duplicate/) | Hash Set | ✅ | [→](arrays/217-duplicate-elements/learnings.md) |
-| 3 | Valid Anagram | Easy | [#242](https://leetcode.com/problems/valid-anagram/) | Hash Map | 🔁 Redo | — |
+| 3 | Valid Anagram | Easy | [#242](https://leetcode.com/problems/valid-anagram/) | Hash Map — character frequency | ✅ | [→](strings/242-anagram/learnings.md) |
 | 4 | Group Anagrams | Medium | [#49](https://leetcode.com/problems/group-anagrams/) | Hash Map | 🔁 Redo | — |
 | 5 | Top K Frequent Elements | Medium | [#347](https://leetcode.com/problems/top-k-frequent-elements/) | Heap / Bucket Sort | ✅ | — |
 | 6 | Product of Array Except Self | Medium | [#238](https://leetcode.com/problems/product-of-array-except-self/) | Prefix / Suffix | ✅ | — |
