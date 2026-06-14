@@ -10,7 +10,8 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
-| LC 42 — Trapping Rain Water (two-pointer only) | Two pointers — running max / bottleneck processing | 2026-06-09 | 2026-06-13 (hard redo agreed) | ⏳ |
+| LC 42 — Trapping Rain Water (two-pointer only) | Two pointers — running max / bottleneck processing | 2026-06-09 | 2026-06-13 (hard redo agreed) | ⚠️ OVERDUE |
+| LC 121 — Best Time to Buy and Sell Stock | Running min / single pass | 2026-06-13 | 2026-07-04 | ⏳ |
 | LC 217 — Contains Duplicate | Hash Set — membership tracking | 2026-06-07 | 2026-06-28 | ⏳ |
 | LC 50 — Pow(x, n) | Exponentiation by Squaring | 2026-06-07 | 2026-06-28 | ⏳ |
 | LC 169 — Majority Element | Boyer-Moore Voting | 2026-06-07 | 2026-06-28 | ⏳ |

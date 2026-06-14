@@ -3,13 +3,15 @@
 ## Current Phase
 **Phase 3 — Sliding Window**
 Phase 2 complete as of 2026-06-09 (LC #42 done)
-Next problem: Best Time to Buy and Sell Stock (LC #121)
+Next problem: Longest Substring Without Repeating Characters (LC #3)
+⚠️ LC 42 two-pointer redo overdue (target was 2026-06-13) — do this cold at the start of next session
 
 For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 
 ---
 
 ## Recently Completed
+- Best Time to Buy and Sell Stock (LC #121) — 2026-06-13 — 80th percentile, Running Min / Single Pass (Phase 3 start)
 - Trapping Rain Water (LC #42) — 2026-06-09 — 100th percentile (two-pointer), Phase 2 final
 - Contains Duplicate (LC #217) — 2026-06-07 — 65th percentile, Hash Set (Phase 1 cleanup)
 - Pow(x, n) (LC #50) — 2026-06-07 — 100th percentile, Exponentiation by Squaring (detour into Phase 17)
@@ -38,7 +40,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 - [x] Cache correctness: `if(n in cache)` not `if(cache[n])`
 - [ ] Two-pointer recursion with early termination
 - [ ] Bottom-up DP (tabulation)
-- [ ] Sliding Window
+- [ ] Sliding Window (started — LC 121 done)
 - [ ] Stack / Monotonic Stack
 
 ---

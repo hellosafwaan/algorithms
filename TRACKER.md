@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-09
+Last updated: 2026-06-13
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-06-09
 | Metric | Count |
 |--------|-------|
 | Total problems | 154 |
-| ✅ Complete | 18 |
+| ✅ Complete | 19 |
 | ⚠️ Needs revisit | 2 |
-| ⏳ Not started | 134 |
+| ⏳ Not started | 133 |
 
 ---
 
@@ -24,7 +24,7 @@ Last updated: 2026-06-09
 |---|-------|----------|------|-------------|--------|
 | 1 | Arrays & Hashing | 9 | 6 | 2026-06-05 | ⚠️ 3 need redo |
 | 2 | Two Pointers | 9 | 9 | 2026-06-02 | ✅ Complete |
-| 3 | Sliding Window | 6 | 0 | 2026-06-08 | ⏳ |
+| 3 | Sliding Window | 6 | 1 | 2026-06-08 | 🔄 In Progress |
 | 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
 | 5 | Binary Search | 7 | 0 | 2026-06-16 | ⏳ |
 | 6 | Linked List | 11 | 0 | 2026-06-22 | ⏳ |
@@ -77,7 +77,7 @@ Last updated: 2026-06-09
 
 | # | Problem | Difficulty | LC | Pattern | Status | Learnings |
 |---|---------|------------|----|---------|--------|-----------|
-| 1 | Best Time to Buy and Sell Stock | Easy | [#121](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | Sliding Window | ⏳ | — |
+| 1 | Best Time to Buy and Sell Stock | Easy | [#121](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | Running Min / Single Pass | ✅ 80th pct | [→](arrays/121-best-time-to-buy-and-sell-a-stock/learnings.md) |
 | 2 | Longest Substring Without Repeating Characters | Medium | [#3](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | Sliding Window | ⏳ | — |
 | 3 | Longest Repeating Character Replacement | Medium | [#424](https://leetcode.com/problems/longest-repeating-character-replacement/) | Sliding Window | ⏳ | — |
 | 4 | Permutation in String | Medium | [#567](https://leetcode.com/problems/permutation-in-string/) | Sliding Window | ⏳ | — |

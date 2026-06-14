@@ -25,6 +25,18 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Running Min / Single Pass (Sliding Window intro)
+
+**Core idea:** Carry a running "best seen so far" variable as you scan left to right. At each step, combine it with the current value to compute a candidate answer. No explicit window to resize — just two variables and one pass.
+
+**When to reach for it:** Maximize or minimize a value that depends on a pair where order matters (must buy before sell). Also the entry point for sliding window thinking.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 121 — Best Time to Buy and Sell Stock | Running minimum | Track cheapest price seen so far; profit at each day = current - minPrice; keep best |
+
+---
+
 ## Hash Set — Membership Tracking
 
 **Core idea:** When you only need to know whether something was seen (no value to store alongside it), use a Set. `has()` is O(1) and works cleanly on any value — no falsy-zero trap, no string key conversion.

@@ -1,5 +1,34 @@
 # Arrays — Patterns & Templates
 
+## Best Time to Buy and Sell Stock (LeetCode 121)
+
+**Pattern:** Running minimum — single pass (Sliding Window intro)
+
+**Core idea:** As you scan left to right, track the cheapest price seen so far (`minPrice`). At each day, the best profit if you sell today is `currentPrice - minPrice`. Keep the best profit seen across all days.
+
+**Why this works:** The optimal buy must come before the optimal sell. `minPrice` always holds the cheapest opportunity up to the current day, so `currentPrice - minPrice` is the true best-possible profit for selling today.
+
+**Template:**
+```js
+function maxProfit(prices) {
+    let minPrice = Infinity;
+    let maxProfit = 0;
+    for (const price of prices) {
+        minPrice = Math.min(minPrice, price);
+        maxProfit = Math.max(maxProfit, price - minPrice);
+    }
+    return maxProfit;
+}
+```
+
+**Edge cases:**
+- Strictly decreasing prices → `maxProfit` stays 0 (never trade)
+- `minPrice = Infinity` ensures the first price always becomes the initial minimum
+
+**Complexity:** O(n) time, O(1) space
+
+---
+
 ## Pascal's Triangle (LeetCode 118)
 
 **Pattern:** 2D array construction, row-by-row

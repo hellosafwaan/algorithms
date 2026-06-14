@@ -3,7 +3,8 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
-| Two-pointer LC 42 hard redo — can he derive `leftMax <= rightMax` cold, build the full solution without hints? Agreed target: end of week (2026-06-13) | Two pointers — running max | 42 | open — scheduled redo |
+| Two-pointer LC 42 hard redo — can he derive `leftMax <= rightMax` cold, build the full solution without hints? Target was 2026-06-13 — OVERDUE, do this at next session start | Two pointers — running max | 42 | open — overdue |
+| `Math.max()` / `Math.min()` habit — does he reach for the built-in first, or still write if/else? Self-identified as a recurring issue (LC 121, 2026-06-13) | JS toolkit | 121 | open |
 | Why does comparing current heights (`height[left] < height[right]`) sometimes fail, while comparing running maxes (`leftMax <= rightMax`) always works? | Two pointers — bottleneck reasoning | 42 | open |
 | "Set for membership, HashMap for key-value" — can he state this rule cold and apply it without prompting? | Hash Set vs HashMap | 217 | open |
 | Falsy-zero trap: `if(obj[key])` misses `0` — does he pre-empt this next time, or only catch it when prompted? | HashMap edge case | 217 | open |

@@ -38,6 +38,15 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 23. Prefers if/else over Math.max() / Math.min() — self-identified
+- **Seen in:** LC 121 (2026-06-13)
+- **What happened:** Wrote `if (profitMade < 0) maxProfits[i] = 0; else maxProfits[i] = profitMade` and `if (currentProfit > maxProfit) maxProfit = currentProfit` instead of reaching for `Math.max()`
+- **How it was caught:** He self-identified this mid-session: "I always make this mistake — I don't use Math.max(), I use if conditions."
+- **Fix:** When the logic is "keep the larger of two values" or "keep the smaller of two values," reach for `Math.max()` / `Math.min()` first.
+- **Status:** Self-aware. Prompt: "is there a built-in that does exactly this?"
+
+---
+
 ### 22. Falsy-zero trap on plain objects — not pre-empted yet
 - **Seen in:** LC 217 (2026-06-07)
 - **What happened:** Used `if(seen[currentElement])` on a plain object — returns `undefined` (falsy) for unseen keys, but also evaluates to falsy for `seen[0]` even after adding `0`. Misses zero as a duplicate.

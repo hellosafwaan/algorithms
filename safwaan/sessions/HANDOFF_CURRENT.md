@@ -1,39 +1,39 @@
-# Handoff — Post Trapping Rain Water (LC 42)
+# Handoff — Post Best Time to Buy and Sell Stock (LC 121)
 
 ## What Was Just Completed
 
-**Trapping Rain Water (LC #42)** — 2026-06-09 — Phase 2 final, 100th percentile (two-pointer)
+**Best Time to Buy and Sell Stock (LC #121)** — 2026-06-13 — Phase 3 first problem, 80th percentile
 
-Three solutions built this session:
-1. Brute force O(n²) — TLE'd at 323/324
-2. Prefix max O(n)/O(n) — 23rd percentile, accepted, built entirely independently
-3. Two-pointer O(n)/O(1) — 100th percentile, built with guided nudges (key condition `leftMax <= rightMax` came from an external chat)
+Built both solutions:
+1. Brute force O(n²)/O(n) — independently, with good structure and correct edge case handling after prompting
+2. Optimal O(n)/O(1) — needed a full step-by-step trace before code structure clicked; then wrote it cleanly
 
-**Phase 2 is now complete.**
+**Phase 3 (Sliding Window) has started.**
 
 ## Safwaan's Current State
 
 **Solid:**
-- Core formula: `min(maxLeft, maxRight) - height[i]` — got this cold before any code
-- Brute force to prefix max transition — saw the bottleneck, knew what to precompute, built it clean
-- Prefix max pattern — independently derived, correctly implemented, no bugs
-- Complexity analysis — called O(n²) vs O(n) himself, explained the "3 sequential loops ≠ nested" distinction
+- Brute force derivation — independent, clean, correctly handled edge cases after one question
+- Complexity analysis — called O(n²) and O(n) correctly without prompting
+- Running the trace correctly once the structure was shown — executed all 6 iterations without error
+- Clamping profit to 0 (no-trade case) — understood once the decreasing-prices edge case was surfaced
 
 **Gaps:**
-1. **Two-pointer condition cold** — `leftMax <= rightMax` was given, not derived. Hard redo agreed for end of week (2026-06-13). This is the one thing to probe at the start of that session.
-2. **Why running maxes vs current heights** — understands after explanation but hasn't had to derive it. Carry-forward question.
-3. All previously open gaps still apply (see carry-forward.md).
+1. **Abstract-to-code bridge is thin** — understood "track running min, compute profit" conceptually but couldn't start the loop. Needed a concrete trace before code unlocked. Watch for this on LC 3.
+2. **`Math.max()` / `Math.min()` not reached for first** — uses if/else instead. Self-identified. Prompt: "is there a built-in for this?"
+3. **LC 42 two-pointer redo is overdue** — target was 2026-06-13. Start next session with this cold redo before any new material.
 
-## Suggested Next Problem
+## Suggested Next Steps
 
-**Best Time to Buy and Sell Stock (LC #121)** — Phase 3 first problem, Sliding Window (Easy). Gentle entry into the new phase.
+**Before new material: LC 42 two-pointer cold redo.** Key question: can he derive `leftMax <= rightMax` condition independently?
 
-But **first**: start the session by checking if the LC 42 two-pointer redo is due. Target was 2026-06-13 — if it's past that date, do the redo cold before anything new.
+**New problem: Longest Substring Without Repeating Characters (LC #3)** — Phase 3 second problem, true sliding window. This is where the explicit window pattern shows up.
+
+Safwaan mentioned an interview coming up soon and wants to focus on harder/pattern-heavy problems. Before starting LC 3, ask how soon the interview is and adjust pacing if needed.
 
 ## Coach Notes
 
-- The prefix max derivation was the highlight of this session — completely independent, clean, fast. That kind of transfer from "I see the bottleneck" to "here's how to precompute around it" is interview-grade.
-- The external chat was a transparency win — he told me rather than pretending he did it himself. That's the right instinct.
-- Don't re-explain prefix max on the next problem that uses it — probe whether he applies it cold instead.
-- The hard redo for LC 42 two-pointer is the most important near-term task. Don't let it slip.
-- Phase 3 (Sliding Window) starts now. The pattern is new. Expect an adjustment period on the first 1-2 problems.
+- The trace walkthrough was the key unlock here. The conceptual understanding was there; the code structure wasn't. This is a different kind of stuck than not understanding the problem — he needed to see the variables evolve to know where to put the code.
+- He spiraled when asked to explain the solution in one sentence — went into a 5-minute walk-through that lost the thread. This is the opposite of what's needed for interviews. Practice the one-liner. "Scan left to right, track running minimum, compute profit at each step, keep the best."
+- Interview coming up — unknown timeline. Prioritize higher-value patterns over completeness if timeline is tight.
+- Note: 4 days elapsed between the session start (where he got the brute force) and returning to finish. That gap explains why the optimal felt harder — he'd lost momentum.

@@ -90,6 +90,8 @@ Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/Ty
 - **Group thinking on in-place array problems** — first instinct is to track occurrence counts per run and write on group transition, rather than processing each element individually. This leads to an approach that always misses the last element of each group. Prompt: "can you think about this one element at a time — write or skip?"
 - **Handles n/2 as raw division in recursion** — doesn't instinctively reach for `Math.floor`. For odd n, `n/2` gives a float that never reaches `0`. Always ask: "what does n/2 give you for odd n?" when halving appears in recursion.
 - **Threads guard logic through recursion instead of using a top-level guard** — when handling a special case (e.g., negative n), tries to handle it at every recursive level rather than one clean check at the top. Prompt: "can you handle this once at the top and keep the rest clean?"
+- **Reaches for `if/else` instead of `Math.max()` / `Math.min()`** — when the logic is "keep the larger/smaller of two values," writes a comparison block instead of using the built-in. Self-identified this as a recurring habit (LC 121, 2026-06-13). Prompt: "is there a built-in that does exactly this?"
+- **Abstract-to-code bridge can be thin on new patterns** — understands the concept but can't start the loop. A concrete trace of what the variables look like after each iteration is often what unlocks the code. When stuck coding an understood concept, ask: "what are your two variables after the first iteration?"
 
 ## Core Rules
 
