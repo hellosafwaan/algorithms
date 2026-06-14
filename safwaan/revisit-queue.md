@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 290 — Word Pattern | Hash Map — Bijection (Two Maps) | 2026-06-15 | 2026-07-06 | ⏳ |
 | LC 205 — Isomorphic Strings | Hash Map — Bijection (Two Maps) | 2026-06-15 | 2026-07-06 | ⏳ |
 | LC 383 — Ransom Note | Hash Map — frequency counting (increment/decrement) | 2026-06-14 | 2026-07-05 | ⏳ |
 | LC 3 — Longest Substring Without Repeating Characters | Sliding Window — HashMap + left pointer | 2026-06-14 | 2026-06-18 (Wednesday — cold redo planned) | ⏳ |

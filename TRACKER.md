@@ -12,8 +12,8 @@ Last updated: 2026-06-15
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 160 |
-| ✅ Complete | 24 |
+| Total problems | 161 |
+| ✅ Complete | 25 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 135 |
 
@@ -59,6 +59,7 @@ Last updated: 2026-06-15
 | 9 | Longest Consecutive Sequence | Medium | [#128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash Set | ⏳ | — |
 | — | Ransom Note *(bonus — Hashmap sprint)* | Easy | [#383](https://leetcode.com/problems/ransom-note/) | Hash Map — frequency counting | ✅ | [→](strings/383-ransom-note/learnings.md) |
 | — | Isomorphic Strings *(bonus — Hashmap sprint)* | Easy | [#205](https://leetcode.com/problems/isomorphic-strings/) | Hash Map — Bijection (Two Maps) | ✅ | [→](strings/205-isomorphic-string/learnings.md) |
+| — | Word Pattern *(bonus — Hashmap sprint)* | Easy | [#290](https://leetcode.com/problems/word-pattern/) | Hash Map — Bijection (Two Maps) | ✅ | [→](strings/290-word-pattern/learnings.md) |
 | — | Pascal's Triangle *(bonus)* | Easy | [#118](https://leetcode.com/problems/pascals-triangle/) | 2D Array Construction | ✅ | [→](arrays/118-pascal's-triangle/learnings.md) |
 | — | Pascal's Triangle II *(bonus)* | Easy | [#119](https://leetcode.com/problems/pascals-triangle-ii/) | Right-to-left In-place Update | ✅ | [→](arrays/119-pascal's-triangle-two/learnings.md) |
 

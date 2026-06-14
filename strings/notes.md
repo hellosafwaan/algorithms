@@ -58,6 +58,7 @@ tToS.set(tc, sc);
 | Problem | Key Insight |
 |---------|-------------|
 | LC 205 — Isomorphic Strings | `sToT` and `tToS` keep namespaces separate; check conflict then set |
+| LC 290 — Word Pattern | Same shape — split `s` into words first; pattern char ↔ word; length check at top |
 
 ---
 

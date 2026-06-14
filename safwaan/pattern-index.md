@@ -62,6 +62,7 @@ When starting a new problem, check here first. Find the pattern, recall what you
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 205 — Isomorphic Strings | Two-map bijection | `sToT` and `tToS` keep namespaces separate; check conflict, then set unconditionally |
+| LC 290 — Word Pattern | Two-map bijection (words, not chars) | Same shape as LC 205 — split `s` first; pattern char ↔ word; check both maps, set both |
 
 ---
 
