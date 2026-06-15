@@ -62,6 +62,51 @@ tToS.set(tc, sc);
 
 ---
 
+### Cycle Detection via Hash Set
+
+**When to reach for it:** A transformation function that might loop forever. Any time you're stuck asking "is this process going to terminate?"
+
+**Key insight:** If a process loops forever, it must eventually revisit a state. Track every intermediate state in a Set. First repeat = you're in a cycle.
+
+**Pattern:**
+```js
+const seen = new Set();
+while (n !== targetState) {
+    if (seen.has(n)) return false;  // cycle detected
+    seen.add(n);
+    n = transform(n);
+}
+return true;
+```
+
+**Space:** O(1) for Happy Number specifically — the Set is bounded by ~243 (max sum of squares for any 3-digit number = 3×81). After one or two steps, any number collapses below 243.
+
+| Problem | Key Insight |
+|---------|-------------|
+| LC 202 — Happy Number | Track intermediate sums in Set; first repeat → cycle → false; reach 1 → true |
+
+---
+
+### Math — Digit Extraction via Modulo
+
+**When to reach for it:** Need to process individual digits of an integer. Faster and cleaner than `String()` conversion.
+
+```js
+while (n > 0) {
+    const digit = n % 10;       // last digit (e.g. 123 % 10 = 3)
+    // use digit
+    n = Math.floor(n / 10);     // chop last digit (e.g. Math.floor(123/10) = 12)
+}
+```
+
+Loop terminates when `n === 0` (all digits consumed).
+
+| Problem | Key Insight |
+|---------|-------------|
+| LC 202 — Happy Number | `% 10` extracts last digit; `Math.floor(n / 10)` removes it; loop while `n > 0` |
+
+---
+
 ### Two Pointers on Strings
 
 **When to reach for it:** Comparing characters from both ends, skipping non-alphanumeric characters.

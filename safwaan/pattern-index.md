@@ -49,6 +49,28 @@ When starting a new problem, check here first. Find the pattern, recall what you
 |---------|--------|-------------|
 | LC 217 — Contains Duplicate | Membership tracking | Add each element to Set; `has()` before `add()`. No falsy-zero edge case. |
 | LC 219 — Contains Duplicate II | Sliding window Set (fixed size k) | Maintain a window of at most k elements. Shrink when `r - l > k` by deleting `nums[l]` and incrementing `l`. Check membership before adding. O(k) space. |
+| LC 202 — Happy Number | Cycle detection | Track every intermediate sum in a Set. First repeat = you're in a cycle → return false. If you reach 1 → return true. |
+
+---
+
+## Math — Digit Extraction via Modulo
+
+**Core idea:** Extract digits from an integer using `% 10` (last digit) and `Math.floor(n / 10)` (remove last digit). Faster than `String()` conversion — no string allocation.
+
+**Template:**
+```js
+while (n > 0) {
+    const digit = n % 10;       // last digit
+    // use digit
+    n = Math.floor(n / 10);     // chop it off
+}
+```
+
+**When to reach for it:** Any problem where you need to process individual digits of a number (happy number, digit sum, reverse integer, etc.)
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 202 — Happy Number | Sum of squares of digits | `n % 10` → last digit; `Math.floor(n / 10)` → chop; loop while `n > 0` |
 
 ---
 

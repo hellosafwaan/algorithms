@@ -3,6 +3,7 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| Cycle detection cold: given a transformation that might loop, does he reach for "track seen states in a Set" without a nudge? | Hash Set — Cycle Detection | 202 | open — needed one nudge at LC 202: "how do you detect a loop?" |
 | Can he write the clean two-line bijection pattern cold (`if has && get !== val → false; set unconditionally`)? | Hash Map — Bijection | 205, 290 | open — check-then-set structure correct; `.set(key, value)` argument order slipped at LC 290 |
 | Can he explain cold why one map fails on isomorphic strings — construct the counterexample himself? | Hash Map — Bijection | 205 | answered 2026-06-15 — gave the counterexample unprompted: "A maps to dog, B maps to dog — one way true, other direction false" |
 | `left = Math.max(left, map[char] + 1)` — can he state this rule cold and explain why `Math.max` is needed? | Sliding Window | 3 | open |
