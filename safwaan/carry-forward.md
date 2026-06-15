@@ -7,7 +7,7 @@ Questions to probe at the start of the next session that uses the same pattern.
 | Can he explain cold why one map fails on isomorphic strings — construct the counterexample himself? | Hash Map — Bijection | 205 | answered 2026-06-15 — gave the counterexample unprompted: "A maps to dog, B maps to dog — one way true, other direction false" |
 | `left = Math.max(left, map[char] + 1)` — can he state this rule cold and explain why `Math.max` is needed? | Sliding Window | 3 | open |
 | Window size formula `i - left + 1` — does he remember the `+1` and why? | Sliding Window | 3 | open |
-| Set vs HashMap for sliding window — when does index tracking make HashMap the right choice? | Sliding Window / data structure choice | 3 | open |
+| Set vs HashMap for sliding window — when does index tracking make HashMap the right choice? | Sliding Window / data structure choice | 3, 219 | answered 2026-06-15 — LC 219: Set is O(k) space and avoids storing indices entirely; HashMap stores value→last index and checks distance directly; both O(n) time, Set wins on space |
 | Two-pointer LC 42 hard redo — can he derive `leftMax <= rightMax` cold, build the full solution without hints? Target was 2026-06-13 — OVERDUE, do this at next session start | Two pointers — running max | 42 | open — overdue |
 | `Math.max()` / `Math.min()` habit — does he reach for the built-in first, or still write if/else? Self-identified as a recurring issue (LC 121, 2026-06-13) | JS toolkit | 121 | open |
 | Why does comparing current heights (`height[left] < height[right]`) sometimes fail, while comparing running maxes (`leftMax <= rightMax`) always works? | Two pointers — bottleneck reasoning | 42 | open |

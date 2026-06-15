@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 219 — Contains Duplicate II | Hash Set — Sliding Window (Fixed Size) / HashMap — Last Seen Index | 2026-06-15 | 2026-07-06 | ⏳ |
 | LC 290 — Word Pattern | Hash Map — Bijection (Two Maps) | 2026-06-15 | 2026-07-06 | ⏳ |
 | LC 205 — Isomorphic Strings | Hash Map — Bijection (Two Maps) | 2026-06-15 | 2026-07-06 | ⏳ |
 | LC 383 — Ransom Note | Hash Map — frequency counting (increment/decrement) | 2026-06-14 | 2026-07-05 | ⏳ |

@@ -315,6 +315,49 @@ function removeDuplicates(nums) {
 
 ---
 
+## Contains Duplicate II (LeetCode 219)
+
+**Pattern:** Sliding Window (Fixed Size) — Hash Set, OR Hash Map — Last Seen Index
+
+**Core idea (Set):** Maintain a Set of the last k elements. Expand right every step. Shrink when `r - l > k` by deleting `nums[l]` and advancing `l`. If the incoming element is already in the Set, it's within k distance.
+
+**Core idea (HashMap):** Store `value → most recent index`. On duplicate hit, check `r - map.get(value) <= k`. Always update the stored index.
+
+**Space comparison:** Set is O(k), HashMap is O(n). Set wins.
+
+**Shrink condition:** `r - l > k` — not `>= k`. When `r - l === k`, the gap is exactly k (still valid). Only shrink when it *exceeds* k.
+
+**Common bug:** On shrink, delete `nums[l]`, not the incoming element.
+
+**Templates:**
+```js
+// Set — O(k) space
+function containsNearbyDuplicate(nums, k) {
+    const window = new Set();
+    let l = 0;
+    for (let r = 0; r < nums.length; r++) {
+        if (r - l > k) { window.delete(nums[l]); l++; }
+        if (window.has(nums[r])) return true;
+        window.add(nums[r]);
+    }
+    return false;
+}
+
+// HashMap — O(n) space
+function containsNearbyDuplicate(nums, k) {
+    const seen = new Map();
+    for (let i = 0; i < nums.length; i++) {
+        if (seen.has(nums[i]) && i - seen.get(nums[i]) <= k) return true;
+        seen.set(nums[i], i);
+    }
+    return false;
+}
+```
+
+**Complexity:** O(n) time, O(k) space (Set) or O(n) space (HashMap)
+
+---
+
 ## Contains Duplicate (LeetCode 217)
 
 **Pattern:** Hash Set — membership tracking

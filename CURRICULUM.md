@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases, 154 problems + 7 bonus problems = 161 total (LC #383, #205, #290, #118, #119, #31, #169 are bonus)
+Total: 18 phases, 154 problems + 8 bonus problems = 162 total (LC #383, #205, #290, #219, #118, #119, #31, #169 are bonus)
 
 ---
 
@@ -25,6 +25,7 @@ Total: 18 phases, 154 problems + 7 bonus problems = 161 total (LC #383, #205, #2
 | — | Ransom Note *(bonus — Hashmap sprint)* | Easy | [LC #383](https://leetcode.com/problems/ransom-note/) | Hash Map — frequency counting |
 | — | Isomorphic Strings *(bonus — Hashmap sprint)* | Easy | [LC #205](https://leetcode.com/problems/isomorphic-strings/) | Hash Map — Bijection |
 | — | Word Pattern *(bonus — Hashmap sprint)* | Easy | [LC #290](https://leetcode.com/problems/word-pattern/) | Hash Map — Bijection |
+| — | Contains Duplicate II *(bonus — Hashmap sprint)* | Easy | [LC #219](https://leetcode.com/problems/contains-duplicate-ii/) | Hash Set — Sliding Window / Hash Map |
 | — | Pascal's Triangle *(bonus)* | Easy | [LC #118](https://leetcode.com/problems/pascals-triangle/) | 2D Array Construction |
 | — | Pascal's Triangle II *(bonus)* | Easy | [LC #119](https://leetcode.com/problems/pascals-triangle-ii/) | Right-to-left In-place Update |
 

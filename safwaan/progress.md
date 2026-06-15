@@ -11,6 +11,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Contains Duplicate II (LC #219) — 2026-06-15 — Hashmap sprint bonus, sliding window (Set) + HashMap (last seen index), 82nd percentile
 - Word Pattern (LC #290) — 2026-06-15 — Hashmap sprint bonus, bijection (two maps), 100th percentile
 - Isomorphic Strings (LC #205) — 2026-06-15 — Hashmap sprint bonus, bijection (two maps), 90th percentile
 - Ransom Note (LC #383) — 2026-06-14 — Hashmap sprint bonus, frequency counting (increment/decrement), clean first-attempt solve

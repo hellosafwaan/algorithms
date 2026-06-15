@@ -48,6 +48,21 @@ When starting a new problem, check here first. Find the pattern, recall what you
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 217 — Contains Duplicate | Membership tracking | Add each element to Set; `has()` before `add()`. No falsy-zero edge case. |
+| LC 219 — Contains Duplicate II | Sliding window Set (fixed size k) | Maintain a window of at most k elements. Shrink when `r - l > k` by deleting `nums[l]` and incrementing `l`. Check membership before adding. O(k) space. |
+
+---
+
+## Hash Map — Last Seen Index
+
+**Core idea:** Store `value → last seen index`. When you encounter the same value again, the most recent index gives the smallest possible gap — if it's still too far, no earlier occurrence can help.
+
+**When to reach for it:** "Have I seen this value within the last k positions?" — you need to know *when* not just *if*.
+
+**Space note:** O(n) worst case — stores every element ever seen, not just the current window. Use the Set approach (above) when you want O(k).
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 219 — Contains Duplicate II | Last seen index | `seen.set(nums[i], i)` always — even after a hit, update to keep the most recent index for future checks. |
 
 ---
 
