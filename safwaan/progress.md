@@ -3,7 +3,7 @@
 ## Current Phase
 **Interview Sprint — 2026-06-14 to 2026-06-18 (interview Friday 2026-06-19)**
 Phase 2 complete as of 2026-06-09 (LC #42 done)
-Next problem: Longest Consecutive Sequence (LC #128)
+Next problem: LC 3 cold redo (Wednesday 2026-06-18), then interview consolidation
 ⚠️ LC 42 two-pointer redo deferred until after the interview
 
 For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
@@ -11,6 +11,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Longest Consecutive Sequence (LC #128) — 2026-06-15 — Phase 1 #9, Hash Set + sequence-start filter, 84th percentile (unclean) / clean rewrite
 - Happy Number (LC #202) — 2026-06-15 — Phase 17 bonus, cycle detection (Hash Set) + digit extraction via `% 10` / `Math.floor`, 100th percentile
 - Contains Duplicate II (LC #219) — 2026-06-15 — Hashmap sprint bonus, sliding window (Set) + HashMap (last seen index), 82nd percentile
 - Word Pattern (LC #290) — 2026-06-15 — Hashmap sprint bonus, bijection (two maps), 100th percentile

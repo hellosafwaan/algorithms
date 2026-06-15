@@ -1,5 +1,43 @@
 # Arrays — Patterns & Templates
 
+## Longest Consecutive Sequence (LeetCode 128)
+
+**Pattern:** Hash Set — sequence-start filter + amortized forward walk
+
+**Core idea:** Build a Set for O(1) lookup. For each element, only start counting if `n - 1` is NOT in the Set — that means it's the beginning of a sequence. Walk forward with a while loop until the chain breaks.
+
+**Why it's O(n) despite nested loops:** The outer loop visits n elements. The inner while loop's total steps across all sequences is also at most n — each element is stepped through by the while at most once. Amortized, it's 2n = O(n).
+
+**Template:**
+```js
+function longestConsecutive(nums) {
+    if (nums.length === 0) return 0;
+    const seen = new Set(nums);
+    let maxCount = 0;
+    for (const num of seen) {
+        if (!seen.has(num - 1)) {
+            let curr = num;
+            let count = 1;
+            while (seen.has(curr + 1)) {
+                curr++;
+                count++;
+            }
+            maxCount = Math.max(count, maxCount);
+        }
+    }
+    return maxCount;
+}
+```
+
+**JS notes:**
+- `new Set(nums)` — Set takes any iterable, deduplicates automatically
+- `for...of` to iterate Set values (NOT `for...in` — that's for plain object keys)
+- Set has `.has()`, `.add()`, `.delete()` — no `.get()`
+
+**Complexity:** O(n) time, O(n) space
+
+---
+
 ## Best Time to Buy and Sell Stock (LeetCode 121)
 
 **Pattern:** Running minimum — single pass (Sliding Window intro)

@@ -56,6 +56,14 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 28. `for...in` vs `for...of` — knowledge gap, not reasoning gap
+- **Seen in:** LC 128 (2026-06-15)
+- **What happened:** Used `for (const elem in seen)` on a Set — gives nothing useful. `for...in` iterates object keys; Sets have no keys.
+- **Fix:** `for...of` for values (arrays, Sets, Maps, strings). `for...in` for plain object keys.
+- **Status:** Explicitly flagged as a gap. Needs deliberate drilling.
+
+---
+
 ### 27. Cycle detection insight needs a nudge — "loop forever = repeated value" not automatic
 - **Seen in:** LC 202 (2026-06-15)
 - **What happened:** Recognised that the loop could run forever and needed to return `false`. But couldn't bridge "runs forever" → "must revisit a state" independently. Needed the question: "unhappy numbers loop forever — how do you detect a loop?"

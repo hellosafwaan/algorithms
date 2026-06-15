@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 128 — Longest Consecutive Sequence | Hash Set — Sequence Start Filter + Amortized Walk | 2026-06-15 | 2026-07-06 | ⏳ |
 | LC 202 — Happy Number | Hash Set — Cycle Detection / Digit Extraction via Modulo | 2026-06-15 | 2026-07-06 | ⏳ |
 | LC 219 — Contains Duplicate II | Hash Set — Sliding Window (Fixed Size) / HashMap — Last Seen Index | 2026-06-15 | 2026-07-06 | ⏳ |
 | LC 290 — Word Pattern | Hash Map — Bijection (Two Maps) | 2026-06-15 | 2026-07-06 | ⏳ |

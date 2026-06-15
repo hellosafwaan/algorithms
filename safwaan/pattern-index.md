@@ -37,6 +37,20 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Hash Set — Consecutive Sequence Detection
+
+**Core idea:** Build a Set for O(1) lookup. Only start counting from elements where `n - 1` is NOT in the Set (sequence starts). Walk forward with a while loop, counting until the chain breaks.
+
+**Why O(n):** The outer loop visits every element once. The inner while loop's total steps across ALL sequences is also at most n — each element is stepped through by the while at most once. Two passes total = O(n).
+
+**When to reach for it:** "Longest consecutive sequence," any problem asking for runs in an unsorted array without sorting.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 128 — Longest Consecutive Sequence | Sequence start filter + walk forward | Only count from `n-1 not in Set`; inner while amortizes to O(n) total |
+
+---
+
 ## Hash Set — Membership Tracking
 
 **Core idea:** When you only need to know whether something was seen (no value to store alongside it), use a Set. `has()` is O(1) and works cleanly on any value — no falsy-zero trap, no string key conversion.

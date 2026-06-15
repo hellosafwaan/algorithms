@@ -13,9 +13,9 @@ Last updated: 2026-06-15
 | Metric | Count |
 |--------|-------|
 | Total problems | 162 |
-| ✅ Complete | 27 |
+| ✅ Complete | 28 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 134 |
+| ⏳ Not started | 133 |
 
 ---
 
@@ -56,7 +56,7 @@ Last updated: 2026-06-15
 | 6 | Product of Array Except Self | Medium | [#238](https://leetcode.com/problems/product-of-array-except-self/) | Prefix / Suffix | ✅ | pre-repo | — |
 | 7 | Valid Sudoku | Medium | [#36](https://leetcode.com/problems/valid-sudoku/) | Hash Set | ⏳ | — | — |
 | 8 | Encode and Decode Strings | Medium | [#271](https://leetcode.com/problems/encode-and-decode-strings/) | String Encoding | ⏳ | — | — |
-| 9 | Longest Consecutive Sequence | Medium | [#128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash Set | ⏳ | — | — |
+| 9 | Longest Consecutive Sequence | Medium | [#128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash Set — Sequence Start Filter | ✅ | 2026-06-15 | [→](arrays/128-longest-consecutive-sequence/learnings.md) |
 | — | Ransom Note *(bonus — Hashmap sprint)* | Easy | [#383](https://leetcode.com/problems/ransom-note/) | Hash Map — frequency counting | ✅ | 2026-06-14 | [→](strings/383-ransom-note/learnings.md) |
 | — | Isomorphic Strings *(bonus — Hashmap sprint)* | Easy | [#205](https://leetcode.com/problems/isomorphic-strings/) | Hash Map — Bijection (Two Maps) | ✅ | 2026-06-15 | [→](strings/205-isomorphic-string/learnings.md) |
 | — | Word Pattern *(bonus — Hashmap sprint)* | Easy | [#290](https://leetcode.com/problems/word-pattern/) | Hash Map — Bijection (Two Maps) | ✅ | 2026-06-15 | [→](strings/290-word-pattern/learnings.md) |
