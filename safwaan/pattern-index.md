@@ -243,3 +243,15 @@ function dp(n, cache = {}) {
 | Problem | Key Insight |
 |---------|-------------|
 | LC 31 — Next Permutation | Find descending suffix, swap pivot with smallest larger element in suffix, reverse suffix |
+
+---
+
+## XOR Self-Cancellation (Bit Manipulation)
+
+**Core idea:** `a ^ a = 0` and `a ^ 0 = a`. XOR is commutative and associative, so order doesn't matter — XOR the whole array into one accumulator and every pair cancels itself out.
+
+**When to reach for it:** Every element appears exactly twice except one (or a similar "all but one cancel" structure). Beats a HashMap/Set approach on space — O(1) instead of O(n).
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 136 — Single Number | XOR entire array | Pairs cancel via `a^a=0`; lone survivor passes through via `a^0=a`; order-independent because XOR is commutative/associative |

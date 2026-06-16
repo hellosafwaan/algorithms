@@ -80,6 +80,7 @@ Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/Ty
 - Decomposes problems well — independently reduced 3Sum to "fix one element + two-sum the rest" (k-sum reduction) with no prompting
 - Now leads on complexity unprompted (called O(n³) and O(n²) himself on 3Sum)
 - Instinctively reaches for HashMap/Set on "have I seen this?" problems — skips nested loops entirely and goes straight to the optimal data structure. Self-identified that Set is cleaner than HashMap for membership-only tracking (LC 217, 2026-06-07).
+- Pre-loads concepts before attempting application problems and it pays off directly — built a bit manipulation cheat sheet ahead of LC 136, then solved it cold with zero mistakes and zero hints, including an unprompted correct explanation of why XOR's commutativity makes order irrelevant. When toolkit gaps are flagged (e.g. Set/Map API), recommend deliberate pre-session review rather than waiting for it to surface mid-problem again.
 
 **Watch for:**
 - Can skip edge case analysis unless pushed

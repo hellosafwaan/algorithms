@@ -74,6 +74,9 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Breakthrough Moments
 
+### Cross-session knowledge transfer — Single Number (LC 136, 2026-06-16)
+Built a bit manipulation cheat sheet ahead of time, then applied XOR self-cancellation (`a^a=0`, `a^0=a`, commutative/associative) cold with zero hints — explained the why before writing code, then traced the result correctly on `[4,1,2,1,2]`. First session this sprint with zero mistakes and zero hints. Confirms that when foundational knowledge is solid going in, execution is clean — supports investing in toolkit/concept review before new patterns (echoes the toolkit recall gap noted elsewhere).
+
 ### DP Core Insight — Session 1
 Safwaan independently articulated: *"Store and reuse values instead of recomputing."* This came after seeing the Fibonacci call tree. He wasn't told this — he saw it. This is the foundation everything in DP builds on.
 

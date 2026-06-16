@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-15
+Last updated: 2026-06-16
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-06-15
 | Metric | Count |
 |--------|-------|
 | Total problems | 162 |
-| ✅ Complete | 28 |
+| ✅ Complete | 29 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 133 |
+| ⏳ Not started | 132 |
 
 ---
 
@@ -289,7 +289,7 @@ Last updated: 2026-06-15
 
 | # | Problem | Difficulty | LC | Pattern | Status | Solved | Learnings |
 |---|---------|------------|----|---------|--------|--------|-----------|
-| 1 | Single Number | Easy | [#136](https://leetcode.com/problems/single-number/) | Bit Manipulation | ⏳ | — | — |
+| 1 | Single Number | Easy | [#136](https://leetcode.com/problems/single-number/) | Bit Manipulation — XOR Cancellation | ✅ 72nd pct | 2026-06-16 | [→](bit-manipulation/136-single-number/learnings.md) |
 | 2 | Number of 1 Bits | Easy | [#191](https://leetcode.com/problems/number-of-1-bits/) | Bit Manipulation | ⏳ | — | — |
 | 3 | Counting Bits | Easy | [#338](https://leetcode.com/problems/counting-bits/) | Bit Manipulation | ⏳ | — | — |
 | 4 | Reverse Bits | Easy | [#190](https://leetcode.com/problems/reverse-bits/) | Bit Manipulation | ⏳ | — | — |
