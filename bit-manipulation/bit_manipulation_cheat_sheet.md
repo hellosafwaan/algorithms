@@ -10,6 +10,9 @@ A **bit** is the smallest unit of information in a computer — a single switch 
 ### Why binary?
 Computers are built from transistors — tiny electronic switches. A switch can only be in two states: on or off. So everything is represented in base 2 (binary).
 
+### Do I need to convert a number to binary before using bitwise operators?
+**No.** An integer is *already stored in binary* internally — `13` and `1101` are the same value, just written differently. Bitwise operators (`&`, `|`, `^`, `<<`, `>>`) read that existing binary representation directly. There's no conversion step, no matter how the number is written in your source code.
+
 ### How many values can n bits represent?
 **n bits → 2ⁿ combinations**
 

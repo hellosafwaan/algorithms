@@ -72,6 +72,26 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 29. Assumed bitwise operators require explicit binary conversion
+- **Seen in:** LC 191 (2026-06-16)
+- **What happened:** Believed `n` needed to be converted from decimal to binary before `&`/`>>` could be applied — didn't know JS integers are already stored in binary and bitwise operators read that representation directly.
+- **How it was caught:** Needed a direct explanation; once given, immediately understood and applied `n & 1` correctly.
+- **Status:** Knowledge gap, not reasoning gap. Probe at next bit manipulation problem (LC 338, 190, or 268) to confirm it doesn't resurface.
+
+### 30. Missing reassignment on shift operator
+- **Seen in:** LC 191 (2026-06-16)
+- **What happened:** Wrote `n >>> 1;` as a standalone statement — computes the shifted value but discards it, so `n` never changes.
+- **How it was caught:** Self-caught the moment asked what that line actually does to `n`.
+- **Status:** Self-corrected immediately — good sign, consistent with his pattern of catching bugs once prompted with the right question.
+
+### 31. Log-based complexity reasoning — self-identified weak spot
+- **Seen in:** LC 191 (2026-06-16)
+- **What happened:** Correctly derived O(log n) reasoning for the halving loop, but when asked to connect that to the fixed-32-bit-width O(1) framing, said outright: "I'm actually bad at computing time complexities when it's log based... please walk me through."
+- **How it was caught:** Self-disclosed. Needed a full from-scratch walkthrough (log₂ as "exponent to reach n", concrete example with 32, then connecting to the bit-width cap).
+- **Status:** Explicitly flagged by him as a recurring gap, not specific to this problem. Probe cold at the next log-based / divide-and-conquer problem (binary search, etc.).
+
+---
+
 ## Breakthrough Moments
 
 ### Cross-session knowledge transfer — Single Number (LC 136, 2026-06-16)

@@ -6,12 +6,14 @@ Phase 2 complete as of 2026-06-09 (LC #42 done)
 Next problem: LC 3 cold redo (Wednesday 2026-06-18), then interview consolidation
 ⚠️ LC 42 two-pointer redo deferred until after the interview
 Pulled forward Single Number (LC #136, Phase 18 — Bit Manipulation) on 2026-06-16 — high-frequency interview easy, jumped curriculum order intentionally
+Followed immediately with Number of 1 Bits (LC #191, Phase 18) same day — continuing the bit manipulation pre-loaded run
 
 For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 
 ---
 
 ## Recently Completed
+- Number of 1 Bits (LC #191) — 2026-06-16 — Phase 18, Mask & Shift (`n & 1` + `n = n >>> 1`), 100th percentile runtime, one toolkit misconception corrected (no decimal→binary conversion needed) plus one self-caught bug (missing shift assignment)
 - Single Number (LC #136) — 2026-06-16 — Phase 18 (bonus pull-forward), XOR self-cancellation, 72nd percentile, clean first-attempt solve, no hints needed
 - Longest Consecutive Sequence (LC #128) — 2026-06-15 — Phase 1 #9, Hash Set + sequence-start filter, 84th percentile (unclean) / clean rewrite
 - Happy Number (LC #202) — 2026-06-15 — Phase 17 bonus, cycle detection (Hash Set) + digit extraction via `% 10` / `Math.floor`, 100th percentile

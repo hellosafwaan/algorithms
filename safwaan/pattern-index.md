@@ -255,3 +255,17 @@ function dp(n, cache = {}) {
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 136 — Single Number | XOR entire array | Pairs cancel via `a^a=0`; lone survivor passes through via `a^0=a`; order-independent because XOR is commutative/associative |
+
+---
+
+## Bit Manipulation — Mask & Shift
+
+**Core idea:** `n & 1` reads the last bit (AND with 1 wipes every other bit). `n = n >>> 1` shifts the next bit into the last position. Loop while `n !== 0`.
+
+**Key fact:** No decimal→binary conversion is needed — integers are already stored in binary; bitwise operators read that representation directly regardless of how the number is written in source.
+
+**When to reach for it:** Any problem requiring inspection of every bit of an integer (counting set bits, reversing bits, checking specific bit positions).
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 191 — Number of 1 Bits | Count set bits | `n & 1` + `n = n >>> 1` in a loop until `n === 0`; for 32-bit ints, capped at 32 iterations → O(1), not O(log n) |

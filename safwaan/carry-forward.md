@@ -20,6 +20,8 @@ Questions to probe at the start of the next session that uses the same pattern.
 | Boyer-Moore without a majority guarantee — how would you verify the candidate? | Boyer-Moore | 169 | open |
 | Boyer-Moore generalisation: find element appearing > n/3 times — how many candidates do you need? | Boyer-Moore | 169 | open |
 | JS object iteration — `for...in`, `Object.keys()`, `Object.entries()` — drill these cold | Toolkit / JS | 169 | open |
+| Does the "numbers are already binary, no conversion needed" misconception resurface on the next bit manipulation problem? | Toolkit / Bit Manipulation | 191 | open — corrected this session, needs a quiet re-check |
+| Log-based complexity reasoning — self-identified weak spot ("I'm bad at computing time complexities when it's log based"). Can he derive O(log n) cold on the next divide-and-conquer / binary search problem? | Complexity analysis | 191, 50 | open — needed full walkthrough this session |
 |----------|---------|---------|--------|
 | Where else does right-to-left in-place update appear? | Right-to-left update | 119 | open |
 | What's the formula for total cells in an n-row triangle? | 2D construction | 118 | open — said n(n-1)/2, correct is n(n+1)/2 |
