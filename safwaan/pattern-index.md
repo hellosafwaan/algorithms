@@ -269,3 +269,4 @@ function dp(n, cache = {}) {
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 191 — Number of 1 Bits | Count set bits | `n & 1` + `n = n >>> 1` in a loop until `n === 0`; for 32-bit ints, capped at 32 iterations → O(1), not O(log n) |
+| LC 190 — Reverse Bits | Build a positioned result | Shift `result` left, *then* OR in `n & 1` (order matters — OR-then-shift corrupts position). Fixed `for(32)` loop, not `while(n!==0)` — building needs every position visited, not just nonzero ones. `n = n >>> 1` to avoid sign-extension. |

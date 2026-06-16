@@ -92,6 +92,46 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 32. Confused rotate with reverse
+- **Seen in:** LC 190 — Reverse Bits (2026-06-16)
+- **What happened:** First instinct was to repeatedly shift/rotate the whole number, believing enough rotations would produce the reversed bit order.
+- **How it was caught:** Asked to trace rotating `1100` right 4 times (its own bit-width) — landed back at the original value, exposing that rotation cycles back rather than mirroring.
+- **Status:** Corrected via one concrete trace. Once shown the mirror relationship (bit at position `i` → position `(n-1-i)`), redirected cleanly to the mask-and-build approach.
+
+### 33. OR-then-shift vs shift-then-OR ordering bug
+- **Seen in:** LC 190 (2026-06-16)
+- **What happened:** When building `result` bit by bit, initially proposed OR-ing the new bit in first, then left-shifting — which re-shifts the bit just added on every iteration, pushing it further left than intended each time.
+- **How it was caught:** Needed a full iteration-by-iteration trace table (two orderings, same input `1010`) — verbal explanation alone hadn't landed. Explicitly confirmed this approach worked ("reason like this, remember to do this more often").
+- **Status:** Corrected with the trace table. Generalizes: when building up a value bit-by-bit, make room first (shift), then fill (OR) — never the reverse.
+
+### 34. Tried OR-then-right-shift on `result` (loses bits entirely)
+- **Seen in:** LC 190 (2026-06-16)
+- **What happened:** After the left-shift-then-OR pattern was settled, asked whether OR-ing first and then *right*-shifting `result` would also work. Right-shifting immediately after placing a bit at position 0 pushes that exact bit off the edge and discards it.
+- **How it was caught:** Trace table with `n = 1010` showed `result` collapsing to `0` — every bit placed got destroyed on the very next operation.
+- **Status:** Resolved via trace. Useful confirmation that he was actively testing alternative orderings rather than passively accepting the first answer — good instinct, even though this particular alternative didn't pan out.
+
+### 35. `while(n !== 0)` terminates before all 32 bit positions are processed
+- **Seen in:** LC 190 (2026-06-16)
+- **What happened:** Used a `while(n !== 0)` loop (correct for LC 191, which only needs to *count* bits) to also drive the *building* of `result`. But once `n`'s remaining bits are all `0`, the loop stops — even though `result` still needs more left-shifts to push earlier bits into their final positions. Traced with `n = 1`: loop ran once, `result = 1`, but the bit (originally at position 0) needs to end up at position 31, requiring 31 more shifts that never happened.
+- **How it was caught:** Asked to trace `n = 1` specifically and check whether the single bit landed in the position the earlier mirror-relationship discussion (`position 0 → position 31`) predicted. Self-identified "the loop stops too early."
+- **Fix:** Use a `for (let i = 0; i < 32; i++)` loop — fixed iteration count, independent of when `n` happens to hit `0`.
+- **Status:** Important distinction from LC 191: counting bits only cares about bits that exist (early exit is fine), but building a positionally-correct result needs every position visited regardless of `n`'s value. Watch for this distinction recurring on LC 268 (Missing Number) or similar fixed-width problems.
+
+### 36. `n >> 1` vs `n >>> 1` — didn't know the difference, risk of infinite loop
+- **Seen in:** LC 190 (2026-06-16)
+- **What happened:** Wrote `n = n >> 1` (signed right shift) instead of `n = n >>> 1` (unsigned). For an `n` whose leftmost bit is `1` (read as negative in 32-bit signed form), `>>` sign-extends — fills new slots with `1`s instead of `0`s — so `n` would never reach `0` and the loop would run forever.
+- **How it was caught:** Direct explanation needed — genuine knowledge gap, not a reasoning gap. Once explained, correctly identified `>>>` as the right choice ("we don't have to preserve the sign").
+- **Status:** Knowledge gap, closed with one explanation. Connects to pattern #29 (LC 191) — this is the same `>>>`-vs-`>>` fact resurfacing in a new context (shifting `n` down vs. the earlier no-conversion-needed fact). Reinforces that `>>>` should be the default for raw bit-pattern manipulation unless sign explicitly matters.
+
+### 37. Asked "why force unsigned if input is signed?" — surfaced a real distinction worth noting
+- **Seen in:** LC 190 (2026-06-16)
+- **What happened:** Pushed back on using `>>> 0` before returning, since the problem labels the input a "32-bit signed integer." Good instinct to question rather than blindly apply a fix.
+- **Resolution:** Distinguished between the *declared type* of the input/output (signed int, a language/problem-statement label) and what the algorithm actually *does* with the bits (treats them as a positionless pattern to rearrange, not a quantity). The `>>> 0` doesn't "add" sign meaning — it strips an unwanted negative interpretation that JS would otherwise apply by default.
+- **Bonus:** Independently noticed the actual LeetCode (Top Interview 150 variant) constraints differ from the classic version — `0 <= n <= 2^31 - 2` and `n is even`. Correctly reasoned (with one guiding question) that since `n` is even, bit 0 of `n` is always `0`, which lands at bit 31 (the sign bit) of `result` after a full reversal — meaning `result` is guaranteed non-negative without needing `>>> 0` at all, for this specific constrained version.
+- **Status:** Strong moment — questioned an instruction instead of accepting it, and reasoned through the constraint-driven exception correctly with minimal prompting.
+
+---
+
 ## Breakthrough Moments
 
 ### Cross-session knowledge transfer — Single Number (LC 136, 2026-06-16)

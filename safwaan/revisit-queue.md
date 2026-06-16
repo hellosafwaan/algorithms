@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 190 — Reverse Bits | Bit Manipulation — Mask & Shift (build variant) | 2026-06-16 | 2026-07-07 | ⏳ |
 | LC 136 — Single Number | XOR Self-Cancellation | 2026-06-16 | 2026-07-07 | ⏳ |
 | LC 191 — Number of 1 Bits | Bit Manipulation — Mask & Shift | 2026-06-16 | 2026-07-07 | ⏳ |
 | LC 128 — Longest Consecutive Sequence | Hash Set — Sequence Start Filter + Amortized Walk | 2026-06-15 | 2026-07-06 | ⏳ |

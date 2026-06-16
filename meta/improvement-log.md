@@ -21,4 +21,9 @@ If an observation has been actioned, it's marked ✅ with a note on what changed
 **Safwaan's words:** "You are giving away the hint that it's a read-write pointer problem. You should not do that."
 **Action:** ✅ Corrected in this session — changed pattern column to "Two Pointers" (generic). Going forward: when adding a new problem to the curriculum mid-session, write the pattern column generically until the session is complete.
 
+### 2026-06-16 — Concrete trace tables resolve operator confusion fast
+**Observed:** During Reverse Bits (LC 190), Safwaan got stuck on the OR-then-shift vs shift-then-OR ordering bug. A plain verbal explanation didn't land; switching to a concrete bit-by-bit trace table (iteration, lastBit, result after each op, n after) for both the wrong and correct order made it click immediately. He also struggled with abstract "what does left shift do" until given a worked example with actual binary digits (`0101 << 1 → 1010`) tied to a real-world analogy (multiply by 10 in decimal).
+**Safwaan's words:** "This is what you should, reason like this, remember to do this more often."
+**Action:** ✅ Updated CLAUDE.md Expertise Calibration — when he's stuck on a bit/index-precision detail, default to a concrete trace table (iteration-by-iteration values) rather than verbal explanation alone.
+
 <!-- New entries added here -->

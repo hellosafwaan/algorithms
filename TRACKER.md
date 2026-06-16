@@ -13,9 +13,9 @@ Last updated: 2026-06-16 (Number of 1 Bits)
 | Metric | Count |
 |--------|-------|
 | Total problems | 162 |
-| ✅ Complete | 31 |
+| ✅ Complete | 32 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 130 |
+| ⏳ Not started | 129 |
 
 ---
 
@@ -292,7 +292,7 @@ Last updated: 2026-06-16 (Number of 1 Bits)
 | 1 | Single Number | Easy | [#136](https://leetcode.com/problems/single-number/) | Bit Manipulation — XOR Cancellation | ✅ 72nd pct | 2026-06-16 | [→](bit-manipulation/136-single-number/learnings.md) |
 | 2 | Number of 1 Bits | Easy | [#191](https://leetcode.com/problems/number-of-1-bits/) | Bit Manipulation — Mask & Shift | ✅ 100th pct | 2026-06-16 | [→](bit-manipulation/191-number-of-1-bits/learnings.md) |
 | 3 | Counting Bits | Easy | [#338](https://leetcode.com/problems/counting-bits/) | Bit Manipulation | ⏳ | — | — |
-| 4 | Reverse Bits | Easy | [#190](https://leetcode.com/problems/reverse-bits/) | Bit Manipulation | ⏳ | — | — |
+| 4 | Reverse Bits | Easy | [#190](https://leetcode.com/problems/reverse-bits/) | Bit Manipulation — Mask & Shift | ✅ 63rd pct | 2026-06-16 | [→](bit-manipulation/190-reverse-bits/learnings.md) |
 | 5 | Missing Number | Easy | [#268](https://leetcode.com/problems/missing-number/) | Bit Manipulation | ⏳ | — | — |
 | 6 | Sum of Two Integers | Medium | [#371](https://leetcode.com/problems/sum-of-two-integers/) | Bit Manipulation | ⏳ | — | — |
 | 7 | Reverse Integer | Medium | [#7](https://leetcode.com/problems/reverse-integer/) | Math | ⏳ | — | — |
