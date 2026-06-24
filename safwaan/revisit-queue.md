@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 209 — Minimum Size Subarray Sum | Sliding Window — Variable Size (minimize) | 2026-06-24 | 2026-07-15 | ⏳ |
 | LC 190 — Reverse Bits | Bit Manipulation — Mask & Shift (build variant) | 2026-06-16 | 2026-07-07 | ⏳ |
 | LC 136 — Single Number | XOR Self-Cancellation | 2026-06-16 | 2026-07-07 | ⏳ |
 | LC 191 — Number of 1 Bits | Bit Manipulation — Mask & Shift | 2026-06-16 | 2026-07-07 | ⏳ |

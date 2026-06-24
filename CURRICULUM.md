@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases, 154 problems + 8 bonus problems = 162 total (LC #383, #205, #290, #219, #118, #119, #31, #169 are bonus)
+Total: 18 phases, 154 problems + 9 bonus problems = 163 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209 are bonus)
 
 ---
 
@@ -64,6 +64,7 @@ Total: 18 phases, 154 problems + 8 bonus problems = 162 total (LC #383, #205, #2
 | 4 | Permutation in String | Medium | [LC #567](https://leetcode.com/problems/permutation-in-string/) | Sliding Window |
 | 5 | Minimum Window Substring | Hard | [LC #76](https://leetcode.com/problems/minimum-window-substring/) | Sliding Window |
 | 6 | Sliding Window Maximum | Hard | [LC #239](https://leetcode.com/problems/sliding-window-maximum/) | Sliding Window + Deque |
+| — | Minimum Size Subarray Sum *(bonus)* | Medium | [LC #209](https://leetcode.com/problems/minimum-size-subarray-sum/) | Sliding Window — Variable Size (minimize) |
 
 ---
 

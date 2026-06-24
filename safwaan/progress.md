@@ -1,19 +1,19 @@
 # Safwaan — Progress
 
 ## Current Phase
-**Interview Sprint — 2026-06-14 to 2026-06-18 (interview Friday 2026-06-19)**
+**Phase 3 — Sliding Window (in progress)**
 Phase 2 complete as of 2026-06-09 (LC #42 done)
-Next problem: LC 3 cold redo (Wednesday 2026-06-18), then interview consolidation
-⚠️ LC 42 two-pointer redo deferred until after the interview
-Pulled forward Single Number (LC #136, Phase 18 — Bit Manipulation) on 2026-06-16 — high-frequency interview easy, jumped curriculum order intentionally
-Followed immediately with Number of 1 Bits (LC #191, Phase 18) same day — continuing the bit manipulation pre-loaded run
-Followed with Reverse Bits (LC #190, Phase 18) same day — third bit-manip bonus, first one needing real debugging (shift/OR order, early loop termination, signed vs unsigned shift)
+Returning from ~1 week break (SQL + interview prep). Interview was 2026-06-19.
+⚠️ LC 42 two-pointer redo still deferred
+⚠️ Multiple revisit-queue items overdue (LC 1, 125, 167, 31, 15, 977, 11, 88, 26, 27, 80) — probe one at next session start
+Next up: LC 424 (Longest Repeating Character Replacement) — first Phase 3 curriculum problem not yet done
 
 For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 
 ---
 
 ## Recently Completed
+- Minimum Size Subarray Sum (LC #209) — 2026-06-24 — Phase 3 bonus, Sliding Window Variable Size (minimize), 67th percentile, struggled with "add unconditionally" structure
 - Reverse Bits (LC #190) — 2026-06-16 — Phase 18, Mask & Shift (build variant — shift `result` left then OR in bit, 32-iteration `for` loop, `>>>` for the consuming shift), 63rd percentile runtime, multiple guided bugs worked through (OR-before-shift order, `while(n!==0)` terminating too early, `n >> 1` vs `n >>> 1` sign-extension risk)
 - Number of 1 Bits (LC #191) — 2026-06-16 — Phase 18, Mask & Shift (`n & 1` + `n = n >>> 1`), 100th percentile runtime, one toolkit misconception corrected (no decimal→binary conversion needed) plus one self-caught bug (missing shift assignment)
 - Single Number (LC #136) — 2026-06-16 — Phase 18 (bonus pull-forward), XOR self-cancellation, 72nd percentile, clean first-attempt solve, no hints needed

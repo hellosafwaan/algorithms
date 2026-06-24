@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-16 (Number of 1 Bits)
+Last updated: 2026-06-24 (Minimum Size Subarray Sum)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-06-16 (Number of 1 Bits)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 162 |
-| ✅ Complete | 32 |
+| Total problems | 163 |
+| ✅ Complete | 33 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 129 |
 
@@ -24,7 +24,7 @@ Last updated: 2026-06-16 (Number of 1 Bits)
 |---|-------|----------|------|-------------|--------|
 | 1 | Arrays & Hashing | 12 | 10 | 2026-06-05 | 🔄 In Progress |
 | 2 | Two Pointers | 10 | 10 | 2026-06-02 | ✅ Complete |
-| 3 | Sliding Window | 6 | 1 | 2026-06-08 | 🔄 In Progress |
+| 3 | Sliding Window | 7 | 2 | 2026-06-08 | 🔄 In Progress |
 | 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
 | 5 | Binary Search | 7 | 0 | 2026-06-16 | ⏳ |
 | 6 | Linked List | 11 | 0 | 2026-06-22 | ⏳ |
@@ -90,6 +90,7 @@ Last updated: 2026-06-16 (Number of 1 Bits)
 | 4 | Permutation in String | Medium | [#567](https://leetcode.com/problems/permutation-in-string/) | Sliding Window | ⏳ | — | — |
 | 5 | Minimum Window Substring | Hard | [#76](https://leetcode.com/problems/minimum-window-substring/) | Sliding Window | ⏳ | — | — |
 | 6 | Sliding Window Maximum | Hard | [#239](https://leetcode.com/problems/sliding-window-maximum/) | Sliding Window + Deque | ⏳ | — | — |
+| — | Minimum Size Subarray Sum *(bonus)* | Medium | [#209](https://leetcode.com/problems/minimum-size-subarray-sum/) | Sliding Window — Variable Size (minimize) | ✅ 67th pct | 2026-06-24 | [→](sliding-window/209-minimum-size-subarray/learnings.md) |
 
 ## Phase 4 — Stack ⏳
 

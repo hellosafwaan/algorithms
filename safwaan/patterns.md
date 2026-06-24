@@ -123,6 +123,13 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 - **How it was caught:** Direct explanation needed — genuine knowledge gap, not a reasoning gap. Once explained, correctly identified `>>>` as the right choice ("we don't have to preserve the sign").
 - **Status:** Knowledge gap, closed with one explanation. Connects to pattern #29 (LC 191) — this is the same `>>>`-vs-`>>` fact resurfacing in a new context (shifting `n` down vs. the earlier no-conversion-needed fact). Reinforces that `>>>` should be the default for raw bit-pattern manipulation unless sign explicitly matters.
 
+### 38. "Add unconditionally" structure not intuitive on sliding window minimize problems
+- **Seen in:** LC 209 (2026-06-24)
+- **What happened:** Made the add conditional on current sum (`if currentSum < target → add`). This skips elements when the window is already large enough, breaking contiguity. Took 5+ iterations and an explicit scaffold to fix.
+- **Root cause:** Mental model was "if sum is already too big, skip adding" — didn't see that every element must enter the window before you decide to shrink.
+- **Fix:** The add is always unconditional. Expand right every iteration. Shrink while valid. No if/else on the add.
+- **Status:** Needed scaffold explicitly. Probe cold at LC 424: "what's the first thing you do every iteration of the outer loop?"
+
 ### 37. Asked "why force unsigned if input is signed?" — surfaced a real distinction worth noting
 - **Seen in:** LC 190 (2026-06-16)
 - **What happened:** Pushed back on using `>>> 0` before returning, since the problem labels the input a "32-bit signed integer." Good instinct to question rather than blindly apply a fix.
