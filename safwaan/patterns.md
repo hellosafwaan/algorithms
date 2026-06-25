@@ -123,6 +123,13 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 - **How it was caught:** Direct explanation needed — genuine knowledge gap, not a reasoning gap. Once explained, correctly identified `>>>` as the right choice ("we don't have to preserve the sign").
 - **Status:** Knowledge gap, closed with one explanation. Connects to pattern #29 (LC 191) — this is the same `>>>`-vs-`>>` fact resurfacing in a new context (shifting `n` down vs. the earlier no-conversion-needed fact). Reinforces that `>>>` should be the default for raw bit-pattern manipulation unless sign explicitly matters.
 
+### 39. Anagram instinct misapplied to word-level problems
+- **Seen in:** LC 30 (2026-06-25)
+- **What happened:** Joined all words and built a character frequency map — treating the problem identically to LC 242 (Valid Anagram). Didn't account for word boundaries at all.
+- **Root cause:** The surface pattern ("find all occurrences of a permutation of a set of things") looks identical to anagram problems. But here the "things" are whole words, not characters, and word boundaries must be preserved.
+- **Fix:** Key question to ask: what is the atomic unit of comparison? Characters → character frequency. Words (all same length) → word frequency + slice by `wordLen`.
+- **Status:** Conceptual error, corrected via counterexample. LC 567 (Permutation in String) IS a character-frequency problem — watch whether he distinguishes the two cold.
+
 ### 38. "Add unconditionally" structure not intuitive on sliding window minimize problems
 - **Seen in:** LC 209 (2026-06-24)
 - **What happened:** Made the add conditional on current sum (`if currentSum < target → add`). This skips elements when the window is already large enough, breaking contiguity. Took 5+ iterations and an explicit scaffold to fix.

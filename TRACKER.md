@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-24 (Minimum Size Subarray Sum)
+Last updated: 2026-06-25 (Substring with Concatenation of All Words)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-06-24 (Minimum Size Subarray Sum)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 163 |
-| ✅ Complete | 33 |
+| Total problems | 164 |
+| ✅ Complete | 34 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 129 |
 
@@ -91,6 +91,7 @@ Last updated: 2026-06-24 (Minimum Size Subarray Sum)
 | 5 | Minimum Window Substring | Hard | [#76](https://leetcode.com/problems/minimum-window-substring/) | Sliding Window | ⏳ | — | — |
 | 6 | Sliding Window Maximum | Hard | [#239](https://leetcode.com/problems/sliding-window-maximum/) | Sliding Window + Deque | ⏳ | — | — |
 | — | Minimum Size Subarray Sum *(bonus)* | Medium | [#209](https://leetcode.com/problems/minimum-size-subarray-sum/) | Sliding Window — Variable Size (minimize) | ✅ 67th pct | 2026-06-24 | [→](sliding-window/209-minimum-size-subarray/learnings.md) |
+| — | Substring with Concatenation of All Words *(bonus)* | Hard | [#30](https://leetcode.com/problems/substring-with-concatenation-of-all-words/) | Sliding Window — Fixed Size, word frequency | ✅ 41st pct | 2026-06-25 | [→](sliding-window/30-substring-with-concatenation-of-all-words/learnings.md) |
 
 ## Phase 4 — Stack ⏳
 

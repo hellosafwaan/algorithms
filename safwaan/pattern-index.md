@@ -194,6 +194,7 @@ while (n > 0) {
 |---------|--------|-------------|
 | LC 3 — Longest Substring Without Repeating Characters | Variable window, HashMap — maximize | Store char → last index; jump left to `Math.max(left, map[char]+1)`; never reset to 0 |
 | LC 209 — Minimum Size Subarray Sum | Variable window, sum — minimize | Add always; shrink while `sum >= target`; record inside while loop; return 0 if never hit |
+| LC 30 — Substring with Concatenation of All Words | Fixed window, word frequency maps | Window = `words.length * wordLen`; slide by 1; inner loop extracts words via `s.substring(i + j*wordLen, i + j*wordLen + wordLen)`; compare two Maps entry by entry |
 
 ---
 

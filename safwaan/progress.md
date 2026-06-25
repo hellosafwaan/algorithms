@@ -6,13 +6,14 @@ Phase 2 complete as of 2026-06-09 (LC #42 done)
 Returning from ~1 week break (SQL + interview prep). Interview was 2026-06-19.
 ⚠️ LC 42 two-pointer redo still deferred
 ⚠️ Multiple revisit-queue items overdue (LC 1, 125, 167, 31, 15, 977, 11, 88, 26, 27, 80) — probe one at next session start
-Next up: LC 424 (Longest Repeating Character Replacement) — first Phase 3 curriculum problem not yet done
+Next up: LC 424 (Longest Repeating Character Replacement) — first Phase 3 curriculum problem not yet done. Also: cold redo from revisit queue is significantly overdue — must start next session with one.
 
 For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 
 ---
 
 ## Recently Completed
+- Substring with Concatenation of All Words (LC #30) — 2026-06-25 — Phase 3 bonus, Sliding Window Fixed Size + word frequency map comparison, 41st percentile, guided solve — anagram instinct misapplied at start
 - Minimum Size Subarray Sum (LC #209) — 2026-06-24 — Phase 3 bonus, Sliding Window Variable Size (minimize), 67th percentile, struggled with "add unconditionally" structure
 - Reverse Bits (LC #190) — 2026-06-16 — Phase 18, Mask & Shift (build variant — shift `result` left then OR in bit, 32-iteration `for` loop, `>>>` for the consuming shift), 63rd percentile runtime, multiple guided bugs worked through (OR-before-shift order, `while(n!==0)` terminating too early, `n >> 1` vs `n >>> 1` sign-extension risk)
 - Number of 1 Bits (LC #191) — 2026-06-16 — Phase 18, Mask & Shift (`n & 1` + `n = n >>> 1`), 100th percentile runtime, one toolkit misconception corrected (no decimal→binary conversion needed) plus one self-caught bug (missing shift assignment)
