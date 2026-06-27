@@ -62,6 +62,43 @@ algorithms/
 
 ---
 
+## Visualiser System
+
+When Safwaan asks for a visualiser, build one at `[topic]/[problem-folder]/visualiser.html` (or `index.html` if it's the primary file for that folder).
+
+**Stack:** vanilla HTML/CSS/JS — no dependencies, opens directly in browser.
+
+**Always included across all patterns:**
+- Step-by-step with Prev/Next buttons + `←` `→` arrow key support
+- Code panel with active line highlighted
+- Step explanation box (badge + text describing what just happened)
+- Multiple test cases in a dropdown — always cover: empty input, single element, match found, no match, skewed/edge structure
+- Legend explaining the color scheme
+
+**Consistent color scheme across all visualisers:**
+- Purple `#7c6af7` — active / currently being processed
+- Yellow `#fbbf24` — on active path / in current window
+- Green `#34d399` — confirmed / found / done
+- Red `#f87171` — mismatch / dead end / invalid
+- Dark `#1c2038` / border `#2e3560` — not yet visited
+
+**Layout:** two-column (main visual left, panels right). Right column: code panel → pattern-specific panel → call stack (if recursive).
+
+**Pattern-specific visual elements:**
+
+| Pattern | Main visual | Extra panel |
+|---------|-------------|-------------|
+| Recursion / Trees | Canvas tree, nodes color-coded by state | Call stack panel + variables panel (current call's state) |
+| Two Pointers | Array row, pointer markers (arrows/highlighted cells) move each step | Variables panel showing pointer indices and current values |
+| Sliding Window | Array row, window shown as shaded region that expands/shrinks | Variables panel showing `left`, `right`, window size, current value |
+| Stack / Monotonic Stack | Array row + stack panel that pushes/pops visually | Variables panel |
+| Hash Map / Hash Set | Array row + map/set panel showing entries being added/checked | Variables panel |
+| BFS | Queue panel + graph/tree canvas, nodes color-coded by visited state | Queue contents panel |
+
+*This system is iterated as new patterns are encountered.*
+
+---
+
 ## Who You're Coaching
 
 Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/TypeScript. Goal: interview-ready in 3 months.
