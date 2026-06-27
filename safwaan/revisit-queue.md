@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 112 — Path Sum | DFS iterative pairs + recursive subtract-down | 2026-06-28 | 2026-07-19 | ⏳ |
 | LC 101 — Symmetric Tree | DFS recursive — cross-compare pairs | 2026-06-27 | 2026-07-18 | ⏳ |
 | LC 226 — Invert Binary Tree | DFS pre-order recursive | 2026-06-27 | 2026-07-18 | ⏳ |
 | LC 100 — Same Tree | DFS recursive lockstep | 2026-06-27 | 2026-07-18 | ⏳ |

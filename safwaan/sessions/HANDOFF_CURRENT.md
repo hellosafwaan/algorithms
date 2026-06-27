@@ -2,6 +2,12 @@
 
 ## What Was Just Completed
 
+**LC 112 — Path Sum** (Phase 9 bonus)
+
+Pattern: DFS iterative pairs + recursive subtract-down. Both accepted. Recursive: 0ms, 100th percentile.
+
+Iterative came completely cold — direct transfer from fundamentals. Recursive needed the "subtract as you go down" insight. BFS variant was not implemented — flagged as an open question.
+
 **LC 101 — Symmetric Tree** (Phase 9 bonus)
 
 Pattern: DFS — recursive cross-compare pairs. Accepted, 0ms, 100th percentile.

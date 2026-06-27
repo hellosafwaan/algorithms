@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Path Sum — Visualiser</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0f1117; color: #e2e8ff;
+  font-family: 'Courier New', monospace;
+  min-height: 100vh; padding: 20px 24px;
+}
+h1 { font-size: 15px; color: #a394ff; margin-bottom: 3px; }
+.subtitle { font-size: 11px; color: #4a5280; margin-bottom: 16px; }
+
+.toolbar {
+  display: flex; gap: 10px; align-items: center;
+  flex-wrap: wrap; margin-bottom: 14px;
+}
+select, button, input[type=number] {
+  font-family: 'Courier New', monospace; font-size: 13px;
+  border-radius: 6px; border: 1px solid #2e3560;
+  background: #1c2038; color: #e2e8ff;
+  padding: 7px 14px; cursor: pointer; transition: border-color 0.15s;
+}
+input[type=number] { width: 80px; cursor: text; }
+input[type=number]:focus { outline: none; border-color: #7c6af7; }
+select:hover, button:hover:not(:disabled) { border-color: #7c6af7; }
+button.primary { background: #7c6af7; border-color: #7c6af7; color: #fff; font-weight: bold; }
+button.primary:hover:not(:disabled) { background: #9b8dff; }
+button:disabled { opacity: 0.3; cursor: default; }
+.step-ctr { font-size: 12px; color: #4a5280; }
+.target-label { font-size: 12px; color: #4a5280; }
+.kbd-hint { font-size: 11px; color: #3a4065; margin-left: auto; }
+.kbd { display: inline-block; background: #1c2038; border: 1px solid #2e3560; border-radius: 3px; padding: 1px 5px; font-size: 10px; }
+
+.step-box {
+  background: #141728; border: 1px solid #2e3560;
+  border-left: 4px solid #7c6af7; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 16px;
+  font-size: 13px; line-height: 1.7;
+  display: flex; align-items: flex-start; gap: 12px; min-height: 52px;
+}
+.badge {
+  flex-shrink: 0; background: #7c6af7; color: #fff;
+  border-radius: 5px; padding: 3px 9px;
+  font-size: 10px; font-weight: bold; letter-spacing: 0.06em; margin-top: 2px;
+}
+.badge.found  { background: #059669; }
+.badge.miss   { background: #dc2626; }
+.badge.base   { background: #b45309; }
+
+.layout { display: grid; grid-template-columns: 1fr 320px; gap: 14px; align-items: start; }
+
+.tree-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 16px;
+}
+.panel-title {
+  font-size: 10px; color: #4a5280;
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+}
+#treeCanvas { width: 100%; display: block; }
+.legend {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  font-size: 11px; color: #4a5280; margin-top: 12px;
+}
+.leg { display: flex; align-items: center; gap: 5px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+
+.right-col { display: flex; flex-direction: column; gap: 14px; }
+
+.code-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 14px 16px; overflow-x: auto;
+}
+.code-line {
+  display: flex; align-items: center; gap: 8px;
+  padding: 2px 8px; border-radius: 4px;
+  font-size: 12px; line-height: 1.9; white-space: nowrap;
+  transition: background 0.15s;
+}
+.code-line.active {
+  background: rgba(124,106,247,0.2);
+  border-left: 3px solid #7c6af7; margin-left: -3px;
+}
+.ln { color: #3a4065; width: 14px; font-size: 10px; flex-shrink: 0; text-align: right; }
+.kw { color: #c792ea; } .fn { color: #82aaff; } .vr { color: #fbbf24; }
+.cm { color: #3a4065; } .nm { color: #f87171; }
+
+.vars-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 14px 16px;
+}
+.vrow {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 6px 0; border-bottom: 1px solid #1a1f3a; font-size: 12px;
+}
+.vrow:last-child { border-bottom: none; }
+.vn { color: #fbbf24; width: 100px; flex-shrink: 0; }
+.veq { color: #3a4065; }
+.vv { color: #e2e8ff; }
+.vv.null-v  { color: #4a5280; font-style: italic; }
+.vv.found-v { color: #34d399; font-weight: bold; }
+.vv.miss-v  { color: #f87171; }
+
+.stack-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 14px 16px;
+}
+.stack-note { font-size: 10px; color: #3a4065; margin-bottom: 10px; }
+.frames { display: flex; flex-direction: column-reverse; gap: 4px; }
+.frame {
+  padding: 6px 10px; border-radius: 5px; font-size: 11px;
+  background: #1c2038; border-left: 3px solid #2e3560;
+  color: #4a5280; line-height: 1.5;
+}
+.frame.top { border-left-color: #7c6af7; color: #e2e8ff; background: rgba(124,106,247,0.1); }
+.frame .fn-label { color: #82aaff; }
+.frame .sub { font-size: 10px; color: #3a4065; margin-top: 1px; }
+.frame.top .sub { color: #7c6af7; }
+.empty-msg { font-size: 12px; color: #3a4065; }
+
+@media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
+  .kbd-hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<h1>hasPathSum — Step-by-Step</h1>
+<p class="subtitle">Recursive: subtract as you go down. At the leaf, targetSum should equal the leaf's value.</p>
+
+<div class="toolbar">
+  <select id="treeSelect">
+    <option value="basic">Basic (has path)</option>
+    <option value="noPath">No matching path</option>
+    <option value="single">Single node — match</option>
+    <option value="singleMiss">Single node — miss</option>
+    <option value="leftOnly">Left-skewed</option>
+    <option value="deep">Deep tree</option>
+    <option value="multiPath">Multiple paths — one matches</option>
+  </select>
+  <span class="target-label">targetSum =</span>
+  <input type="number" id="targetInput" value="22"/>
+  <button id="applyTarget">Apply</button>
+  <button id="prevBtn" disabled>← Prev</button>
+  <button id="nextBtn" class="primary">Next →</button>
+  <button id="resetBtn">↺ Reset</button>
+  <span class="step-ctr" id="stepCtr">Step 0 / 0</span>
+  <span class="kbd-hint"><span class="kbd">←</span> <span class="kbd">→</span> arrow keys</span>
+</div>
+
+<div class="step-box">
+  <span class="badge" id="badge">START</span>
+  <span id="stepText">Press Next → to begin stepping through the algorithm.</span>
+</div>
+
+<div class="layout">
+  <div class="tree-panel">
+    <div class="panel-title">Tree — current state</div>
+    <canvas id="treeCanvas"></canvas>
+    <div class="legend">
+      <div class="leg"><div class="dot" style="background:#7c6af7"></div> Current node</div>
+      <div class="leg"><div class="dot" style="background:#fbbf24"></div> On active path</div>
+      <div class="leg"><div class="dot" style="background:#34d399"></div> Path found ✓</div>
+      <div class="leg"><div class="dot" style="background:#f87171"></div> Dead end ✗</div>
+      <div class="leg"><div class="dot" style="background:#1c2038;border:1px solid #2e3560"></div> Not yet visited</div>
+    </div>
+  </div>
+
+  <div class="right-col">
+    <div class="code-panel">
+      <div class="panel-title">Code — recursive</div>
+      <div id="codeBlock"></div>
+    </div>
+
+    <div class="vars-panel">
+      <div class="panel-title">Variables — current call</div>
+      <div class="vrow"><span class="vn">root</span><span class="veq">=</span><span class="vv" id="vRoot">—</span></div>
+      <div class="vrow"><span class="vn">targetSum</span><span class="veq">=</span><span class="vv" id="vTarget">—</span></div>
+      <div class="vrow"><span class="vn">root.val</span><span class="veq">=</span><span class="vv" id="vVal">—</span></div>
+      <div class="vrow"><span class="vn">remaining</span><span class="veq">=</span><span class="vv" id="vRemain">—</span></div>
+      <div class="vrow"><span class="vn">returns</span><span class="veq">=</span><span class="vv" id="vReturn">—</span></div>
+    </div>
+
+    <div class="stack-panel">
+      <div class="panel-title">Call Stack</div>
+      <div class="stack-note">top = currently executing</div>
+      <div class="frames" id="frames"><div class="empty-msg">empty</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function N(val, left=null, right=null) { return { val, left, right, _id: 0 }; }
+
+const TREE_DEFS = {
+  basic:      { tree: () => N(5, N(4, N(11, N(7), N(2)), null), N(8, N(13), N(4, null, N(1)))), target: 22 },
+  noPath:     { tree: () => N(1, N(2), N(3)), target: 5 },
+  single:     { tree: () => N(7), target: 7 },
+  singleMiss: { tree: () => N(7), target: 10 },
+  leftOnly:   { tree: () => N(1, N(2, N(3, N(4), null), null), null), target: 6 },
+  deep:       { tree: () => N(1, N(2, N(4, N(8), N(9)), N(5, null, N(10))), N(3, N(6), N(7))), target: 15 },
+  multiPath:  { tree: () => N(1, N(2, N(4), N(5)), N(3, N(6), N(7))), target: 8 },
+};
+
+function clone(n) {
+  if (!n) return null;
+  return { val: n.val, left: clone(n.left), right: clone(n.right), _id: n._id };
+}
+
+let idC = 0;
+function assignIds(n) {
+  if (!n) return;
+  n._id = idC++;
+  assignIds(n.left);
+  assignIds(n.right);
+}
+
+function generateSteps(root, targetSum) {
+  const steps = [];
+  const pathIds = new Set();   // nodes on current active path
+  const foundIds = new Set();  // nodes on the found path
+  const deadIds = new Set();   // leaf nodes that didn't match
+  const callStack = [];
+
+  function snap(codeLine, badge, badgeClass, text, extras={}) {
+    steps.push({
+      codeLine, badge, badgeClass, text,
+      tree: clone(root),
+      pathIds: new Set(pathIds),
+      foundIds: new Set(foundIds),
+      deadIds: new Set(deadIds),
+      activeId: extras.activeId ?? null,
+      stack: callStack.map(f => ({...f})),
+      vars: {
+        root:    extras.vRoot    ?? '—',
+        target:  extras.vTarget  ?? '—',
+        val:     extras.vVal     ?? '—',
+        remain:  extras.vRemain  ?? '—',
+        returns: extras.vReturn  ?? '—',
+      }
+    });
+  }
+
+  function dfs(node, remaining) {
+    const label = node ? `hasPathSum(${node.val}, ${remaining})` : `hasPathSum(null, ${remaining})`;
+    callStack.push({ label });
+
+    if (!node) {
+      snap(1, 'BASE CASE', 'base',
+        `<code>root</code> is <strong>null</strong> — went past a leaf. No path here. Return false.`,
+        { vRoot: 'null', vTarget: remaining, vReturn: 'false' });
+      callStack.pop();
+      return false;
+    }
+
+    const id = node._id;
+    pathIds.add(id);
+
+    snap(2, 'ENTER', '',
+      `At node <strong>${node.val}</strong>. targetSum = <strong>${remaining}</strong>. Not null, continue.`,
+      { activeId: id, vRoot: `Node(${node.val})`, vTarget: remaining, vVal: node.val, vRemain: remaining - node.val });
+
+    // Check leaf
+    if (!node.left && !node.right) {
+      const match = remaining === node.val;
+      if (match) {
+        foundIds.add(id);
+        snap(3, 'FOUND ✓', 'found',
+          `Leaf node <strong>${node.val}</strong>. targetSum (${remaining}) === root.val (${node.val}). <strong>Path found!</strong> Return true.`,
+          { activeId: id, vRoot: `Node(${node.val})`, vTarget: remaining, vVal: node.val, vRemain: 0, vReturn: 'true' });
+        callStack.pop();
+        return true;
+      } else {
+        deadIds.add(id);
+        pathIds.delete(id);
+        snap(3, 'NO MATCH', 'miss',
+          `Leaf node <strong>${node.val}</strong>. targetSum (${remaining}) ≠ root.val (${node.val}). Dead end. Return false.`,
+          { activeId: id, vRoot: `Node(${node.val})`, vTarget: remaining, vVal: node.val, vRemain: remaining - node.val, vReturn: 'false' });
+        callStack.pop();
+        return false;
+      }
+    }
+
+    snap(4, 'RECURSE', '',
+      `Node <strong>${node.val}</strong> is not a leaf. Recurse left and right with targetSum = <strong>${remaining} − ${node.val} = ${remaining - node.val}</strong>.`,
+      { activeId: id, vRoot: `Node(${node.val})`, vTarget: remaining, vVal: node.val, vRemain: remaining - node.val });
+
+    callStack[callStack.length-1].waiting = 'left';
+    const leftResult = dfs(node.left, remaining - node.val);
+    callStack[callStack.length-1].waiting = null;
+
+    if (leftResult) {
+      foundIds.add(id);
+      snap(5, 'FOUND ✓', 'found',
+        `Left subtree of node <strong>${node.val}</strong> returned true — path found through left. Return true.`,
+        { activeId: id, vRoot: `Node(${node.val})`, vTarget: remaining, vVal: node.val, vRemain: remaining - node.val, vReturn: 'true' });
+      callStack.pop();
+      return true;
+    }
+
+    callStack[callStack.length-1].waiting = 'right';
+    const rightResult = dfs(node.right, remaining - node.val);
+    callStack[callStack.length-1].waiting = null;
+
+    const result = leftResult || rightResult;
+    if (result) {
+      foundIds.add(id);
+    } else {
+      deadIds.add(id);
+      pathIds.delete(id);
+    }
+
+    snap(result ? 5 : 6, result ? 'FOUND ✓' : 'NO PATH', result ? 'found' : 'miss',
+      result
+        ? `Right subtree of node <strong>${node.val}</strong> returned true. Return true.`
+        : `Both subtrees of node <strong>${node.val}</strong> returned false. No path here. Return false.`,
+      { activeId: id, vRoot: `Node(${node.val})`, vTarget: remaining, vVal: node.val, vRemain: remaining - node.val, vReturn: result ? 'true' : 'false' });
+
+    callStack.pop();
+    return result;
+  }
+
+  if (!root) {
+    snap(1, 'BASE CASE', 'base', 'Tree is empty — return false.', { vRoot: 'null', vReturn: 'false' });
+    return steps;
+  }
+
+  snap(0, 'START', '',
+    `Call <code>hasPathSum(root, ${targetSum})</code>. We'll subtract each node's value as we go down. At a leaf, if targetSum equals the leaf's value — path found.`, {});
+
+  const result = dfs(root, targetSum);
+
+  snap(result ? 5 : 6, result ? 'PATH EXISTS ✓' : 'NO PATH ✗', result ? 'found' : 'miss',
+    result
+      ? `A root-to-leaf path summing to <strong>${targetSum}</strong> was found.`
+      : `No root-to-leaf path sums to <strong>${targetSum}</strong>.`,
+    { vReturn: result ? 'true' : 'false' });
+
+  return steps;
+}
+
+// ── Tree drawing ──────────────────────────────────────────────────────────────
+function treeDepth(n) { return !n ? 0 : 1 + Math.max(treeDepth(n.left), treeDepth(n.right)); }
+
+function buildLayout(node, x, y, hGap, vGap, pos={}, edges=[]) {
+  if (!node) return { pos, edges };
+  pos[node._id] = { x, y, val: node.val };
+  if (node.left)  { edges.push([node._id, node.left._id]);  buildLayout(node.left,  x-hGap, y+vGap, hGap*0.52, vGap, pos, edges); }
+  if (node.right) { edges.push([node._id, node.right._id]); buildLayout(node.right, x+hGap, y+vGap, hGap*0.52, vGap, pos, edges); }
+  return { pos, edges };
+}
+
+function drawTree(canvas, treeRoot, activeId, pathIds, foundIds, deadIds) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  if (!treeRoot) {
+    ctx.fillStyle = '#3a4065'; ctx.font = '13px Courier New';
+    ctx.textAlign = 'center'; ctx.fillText('null — empty tree', W/2, H/2);
+    return;
+  }
+
+  const depth = treeDepth(treeRoot);
+  const vGap = Math.min(72, (H - 70) / Math.max(depth, 1));
+  const hGap = Math.min(W * 0.3, 120);
+  const { pos, edges } = buildLayout(treeRoot, W/2, 44, hGap, vGap);
+  const R = 22;
+
+  ctx.lineWidth = 2;
+  edges.forEach(([a, b]) => {
+    const pa = pos[a], pb = pos[b];
+    if (!pa || !pb) return;
+    let color = '#1e2445';
+    if (foundIds.has(a) && foundIds.has(b)) color = '#1a5c42';
+    else if (pathIds.has(a) && pathIds.has(b)) color = '#3730a3';
+    ctx.strokeStyle = color;
+    ctx.beginPath(); ctx.moveTo(pa.x, pa.y); ctx.lineTo(pb.x, pb.y); ctx.stroke();
+  });
+
+  Object.entries(pos).forEach(([idStr, { x, y, val }]) => {
+    const id = parseInt(idStr);
+    const isActive = id === activeId;
+    const isFound  = foundIds.has(id);
+    const isDead   = deadIds.has(id);
+    const isOnPath = pathIds.has(id);
+
+    let fill, stroke;
+    if (isFound)       { fill = '#064e3b'; stroke = '#34d399'; }
+    else if (isDead)   { fill = '#7f1d1d'; stroke = '#f87171'; }
+    else if (isActive) { fill = '#3730a3'; stroke = '#7c6af7'; }
+    else if (isOnPath) { fill = '#78350f'; stroke = '#fbbf24'; }
+    else               { fill = '#1c2038'; stroke = '#2e3560'; }
+
+    if (isActive || isFound || isDead) { ctx.shadowColor = stroke; ctx.shadowBlur = 14; }
+    ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI*2);
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.strokeStyle = stroke; ctx.lineWidth = (isActive || isFound || isDead || isOnPath) ? 3 : 2; ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = '#e2e8ff'; ctx.font = 'bold 13px Courier New';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(String(val), x, y);
+  });
+}
+
+// ── Code ──────────────────────────────────────────────────────────────────────
+const CODE = [
+  { n: '',  h: `<span class="kw">function</span> <span class="fn">hasPathSum</span>(root, target) {` },
+  { n: '1', h: `&nbsp;<span class="kw">if</span> (!root) <span class="kw">return</span> <span class="nm">false</span>;` },
+  { n: '2', h: `&nbsp;<span class="cm">// not null — at a real node</span>` },
+  { n: '3', h: `&nbsp;<span class="kw">if</span> (!root.left && !root.right)` },
+  { n: '',  h: `&nbsp;&nbsp;&nbsp;<span class="kw">return</span> target <span style="color:#89ddff">===</span> root.val;` },
+  { n: '4', h: `&nbsp;<span class="cm">// not a leaf — recurse down</span>` },
+  { n: '5', h: `&nbsp;<span class="kw">return</span> <span class="fn">hasPathSum</span>(root.left,  target - root.val)` },
+  { n: '6', h: `&nbsp;&nbsp;&nbsp;<span style="color:#89ddff">||</span> <span class="fn">hasPathSum</span>(root.right, target - root.val);` },
+  { n: '',  h: `}` },
+];
+
+function renderCode(activeLine) {
+  document.getElementById('codeBlock').innerHTML = CODE.map(({ n, h }) => {
+    const isActive = n !== '' && parseInt(n) === activeLine;
+    return `<div class="code-line ${isActive ? 'active' : ''}"><span class="ln">${n}</span>${h}</div>`;
+  }).join('');
+}
+
+function setVar(id, val, cls='') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.className = `vv ${cls}`;
+  el.innerHTML = val;
+}
+
+function applyStep(idx) {
+  const s = steps[idx];
+  const badgeEl = document.getElementById('badge');
+  badgeEl.textContent = s.badge;
+  badgeEl.className = `badge ${s.badgeClass || ''}`;
+  document.getElementById('stepText').innerHTML = s.text;
+  document.getElementById('stepCtr').textContent = `Step ${idx + 1} / ${steps.length}`;
+  renderCode(s.codeLine);
+  drawTree(canvas, s.tree, s.activeId, s.pathIds, s.foundIds, s.deadIds);
+
+  const vRoot = s.vars.root;
+  setVar('vRoot', vRoot, vRoot === 'null' ? 'null-v' : '');
+  setVar('vTarget', s.vars.target);
+  setVar('vVal', s.vars.val);
+  setVar('vRemain', s.vars.remain);
+  const ret = s.vars.returns;
+  setVar('vReturn', ret, ret === 'true' ? 'found-v' : ret === 'false' ? 'miss-v' : '');
+
+  const fr = document.getElementById('frames');
+  fr.innerHTML = '';
+  if (s.stack.length === 0) {
+    fr.innerHTML = '<div class="empty-msg">empty — all calls returned</div>';
+  } else {
+    s.stack.forEach((frame, i) => {
+      const isTop = i === s.stack.length - 1;
+      const div = document.createElement('div');
+      div.className = `frame ${isTop ? 'top' : ''}`;
+      const sub = isTop
+        ? (frame.waiting ? `▶ waiting on ${frame.waiting} subtree` : '▶ executing now')
+        : '⏸ waiting for child to return';
+      div.innerHTML = `<div class="fn-label">${frame.label}</div><div class="sub">${sub}</div>`;
+      fr.appendChild(div);
+    });
+  }
+
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').disabled = idx === steps.length - 1;
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+let steps = [], currentStep = -1, canvas, currentKey = 'basic';
+
+function resizeCanvas() {
+  const def = TREE_DEFS[currentKey];
+  const depth = treeDepth(def.tree());
+  const w = canvas.parentElement.clientWidth - 32;
+  canvas.width  = Math.max(w, 200);
+  canvas.height = Math.max(200, Math.min(440, 60 + depth * 82));
+}
+
+function loadTree(key, target) {
+  currentKey = key;
+  const def = TREE_DEFS[key];
+  const t = target ?? def.target;
+  document.getElementById('targetInput').value = t;
+
+  idC = 0;
+  const root = def.tree();
+  assignIds(root);
+  steps = generateSteps(root, t);
+  currentStep = -1;
+
+  document.getElementById('stepCtr').textContent = `Step 0 / ${steps.length}`;
+  document.getElementById('badge').textContent = 'START';
+  document.getElementById('badge').className = 'badge';
+  document.getElementById('stepText').textContent = 'Press Next → (or → key) to begin.';
+  document.getElementById('frames').innerHTML = '<div class="empty-msg">empty</div>';
+  ['vRoot','vTarget','vVal','vRemain','vReturn'].forEach(id => setVar(id, '—'));
+  renderCode(null);
+
+  idC = 0;
+  const fresh = def.tree();
+  assignIds(fresh);
+  resizeCanvas();
+  drawTree(canvas, fresh, null, new Set(), new Set(), new Set());
+
+  document.getElementById('prevBtn').disabled = true;
+  document.getElementById('nextBtn').disabled = steps.length === 0;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  canvas = document.getElementById('treeCanvas');
+
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    if (currentStep >= 0) applyStep(currentStep);
+    else {
+      idC = 0; const f = TREE_DEFS[currentKey].tree(); assignIds(f);
+      drawTree(canvas, f, null, new Set(), new Set(), new Set());
+    }
+  });
+
+  renderCode(null);
+  loadTree('basic');
+
+  document.getElementById('treeSelect').addEventListener('change', e => loadTree(e.target.value));
+  document.getElementById('applyTarget').addEventListener('click', () => {
+    const t = parseInt(document.getElementById('targetInput').value) || 0;
+    loadTree(currentKey, t);
+  });
+  document.getElementById('targetInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('applyTarget').click();
+  });
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentStep < steps.length - 1) { currentStep++; applyStep(currentStep); }
+  });
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentStep > 0) { currentStep--; applyStep(currentStep); }
+  });
+  document.getElementById('resetBtn').addEventListener('click', () => loadTree(currentKey));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' && currentStep < steps.length - 1) { currentStep++; applyStep(currentStep); }
+    if (e.key === 'ArrowLeft'  && currentStep > 0)                { currentStep--; applyStep(currentStep); }
+  });
+});
+</script>
+</body>
+</html>
