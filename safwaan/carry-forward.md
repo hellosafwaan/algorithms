@@ -3,6 +3,7 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| **Recursive returns** — how does a return value travel upward through the call stack? When do you return a value vs return nothing (void/undefined)? He self-identified this as a gap during LC 226. Wants a dedicated session on this. | Recursion fundamentals | 226 | open — explicitly requested by Safwaan 2026-06-27 |
 | `for...in` vs `for...of` — can he state the rule cold? `for...of` for values (arrays, Sets, Maps, strings); `for...in` for plain object keys. | JS Toolkit | 128 | open — used `for...in` on a Set; explicitly flagged as a gap |
 | LC 567 (Permutation in String) IS a character-frequency problem. Can he distinguish it from LC 30 cold — what's the structural difference? (LC 30 = words all same length, word-level unit; LC 567 = characters, anagram-style) | Sliding Window — pattern recognition | 30 | open — anagram instinct misapplied at LC 30; interesting test whether he correctly identifies LC 567 as character-based |
 | Map comparison cold — can he write `isMapsEqual` without help? `for...of` on a Map gives `[key, value]` pairs. Size check first, then iterate. | JS Toolkit | 30 | open — had to give him the helper directly this session |

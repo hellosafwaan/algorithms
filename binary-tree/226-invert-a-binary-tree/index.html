@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Invert Binary Tree — Visualiser</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0f1117;
+  color: #e2e8ff;
+  font-family: 'Courier New', monospace;
+  min-height: 100vh;
+  padding: 20px 24px;
+}
+
+h1 { font-size: 15px; color: #a394ff; margin-bottom: 3px; }
+.subtitle { font-size: 11px; color: #4a5280; margin-bottom: 16px; }
+
+/* ── Toolbar ── */
+.toolbar {
+  display: flex; gap: 10px; align-items: center;
+  flex-wrap: wrap; margin-bottom: 14px;
+}
+select, button {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid #2e3560;
+  background: #1c2038;
+  color: #e2e8ff;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+select:hover, button:hover:not(:disabled) { border-color: #7c6af7; }
+button.primary { background: #7c6af7; border-color: #7c6af7; color: #fff; font-weight: bold; }
+button.primary:hover:not(:disabled) { background: #9b8dff; }
+button:disabled { opacity: 0.3; cursor: default; }
+.step-ctr { font-size: 12px; color: #4a5280; }
+.kbd-hint { font-size: 11px; color: #3a4065; margin-left: auto; }
+.kbd { display: inline-block; background: #1c2038; border: 1px solid #2e3560; border-radius: 3px; padding: 1px 5px; font-size: 10px; }
+
+/* ── Step explanation ── */
+.step-box {
+  background: #141728;
+  border: 1px solid #2e3560;
+  border-left: 4px solid #7c6af7;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 52px;
+}
+.badge {
+  flex-shrink: 0;
+  background: #7c6af7;
+  color: #fff;
+  border-radius: 5px;
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+/* ── Main layout: tree left (bigger), panels right ── */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 14px;
+  align-items: start;
+}
+
+/* ── Tree panel ── */
+.tree-panel {
+  background: #141728;
+  border: 1px solid #2e3560;
+  border-radius: 10px;
+  padding: 16px;
+}
+.panel-title {
+  font-size: 10px; color: #4a5280;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+#treeCanvas { width: 100%; display: block; }
+.legend {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  font-size: 11px; color: #4a5280;
+  margin-top: 12px;
+}
+.leg { display: flex; align-items: center; gap: 5px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Right column ── */
+.right-col { display: flex; flex-direction: column; gap: 14px; }
+
+/* ── Code panel ── */
+.code-panel {
+  background: #141728;
+  border: 1px solid #2e3560;
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow: hidden;
+}
+.code-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12.5px;
+  line-height: 1.9;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.code-line.active {
+  background: rgba(124,106,247,0.2);
+  border-left: 3px solid #7c6af7;
+  margin-left: -3px;
+}
+.ln { color: #3a4065; width: 14px; font-size: 10px; flex-shrink: 0; text-align: right; }
+.kw { color: #c792ea; }
+.fn { color: #82aaff; }
+.vr { color: #fbbf24; }
+.cm { color: #3a4065; }
+.nm { color: #f87171; }
+
+/* ── Variables panel ── */
+.vars-panel {
+  background: #141728;
+  border: 1px solid #2e3560;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.vrow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #1a1f3a;
+  font-size: 12px;
+}
+.vrow:last-child { border-bottom: none; }
+.vn { color: #fbbf24; width: 82px; flex-shrink: 0; }
+.veq { color: #3a4065; }
+.vv { color: #e2e8ff; }
+.vv.null-val { color: #4a5280; font-style: italic; }
+.vv.node-val { color: #a394ff; }
+.vv.done-val { color: #34d399; }
+
+/* ── Stack panel ── */
+.stack-panel {
+  background: #141728;
+  border: 1px solid #2e3560;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.stack-label {
+  font-size: 10px; color: #4a5280;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.stack-note {
+  font-size: 10px; color: #3a4065;
+  margin-bottom: 10px;
+}
+.frames { display: flex; flex-direction: column-reverse; gap: 4px; }
+.frame {
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  background: #1c2038;
+  border-left: 3px solid #2e3560;
+  color: #4a5280;
+  line-height: 1.5;
+}
+.frame.top { border-left-color: #7c6af7; color: #e2e8ff; background: rgba(124,106,247,0.1); }
+.frame .fn { color: #82aaff; }
+.frame .sub { font-size: 10px; color: #3a4065; margin-top: 1px; }
+.frame.top .sub { color: #7c6af7; }
+.empty-msg { font-size: 12px; color: #3a4065; }
+
+@media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
+  .kbd-hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<h1>invertTree — Step-by-Step</h1>
+<p class="subtitle">Watch every swap happen live. Follow the code, variables, and call stack together.</p>
+
+<div class="toolbar">
+  <select id="treeSelect">
+    <option value="balanced">Balanced (3 levels)</option>
+    <option value="leftSkewed">Left-skewed</option>
+    <option value="rightSkewed">Right-skewed</option>
+    <option value="single">Single node</option>
+    <option value="unbalanced">Unbalanced</option>
+    <option value="large">Large (4 levels)</option>
+  </select>
+  <button id="prevBtn" disabled>← Prev</button>
+  <button id="nextBtn" class="primary">Next →</button>
+  <button id="resetBtn">↺ Reset</button>
+  <span class="step-ctr" id="stepCtr">Step 0 / 0</span>
+  <span class="kbd-hint"><span class="kbd">←</span> <span class="kbd">→</span> arrow keys work too</span>
+</div>
+
+<div class="step-box">
+  <span class="badge" id="badge">START</span>
+  <span id="stepText">Press Next → (or →) to begin stepping through the algorithm.</span>
+</div>
+
+<div class="layout">
+  <div class="tree-panel">
+    <div class="panel-title">Tree — current state</div>
+    <canvas id="treeCanvas"></canvas>
+    <div class="legend">
+      <div class="leg"><div class="dot" style="background:#7c6af7"></div> Active node</div>
+      <div class="leg"><div class="dot" style="background:#fbbf24"></div> Just swapped</div>
+      <div class="leg"><div class="dot" style="background:#34d399"></div> Fully inverted</div>
+      <div class="leg"><div class="dot" style="background:#1c2038;border:1px solid #2e3560"></div> Not yet visited</div>
+    </div>
+  </div>
+
+  <div class="right-col">
+    <div class="code-panel">
+      <div class="panel-title">Code</div>
+      <div id="codeBlock"></div>
+    </div>
+
+    <div class="vars-panel">
+      <div class="panel-title">Variables — current call</div>
+      <div class="vrow"><span class="vn">root</span><span class="veq">=</span><span class="vv" id="vRoot">—</span></div>
+      <div class="vrow"><span class="vn">tempLeft</span><span class="veq">=</span><span class="vv" id="vTempLeft">—</span></div>
+      <div class="vrow"><span class="vn">root.left</span><span class="veq">=</span><span class="vv" id="vRootLeft">—</span></div>
+      <div class="vrow"><span class="vn">root.right</span><span class="veq">=</span><span class="vv" id="vRootRight">—</span></div>
+      <div class="vrow"><span class="vn">returns</span><span class="veq">=</span><span class="vv" id="vReturn">—</span></div>
+    </div>
+
+    <div class="stack-panel">
+      <div class="stack-label">Call Stack</div>
+      <div class="stack-note">top = currently executing</div>
+      <div class="frames" id="frames">
+        <div class="empty-msg">empty</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function N(val, left=null, right=null) { return { val, left, right, _id: 0 }; }
+
+const TREES = {
+  balanced:    () => N(4, N(2, N(1), N(3)), N(7, N(6), N(9))),
+  leftSkewed:  () => N(1, N(2, N(3, N(4), null), null), null),
+  rightSkewed: () => N(1, null, N(2, null, N(3, null, N(4)))),
+  single:      () => N(42),
+  unbalanced:  () => N(5, N(3, N(1), null), N(8, N(7), N(9, null, N(10)))),
+  large:       () => N(8, N(4, N(2, N(1), N(3)), N(6, N(5), N(7))), N(12, N(10, N(9), N(11)), N(14, N(13), N(15)))),
+};
+
+function clone(n) {
+  if (!n) return null;
+  return { val: n.val, left: clone(n.left), right: clone(n.right), _id: n._id };
+}
+
+let idC = 0;
+function assignIds(n) {
+  if (!n) return;
+  n._id = idC++;
+  assignIds(n.left);
+  assignIds(n.right);
+}
+
+function generateSteps(root) {
+  const steps = [];
+  const done = new Set();
+  const callStack = [];
+
+  function snap(codeLine, badge, text, extras={}) {
+    steps.push({
+      codeLine, badge, text,
+      tree: clone(root),
+      done: new Set(done),
+      activeId: extras.activeId ?? null,
+      swappedId: extras.swappedId ?? null,
+      stack: callStack.map(f => ({...f})),
+      vars: {
+        root:      extras.vRoot      ?? '—',
+        tempLeft:  extras.vTempLeft  ?? '—',
+        rootLeft:  extras.vRootLeft  ?? '—',
+        rootRight: extras.vRootRight ?? '—',
+        returns:   extras.vReturn    ?? '—',
+      }
+    });
+  }
+
+  function invert(node) {
+    const label = node
+      ? `invertTree(<span class="fn">node ${node.val}</span>)`
+      : `invertTree(<span style="color:#f87171">null</span>)`;
+    callStack.push({ label });
+
+    if (!node) {
+      snap(1, 'BASE CASE',
+        `<code>root</code> is <strong>null</strong> — base case hit. Nothing to invert. Return null and pop this call.`,
+        { vRoot: 'null', vReturn: 'null' });
+      callStack.pop();
+      return null;
+    }
+
+    const id = node._id;
+    const lv = node.left  ? `Node(${node.left.val})`  : 'null';
+    const rv = node.right ? `Node(${node.right.val})` : 'null';
+
+    snap(2, 'ENTER',
+      `Entered <code>invertTree</code> for node <strong>${node.val}</strong>. root ≠ null so we continue.`,
+      { activeId: id, vRoot: `Node(${node.val})`, vRootLeft: lv, vRootRight: rv });
+
+    snap(3, 'SAVE LEFT',
+      `Save <code>root.left</code> into <code>tempLeft</code> before overwriting it. tempLeft = <strong>${lv}</strong>.`,
+      { activeId: id, vRoot: `Node(${node.val})`, vTempLeft: lv, vRootLeft: lv, vRootRight: rv });
+
+    const savedLeft = node.left;
+
+    node.left = node.right;
+    const newLv = node.left ? `Node(${node.left.val})` : 'null';
+    snap(4, 'SWAP ½',
+      `<code>root.left = root.right</code>. Node ${node.val}'s left is now <strong>${node.left ? node.left.val : 'null'}</strong>. Half done.`,
+      { activeId: id, swappedId: id, vRoot: `Node(${node.val})`, vTempLeft: lv, vRootLeft: newLv, vRootRight: rv });
+
+    node.right = savedLeft;
+    const newRv = node.right ? `Node(${node.right.val})` : 'null';
+    snap(5, 'SWAP DONE',
+      `<code>root.right = tempLeft</code>. Node ${node.val}'s right is now <strong>${node.right ? node.right.val : 'null'}</strong>. <strong>Swap at node ${node.val} complete.</strong>`,
+      { activeId: id, swappedId: id, vRoot: `Node(${node.val})`, vTempLeft: lv, vRootLeft: newLv, vRootRight: newRv });
+
+    snap(6, 'RECURSE LEFT',
+      `Recurse into <strong>left subtree</strong> of node ${node.val} (now <strong>${node.left ? node.left.val : 'null'}</strong>). Pushing new call.`,
+      { activeId: id, vRoot: `Node(${node.val})`, vTempLeft: lv, vRootLeft: newLv, vRootRight: newRv });
+    callStack[callStack.length-1].waiting = 'left';
+    invert(node.left);
+    callStack[callStack.length-1].waiting = null;
+
+    snap(7, 'RECURSE RIGHT',
+      `Left of node ${node.val} done. Now recurse into <strong>right subtree</strong> (<strong>${node.right ? node.right.val : 'null'}</strong>).`,
+      { activeId: id, vRoot: `Node(${node.val})`, vTempLeft: lv, vRootLeft: newLv, vRootRight: newRv });
+    callStack[callStack.length-1].waiting = 'right';
+    invert(node.right);
+    callStack[callStack.length-1].waiting = null;
+
+    done.add(id);
+    snap(8, 'RETURN',
+      `Both subtrees of node <strong>${node.val}</strong> are fully inverted. Return node ${node.val} to caller.`,
+      { activeId: id, vRoot: `Node(${node.val})`, vTempLeft: lv, vRootLeft: newLv, vRootRight: newRv, vReturn: `Node(${node.val})` });
+
+    callStack.pop();
+    return node;
+  }
+
+  if (!root) {
+    snap(1, 'BASE CASE', 'Tree is empty — root is null. Return null.', { vRoot: 'null', vReturn: 'null' });
+  } else {
+    invert(root);
+    snap(9, 'DONE ✓',
+      `Tree fully inverted. Every node's children have been swapped recursively, bottom-up.`,
+      { vReturn: `Node(${root.val}) — root` });
+  }
+
+  return steps;
+}
+
+// ── Tree drawing ─────────────────────────────────────────────────────────────
+function treeDepth(n) {
+  if (!n) return 0;
+  return 1 + Math.max(treeDepth(n.left), treeDepth(n.right));
+}
+
+function buildLayout(node, x, y, hGap, vGap, pos={}, edges=[]) {
+  if (!node) return { pos, edges };
+  pos[node._id] = { x, y, val: node.val };
+  if (node.left)  { edges.push([node._id, node.left._id]);  buildLayout(node.left,  x - hGap, y + vGap, hGap * 0.52, vGap, pos, edges); }
+  if (node.right) { edges.push([node._id, node.right._id]); buildLayout(node.right, x + hGap, y + vGap, hGap * 0.52, vGap, pos, edges); }
+  return { pos, edges };
+}
+
+function drawTree(canvas, treeRoot, activeId, swappedId, doneIds) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  if (!treeRoot) {
+    ctx.fillStyle = '#3a4065';
+    ctx.font = '13px Courier New';
+    ctx.textAlign = 'center';
+    ctx.fillText('null — empty tree', W/2, H/2);
+    return;
+  }
+
+  const depth = treeDepth(treeRoot);
+  const vGap = Math.min(72, (H - 70) / Math.max(depth, 1));
+  const hGap = Math.min(W * 0.3, 120);
+  const { pos, edges } = buildLayout(treeRoot, W/2, 44, hGap, vGap);
+  const R = 22;
+
+  ctx.lineWidth = 2;
+  edges.forEach(([a, b]) => {
+    const pa = pos[a], pb = pos[b];
+    if (!pa || !pb) return;
+    ctx.strokeStyle = (doneIds.has(a) && doneIds.has(b)) ? '#1a5c42' : '#1e2445';
+    ctx.beginPath(); ctx.moveTo(pa.x, pa.y); ctx.lineTo(pb.x, pb.y); ctx.stroke();
+  });
+
+  Object.entries(pos).forEach(([idStr, { x, y, val }]) => {
+    const id = parseInt(idStr);
+    const isActive  = id === activeId;
+    const isSwapped = id === swappedId;
+    const isDone    = doneIds.has(id);
+
+    let fill, stroke;
+    if (isSwapped) { fill = '#92400e'; stroke = '#fbbf24'; }
+    else if (isActive)  { fill = '#3730a3'; stroke = '#7c6af7'; }
+    else if (isDone)    { fill = '#064e3b'; stroke = '#34d399'; }
+    else                { fill = '#1c2038'; stroke = '#2e3560'; }
+
+    if (isActive || isSwapped) { ctx.shadowColor = stroke; ctx.shadowBlur = 16; }
+    ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI*2);
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.strokeStyle = stroke; ctx.lineWidth = (isActive || isSwapped) ? 3 : 2; ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = '#e2e8ff';
+    ctx.font = 'bold 14px Courier New';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(String(val), x, y);
+  });
+}
+
+// ── Code panel ───────────────────────────────────────────────────────────────
+const CODE = [
+  { n: '',  h: `<span class="kw">function</span> <span class="fn">invertTree</span>(root) {` },
+  { n: '1', h: `&nbsp;&nbsp;<span class="kw">if</span> (root <span style="color:#89ddff">===</span> <span class="nm">null</span>) <span class="kw">return</span> <span class="nm">null</span>;` },
+  { n: '2', h: `&nbsp;&nbsp;<span class="cm">// not null, proceed</span>` },
+  { n: '3', h: `&nbsp;&nbsp;<span class="kw">const</span> <span class="vr">tempLeft</span> = root.left;` },
+  { n: '4', h: `&nbsp;&nbsp;root.left = root.right;` },
+  { n: '5', h: `&nbsp;&nbsp;root.right = <span class="vr">tempLeft</span>;` },
+  { n: '6', h: `&nbsp;&nbsp;<span class="fn">invertTree</span>(root.left);` },
+  { n: '7', h: `&nbsp;&nbsp;<span class="fn">invertTree</span>(root.right);` },
+  { n: '8', h: `&nbsp;&nbsp;<span class="kw">return</span> root;` },
+  { n: '',  h: `}` },
+];
+
+function renderCode(activeLine) {
+  document.getElementById('codeBlock').innerHTML = CODE.map(({ n, h }) => {
+    const isActive = n !== '' && parseInt(n) === activeLine;
+    return `<div class="code-line ${isActive ? 'active' : ''}"><span class="ln">${n}</span>${h}</div>`;
+  }).join('');
+}
+
+function setVar(id, val) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (val === '—')            { el.className = 'vv';           el.innerHTML = '—'; }
+  else if (val === 'null')    { el.className = 'vv null-val';  el.innerHTML = 'null'; }
+  else if (val.startsWith('Node(')) { el.className = 'vv node-val'; el.innerHTML = val; }
+  else                        { el.className = 'vv done-val';  el.innerHTML = val; }
+}
+
+// ── Step application ──────────────────────────────────────────────────────────
+function applyStep(idx) {
+  const s = steps[idx];
+  document.getElementById('badge').textContent = s.badge;
+  document.getElementById('stepText').innerHTML = s.text;
+  document.getElementById('stepCtr').textContent = `Step ${idx + 1} / ${steps.length}`;
+  renderCode(s.codeLine);
+  drawTree(canvas, s.tree, s.activeId, s.swappedId, s.done);
+  setVar('vRoot',      s.vars.root);
+  setVar('vTempLeft',  s.vars.tempLeft);
+  setVar('vRootLeft',  s.vars.rootLeft);
+  setVar('vRootRight', s.vars.rootRight);
+  setVar('vReturn',    s.vars.returns);
+
+  const fr = document.getElementById('frames');
+  fr.innerHTML = '';
+  if (s.stack.length === 0) {
+    fr.innerHTML = '<div class="empty-msg">empty — all calls returned</div>';
+  } else {
+    s.stack.forEach((frame, i) => {
+      const isTop = i === s.stack.length - 1;
+      const div = document.createElement('div');
+      div.className = `frame ${isTop ? 'top' : ''}`;
+      const sub = isTop
+        ? (frame.waiting ? `▶ waiting on ${frame.waiting} subtree` : '▶ executing now')
+        : `⏸ waiting for child to return`;
+      div.innerHTML = `<div class="fn">${frame.label}</div><div class="sub">${sub}</div>`;
+      fr.appendChild(div);
+    });
+  }
+
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').disabled = idx === steps.length - 1;
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+let steps = [], currentStep = -1, canvas;
+
+function loadTree(key) {
+  idC = 0;
+  const root = TREES[key]();
+  assignIds(root);
+  steps = generateSteps(root);
+  currentStep = -1;
+
+  document.getElementById('stepCtr').textContent = `Step 0 / ${steps.length}`;
+  document.getElementById('badge').textContent = 'START';
+  document.getElementById('stepText').textContent = 'Press Next → (or → key) to begin.';
+  document.getElementById('frames').innerHTML = '<div class="empty-msg">empty</div>';
+  ['vRoot','vTempLeft','vRootLeft','vRootRight','vReturn'].forEach(id => setVar(id, '—'));
+  renderCode(null);
+
+  // Draw fresh tree
+  idC = 0;
+  const fresh = TREES[key]();
+  assignIds(fresh);
+  resizeCanvas();
+  drawTree(canvas, fresh, null, null, new Set());
+
+  document.getElementById('prevBtn').disabled = true;
+  document.getElementById('nextBtn').disabled = steps.length === 0;
+}
+
+function resizeCanvas() {
+  const key = document.getElementById('treeSelect').value;
+  const depth = treeDepth(TREES[key]());
+  const w = canvas.parentElement.clientWidth - 32;
+  const h = Math.max(200, Math.min(420, 60 + depth * 80));
+  canvas.width  = Math.max(w, 200);
+  canvas.height = h;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  canvas = document.getElementById('treeCanvas');
+
+  function onResize() {
+    resizeCanvas();
+    if (currentStep >= 0) applyStep(currentStep);
+    else {
+      idC = 0;
+      const r = TREES[document.getElementById('treeSelect').value]();
+      assignIds(r);
+      drawTree(canvas, r, null, null, new Set());
+    }
+  }
+
+  window.addEventListener('resize', onResize);
+  renderCode(null);
+  loadTree('balanced');
+
+  document.getElementById('treeSelect').addEventListener('change', e => loadTree(e.target.value));
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentStep < steps.length - 1) { currentStep++; applyStep(currentStep); }
+  });
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentStep > 0) { currentStep--; applyStep(currentStep); }
+  });
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    loadTree(document.getElementById('treeSelect').value);
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' && currentStep < steps.length - 1) { currentStep++; applyStep(currentStep); }
+    if (e.key === 'ArrowLeft'  && currentStep > 0)                { currentStep--; applyStep(currentStep); }
+  });
+});
+</script>
+</body>
+</html>

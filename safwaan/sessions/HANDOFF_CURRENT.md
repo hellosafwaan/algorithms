@@ -2,6 +2,12 @@
 
 ## What Was Just Completed
 
+**LC 226 — Invert Binary Tree** (Phase 9, Trees)
+
+Pattern: DFS pre-order (swap → recurse left → recurse right). Accepted, 0ms, 100th percentile.
+
+Core logic came quickly — swap was obvious, recursion structure was right first try. Only friction: uncertainty about `return root`. Self-identified recursive returns as a gap worth a dedicated session. Also independently asked about traversal order and whether post-order / BFS also work — good instinct.
+
 **LC 100 — Same Tree** (Phase 9, Trees)
 
 Pattern: DFS — recursive lockstep comparison. Accepted, 0ms, 100th percentile.
@@ -31,9 +37,9 @@ Clean cold solve. Safwaan directly transferred the pattern from fundamentals pro
 ## Suggested Next Problems
 
 Binary tree problems (in order):
-1. **LC 226 — Invert Binary Tree** — first Phase 9 curriculum problem
-2. **LC 543 — Diameter of Binary Tree**
-3. **LC 110 — Balanced Binary Tree**
+1. **LC 543 — Diameter of Binary Tree**
+2. **LC 110 — Balanced Binary Tree**
+3. **LC 572 — Subtree of Another Tree**
 
 Also has an untracked folder for LC 100 from before this session.
 

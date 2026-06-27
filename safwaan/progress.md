@@ -13,6 +13,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Invert Binary Tree (LC #226) — 2026-06-27 — Phase 9, DFS pre-order, 100th percentile, clean solve, traversal order discussion
 - Same Tree (LC #100) — 2026-06-27 — Phase 9, DFS recursive lockstep, 100th percentile, base case reasoning unlocked via concrete trace
 - Maximum Depth of Binary Tree (LC #104) — 2026-06-27 — Phase 9, DFS (iterative pairs + recursive), 100th percentile recursive, clean transfer from fundamentals
 - Substring with Concatenation of All Words (LC #30) — 2026-06-25 — Phase 3 bonus, Sliding Window Fixed Size + word frequency map comparison, 41st percentile, guided solve — anagram instinct misapplied at start

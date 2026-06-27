@@ -13,9 +13,9 @@ Last updated: 2026-06-27 (Same Tree)
 | Metric | Count |
 |--------|-------|
 | Total problems | 164 |
-| ✅ Complete | 36 |
+| ✅ Complete | 37 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 127 |
+| ⏳ Not started | 126 |
 
 ---
 
@@ -170,7 +170,7 @@ Last updated: 2026-06-27 (Same Tree)
 
 | # | Problem | Difficulty | LC | Pattern | Status | Solved | Learnings |
 |---|---------|------------|----|---------|--------|--------|-----------|
-| 1 | Invert Binary Tree | Easy | [#226](https://leetcode.com/problems/invert-binary-tree/) | DFS | ⏳ | — | — |
+| 1 | Invert Binary Tree | Easy | [#226](https://leetcode.com/problems/invert-binary-tree/) | DFS | ✅ | 2026-06-27 | [learnings](binary-tree/226-invert-a-binary-tree/learnings.md) |
 | 2 | Max Depth of Binary Tree | Easy | [#104](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | DFS | ✅ | 2026-06-27 | [learnings](binary-tree/104-maximum-depth-of-binary-tree/learnings.md) |
 | 3 | Diameter of Binary Tree | Easy | [#543](https://leetcode.com/problems/diameter-of-binary-tree/) | DFS | ⏳ | — | — |
 | 4 | Balanced Binary Tree | Easy | [#110](https://leetcode.com/problems/balanced-binary-tree/) | DFS | ⏳ | — | — |
