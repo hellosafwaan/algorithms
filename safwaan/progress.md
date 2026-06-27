@@ -1,7 +1,7 @@
 # Safwaan — Progress
 
 ## Current Phase
-**Phase 3 — Sliding Window (in progress)**
+**Phase 9 — Trees (started 2026-06-27, prioritized over Phase 3–8 to finish by weekend)**
 Phase 2 complete as of 2026-06-09 (LC #42 done)
 Returning from ~1 week break (SQL + interview prep). Interview was 2026-06-19.
 ⚠️ LC 42 two-pointer redo still deferred
@@ -13,6 +13,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Maximum Depth of Binary Tree (LC #104) — 2026-06-27 — Phase 9, DFS (iterative pairs + recursive), 100th percentile recursive, clean transfer from fundamentals
 - Substring with Concatenation of All Words (LC #30) — 2026-06-25 — Phase 3 bonus, Sliding Window Fixed Size + word frequency map comparison, 41st percentile, guided solve — anagram instinct misapplied at start
 - Minimum Size Subarray Sum (LC #209) — 2026-06-24 — Phase 3 bonus, Sliding Window Variable Size (minimize), 67th percentile, struggled with "add unconditionally" structure
 - Reverse Bits (LC #190) — 2026-06-16 — Phase 18, Mask & Shift (build variant — shift `result` left then OR in bit, 32-iteration `for` loop, `>>>` for the consuming shift), 63rd percentile runtime, multiple guided bugs worked through (OR-before-shift order, `while(n!==0)` terminating too early, `n >> 1` vs `n >>> 1` sign-extension risk)

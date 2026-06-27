@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-25 (Substring with Concatenation of All Words)
+Last updated: 2026-06-27 (Maximum Depth of Binary Tree)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-06-25 (Substring with Concatenation of All Words)
 | Metric | Count |
 |--------|-------|
 | Total problems | 164 |
-| ✅ Complete | 34 |
+| ✅ Complete | 35 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 129 |
+| ⏳ Not started | 128 |
 
 ---
 
@@ -171,7 +171,7 @@ Last updated: 2026-06-25 (Substring with Concatenation of All Words)
 | # | Problem | Difficulty | LC | Pattern | Status | Solved | Learnings |
 |---|---------|------------|----|---------|--------|--------|-----------|
 | 1 | Invert Binary Tree | Easy | [#226](https://leetcode.com/problems/invert-binary-tree/) | DFS | ⏳ | — | — |
-| 2 | Max Depth of Binary Tree | Easy | [#104](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | DFS | ⏳ | — | — |
+| 2 | Max Depth of Binary Tree | Easy | [#104](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | DFS | ✅ | 2026-06-27 | [learnings](binary-tree/104-maximum-depth-of-binary-tree/learnings.md) |
 | 3 | Diameter of Binary Tree | Easy | [#543](https://leetcode.com/problems/diameter-of-binary-tree/) | DFS | ⏳ | — | — |
 | 4 | Balanced Binary Tree | Easy | [#110](https://leetcode.com/problems/balanced-binary-tree/) | DFS | ⏳ | — | — |
 | 5 | Same Tree | Easy | [#100](https://leetcode.com/problems/same-tree/) | DFS | ⏳ | — | — |

@@ -260,6 +260,20 @@ function dp(n, cache = {}) {
 
 ---
 
+## DFS — Accumulate a Value Over a Tree
+
+**Core idea:** Two flavors. Iterative: push `[node, accumulatedValue]` pairs so each branch carries its own state. Recursive: ask both subtrees for their answer, combine with the current node, return up.
+
+**When to reach for it:** Max/min depth, path sums, any problem where you need to accumulate something as you traverse a tree.
+
+**Key insight:** A single shared variable breaks when the stack branches. Push pairs — each entry is self-contained.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 104 — Maximum Depth of Binary Tree | Iterative pairs + recursive post-order | Push `[node, depth]`; update max only at leaves. Recursive: `Math.max(left, right) + 1`. Null → 0. |
+
+---
+
 ## Bit Manipulation — Mask & Shift
 
 **Core idea:** `n & 1` reads the last bit (AND with 1 wipes every other bit). `n = n >>> 1` shifts the next bit into the last position. Loop while `n !== 0`.
