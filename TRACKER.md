@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-27 (Same Tree)
+Last updated: 2026-06-27 (Symmetric Tree)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-06-27 (Same Tree)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 164 |
-| ✅ Complete | 37 |
+| Total problems | 165 |
+| ✅ Complete | 38 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 126 |
 
@@ -185,6 +185,7 @@ Last updated: 2026-06-27 (Same Tree)
 | 13 | Construct Tree from Preorder and Inorder | Medium | [#105](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) | DFS | ⏳ | — | — |
 | 14 | Binary Tree Maximum Path Sum | Hard | [#124](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | DFS | ⏳ | — | — |
 | 15 | Serialize and Deserialize Binary Tree | Hard | [#297](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) | BFS / DFS | ⏳ | — | — |
+| *(bonus)* | Symmetric Tree | Easy | [#101](https://leetcode.com/problems/symmetric-tree/) | DFS | ✅ | 2026-06-27 | [learnings](binary-tree/101-symmetric-tree/learnings.md) |
 
 ## Phase 10 — Tries ⏳
 

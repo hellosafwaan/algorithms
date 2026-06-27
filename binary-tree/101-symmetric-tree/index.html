@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Symmetric Tree — Visualiser</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0f1117;
+  color: #e2e8ff;
+  font-family: 'Courier New', monospace;
+  min-height: 100vh;
+  padding: 20px 24px;
+}
+h1 { font-size: 15px; color: #a394ff; margin-bottom: 3px; }
+.subtitle { font-size: 11px; color: #4a5280; margin-bottom: 16px; }
+
+.toolbar {
+  display: flex; gap: 10px; align-items: center;
+  flex-wrap: wrap; margin-bottom: 14px;
+}
+select, button {
+  font-family: 'Courier New', monospace; font-size: 13px;
+  border-radius: 6px; border: 1px solid #2e3560;
+  background: #1c2038; color: #e2e8ff;
+  padding: 7px 14px; cursor: pointer; transition: border-color 0.15s;
+}
+select:hover, button:hover:not(:disabled) { border-color: #7c6af7; }
+button.primary { background: #7c6af7; border-color: #7c6af7; color: #fff; font-weight: bold; }
+button.primary:hover:not(:disabled) { background: #9b8dff; }
+button:disabled { opacity: 0.3; cursor: default; }
+.step-ctr { font-size: 12px; color: #4a5280; }
+.kbd-hint { font-size: 11px; color: #3a4065; margin-left: auto; }
+.kbd { display: inline-block; background: #1c2038; border: 1px solid #2e3560; border-radius: 3px; padding: 1px 5px; font-size: 10px; }
+
+.step-box {
+  background: #141728; border: 1px solid #2e3560;
+  border-left: 4px solid #7c6af7; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 16px;
+  font-size: 13px; line-height: 1.7;
+  display: flex; align-items: flex-start; gap: 12px; min-height: 52px;
+}
+.badge {
+  flex-shrink: 0; background: #7c6af7; color: #fff;
+  border-radius: 5px; padding: 3px 9px;
+  font-size: 10px; font-weight: bold; letter-spacing: 0.06em; margin-top: 2px;
+}
+.badge.fail { background: #dc2626; }
+.badge.pass { background: #059669; }
+
+.layout { display: grid; grid-template-columns: 1fr 300px; gap: 14px; align-items: start; }
+
+.tree-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 16px;
+}
+.panel-title {
+  font-size: 10px; color: #4a5280;
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+}
+#treeCanvas { width: 100%; display: block; }
+.legend {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  font-size: 11px; color: #4a5280; margin-top: 12px;
+}
+.leg { display: flex; align-items: center; gap: 5px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+
+/* Pair indicator */
+.pair-box {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 14px;
+}
+.pair-title { font-size: 10px; color: #4a5280; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+.pair-row {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; padding: 6px 0;
+  border-bottom: 1px solid #1a1f3a;
+}
+.pair-row:last-child { border-bottom: none; }
+.pair-node {
+  background: #1c2038; border: 2px solid #2e3560;
+  border-radius: 50%; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: bold; flex-shrink: 0;
+}
+.pair-node.active { border-color: #7c6af7; background: #3730a3; }
+.pair-node.match  { border-color: #34d399; background: #064e3b; }
+.pair-node.fail   { border-color: #f87171; background: #7f1d1d; }
+.pair-node.null-n { border-color: #3a4065; color: #3a4065; font-size: 10px; }
+.pair-arrow { color: #4a5280; font-size: 14px; }
+.pair-result { font-size: 11px; color: #4a5280; margin-left: auto; }
+.pair-result.match { color: #34d399; }
+.pair-result.fail  { color: #f87171; }
+
+.right-col { display: flex; flex-direction: column; gap: 14px; }
+
+.code-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 14px 16px; overflow-x: auto;
+}
+.code-line {
+  display: flex; align-items: center; gap: 8px;
+  padding: 2px 8px; border-radius: 4px;
+  font-size: 11.5px; line-height: 1.9; white-space: nowrap;
+  transition: background 0.15s;
+}
+.code-line.active {
+  background: rgba(124,106,247,0.2);
+  border-left: 3px solid #7c6af7; margin-left: -3px;
+}
+.ln { color: #3a4065; width: 14px; font-size: 10px; flex-shrink: 0; text-align: right; }
+.kw { color: #c792ea; } .fn { color: #82aaff; } .vr { color: #fbbf24; }
+.cm { color: #3a4065; } .nm { color: #f87171; }
+
+.stack-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 14px 16px;
+}
+.stack-note { font-size: 10px; color: #3a4065; margin-bottom: 10px; }
+.frames { display: flex; flex-direction: column-reverse; gap: 4px; }
+.frame {
+  padding: 6px 10px; border-radius: 5px; font-size: 11px;
+  background: #1c2038; border-left: 3px solid #2e3560;
+  color: #4a5280; line-height: 1.5;
+}
+.frame.top { border-left-color: #7c6af7; color: #e2e8ff; background: rgba(124,106,247,0.1); }
+.frame .fn { color: #82aaff; }
+.frame .sub { font-size: 10px; color: #3a4065; margin-top: 1px; }
+.frame.top .sub { color: #7c6af7; }
+.empty-msg { font-size: 12px; color: #3a4065; }
+
+@media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
+  .kbd-hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<h1>isSymmetric — Step-by-Step</h1>
+<p class="subtitle">Watch each mirror pair get checked. See which children pair with which.</p>
+
+<div class="toolbar">
+  <select id="treeSelect">
+    <option value="sym2">Symmetric (2 levels)</option>
+    <option value="asym2">Asymmetric (2 levels)</option>
+    <option value="symmetric">Symmetric (3 levels)</option>
+    <option value="asymmetric">Asymmetric — different values</option>
+    <option value="asymmetricStruct">Asymmetric — different structure</option>
+    <option value="single">Single node</option>
+    <option value="deep">Deep symmetric (4 levels)</option>
+    <option value="almostSymmetric">Almost symmetric — one mismatch</option>
+  </select>
+  <button id="prevBtn" disabled>← Prev</button>
+  <button id="nextBtn" class="primary">Next →</button>
+  <button id="resetBtn">↺ Reset</button>
+  <span class="step-ctr" id="stepCtr">Step 0 / 0</span>
+  <span class="kbd-hint"><span class="kbd">←</span> <span class="kbd">→</span> arrow keys</span>
+</div>
+
+<div class="step-box">
+  <span class="badge" id="badge">START</span>
+  <span id="stepText">Press Next → to begin stepping through the algorithm.</span>
+</div>
+
+<div class="layout">
+  <div class="tree-panel">
+    <div class="panel-title">Tree — current state</div>
+    <canvas id="treeCanvas"></canvas>
+    <div class="legend">
+      <div class="leg"><div class="dot" style="background:#7c6af7"></div> Being compared</div>
+      <div class="leg"><div class="dot" style="background:#34d399"></div> Mirror confirmed ✓</div>
+      <div class="leg"><div class="dot" style="background:#f87171"></div> Mismatch ✗</div>
+      <div class="leg"><div class="dot" style="background:#1c2038;border:1px solid #2e3560"></div> Not yet visited</div>
+    </div>
+  </div>
+
+  <div class="right-col">
+    <div class="code-panel">
+      <div class="panel-title">Code</div>
+      <div id="codeBlock"></div>
+    </div>
+
+    <div class="pair-box">
+      <div class="pair-title">Current pair being compared</div>
+      <div id="pairDisplay">
+        <div style="font-size:12px;color:#3a4065">—</div>
+      </div>
+    </div>
+
+    <div class="stack-panel">
+      <div class="panel-title">Call Stack</div>
+      <div class="stack-note">top = currently executing</div>
+      <div class="frames" id="frames">
+        <div class="empty-msg">empty</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function N(val, left=null, right=null) { return { val, left, right, _id: 0 }; }
+
+const TREES = {
+  sym2:             () => N(1, N(2), N(2)),
+  asym2:            () => N(1, N(2), N(3)),
+  symmetric:        () => N(1, N(2, N(3), N(4)), N(2, N(4), N(3))),
+  asymmetric:       () => N(1, N(2, null, N(3)), N(2, null, N(3))),
+  asymmetricStruct: () => N(1, N(2, N(3), null), N(2, null, N(3))),
+  single:           () => N(1),
+  deep:             () => N(1, N(2, N(3, N(4), N(5)), N(6, N(7), N(8))), N(2, N(8, N(7), null), N(3, N(5), N(4)))),
+  almostSymmetric:  () => N(1, N(2, N(3), N(4)), N(2, N(4), N(9))),
+};
+
+// Fix the deep symmetric tree to actually be symmetric
+TREES.deep = () => N(1,
+  N(2, N(3, N(4), N(5)), N(6, N(7), N(8))),
+  N(2, N(6, N(8), N(7)), N(3, N(5), N(4)))
+);
+
+function clone(n) {
+  if (!n) return null;
+  return { val: n.val, left: clone(n.left), right: clone(n.right), _id: n._id };
+}
+
+let idC = 0;
+function assignIds(n) {
+  if (!n) return;
+  n._id = idC++;
+  assignIds(n.left);
+  assignIds(n.right);
+}
+
+function generateSteps(root) {
+  const steps = [];
+  const matched = new Set();
+  const failed  = new Set();
+  const callStack = [];
+
+  function snap(codeLine, badge, badgeClass, text, extras={}) {
+    steps.push({
+      codeLine, badge, badgeClass, text,
+      tree: clone(root),
+      matched: new Set(matched),
+      failed:  new Set(failed),
+      activeIds: extras.activeIds ?? [],
+      stack: callStack.map(f => ({...f})),
+      pair: extras.pair ?? null,
+    });
+  }
+
+  function dfs(left, right, depth) {
+    const lLabel = left  ? `node <strong>${left.val}</strong>`  : `<span style="color:#f87171">null</span>`;
+    const rLabel = right ? `node <strong>${right.val}</strong>` : `<span style="color:#f87171">null</span>`;
+    const label  = `dfs(${left ? left.val : 'null'}, ${right ? right.val : 'null'})`;
+    callStack.push({ label });
+
+    // Both null
+    if (!left && !right) {
+      snap(2, 'BASE CASE', '', `Both sides are <strong>null</strong> — nothing here on either side. Mirror confirmed at this position. Return true.`,
+        { pair: { left: null, right: null, result: 'match' } });
+      callStack.pop();
+      return true;
+    }
+
+    // One null
+    if (!left || !right) {
+      const activeIds = [];
+      if (left)  { activeIds.push(left._id);  failed.add(left._id); }
+      if (right) { activeIds.push(right._id); failed.add(right._id); }
+      snap(3, 'MISMATCH ✗', 'fail',
+        `One side is <strong>null</strong>, the other is not (${lLabel} vs ${rLabel}). Structure doesn't mirror. Return false.`,
+        { activeIds, pair: { left, right, result: 'fail' } });
+      callStack.pop();
+      return false;
+    }
+
+    // Values differ
+    const activeIds = [left._id, right._id];
+    snap(4, 'COMPARE', '',
+      `Comparing ${lLabel} and ${rLabel} — checking if values match.`,
+      { activeIds, pair: { left, right, result: null } });
+
+    if (left.val !== right.val) {
+      failed.add(left._id); failed.add(right._id);
+      snap(5, 'MISMATCH ✗', 'fail',
+        `Values differ: <strong>${left.val} ≠ ${right.val}</strong>. Not a mirror. Return false.`,
+        { activeIds, pair: { left, right, result: 'fail' } });
+      callStack.pop();
+      return false;
+    }
+
+    snap(6, 'VALUES MATCH', '',
+      `Values match: <strong>${left.val} = ${right.val}</strong>. Now check the outside pair (left.left ↔ right.right) and inside pair (left.right ↔ right.left).`,
+      { activeIds, pair: { left, right, result: 'match' } });
+
+    // Recurse outside
+    snap(7, 'OUTSIDE', '',
+      `Check outside pair: <strong>left.left (${left.left ? left.left.val : 'null'})</strong> ↔ <strong>right.right (${right.right ? right.right.val : 'null'})</strong>.`,
+      { activeIds, pair: { left, right, result: 'match', checking: 'outside' } });
+    callStack[callStack.length-1].waiting = 'outside pair';
+    const outsideOk = dfs(left.left, right.right, depth + 1);
+    callStack[callStack.length-1].waiting = null;
+
+    if (!outsideOk) {
+      callStack.pop();
+      return false;
+    }
+
+    // Recurse inside
+    snap(8, 'INSIDE', '',
+      `Outside pair matched. Check inside pair: <strong>left.right (${left.right ? left.right.val : 'null'})</strong> ↔ <strong>right.left (${right.left ? right.left.val : 'null'})</strong>.`,
+      { activeIds, pair: { left, right, result: 'match', checking: 'inside' } });
+    callStack[callStack.length-1].waiting = 'inside pair';
+    const insideOk = dfs(left.right, right.left, depth + 1);
+    callStack[callStack.length-1].waiting = null;
+
+    if (outsideOk && insideOk) {
+      matched.add(left._id); matched.add(right._id);
+    }
+
+    snap(9, insideOk ? 'MIRROR ✓' : 'MISMATCH ✗', insideOk ? 'pass' : 'fail',
+      insideOk
+        ? `Both pairs matched for nodes <strong>${left.val}</strong> ↔ <strong>${right.val}</strong>. Return true.`
+        : `Inside pair failed for nodes <strong>${left.val}</strong> ↔ <strong>${right.val}</strong>. Return false.`,
+      { activeIds, pair: { left, right, result: insideOk ? 'match' : 'fail' } });
+
+    callStack.pop();
+    return outsideOk && insideOk;
+  }
+
+  if (!root) {
+    snap(1, 'BASE CASE', 'pass', 'Tree is empty — null is symmetric. Return true.', {});
+    return steps;
+  }
+
+  snap(1, 'START', '',
+    `Call <code>dfs(root.left, root.right)</code> — check if the left and right subtrees are mirrors of each other.`, {});
+
+  const result = dfs(root.left, root.right, 0);
+
+  snap(10, result ? 'SYMMETRIC ✓' : 'NOT SYMMETRIC ✗', result ? 'pass' : 'fail',
+    result
+      ? `All pairs matched. The tree <strong>is symmetric</strong>.`
+      : `A mismatch was found. The tree <strong>is not symmetric</strong>.`,
+    {});
+
+  return steps;
+}
+
+// ── Tree drawing ──────────────────────────────────────────────────────────────
+function treeDepth(n) { return !n ? 0 : 1 + Math.max(treeDepth(n.left), treeDepth(n.right)); }
+
+function buildLayout(node, x, y, hGap, vGap, pos={}, edges=[]) {
+  if (!node) return { pos, edges };
+  pos[node._id] = { x, y, val: node.val };
+  if (node.left)  { edges.push([node._id, node.left._id]);  buildLayout(node.left,  x-hGap, y+vGap, hGap*0.52, vGap, pos, edges); }
+  if (node.right) { edges.push([node._id, node.right._id]); buildLayout(node.right, x+hGap, y+vGap, hGap*0.52, vGap, pos, edges); }
+  return { pos, edges };
+}
+
+function drawTree(canvas, treeRoot, activeIds, matchedIds, failedIds) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  if (!treeRoot) {
+    ctx.fillStyle = '#3a4065'; ctx.font = '13px Courier New';
+    ctx.textAlign = 'center'; ctx.fillText('null — empty tree', W/2, H/2);
+    return;
+  }
+
+  const depth = treeDepth(treeRoot);
+  const vGap = Math.min(72, (H - 70) / Math.max(depth, 1));
+  const hGap = Math.min(W * 0.3, 120);
+  const { pos, edges } = buildLayout(treeRoot, W/2, 44, hGap, vGap);
+  const R = 22;
+
+  ctx.lineWidth = 2;
+  edges.forEach(([a, b]) => {
+    const pa = pos[a], pb = pos[b];
+    if (!pa || !pb) return;
+    const aDone = matchedIds.has(a) || failedIds.has(a);
+    const bDone = matchedIds.has(b) || failedIds.has(b);
+    ctx.strokeStyle = (aDone && bDone) ? (matchedIds.has(a) ? '#1a5c42' : '#5a1d1d') : '#1e2445';
+    ctx.beginPath(); ctx.moveTo(pa.x, pa.y); ctx.lineTo(pb.x, pb.y); ctx.stroke();
+  });
+
+  Object.entries(pos).forEach(([idStr, { x, y, val }]) => {
+    const id = parseInt(idStr);
+    const isActive  = activeIds.includes(id);
+    const isMatched = matchedIds.has(id);
+    const isFailed  = failedIds.has(id);
+
+    let fill, stroke;
+    if (isFailed)       { fill = '#7f1d1d'; stroke = '#f87171'; }
+    else if (isMatched) { fill = '#064e3b'; stroke = '#34d399'; }
+    else if (isActive)  { fill = '#3730a3'; stroke = '#7c6af7'; }
+    else                { fill = '#1c2038'; stroke = '#2e3560'; }
+
+    if (isActive || isFailed || isMatched) { ctx.shadowColor = stroke; ctx.shadowBlur = 14; }
+    ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI*2);
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.strokeStyle = stroke; ctx.lineWidth = (isActive || isFailed || isMatched) ? 3 : 2; ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = '#e2e8ff'; ctx.font = 'bold 14px Courier New';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(String(val), x, y);
+  });
+
+  // Draw "mirror axis" down the center
+  ctx.setLineDash([4, 6]);
+  ctx.strokeStyle = '#2e3560';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(W/2, 0); ctx.lineTo(W/2, H); ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+// ── Code panel ────────────────────────────────────────────────────────────────
+const CODE = [
+  { n: '',   h: `<span class="kw">function</span> <span class="fn">isSymmetric</span>(root) {` },
+  { n: '1',  h: `&nbsp;&nbsp;<span class="kw">function</span> <span class="fn">dfs</span>(left, right) {` },
+  { n: '2',  h: `&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (!left && !right) <span class="kw">return</span> <span class="nm">true</span>;` },
+  { n: '3',  h: `&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (!left || !right) <span class="kw">return</span> <span class="nm">false</span>;` },
+  { n: '4',  h: `&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// both exist — compare values</span>` },
+  { n: '5',  h: `&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (left.val !== right.val) <span class="kw">return</span> <span class="nm">false</span>;` },
+  { n: '6',  h: `&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// values match — check pairs</span>` },
+  { n: '7',  h: `&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">const</span> <span class="vr">outside</span> = <span class="fn">dfs</span>(left.left, right.right);` },
+  { n: '8',  h: `&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">const</span> <span class="vr">inside</span>  = <span class="fn">dfs</span>(left.right, right.left);` },
+  { n: '9',  h: `&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="vr">outside</span> && <span class="vr">inside</span>;` },
+  { n: '',   h: `&nbsp;&nbsp;}` },
+  { n: '10', h: `&nbsp;&nbsp;<span class="kw">return</span> <span class="fn">dfs</span>(root.left, root.right);` },
+  { n: '',   h: `}` },
+];
+
+function renderCode(activeLine) {
+  document.getElementById('codeBlock').innerHTML = CODE.map(({ n, h }) => {
+    const isActive = n !== '' && parseInt(n) === activeLine;
+    return `<div class="code-line ${isActive ? 'active' : ''}"><span class="ln">${n}</span>${h}</div>`;
+  }).join('');
+}
+
+function renderPair(pair) {
+  const el = document.getElementById('pairDisplay');
+  if (!pair) { el.innerHTML = '<div style="font-size:12px;color:#3a4065">—</div>'; return; }
+
+  function nodeEl(n, cls) {
+    if (!n) return `<div class="pair-node null-n ${cls}">null</div>`;
+    return `<div class="pair-node ${cls}">${n.val}</div>`;
+  }
+
+  const resultLabel = pair.result === 'match' ? '<span class="pair-result match">✓ match</span>'
+                    : pair.result === 'fail'  ? '<span class="pair-result fail">✗ mismatch</span>'
+                    : '<span class="pair-result">comparing…</span>';
+
+  const cls = pair.result === 'match' ? 'match' : pair.result === 'fail' ? 'fail' : 'active';
+
+  let html = `<div class="pair-row">${nodeEl(pair.left, cls)}<span class="pair-arrow">↔</span>${nodeEl(pair.right, cls)}${resultLabel}</div>`;
+
+  if (pair.checking === 'outside' || pair.checking === 'inside') {
+    html += `<div style="font-size:11px;color:#7c6af7;margin-top:8px;">
+      Next: ${pair.checking === 'outside'
+        ? `outside → left.left (${pair.left?.left?.val ?? 'null'}) ↔ right.right (${pair.right?.right?.val ?? 'null'})`
+        : `inside → left.right (${pair.left?.right?.val ?? 'null'}) ↔ right.left (${pair.right?.left?.val ?? 'null'})`}
+    </div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+// ── Apply step ────────────────────────────────────────────────────────────────
+function applyStep(idx) {
+  const s = steps[idx];
+  const badgeEl = document.getElementById('badge');
+  badgeEl.textContent = s.badge;
+  badgeEl.className = `badge ${s.badgeClass || ''}`;
+  document.getElementById('stepText').innerHTML = s.text;
+  document.getElementById('stepCtr').textContent = `Step ${idx + 1} / ${steps.length}`;
+  renderCode(s.codeLine);
+  drawTree(canvas, s.tree, s.activeIds, s.matched, s.failed);
+  renderPair(s.pair);
+
+  const fr = document.getElementById('frames');
+  fr.innerHTML = '';
+  if (s.stack.length === 0) {
+    fr.innerHTML = '<div class="empty-msg">empty — all calls returned</div>';
+  } else {
+    s.stack.forEach((frame, i) => {
+      const isTop = i === s.stack.length - 1;
+      const div = document.createElement('div');
+      div.className = `frame ${isTop ? 'top' : ''}`;
+      const sub = isTop
+        ? (frame.waiting ? `▶ checking ${frame.waiting}` : '▶ executing now')
+        : '⏸ waiting for child to return';
+      div.innerHTML = `<div class="fn">${frame.label}</div><div class="sub">${sub}</div>`;
+      fr.appendChild(div);
+    });
+  }
+
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').disabled = idx === steps.length - 1;
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+let steps = [], currentStep = -1, canvas;
+
+function resizeCanvas() {
+  const key = document.getElementById('treeSelect').value;
+  const depth = treeDepth(TREES[key]());
+  const w = canvas.parentElement.clientWidth - 32;
+  canvas.width  = Math.max(w, 200);
+  canvas.height = Math.max(200, Math.min(420, 60 + depth * 82));
+}
+
+function loadTree(key) {
+  idC = 0;
+  const root = TREES[key]();
+  assignIds(root);
+  steps = generateSteps(root);
+  currentStep = -1;
+
+  document.getElementById('stepCtr').textContent = `Step 0 / ${steps.length}`;
+  document.getElementById('badge').textContent = 'START';
+  document.getElementById('badge').className = 'badge';
+  document.getElementById('stepText').textContent = 'Press Next → (or → key) to begin.';
+  document.getElementById('frames').innerHTML = '<div class="empty-msg">empty</div>';
+  document.getElementById('pairDisplay').innerHTML = '<div style="font-size:12px;color:#3a4065">—</div>';
+  renderCode(null);
+
+  idC = 0;
+  const fresh = TREES[key]();
+  assignIds(fresh);
+  resizeCanvas();
+  drawTree(canvas, fresh, [], new Set(), new Set());
+
+  document.getElementById('prevBtn').disabled = true;
+  document.getElementById('nextBtn').disabled = steps.length === 0;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  canvas = document.getElementById('treeCanvas');
+
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    if (currentStep >= 0) applyStep(currentStep);
+    else {
+      idC = 0;
+      const r = TREES[document.getElementById('treeSelect').value]();
+      assignIds(r);
+      drawTree(canvas, r, [], new Set(), new Set());
+    }
+  });
+
+  renderCode(null);
+  loadTree('symmetric');
+
+  document.getElementById('treeSelect').addEventListener('change', e => loadTree(e.target.value));
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentStep < steps.length - 1) { currentStep++; applyStep(currentStep); }
+  });
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentStep > 0) { currentStep--; applyStep(currentStep); }
+  });
+  document.getElementById('resetBtn').addEventListener('click', () => loadTree(document.getElementById('treeSelect').value));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' && currentStep < steps.length - 1) { currentStep++; applyStep(currentStep); }
+    if (e.key === 'ArrowLeft'  && currentStep > 0)                { currentStep--; applyStep(currentStep); }
+  });
+});
+</script>
+</body>
+</html>

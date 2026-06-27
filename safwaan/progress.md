@@ -13,6 +13,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Symmetric Tree (LC #101) — 2026-06-27 — Phase 9 bonus, DFS recursive, 100th percentile, mirror pairing concept explained from scratch
 - Invert Binary Tree (LC #226) — 2026-06-27 — Phase 9, DFS pre-order, 100th percentile, clean solve, traversal order discussion
 - Same Tree (LC #100) — 2026-06-27 — Phase 9, DFS recursive lockstep, 100th percentile, base case reasoning unlocked via concrete trace
 - Maximum Depth of Binary Tree (LC #104) — 2026-06-27 — Phase 9, DFS (iterative pairs + recursive), 100th percentile recursive, clean transfer from fundamentals

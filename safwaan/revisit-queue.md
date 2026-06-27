@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 101 — Symmetric Tree | DFS recursive — cross-compare pairs | 2026-06-27 | 2026-07-18 | ⏳ |
 | LC 226 — Invert Binary Tree | DFS pre-order recursive | 2026-06-27 | 2026-07-18 | ⏳ |
 | LC 100 — Same Tree | DFS recursive lockstep | 2026-06-27 | 2026-07-18 | ⏳ |
 | LC 104 — Maximum Depth of Binary Tree | DFS (iterative pairs + recursive) | 2026-06-27 | 2026-07-18 | ⏳ |

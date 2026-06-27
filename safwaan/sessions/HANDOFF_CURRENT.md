@@ -2,6 +2,12 @@
 
 ## What Was Just Completed
 
+**LC 101 — Symmetric Tree** (Phase 9 bonus)
+
+Pattern: DFS — recursive cross-compare pairs. Accepted, 0ms, 100th percentile.
+
+Needed the concept of "symmetric" explained visually first. Once the mirror pairing was clear (outside ↔ outside, inside ↔ inside), built the base cases correctly from Same Tree memory and filled in the recursive calls with minimal prompting. Independently asked about alternative approaches and algorithm names (BFS/DFS) — good pattern forming.
+
 **LC 226 — Invert Binary Tree** (Phase 9, Trees)
 
 Pattern: DFS pre-order (swap → recurse left → recurse right). Accepted, 0ms, 100th percentile.
@@ -36,10 +42,11 @@ Clean cold solve. Safwaan directly transferred the pattern from fundamentals pro
 
 ## Suggested Next Problems
 
-Binary tree problems (in order):
 1. **LC 543 — Diameter of Binary Tree**
 2. **LC 110 — Balanced Binary Tree**
 3. **LC 572 — Subtree of Another Tree**
+
+Good probe for next session: "How does Symmetric Tree differ from Same Tree — just one line?" Should be able to answer cold.
 
 Also has an untracked folder for LC 100 from before this session.
 

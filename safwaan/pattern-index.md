@@ -273,6 +273,7 @@ function dp(n, cache = {}) {
 | LC 104 — Maximum Depth of Binary Tree | Iterative pairs + recursive post-order | Push `[node, depth]`; update max only at leaves. Recursive: `Math.max(left, right) + 1`. Null → 0. |
 | LC 100 — Same Tree | Recursive lockstep comparison | Walk both trees simultaneously. Null+null → true (base case). One null → false. Values differ → false. Otherwise recurse both sides. |
 | LC 226 — Invert Binary Tree | Pre-order DFS (process → recurse) | Swap children at current node, then recurse into both. Post-order, iterative DFS, and BFS all also work. |
+| LC 101 — Symmetric Tree | DFS recursive — cross-compare pairs | `dfs(root.left, root.right)`. Outside: `dfs(l.left, r.right)`. Inside: `dfs(l.right, r.left)`. Base cases identical to Same Tree. |
 
 ---
 
