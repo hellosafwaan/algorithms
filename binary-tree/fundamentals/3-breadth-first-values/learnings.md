@@ -1,5 +1,11 @@
 # Breadth-First Values
 
+## Problem
+
+Write a function that takes in the root of a binary tree and returns an array containing all values of the tree in breadth-first order (level by level, left to right).
+
+---
+
 ## Key Insight
 
 BFS visits nodes level by level, left to right. It requires a **queue** (FIFO) — you process nodes in the order you discover them, and you discover them left-to-right per level. A stack would give you DFS, not BFS.

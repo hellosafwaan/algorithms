@@ -1,5 +1,11 @@
 # Tree Sum
 
+## Problem
+
+Write a function that takes in the root of a binary tree that contains number values and returns the sum of all values in the tree.
+
+---
+
 ## Key Insight
 
 Summing all nodes in a tree is the first problem where you see all three traversal approaches side by side — recursive DFS, iterative DFS, and iterative BFS — and they all work. The recursive version is the most natural. The critical rule for iterative: **add the value when you pop/dequeue, not when you push children.**

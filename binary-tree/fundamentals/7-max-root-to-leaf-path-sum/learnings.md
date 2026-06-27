@@ -1,5 +1,11 @@
 # Max Root to Leaf Path Sum
 
+## Problem
+
+Write a function that takes in the root of a binary tree that contains number values and returns the maximum sum of any root-to-leaf path within the tree. You may assume the input tree is non-empty.
+
+---
+
 ## Key Insight
 
 **Iterative:** A single `currentSum` variable breaks when the stack branches — two different paths can't share one number. The fix is to push the accumulated path sum *alongside* each node as a pair `[node, pathSum]`, so each branch carries its own independent sum.

@@ -1,5 +1,11 @@
 # Depth-First Values
 
+## Problem
+
+Write a function that takes in the root of a binary tree and returns an array containing all values of the tree in depth-first order (preorder: root, left, right).
+
+---
+
 ## Key Insight
 
 DFS goes deep before wide — it follows one branch all the way to the bottom before backtracking. The standard order is **preorder**: root → left subtree → right subtree. A stack (LIFO) naturally produces this order because the last thing pushed is the first thing processed.

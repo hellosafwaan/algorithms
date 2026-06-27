@@ -1,5 +1,11 @@
 # Binary Tree Warm-Up — The Node Class
 
+## Problem
+
+Build a binary tree using a Node class. Each node has a value, a left child, and a right child. Wire up nodes manually by assigning `.left` and `.right` pointers.
+
+---
+
 ## Key Insight
 
 A binary tree node has three fields: a value and two child pointers (`left`, `right`). Unlike a linked list node (one `.next`), each node can branch in two directions. You build the tree by wiring up nodes manually — the structure exists only through the pointer assignments.

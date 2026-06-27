@@ -1,5 +1,11 @@
 # Tree Min Value
 
+## Problem
+
+Write a function that takes in the root of a binary tree that contains number values and returns the minimum value within the tree. You may assume the input tree is non-empty.
+
+---
+
 ## Key Insight
 
 Find the minimum value in a tree. The iterative version tracks a running minimum as you traverse. The recursive version is cleaner — return `Infinity` for null nodes so they never win a `Math.min` comparison, and let the minimum bubble up through return values naturally. Same pattern as recursive tree sum.

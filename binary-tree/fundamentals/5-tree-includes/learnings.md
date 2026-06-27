@@ -1,5 +1,11 @@
 # Tree Includes
 
+## Problem
+
+Write a function that takes in the root of a binary tree and a target value. The function should return `true` if the target value exists anywhere in the tree, and `false` if it does not.
+
+---
+
 ## Key Insight
 
 Search for a target value anywhere in the tree. Return `true` if found, `false` if not. Works with any traversal — DFS or BFS — because you're checking every node regardless of order. The recursive version uses `||` to combine both subtree results: if left finds it, done; if not, try right.
