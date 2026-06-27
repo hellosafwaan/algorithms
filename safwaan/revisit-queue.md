@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 100 — Same Tree | DFS recursive lockstep | 2026-06-27 | 2026-07-18 | ⏳ |
 | LC 104 — Maximum Depth of Binary Tree | DFS (iterative pairs + recursive) | 2026-06-27 | 2026-07-18 | ⏳ |
 | LC 30 — Substring with Concatenation of All Words | Sliding Window — Fixed Size, word frequency maps | 2026-06-25 | 2026-07-16 | ⏳ |
 | LC 209 — Minimum Size Subarray Sum | Sliding Window — Variable Size (minimize) | 2026-06-24 | 2026-07-15 | ⏳ |

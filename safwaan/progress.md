@@ -13,6 +13,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Same Tree (LC #100) — 2026-06-27 — Phase 9, DFS recursive lockstep, 100th percentile, base case reasoning unlocked via concrete trace
 - Maximum Depth of Binary Tree (LC #104) — 2026-06-27 — Phase 9, DFS (iterative pairs + recursive), 100th percentile recursive, clean transfer from fundamentals
 - Substring with Concatenation of All Words (LC #30) — 2026-06-25 — Phase 3 bonus, Sliding Window Fixed Size + word frequency map comparison, 41st percentile, guided solve — anagram instinct misapplied at start
 - Minimum Size Subarray Sum (LC #209) — 2026-06-24 — Phase 3 bonus, Sliding Window Variable Size (minimize), 67th percentile, struggled with "add unconditionally" structure

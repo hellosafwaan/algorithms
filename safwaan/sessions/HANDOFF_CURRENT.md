@@ -2,6 +2,12 @@
 
 ## What Was Just Completed
 
+**LC 100 — Same Tree** (Phase 9, Trees)
+
+Pattern: DFS — recursive lockstep comparison. Accepted, 0ms, 100th percentile.
+
+Struggled with two things: the short-circuit bug (returning true too early before checking subtrees) and the null base case (why `null, null → true`). Both unlocked via concrete call-stack traces. Time/space complexity clicked quickly once connected to LC 104.
+
 **LC 104 — Maximum Depth of Binary Tree** (Phase 9, Trees)
 
 Pattern: DFS — iterative pairs + recursive post-order. Both accepted. Recursive hit 100th percentile.
@@ -27,12 +33,15 @@ Clean cold solve. Safwaan directly transferred the pattern from fundamentals pro
 Binary tree problems (in order):
 1. **LC 226 — Invert Binary Tree** — first Phase 9 curriculum problem
 2. **LC 543 — Diameter of Binary Tree**
-3. **LC 100 — Same Tree** — folder already exists untracked
+3. **LC 110 — Balanced Binary Tree**
 
 Also has an untracked folder for LC 100 from before this session.
 
 ## Coach Notes
 
-- Pattern transfer is strong — he's connecting new problems to prior fundamentals without prompting. This is a good sign for the binary tree sprint.
+- Base case reasoning is still developing. He understands it when traced concretely but can't derive it cold. Reinforce the question: "what is the simplest input that needs no recursion? What do I return for it?"
+- Short-circuit bug (returning true too early) is a pattern to watch — same shape as "closing a subproblem at first success."
+- O(n) time + O(h) space is solidifying as the standard recursive DFS complexity. Connecting new problems to prior ones (LC 104) is working.
+- Concrete call-stack traces are the unlock for base case confusion — default to them when he's stuck on null handling.
 - Revisit queue is severely overdue but intentionally deferred to next month. Don't bring it up mid-sprint.
 - The week's goal is Linked List + Binary Tree done by weekend. Prioritize moving through problems quickly over deep complexity discussion.

@@ -271,6 +271,7 @@ function dp(n, cache = {}) {
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 104 — Maximum Depth of Binary Tree | Iterative pairs + recursive post-order | Push `[node, depth]`; update max only at leaves. Recursive: `Math.max(left, right) + 1`. Null → 0. |
+| LC 100 — Same Tree | Recursive lockstep comparison | Walk both trees simultaneously. Null+null → true (base case). One null → false. Values differ → false. Otherwise recurse both sides. |
 
 ---
 
