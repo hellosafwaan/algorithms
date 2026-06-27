@@ -1,5 +1,11 @@
 # Get Node Value at Index
 
+## Problem
+
+Write a function that takes in the head of a linked list and an index. The function should return the value of the node at the given index. If there is no node at the given index, return `null`.
+
+---
+
 ## Key Insight
 
 First problem where you need to **carry extra state through recursion** — the current index — alongside the node. Same situation as problem 2 (return all values), but instead of mutating an array, you pass the index as a parameter to a helper. Returns `null` for out-of-bounds (index past the end of the list).

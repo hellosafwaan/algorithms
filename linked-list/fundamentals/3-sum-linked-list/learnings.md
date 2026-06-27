@@ -1,5 +1,11 @@
 # Sum Linked List
 
+## Problem
+
+Write a function that takes in the head of a linked list containing numbers and returns the sum of all values in the list.
+
+---
+
 ## Key Insight
 
 The recursive version is the cleanest linked list pattern where a **value flows back up through return values** — no helper needed. Base case returns 0 (empty list contributes nothing). Each node returns its own value plus whatever its tail sums to.

@@ -1,5 +1,11 @@
 # Return All Values in a List
 
+## Problem
+
+Write a function that takes in the head of a linked list and returns an array containing all values of the nodes in the list, in order.
+
+---
+
 ## Key Insight
 
 Same traversal as print-all-values, but collecting into an array. The recursive version introduces the **helper function pattern** — when you need to carry extra state through recursion that you can't return up the chain cleanly, pass it as a parameter to a helper.

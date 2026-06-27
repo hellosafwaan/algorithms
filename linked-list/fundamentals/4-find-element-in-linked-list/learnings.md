@@ -1,5 +1,11 @@
 # Find Element in Linked List
 
+## Problem
+
+Write a function that takes in the head of a linked list and a target value. The function should return `true` if the target value exists anywhere in the list, and `false` if it does not.
+
+---
+
 ## Key Insight
 
 First pattern where there are **two base cases** in the recursive version: one for "fell off the end without finding it" and one for "found it here." The recursive case passes the result up — whatever `.next` returns is what you return.

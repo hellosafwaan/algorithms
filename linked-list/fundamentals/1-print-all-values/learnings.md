@@ -1,5 +1,11 @@
 # Print All Values
 
+## Problem
+
+Write a function that takes in the head of a linked list and prints each value in the list, in order.
+
+---
+
 ## Key Insight
 
 The core traversal pattern for a linked list. Every linked list problem starts with this shape — walk from head to null, doing something at each node.
