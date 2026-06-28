@@ -275,6 +275,7 @@ function dp(n, cache = {}) {
 | LC 226 — Invert Binary Tree | Pre-order DFS (process → recurse) | Swap children at current node, then recurse into both. Post-order, iterative DFS, and BFS all also work. |
 | LC 101 — Symmetric Tree | DFS recursive — cross-compare pairs | `dfs(root.left, root.right)`. Outside: `dfs(l.left, r.right)`. Inside: `dfs(l.right, r.left)`. Base cases identical to Same Tree. |
 | LC 112 — Path Sum | DFS iterative pairs + recursive subtract-down | Iterative: push `[node, sum]`, check at leaves. Recursive: pass `targetSum - root.val` down; at leaf check `targetSum === root.val`. Return `left \|\| right`. |
+| LC 222 — Count Complete Tree Nodes | Complete tree shortcut (O(log²n)) | Measure leftmost height and rightmost height from same root. If equal → perfect subtree → `2**h - 1`. Else: `1 + recurse(left) + recurse(right)`. Shortcut fires at multiple levels. |
 
 ---
 

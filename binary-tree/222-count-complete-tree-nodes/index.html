@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Count Complete Tree Nodes — Visualiser</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0f1117; color: #e2e8ff;
+  font-family: 'Courier New', monospace;
+  min-height: 100vh; padding: 20px 24px;
+}
+h1 { font-size: 15px; color: #a394ff; margin-bottom: 3px; }
+.subtitle { font-size: 11px; color: #4a5280; margin-bottom: 16px; }
+
+.toolbar {
+  display: flex; gap: 10px; align-items: center;
+  flex-wrap: wrap; margin-bottom: 14px;
+}
+select, button {
+  font-family: 'Courier New', monospace; font-size: 13px;
+  border-radius: 6px; border: 1px solid #2e3560;
+  background: #1c2038; color: #e2e8ff;
+  padding: 7px 14px; cursor: pointer; transition: border-color 0.15s;
+}
+select:hover, button:hover:not(:disabled) { border-color: #7c6af7; }
+button.primary { background: #7c6af7; border-color: #7c6af7; color: #fff; font-weight: bold; }
+button.primary:hover:not(:disabled) { background: #9b8dff; }
+button:disabled { opacity: 0.3; cursor: default; }
+.step-ctr { font-size: 12px; color: #4a5280; }
+.kbd-hint { font-size: 11px; color: #3a4065; margin-left: auto; }
+.kbd { display: inline-block; background: #1c2038; border: 1px solid #2e3560; border-radius: 3px; padding: 1px 5px; font-size: 10px; }
+
+.step-box {
+  background: #141728; border: 1px solid #2e3560;
+  border-left: 4px solid #7c6af7; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 16px;
+  font-size: 13px; line-height: 1.7;
+  display: flex; align-items: flex-start; gap: 12px; min-height: 52px;
+}
+.badge {
+  flex-shrink: 0; background: #7c6af7; color: #fff;
+  border-radius: 5px; padding: 3px 9px;
+  font-size: 10px; font-weight: bold; letter-spacing: 0.06em; margin-top: 2px;
+}
+.badge.shortcut { background: #059669; }
+.badge.base     { background: #b45309; }
+.badge.recurse  { background: #1d4ed8; }
+
+.layout { display: grid; grid-template-columns: 1fr 320px; gap: 14px; align-items: start; }
+
+.tree-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 16px;
+}
+.panel-title {
+  font-size: 10px; color: #4a5280;
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+}
+#treeCanvas { width: 100%; display: block; }
+.legend {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  font-size: 11px; color: #4a5280; margin-top: 12px;
+}
+.leg { display: flex; align-items: center; gap: 5px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+
+.right-col { display: flex; flex-direction: column; gap: 14px; }
+
+.code-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 14px 16px; overflow-x: auto;
+}
+.code-line {
+  display: flex; align-items: center; gap: 8px;
+  padding: 2px 8px; border-radius: 4px;
+  font-size: 12px; line-height: 1.9; white-space: nowrap;
+  transition: background 0.15s;
+}
+.code-line.active {
+  background: rgba(124,106,247,0.2);
+  border-left: 3px solid #7c6af7; margin-left: -3px;
+}
+.ln { color: #3a4065; width: 14px; font-size: 10px; flex-shrink: 0; text-align: right; }
+.kw { color: #c792ea; } .fn { color: #82aaff; } .vr { color: #fbbf24; }
+.cm { color: #3a4065; } .nm { color: #f87171; }
+
+/* Heights panel */
+.heights-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 14px 16px;
+}
+.h-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 0; border-bottom: 1px solid #1a1f3a;
+  font-size: 12px;
+}
+.h-row:last-child { border-bottom: none; }
+.h-label { color: #fbbf24; width: 90px; flex-shrink: 0; }
+.h-val { color: #e2e8ff; }
+.h-val.highlight { color: #34d399; font-weight: bold; }
+.h-equal { color: #34d399; font-size: 11px; margin-left: auto; }
+.h-notequal { color: #f87171; font-size: 11px; margin-left: auto; }
+
+/* Count display */
+.count-display {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 14px 16px; text-align: center;
+}
+.count-number {
+  font-size: 32px; font-weight: bold; color: #7c6af7;
+  line-height: 1.2;
+}
+.count-label { font-size: 11px; color: #4a5280; margin-top: 4px; }
+.count-formula { font-size: 11px; color: #34d399; margin-top: 6px; min-height: 16px; }
+
+.stack-panel {
+  background: #141728; border: 1px solid #2e3560;
+  border-radius: 10px; padding: 14px 16px;
+}
+.stack-note { font-size: 10px; color: #3a4065; margin-bottom: 10px; }
+.frames { display: flex; flex-direction: column-reverse; gap: 4px; }
+.frame {
+  padding: 6px 10px; border-radius: 5px; font-size: 11px;
+  background: #1c2038; border-left: 3px solid #2e3560;
+  color: #4a5280; line-height: 1.5;
+}
+.frame.top { border-left-color: #7c6af7; color: #e2e8ff; background: rgba(124,106,247,0.1); }
+.frame .fn-label { color: #82aaff; }
+.frame .sub { font-size: 10px; color: #3a4065; margin-top: 1px; }
+.frame.top .sub { color: #7c6af7; }
+.empty-msg { font-size: 12px; color: #3a4065; }
+
+@media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
+  .kbd-hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<h1>countNodes (Complete Tree) — Step-by-Step</h1>
+<p class="subtitle">Watch the height shortcut fire on perfect subtrees. Compare O(n) brute force vs O(log²n) optimal.</p>
+
+<div class="toolbar">
+  <select id="treeSelect">
+    <option value="complete7">Complete — 7 nodes (perfect)</option>
+    <option value="complete6">Complete — 6 nodes</option>
+    <option value="complete5">Complete — 5 nodes</option>
+    <option value="complete12">Complete — 12 nodes</option>
+    <option value="single">Single node</option>
+    <option value="empty">Empty tree</option>
+  </select>
+  <select id="algoSelect">
+    <option value="optimal">Optimal — O(log²n)</option>
+    <option value="naive">Naive — O(n) recursive</option>
+  </select>
+  <button id="prevBtn" disabled>← Prev</button>
+  <button id="nextBtn" class="primary">Next →</button>
+  <button id="resetBtn">↺ Reset</button>
+  <span class="step-ctr" id="stepCtr">Step 0 / 0</span>
+  <span class="kbd-hint"><span class="kbd">←</span> <span class="kbd">→</span> arrow keys</span>
+</div>
+
+<div class="step-box">
+  <span class="badge" id="badge">START</span>
+  <span id="stepText">Press Next → to begin stepping through the algorithm.</span>
+</div>
+
+<div class="layout">
+  <div class="tree-panel">
+    <div class="panel-title">Tree — current state</div>
+    <canvas id="treeCanvas"></canvas>
+    <div class="legend">
+      <div class="leg"><div class="dot" style="background:#7c6af7"></div> Current node</div>
+      <div class="leg"><div class="dot" style="background:#34d399"></div> Perfect subtree (shortcut!)</div>
+      <div class="leg"><div class="dot" style="background:#fbbf24"></div> Counted</div>
+      <div class="leg"><div class="dot" style="background:#1c2038;border:1px solid #2e3560"></div> Not yet visited</div>
+    </div>
+  </div>
+
+  <div class="right-col">
+    <div class="code-panel">
+      <div class="panel-title" id="codeTitle">Code — optimal O(log²n)</div>
+      <div id="codeBlock"></div>
+    </div>
+
+    <div class="heights-panel" id="heightsPanel">
+      <div class="panel-title">Height measurements</div>
+      <div class="h-row">
+        <span class="h-label">leftHeight</span>
+        <span class="h-val" id="hLeft">—</span>
+        <span id="hResult" style="font-size:11px;margin-left:auto;color:#4a5280">—</span>
+      </div>
+      <div class="h-row">
+        <span class="h-label">rightHeight</span>
+        <span class="h-val" id="hRight">—</span>
+      </div>
+      <div class="h-row">
+        <span class="h-label">formula</span>
+        <span class="h-val" id="hFormula" style="color:#34d399">—</span>
+      </div>
+    </div>
+
+    <div class="count-display">
+      <div class="count-number" id="countNum">—</div>
+      <div class="count-label">nodes counted so far</div>
+      <div class="count-formula" id="countFormula"></div>
+    </div>
+
+    <div class="stack-panel">
+      <div class="panel-title">Call Stack</div>
+      <div class="stack-note">top = currently executing</div>
+      <div class="frames" id="frames"><div class="empty-msg">empty</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function N(val, left=null, right=null) { return { val, left, right, _id: 0 }; }
+
+const TREES = {
+  complete7:  () => N(1, N(2, N(4), N(5)), N(3, N(6), N(7))),
+  complete6:  () => N(1, N(2, N(4), N(5)), N(3, N(6), null)),
+  complete5:  () => N(1, N(2, N(4), N(5)), N(3, null, null)),
+  complete12: () => N(1, N(2, N(4, N(8), N(9)), N(5, N(10), N(11))), N(3, N(6, N(12), null), N(7))),
+  single:     () => N(1),
+  empty:      () => null,
+};
+
+function clone(n) {
+  if (!n) return null;
+  return { val: n.val, left: clone(n.left), right: clone(n.right), _id: n._id };
+}
+
+let idC = 0;
+function assignIds(n) {
+  if (!n) return;
+  n._id = idC++;
+  assignIds(n.left);
+  assignIds(n.right);
+}
+
+function getLeftHeight(n) { let h=0; while(n){h++;n=n.left;} return h; }
+function getRightHeight(n) { let h=0; while(n){h++;n=n.right;} return h; }
+
+// ── Step generation — OPTIMAL ──────────────────────────────────────────────
+function generateOptimalSteps(root) {
+  const steps = [];
+  const counted = new Set();
+  const shortcut = new Set();
+  const callStack = [];
+  let runningCount = 0;
+
+  function collectIds(n, s) { if(!n) return; s.add(n._id); collectIds(n.left,s); collectIds(n.right,s); }
+
+  function snap(codeLine, badge, badgeClass, text, extras={}) {
+    steps.push({
+      codeLine, badge, badgeClass, text,
+      tree: clone(root),
+      counted: new Set(counted),
+      shortcut: new Set(shortcut),
+      activeId: extras.activeId ?? null,
+      stack: callStack.map(f=>({...f})),
+      hLeft:    extras.hLeft    ?? '—',
+      hRight:   extras.hRight   ?? '—',
+      hFormula: extras.hFormula ?? '—',
+      hResult:  extras.hResult  ?? '—',
+      count:    extras.count    ?? runningCount,
+      countFormula: extras.countFormula ?? '',
+    });
+  }
+
+  function dfs(node) {
+    const label = node ? `countNodes(${node.val})` : 'countNodes(null)';
+    callStack.push({ label });
+
+    if (!node) {
+      snap(1, 'BASE CASE', 'base', `root is <strong>null</strong>. Return 0.`,
+        { hLeft:'—', hRight:'—', hFormula:'—', hResult:'—', count: runningCount });
+      callStack.pop();
+      return 0;
+    }
+
+    const id = node._id;
+    const lh = getLeftHeight(node);
+    const rh = getRightHeight(node);
+
+    snap(2, 'MEASURE', '', `At node <strong>${node.val}</strong>. Measuring left height (go left only) and right height (go right only).`,
+      { activeId: id, hLeft: lh, hRight: rh, hFormula: '—', hResult: '—', count: runningCount });
+
+    if (lh === rh) {
+      const result = (2 ** lh) - 1;
+      collectIds(node, shortcut);
+      runningCount += result;
+      snap(3, 'SHORTCUT ✓', 'shortcut',
+        `Left height (${lh}) = Right height (${rh}). This is a <strong>perfect subtree</strong>. Nodes = 2^${lh} − 1 = <strong>${result}</strong>. No need to traverse!`,
+        { activeId: id, hLeft: lh, hRight: rh, hFormula: `2^${lh} − 1 = ${result}`, hResult: '✓ equal — shortcut!', count: runningCount, countFormula: `+${result} (perfect subtree formula)` });
+      callStack.pop();
+      return result;
+    }
+
+    snap(4, 'NOT PERFECT', 'recurse',
+      `Left height (${lh}) ≠ Right height (${rh}). Not a perfect subtree. Recurse into left and right children.`,
+      { activeId: id, hLeft: lh, hRight: rh, hFormula: '—', hResult: '✗ different — recurse', count: runningCount });
+
+    counted.add(id);
+    runningCount += 1;
+
+    callStack[callStack.length-1].waiting = 'left';
+    const leftCount = dfs(node.left);
+    callStack[callStack.length-1].waiting = null;
+
+    callStack[callStack.length-1].waiting = 'right';
+    const rightCount = dfs(node.right);
+    callStack[callStack.length-1].waiting = null;
+
+    const total = 1 + leftCount + rightCount;
+    snap(5, 'RETURN', '',
+      `Node <strong>${node.val}</strong>: 1 (this node) + ${leftCount} (left) + ${rightCount} (right) = <strong>${total}</strong>. Return ${total}.`,
+      { activeId: id, hLeft: lh, hRight: rh, hFormula: `1 + ${leftCount} + ${rightCount} = ${total}`, hResult: '—', count: runningCount, countFormula: '' });
+
+    callStack.pop();
+    return total;
+  }
+
+  if (!root) {
+    snap(1, 'BASE CASE', 'base', 'Tree is empty. Return 0.', { count: 0 });
+    return steps;
+  }
+
+  snap(0, 'START', '', `Starting <code>countNodes</code>. If left height = right height at any subtree → it's perfect → use formula 2^h − 1. No traversal needed.`, { count: 0 });
+  const result = dfs(root);
+  snap(6, 'DONE ✓', 'shortcut', `Total nodes = <strong>${result}</strong>.`, { count: result, countFormula: `Final answer: ${result}` });
+  return steps;
+}
+
+// ── Step generation — NAIVE ────────────────────────────────────────────────
+function generateNaiveSteps(root) {
+  const steps = [];
+  const counted = new Set();
+  const callStack = [];
+  let runningCount = 0;
+
+  function snap(codeLine, badge, badgeClass, text, extras={}) {
+    steps.push({
+      codeLine, badge, badgeClass, text,
+      tree: clone(root),
+      counted: new Set(counted),
+      shortcut: new Set(),
+      activeId: extras.activeId ?? null,
+      stack: callStack.map(f=>({...f})),
+      hLeft: '—', hRight: '—', hFormula: '—', hResult: '—',
+      count: extras.count ?? runningCount,
+      countFormula: extras.countFormula ?? '',
+    });
+  }
+
+  function dfs(node) {
+    callStack.push({ label: node ? `countNodes(${node.val})` : 'countNodes(null)' });
+
+    if (!node) {
+      snap(10, 'BASE CASE', 'base', `root is <strong>null</strong>. Return 0.`, { count: runningCount });
+      callStack.pop();
+      return 0;
+    }
+
+    const id = node._id;
+    snap(11, 'ENTER', '', `At node <strong>${node.val}</strong>. Recurse into left and right.`, { activeId: id, count: runningCount });
+
+    callStack[callStack.length-1].waiting = 'left';
+    const l = dfs(node.left);
+    callStack[callStack.length-1].waiting = null;
+
+    callStack[callStack.length-1].waiting = 'right';
+    const r = dfs(node.right);
+    callStack[callStack.length-1].waiting = null;
+
+    counted.add(id);
+    runningCount++;
+    const total = 1 + l + r;
+
+    snap(12, 'RETURN', '', `Node <strong>${node.val}</strong>: 1 + ${l} + ${r} = <strong>${total}</strong>.`,
+      { activeId: id, count: runningCount, countFormula: `+1 (node ${node.val})` });
+
+    callStack.pop();
+    return total;
+  }
+
+  if (!root) {
+    snap(10, 'BASE CASE', 'base', 'Tree is empty. Return 0.', { count: 0 });
+    return steps;
+  }
+
+  snap(9, 'START', '', `O(n) approach: visit every single node and count. No shortcuts.`, { count: 0 });
+  const result = dfs(root);
+  snap(13, 'DONE', 'shortcut', `Total nodes = <strong>${result}</strong>. Every node was visited.`, { count: result });
+  return steps;
+}
+
+// ── Code definitions ───────────────────────────────────────────────────────
+const CODE_OPTIMAL = [
+  { n: '',  h: `<span class="kw">function</span> <span class="fn">countNodes</span>(root) {` },
+  { n: '1', h: `&nbsp;<span class="kw">if</span> (!root) <span class="kw">return</span> <span class="nm">0</span>;` },
+  { n: '2', h: `&nbsp;<span class="kw">let</span> lh=0, rh=0, l=root, r=root;` },
+  { n: '',  h: `&nbsp;<span class="kw">while</span>(l){lh++;l=l.left;}` },
+  { n: '',  h: `&nbsp;<span class="kw">while</span>(r){rh++;r=r.right;}` },
+  { n: '3', h: `&nbsp;<span class="kw">if</span>(lh===rh) <span class="kw">return</span> <span class="nm">2</span>**lh-<span class="nm">1</span>; <span class="cm">// perfect!</span>` },
+  { n: '4', h: `&nbsp;<span class="cm">// not perfect — recurse</span>` },
+  { n: '5', h: `&nbsp;<span class="kw">return</span> <span class="nm">1</span> + <span class="fn">countNodes</span>(root.left)` },
+  { n: '',  h: `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="fn">countNodes</span>(root.right);` },
+  { n: '6', h: `}` },
+];
+
+const CODE_NAIVE = [
+  { n: '',  h: `<span class="kw">function</span> <span class="fn">countNodes</span>(root) {` },
+  { n: '10', h: `&nbsp;<span class="kw">if</span> (!root) <span class="kw">return</span> <span class="nm">0</span>;` },
+  { n: '11', h: `&nbsp;<span class="cm">// recurse both sides</span>` },
+  { n: '12', h: `&nbsp;<span class="kw">return</span> <span class="nm">1</span> + <span class="fn">countNodes</span>(root.left)` },
+  { n: '',  h: `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="fn">countNodes</span>(root.right);` },
+  { n: '13', h: `}` },
+];
+
+function renderCode(activeLine, isOptimal) {
+  const code = isOptimal ? CODE_OPTIMAL : CODE_NAIVE;
+  document.getElementById('codeBlock').innerHTML = code.map(({ n, h }) => {
+    const isActive = n !== '' && parseInt(n) === activeLine;
+    return `<div class="code-line ${isActive ? 'active' : ''}"><span class="ln">${n}</span>${h}</div>`;
+  }).join('');
+}
+
+// ── Tree drawing ───────────────────────────────────────────────────────────
+function treeDepth(n) { return !n ? 0 : 1 + Math.max(treeDepth(n.left), treeDepth(n.right)); }
+
+function buildLayout(node, x, y, hGap, vGap, pos={}, edges=[]) {
+  if (!node) return { pos, edges };
+  pos[node._id] = { x, y, val: node.val };
+  if (node.left)  { edges.push([node._id, node.left._id]);  buildLayout(node.left,  x-hGap, y+vGap, hGap*0.52, vGap, pos, edges); }
+  if (node.right) { edges.push([node._id, node.right._id]); buildLayout(node.right, x+hGap, y+vGap, hGap*0.52, vGap, pos, edges); }
+  return { pos, edges };
+}
+
+function drawTree(canvas, treeRoot, activeId, countedIds, shortcutIds) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  if (!treeRoot) {
+    ctx.fillStyle = '#3a4065'; ctx.font = '13px Courier New';
+    ctx.textAlign = 'center'; ctx.fillText('null — empty tree', W/2, H/2);
+    return;
+  }
+
+  const depth = treeDepth(treeRoot);
+  const vGap = Math.min(72, (H - 70) / Math.max(depth, 1));
+  const hGap = Math.min(W * 0.3, 130);
+  const { pos, edges } = buildLayout(treeRoot, W/2, 44, hGap, vGap);
+  const R = 22;
+
+  ctx.lineWidth = 2;
+  edges.forEach(([a, b]) => {
+    const pa = pos[a], pb = pos[b];
+    if (!pa || !pb) return;
+    ctx.strokeStyle = shortcutIds.has(a) ? '#1a5c42' : countedIds.has(a) ? '#fbbf24' : '#1e2445';
+    ctx.beginPath(); ctx.moveTo(pa.x, pa.y); ctx.lineTo(pb.x, pb.y); ctx.stroke();
+  });
+
+  Object.entries(pos).forEach(([idStr, { x, y, val }]) => {
+    const id = parseInt(idStr);
+    const isActive   = id === activeId;
+    const isShortcut = shortcutIds.has(id);
+    const isCounted  = countedIds.has(id);
+
+    let fill, stroke;
+    if (isShortcut)     { fill = '#064e3b'; stroke = '#34d399'; }
+    else if (isActive)  { fill = '#3730a3'; stroke = '#7c6af7'; }
+    else if (isCounted) { fill = '#78350f'; stroke = '#fbbf24'; }
+    else                { fill = '#1c2038'; stroke = '#2e3560'; }
+
+    if (isActive || isShortcut) { ctx.shadowColor = stroke; ctx.shadowBlur = 14; }
+    ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI*2);
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.strokeStyle = stroke; ctx.lineWidth = (isActive || isShortcut || isCounted) ? 3 : 2; ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = '#e2e8ff'; ctx.font = 'bold 13px Courier New';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(String(val), x, y);
+  });
+}
+
+// ── Apply step ──────────────────────────────────────────────────────────────
+function applyStep(idx) {
+  const s = steps[idx];
+  const isOptimal = document.getElementById('algoSelect').value === 'optimal';
+
+  const badgeEl = document.getElementById('badge');
+  badgeEl.textContent = s.badge;
+  badgeEl.className = `badge ${s.badgeClass || ''}`;
+  document.getElementById('stepText').innerHTML = s.text;
+  document.getElementById('stepCtr').textContent = `Step ${idx+1} / ${steps.length}`;
+
+  renderCode(s.codeLine, isOptimal);
+  drawTree(canvas, s.tree, s.activeId, s.counted, s.shortcut);
+
+  document.getElementById('hLeft').textContent    = s.hLeft;
+  document.getElementById('hRight').textContent   = s.hRight;
+  document.getElementById('hFormula').textContent = s.hFormula;
+
+  const hRes = document.getElementById('hResult');
+  hRes.textContent = s.hResult;
+  hRes.className = s.hResult.includes('✓') ? 'h-equal' : s.hResult.includes('✗') ? 'h-notequal' : '';
+
+  document.getElementById('countNum').textContent     = s.count === 0 && s.badge === 'START' ? '0' : s.count;
+  document.getElementById('countFormula').textContent = s.countFormula;
+  document.getElementById('heightsPanel').style.display = isOptimal ? '' : 'none';
+
+  const fr = document.getElementById('frames');
+  fr.innerHTML = '';
+  if (s.stack.length === 0) {
+    fr.innerHTML = '<div class="empty-msg">empty — all calls returned</div>';
+  } else {
+    s.stack.forEach((frame, i) => {
+      const isTop = i === s.stack.length - 1;
+      const div = document.createElement('div');
+      div.className = `frame ${isTop ? 'top' : ''}`;
+      const sub = isTop ? (frame.waiting ? `▶ waiting on ${frame.waiting}` : '▶ executing now') : '⏸ waiting for child to return';
+      div.innerHTML = `<div class="fn-label">${frame.label}</div><div class="sub">${sub}</div>`;
+      fr.appendChild(div);
+    });
+  }
+
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').disabled = idx === steps.length - 1;
+}
+
+// ── Init ────────────────────────────────────────────────────────────────────
+let steps = [], currentStep = -1, canvas, currentKey = 'complete7';
+
+function resizeCanvas() {
+  const w = canvas.parentElement.clientWidth - 32;
+  const depth = treeDepth(TREES[currentKey]());
+  canvas.width  = Math.max(w, 200);
+  canvas.height = Math.max(180, Math.min(440, 60 + depth * 82));
+}
+
+function loadTree() {
+  const key  = document.getElementById('treeSelect').value;
+  const algo = document.getElementById('algoSelect').value;
+  const isOptimal = algo === 'optimal';
+  currentKey = key;
+
+  document.getElementById('codeTitle').textContent = isOptimal ? 'Code — optimal O(log²n)' : 'Code — naive O(n)';
+  document.getElementById('heightsPanel').style.display = isOptimal ? '' : 'none';
+
+  idC = 0;
+  const root = TREES[key]();
+  assignIds(root);
+  steps = isOptimal ? generateOptimalSteps(root) : generateNaiveSteps(root);
+  currentStep = -1;
+
+  document.getElementById('stepCtr').textContent = `Step 0 / ${steps.length}`;
+  document.getElementById('badge').textContent = 'START';
+  document.getElementById('badge').className = 'badge';
+  document.getElementById('stepText').textContent = 'Press Next → (or → key) to begin.';
+  document.getElementById('frames').innerHTML = '<div class="empty-msg">empty</div>';
+  document.getElementById('hLeft').textContent = '—';
+  document.getElementById('hRight').textContent = '—';
+  document.getElementById('hFormula').textContent = '—';
+  document.getElementById('hResult').textContent = '—';
+  document.getElementById('countNum').textContent = '—';
+  document.getElementById('countFormula').textContent = '';
+  renderCode(null, isOptimal);
+
+  idC = 0;
+  const fresh = TREES[key]();
+  assignIds(fresh);
+  resizeCanvas();
+  drawTree(canvas, fresh, null, new Set(), new Set());
+
+  document.getElementById('prevBtn').disabled = true;
+  document.getElementById('nextBtn').disabled = steps.length === 0;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  canvas = document.getElementById('treeCanvas');
+
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    if (currentStep >= 0) applyStep(currentStep);
+    else { idC=0; const r=TREES[currentKey](); assignIds(r); drawTree(canvas,r,null,new Set(),new Set()); }
+  });
+
+  renderCode(null, true);
+  loadTree();
+
+  document.getElementById('treeSelect').addEventListener('change', loadTree);
+  document.getElementById('algoSelect').addEventListener('change', loadTree);
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentStep < steps.length-1) { currentStep++; applyStep(currentStep); }
+  });
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentStep > 0) { currentStep--; applyStep(currentStep); }
+  });
+  document.getElementById('resetBtn').addEventListener('click', loadTree);
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight' && currentStep<steps.length-1) { currentStep++; applyStep(currentStep); }
+    if (e.key==='ArrowLeft'  && currentStep>0)              { currentStep--; applyStep(currentStep); }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,66 +1,70 @@
-# Handoff — 2026-06-27
+# Handoff — 2026-06-28
 
 ## What Was Just Completed
 
+**LC 222 — Count Complete Tree Nodes** (Phase 9 bonus)
+
+Pattern: Complete tree shortcut (O(log²n)). Three O(n) solutions written completely cold (iterative DFS, recursive, BFS). Optimal derived with guided Socratic questions. 100th percentile. One bug: used `^` (XOR) instead of `**` for exponentiation — corrected.
+
 **LC 112 — Path Sum** (Phase 9 bonus)
 
-Pattern: DFS iterative pairs + recursive subtract-down. Both accepted. Recursive: 0ms, 100th percentile.
-
-Iterative came completely cold — direct transfer from fundamentals. Recursive needed the "subtract as you go down" insight. BFS variant was not implemented — flagged as an open question.
+Pattern: DFS iterative pairs + recursive subtract-down. Both accepted. Recursive: 0ms, 100th percentile. Iterative came completely cold — direct transfer from fundamentals. Recursive needed the "subtract as you go down" insight. BFS variant was not implemented.
 
 **LC 101 — Symmetric Tree** (Phase 9 bonus)
 
-Pattern: DFS — recursive cross-compare pairs. Accepted, 0ms, 100th percentile.
-
-Needed the concept of "symmetric" explained visually first. Once the mirror pairing was clear (outside ↔ outside, inside ↔ inside), built the base cases correctly from Same Tree memory and filled in the recursive calls with minimal prompting. Independently asked about alternative approaches and algorithm names (BFS/DFS) — good pattern forming.
+Pattern: DFS — recursive cross-compare pairs. Accepted, 0ms, 100th percentile. Needed the concept of "symmetric" explained visually first.
 
 **LC 226 — Invert Binary Tree** (Phase 9, Trees)
 
 Pattern: DFS pre-order (swap → recurse left → recurse right). Accepted, 0ms, 100th percentile.
 
-Core logic came quickly — swap was obvious, recursion structure was right first try. Only friction: uncertainty about `return root`. Self-identified recursive returns as a gap worth a dedicated session. Also independently asked about traversal order and whether post-order / BFS also work — good instinct.
-
 **LC 100 — Same Tree** (Phase 9, Trees)
 
-Pattern: DFS — recursive lockstep comparison. Accepted, 0ms, 100th percentile.
-
-Struggled with two things: the short-circuit bug (returning true too early before checking subtrees) and the null base case (why `null, null → true`). Both unlocked via concrete call-stack traces. Time/space complexity clicked quickly once connected to LC 104.
+Pattern: DFS — recursive lockstep comparison. Accepted, 0ms, 100th percentile. Struggled with short-circuit bug and null base case — both unlocked via concrete call-stack traces.
 
 **LC 104 — Maximum Depth of Binary Tree** (Phase 9, Trees)
 
-Pattern: DFS — iterative pairs + recursive post-order. Both accepted. Recursive hit 100th percentile.
+Pattern: DFS — iterative pairs + recursive post-order. Both accepted. Recursive hit 100th percentile. Clean cold solve.
 
-Clean cold solve. Safwaan directly transferred the pattern from fundamentals problem 7 (max-root-to-leaf-path-sum) — no hints, no false starts. Introduced balanced vs skewed tree terminology during complexity discussion.
+---
 
 ## Safwaan's Current State
 
-**Focus shift:** Moving off Sliding Window to tackle Linked List + Binary Trees. Target: finish both by this Saturday/Sunday. Revisit queue deferred to next month.
+**Focus:** Trees sprint ongoing. 6 tree problems done in 2 days. Goal was to finish Trees + Linked List by this weekend — Trees sprint is on track.
 
 **What he knows (binary trees):**
 - DFS iterative: push `[node, value]` pairs — each branch carries its own accumulated state
 - DFS recursive: ask subtrees, combine, return up. Null base case handles leaves automatically.
-- BFS vs DFS distinction — covered in fundamentals
-- Balanced vs skewed tree: new concept, introduced today
+- Complete tree shortcut: all-left height = all-right height from same root → perfect → `2**h - 1`
+- BFS iterative traversal — written cold this session
+- Balanced vs skewed tree: introduced
+- Pre-order vs post-order vs in-order — mentioned, not yet drilled
 
 **Gaps to watch:**
-- In-order / pre-order / post-order distinctions — haven't come up yet
+- `^` vs `**` — used `^` for exponentiation once (corrected). Check again cold.
+- Recursive returns: self-identified gap, wants dedicated session. Don't defer much longer.
 - BST properties — not yet covered
+- Revisit queue severely overdue — multiple problems from early June still pending
+
+---
 
 ## Suggested Next Problems
 
-1. **LC 543 — Diameter of Binary Tree**
+1. **LC 543 — Diameter of Binary Tree** (next Phase 9 curriculum)
 2. **LC 110 — Balanced Binary Tree**
 3. **LC 572 — Subtree of Another Tree**
 
-Good probe for next session: "How does Symmetric Tree differ from Same Tree — just one line?" Should be able to answer cold.
+Good probe for next session start: "In LC 222's optimal solution, why do both height pointers start from root, not from root.left and root.right?"
 
-Also has an untracked folder for LC 100 from before this session.
+Also must do: cold redo from revisit queue at the start of next session before new material.
+
+---
 
 ## Coach Notes
 
-- Base case reasoning is still developing. He understands it when traced concretely but can't derive it cold. Reinforce the question: "what is the simplest input that needs no recursion? What do I return for it?"
-- Short-circuit bug (returning true too early) is a pattern to watch — same shape as "closing a subproblem at first success."
-- O(n) time + O(h) space is solidifying as the standard recursive DFS complexity. Connecting new problems to prior ones (LC 104) is working.
-- Concrete call-stack traces are the unlock for base case confusion — default to them when he's stuck on null handling.
-- Revisit queue is severely overdue but intentionally deferred to next month. Don't bring it up mid-sprint.
-- The week's goal is Linked List + Binary Tree done by weekend. Prioritize moving through problems quickly over deep complexity discussion.
+- Three O(n) traversal approaches written cold in a row — DFS/BFS patterns genuinely internalized. This is a milestone.
+- Complete tree shortcut required Socratic guidance — needed the concept broken down piece by piece. Code came quickly once the insight landed.
+- `^` vs `**` knowledge gap — probe cold next session: "what does `^` do in JavaScript?"
+- Revisit queue is severely overdue. Don't let it slip further.
+- Base case reasoning continues to develop. The LC 222 null case (`leftHeight = rightHeight = 0 → 2**0 - 1 = 0`) is worth probing: can he trace it cold?
+- Recursive returns as a dedicated session was requested explicitly. Schedule it.

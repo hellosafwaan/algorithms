@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-28 (Path Sum)
+Last updated: 2026-06-28 (Count Complete Tree Nodes)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-06-28 (Path Sum)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 166 |
-| ✅ Complete | 39 |
+| Total problems | 167 |
+| ✅ Complete | 40 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 126 |
 
@@ -187,6 +187,7 @@ Last updated: 2026-06-28 (Path Sum)
 | 15 | Serialize and Deserialize Binary Tree | Hard | [#297](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) | BFS / DFS | ⏳ | — | — |
 | *(bonus)* | Symmetric Tree | Easy | [#101](https://leetcode.com/problems/symmetric-tree/) | DFS | ✅ | 2026-06-27 | [learnings](binary-tree/101-symmetric-tree/learnings.md) |
 | *(bonus)* | Path Sum | Easy | [#112](https://leetcode.com/problems/path-sum/) | DFS | ✅ | 2026-06-28 | [learnings](binary-tree/112-path-sum/learnings.md) |
+| *(bonus)* | Count Complete Tree Nodes | Medium | [#222](https://leetcode.com/problems/count-complete-tree-nodes/) | DFS — Complete Tree Shortcut (O(log²n)) | ✅ | 2026-06-28 | [learnings](binary-tree/222-count-complete-tree-nodes/learnings.md) |
 
 ## Phase 10 — Tries ⏳
 
