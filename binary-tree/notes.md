@@ -60,3 +60,27 @@ All traversals: **O(n) time** — every node visited once.
 Balanced tree: h = O(log n). Skewed tree: h = O(n). BFS worst case: O(n) at the bottom level.
 
 > **`shift` caveat:** `Array.shift()` is O(n) — it re-indexes the whole array. Fine for interviews. For production use a proper queue with a head pointer.
+
+
+---
+
+## DFS Post-order with Closure Variable
+
+**When you need two outputs from one function:** a return value for the parent AND a global best tracked across all calls.
+
+```js
+let best = 0;
+function dfs(node) {
+    if (!node) return 0;
+    const left = dfs(node.left);
+    const right = dfs(node.right);
+    best = Math.max(best, left + right);   // ← side-effect: global tracker
+    return 1 + Math.max(left, right);       // ← return value: for parent only
+}
+```
+
+**The two things are different:**
+- `left + right` = longest path through this node (diameter candidate) → update `best`
+- `1 + max(left, right)` = longest single arm downward → return to parent
+
+Seen in: LC 543 (Diameter), LC 124 (Max Path Sum — harder variant).

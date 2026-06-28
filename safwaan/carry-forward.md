@@ -3,6 +3,7 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| At LC 543, `dfs` has two outputs: a return value for the parent and a side-effect on `best`. Can he explain cold what each one is computing and why they're different? | Trees — DFS + closure | 543 | open — needed scaffold + visualizer; probe cold next trees session |
 | `^` vs `**` in JavaScript — `^` is XOR, `**` is exponentiation. Can he recall this cold before writing power calculations in trees? | JS toolkit | 222 | open — used `^` for exponentiation this session, corrected when caught |
 | Complete tree shortcut: can he state cold what "measure all-left and all-right from same root" tells you, and why equal heights → perfect? | Trees — complete tree | 222 | open — needed guided questions to arrive at this |
 | **Recursive returns** — how does a return value travel upward through the call stack? When do you return a value vs return nothing (void/undefined)? He self-identified this as a gap during LC 226. Wants a dedicated session on this. | Recursion fundamentals | 226 | open — explicitly requested by Safwaan 2026-06-27 |

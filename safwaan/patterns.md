@@ -146,6 +146,15 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 40. Two-output function confusion — return value vs closure side-effect
+- **Seen in:** LC 543 (2026-06-28)
+- **What happened:** When a `dfs` function needs to both return a value to the parent AND update a global best, Safwaan kept conflating the two. Wrote `return 1 + left + right` (the full path) instead of `1 + max(left, right)` (the single arm). Needed repeated explanation + a scaffold before the distinction landed.
+- **Root cause:** New pattern — "one function, two outputs." He's seen functions that return one thing. The idea that `best = ...` and `return ...` can be computing different things in the same function wasn't intuitive.
+- **Fix:** At every node, ask: "what does my parent need?" (single arm = `1 + max(left, right)`) vs "what am I tracking globally?" (full path = `left + right`). These are different.
+- **Status:** Visualizer built to reinforce. Probe cold at LC 124 (Max Path Sum) — same pattern, harder variant.
+
+---
+
 ## Breakthrough Moments
 
 ### Cross-session knowledge transfer — Single Number (LC 136, 2026-06-16)

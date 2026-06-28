@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 543 — Diameter of Binary Tree | DFS post-order + closure variable (two-output pattern) | 2026-06-28 | 2026-07-19 | ⏳ |
 | LC 222 — Count Complete Tree Nodes | Complete tree shortcut O(log²n) | 2026-06-28 | 2026-07-19 | ⏳ |
 | LC 112 — Path Sum | DFS iterative pairs + recursive subtract-down | 2026-06-28 | 2026-07-19 | ⏳ |
 | LC 101 — Symmetric Tree | DFS recursive — cross-compare pairs | 2026-06-27 | 2026-07-18 | ⏳ |

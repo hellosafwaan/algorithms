@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LC 543 — Diameter of Binary Tree</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f1225; color: #e2e8f0; font-family: 'Segoe UI', monospace; height: 100vh; display: flex; flex-direction: column; }
+
+  header { padding: 14px 24px; background: #1c2038; border-bottom: 1px solid #2e3560; display: flex; align-items: center; gap: 16px; }
+  header h1 { font-size: 15px; font-weight: 600; color: #a78bfa; }
+  #case-select { background: #2e3560; color: #e2e8f0; border: 1px solid #3d4a7a; border-radius: 6px; padding: 4px 10px; font-size: 13px; }
+
+  .main { display: flex; flex: 1; overflow: hidden; }
+
+  /* LEFT — tree canvas */
+  .left { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+  #tree-svg { width: 100%; max-width: 500px; }
+
+  /* RIGHT — panels */
+  .right { width: 340px; border-left: 1px solid #2e3560; display: flex; flex-direction: column; overflow-y: auto; }
+
+  .panel { border-bottom: 1px solid #2e3560; padding: 14px 16px; }
+  .panel h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #64748b; margin-bottom: 10px; }
+
+  /* Code panel */
+  #code-panel { font-size: 12px; line-height: 1.8; }
+  #code-panel .line { padding: 1px 6px; border-radius: 3px; white-space: pre; }
+  #code-panel .line.active { background: #7c6af720; border-left: 3px solid #7c6af7; color: #c4b5fd; }
+
+  /* Variables panel */
+  .var-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .var-box { background: #1c2038; border: 1px solid #2e3560; border-radius: 6px; padding: 8px 10px; }
+  .var-box .label { font-size: 10px; color: #64748b; margin-bottom: 2px; }
+  .var-box .value { font-size: 18px; font-weight: 700; color: #e2e8f0; }
+  .var-box.highlight .value { color: #34d399; }
+
+  /* Call stack panel */
+  #stack-list { display: flex; flex-direction: column; gap: 4px; }
+  .stack-frame { background: #1c2038; border: 1px solid #2e3560; border-radius: 5px; padding: 6px 10px; font-size: 12px; }
+  .stack-frame.active-frame { border-color: #7c6af7; background: #7c6af715; }
+  .stack-frame .fname { color: #a78bfa; font-weight: 600; }
+  .stack-frame .fval { color: #94a3b8; font-size: 11px; margin-top: 2px; }
+
+  /* Step explanation */
+  .step-box { background: #1c2038; border: 1px solid #2e3560; border-radius: 8px; padding: 12px 14px; }
+  .step-badge { display: inline-block; background: #7c6af730; color: #a78bfa; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-bottom: 6px; }
+  .step-text { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
+
+  /* Controls */
+  footer { padding: 12px 24px; background: #1c2038; border-top: 1px solid #2e3560; display: flex; align-items: center; gap: 12px; }
+  button { background: #2e3560; color: #e2e8f0; border: 1px solid #3d4a7a; border-radius: 6px; padding: 7px 18px; font-size: 13px; cursor: pointer; }
+  button:hover { background: #3d4a7a; }
+  button:disabled { opacity: .35; cursor: default; }
+  #step-counter { font-size: 13px; color: #64748b; margin-left: auto; }
+
+  /* Legend */
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; }
+  .leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #94a3b8; }
+  .leg-dot { width: 12px; height: 12px; border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>LC 543 — Diameter of Binary Tree</h1>
+  <select id="case-select">
+    <option value="0">Example 1 — standard (ans: 3)</option>
+    <option value="1">Example 2 — skewed left (ans: 3)</option>
+    <option value="2">Example 3 — single node (ans: 0)</option>
+    <option value="3">Example 4 — deep right (ans: 4)</option>
+  </select>
+</header>
+
+<div class="main">
+  <!-- LEFT: tree -->
+  <div class="left">
+    <svg id="tree-svg" viewBox="0 0 460 320"></svg>
+    <div style="margin-top:16px;" class="panel" style="border:none;">
+      <div class="legend">
+        <div class="leg"><div class="leg-dot" style="background:#7c6af7"></div> Active call</div>
+        <div class="leg"><div class="leg-dot" style="background:#fbbf24"></div> Waiting for child</div>
+        <div class="leg"><div class="leg-dot" style="background:#34d399"></div> Returned / done</div>
+        <div class="leg"><div class="leg-dot" style="background:#475569"></div> Not yet visited</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: panels -->
+  <div class="right">
+    <div class="panel">
+      <h2>Step</h2>
+      <div class="step-box">
+        <div class="step-badge" id="step-badge">—</div>
+        <div class="step-text" id="step-text">Press Next to start.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Variables</h2>
+      <div class="var-grid">
+        <div class="var-box" id="vb-node"><div class="label">current node</div><div class="value" id="v-node">—</div></div>
+        <div class="var-box" id="vb-best"><div class="label">best (diameter)</div><div class="value" id="v-best">0</div></div>
+        <div class="var-box" id="vb-left"><div class="label">left depth</div><div class="value" id="v-left">—</div></div>
+        <div class="var-box" id="vb-right"><div class="label">right depth</div><div class="value" id="v-right">—</div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Code</h2>
+      <div id="code-panel">
+        <div class="line" data-line="1">function dfs(node) {</div>
+        <div class="line" data-line="2">  if (!node) return 0;</div>
+        <div class="line" data-line="3">  const left = dfs(node.left);</div>
+        <div class="line" data-line="4">  const right = dfs(node.right);</div>
+        <div class="line" data-line="5">  best = Math.max(best, left+right);</div>
+        <div class="line" data-line="6">  return 1 + Math.max(left, right);</div>
+        <div class="line" data-line="7">}</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Call Stack</h2>
+      <div id="stack-list"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <button id="btn-prev" disabled>← Prev</button>
+  <button id="btn-next">Next →</button>
+  <span id="step-counter">Step 0 / 0</span>
+</footer>
+
+<script>
+// ── Tree definitions ──────────────────────────────────────────────────────────
+const CASES = [
+  // case 0: standard
+  { label: "standard", nodes: [
+    { id:1, val:1, parent:null, side:null },
+    { id:2, val:2, parent:1, side:'left' },
+    { id:3, val:3, parent:1, side:'right' },
+    { id:4, val:4, parent:2, side:'left' },
+    { id:5, val:5, parent:2, side:'right' },
+  ]},
+  // case 1: skewed left
+  { label: "skewed", nodes: [
+    { id:1, val:1, parent:null, side:null },
+    { id:2, val:2, parent:1, side:'left' },
+    { id:3, val:3, parent:2, side:'left' },
+    { id:4, val:4, parent:3, side:'left' },
+  ]},
+  // case 2: single node
+  { label: "single", nodes: [
+    { id:1, val:1, parent:null, side:null },
+  ]},
+  // case 3: deep right
+  { label: "deep", nodes: [
+    { id:1, val:1, parent:null, side:null },
+    { id:2, val:2, parent:1, side:'left' },
+    { id:3, val:3, parent:1, side:'right' },
+    { id:4, val:4, parent:3, side:'right' },
+    { id:5, val:5, parent:4, side:'right' },
+    { id:6, val:6, parent:5, side:'right' },
+  ]},
+];
+
+// ── Build tree object from node list ─────────────────────────────────────────
+function buildTree(nodes) {
+  const map = {};
+  nodes.forEach(n => map[n.id] = { ...n, left: null, right: null, depth: 0 });
+  let root = null;
+  nodes.forEach(n => {
+    if (n.parent === null) { root = map[n.id]; }
+    else {
+      if (n.side === 'left') map[n.parent].left = map[n.id];
+      else map[n.parent].right = map[n.id];
+    }
+  });
+  return { root, map };
+}
+
+// ── Compute positions for SVG layout ─────────────────────────────────────────
+function layoutTree(root, W=460, H=300) {
+  const positions = {};
+  function assignPos(node, depth, left, right) {
+    if (!node) return;
+    const x = (left + right) / 2;
+    const y = 40 + depth * 70;
+    positions[node.id] = { x, y };
+    assignPos(node.left, depth+1, left, x);
+    assignPos(node.right, depth+1, x, right);
+  }
+  assignPos(root, 0, 0, W);
+  return positions;
+}
+
+// ── Simulate algorithm and record steps ──────────────────────────────────────
+function simulate(root, map) {
+  const steps = [];
+  const nodeState = {}; // 'pending' | 'active' | 'waiting' | 'done'
+  Object.keys(map).forEach(id => nodeState[id] = 'pending');
+
+  let best = 0;
+  const callStack = []; // array of {nodeId, left, right, phase}
+
+  function record(codeLine, badge, text, currentNode, leftVal, rightVal) {
+    steps.push({
+      codeLine,
+      badge,
+      text,
+      best,
+      currentNode: currentNode ? currentNode.id : null,
+      leftVal,
+      rightVal,
+      nodeStates: { ...nodeState },
+      stack: callStack.map(f => ({ ...f })),
+    });
+  }
+
+  function dfs(node) {
+    if (!node) return 0;
+
+    nodeState[node.id] = 'active';
+    callStack.push({ nodeId: node.id, left: '?', right: '?', phase: 'enter' });
+    record(1, `dfs(${node.val})`, `Entered dfs for node <b>${node.val}</b>. We'll compute left and right depths, then update best.`, node, '—', '—');
+
+    // check null — already handled by guard above, but show the line
+    record(2, `check null`, `Node ${node.val} is not null — continue.`, node, '—', '—');
+
+    // recurse left
+    nodeState[node.id] = 'waiting';
+    callStack[callStack.length-1].phase = 'wait-left';
+    record(3, `left = dfs(${node.left ? node.left.val : 'null'})`, `Calling dfs on left child <b>${node.left ? node.left.val : 'null'}</b> to get its depth.`, node, '—', '—');
+    const leftDepth = dfs(node.left);
+    nodeState[node.id] = 'active';
+    callStack[callStack.length-1].left = leftDepth;
+    callStack[callStack.length-1].phase = 'got-left';
+    record(3, `left = ${leftDepth}`, `Left subtree of node <b>${node.val}</b> returned depth <b>${leftDepth}</b>.`, node, leftDepth, '—');
+
+    // recurse right
+    nodeState[node.id] = 'waiting';
+    callStack[callStack.length-1].phase = 'wait-right';
+    record(4, `right = dfs(${node.right ? node.right.val : 'null'})`, `Calling dfs on right child <b>${node.right ? node.right.val : 'null'}</b> to get its depth.`, node, leftDepth, '—');
+    const rightDepth = dfs(node.right);
+    nodeState[node.id] = 'active';
+    callStack[callStack.length-1].right = rightDepth;
+    callStack[callStack.length-1].phase = 'got-right';
+    record(4, `right = ${rightDepth}`, `Right subtree of node <b>${node.val}</b> returned depth <b>${rightDepth}</b>.`, node, leftDepth, rightDepth);
+
+    // update best
+    const candidate = leftDepth + rightDepth;
+    const prevBest = best;
+    best = Math.max(best, candidate);
+    record(5, `best = max(${prevBest}, ${candidate}) = ${best}`,
+      `Path through node <b>${node.val}</b>: left(${leftDepth}) + right(${rightDepth}) = <b>${candidate}</b>. ` +
+      (best > prevBest ? `New best! <b>${best}</b>` : `Best stays <b>${best}</b>.`),
+      node, leftDepth, rightDepth);
+
+    // return
+    const ret = 1 + Math.max(leftDepth, rightDepth);
+    callStack[callStack.length-1].phase = 'return';
+    record(6, `return ${ret}`,
+      `Return <b>${ret}</b> to parent. (1 + max(${leftDepth}, ${rightDepth}) = longest single arm from node ${node.val})`,
+      node, leftDepth, rightDepth);
+
+    nodeState[node.id] = 'done';
+    callStack.pop();
+    return ret;
+  }
+
+  // null guard step
+  function dfsWithNullStep(node) {
+    if (!node) {
+      record(2, `dfs(null)`, `Hit a null child — base case, return <b>0</b>.`, null, '—', '—');
+      return 0;
+    }
+    return dfs(node);
+  }
+
+  // patch dfs to use null step version for children
+  function dfsMain(node) {
+    if (!node) {
+      record(2, `dfs(null)`, `Hit a null child — base case, return <b>0</b>.`, null, '—', '—');
+      return 0;
+    }
+    nodeState[node.id] = 'active';
+    callStack.push({ nodeId: node.id, left: '?', right: '?', phase: 'enter' });
+    record(1, `dfs(${node.val})`, `Entered dfs for node <b>${node.val}</b>. We'll compute left and right depths, then update best.`, node, '—', '—');
+    record(2, `check null`, `Node ${node.val} is not null — continue.`, node, '—', '—');
+
+    nodeState[node.id] = 'waiting';
+    callStack[callStack.length-1].phase = 'wait-left';
+    record(3, `left = dfs(${node.left ? node.left.val : 'null'})`, `Calling dfs on left child <b>${node.left ? node.left.val : 'null'}</b>.`, node, '—', '—');
+    const leftDepth = dfsMain(node.left);
+    nodeState[node.id] = 'active';
+    callStack[callStack.length-1].left = leftDepth;
+    record(3, `left = ${leftDepth}`, `Left subtree of node <b>${node.val}</b> returned <b>${leftDepth}</b>.`, node, leftDepth, '—');
+
+    nodeState[node.id] = 'waiting';
+    callStack[callStack.length-1].phase = 'wait-right';
+    record(4, `right = dfs(${node.right ? node.right.val : 'null'})`, `Calling dfs on right child <b>${node.right ? node.right.val : 'null'}</b>.`, node, leftDepth, '—');
+    const rightDepth = dfsMain(node.right);
+    nodeState[node.id] = 'active';
+    callStack[callStack.length-1].right = rightDepth;
+    record(4, `right = ${rightDepth}`, `Right subtree of node <b>${node.val}</b> returned <b>${rightDepth}</b>.`, node, leftDepth, rightDepth);
+
+    const candidate = leftDepth + rightDepth;
+    const prevBest = best;
+    best = Math.max(best, candidate);
+    record(5, `best = max(${prevBest}, ${candidate}) = ${best}`,
+      `Path through node <b>${node.val}</b>: left(${leftDepth}) + right(${rightDepth}) = <b>${candidate}</b>. ` +
+      (best > prevBest ? `New best! <b>${best}</b>` : `Best stays <b>${best}</b>.`),
+      node, leftDepth, rightDepth);
+
+    const ret = 1 + Math.max(leftDepth, rightDepth);
+    callStack[callStack.length-1].phase = 'return';
+    record(6, `return ${ret}`,
+      `Return <b>${ret}</b> to parent — the longest single arm from node ${node.val} (1 + max(${leftDepth},${rightDepth})).`,
+      node, leftDepth, rightDepth);
+
+    nodeState[node.id] = 'done';
+    callStack.pop();
+    return ret;
+  }
+
+  dfsMain(root);
+
+  // final step
+  steps.push({
+    codeLine: null,
+    badge: `Answer: ${best}`,
+    text: `Done! The diameter is <b>${best}</b>.`,
+    best,
+    currentNode: null,
+    leftVal: '—', rightVal: '—',
+    nodeStates: { ...nodeState },
+    stack: [],
+  });
+
+  return steps;
+}
+
+// ── SVG rendering ─────────────────────────────────────────────────────────────
+const COLORS = {
+  pending: '#475569',
+  active:  '#7c6af7',
+  waiting: '#fbbf24',
+  done:    '#34d399',
+};
+
+function renderTree(svg, positions, map, nodeStates, currentNode) {
+  svg.innerHTML = '';
+
+  // edges
+  Object.values(map).forEach(n => {
+    if (n.parent === null) return;
+    const from = positions[n.parent];
+    const to = positions[n.id];
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', from.x); line.setAttribute('y1', from.y);
+    line.setAttribute('x2', to.x);   line.setAttribute('y2', to.y);
+    line.setAttribute('stroke', '#2e3560'); line.setAttribute('stroke-width', '2');
+    svg.appendChild(line);
+  });
+
+  // nodes
+  Object.values(map).forEach(n => {
+    const pos = positions[n.id];
+    const state = nodeStates[n.id] || 'pending';
+    const isCurrent = currentNode === n.id;
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('cx', pos.x); circle.setAttribute('cy', pos.y);
+    circle.setAttribute('r', isCurrent ? 22 : 18);
+    circle.setAttribute('fill', COLORS[state]);
+    circle.setAttribute('stroke', isCurrent ? '#fff' : 'none');
+    circle.setAttribute('stroke-width', '2');
+    svg.appendChild(circle);
+
+    const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+    text.setAttribute('x', pos.x); text.setAttribute('y', pos.y + 5);
+    text.setAttribute('text-anchor','middle');
+    text.setAttribute('font-size','14'); text.setAttribute('font-weight','700');
+    text.setAttribute('fill','#0f1225');
+    text.textContent = n.val;
+    svg.appendChild(text);
+  });
+}
+
+// ── UI state ─────────────────────────────────────────────────────────────────
+let steps = [], stepIdx = 0, positions = {}, map = {};
+
+function loadCase(ci) {
+  const { root, map: m } = buildTree(CASES[ci].nodes);
+  map = m;
+  positions = layoutTree(root);
+  steps = simulate(root, map);
+  stepIdx = 0;
+  render();
+}
+
+function render() {
+  const s = steps[stepIdx] || steps[steps.length-1];
+
+  // tree
+  const svg = document.getElementById('tree-svg');
+  renderTree(svg, positions, map, s.nodeStates, s.currentNode);
+
+  // code highlight
+  document.querySelectorAll('#code-panel .line').forEach(el => {
+    el.classList.remove('active');
+    if (s.codeLine && parseInt(el.dataset.line) === s.codeLine) el.classList.add('active');
+  });
+
+  // step
+  document.getElementById('step-badge').textContent = s.badge;
+  document.getElementById('step-text').innerHTML = s.text;
+
+  // vars
+  document.getElementById('v-node').textContent = s.currentNode ? map[s.currentNode]?.val ?? '—' : 'null';
+  document.getElementById('v-best').textContent = s.best;
+  document.getElementById('v-left').textContent = s.leftVal;
+  document.getElementById('v-right').textContent = s.rightVal;
+
+  // stack
+  const sl = document.getElementById('stack-list');
+  sl.innerHTML = '';
+  const stackCopy = [...s.stack].reverse();
+  stackCopy.forEach((f, i) => {
+    const div = document.createElement('div');
+    div.className = 'stack-frame' + (i === 0 ? ' active-frame' : '');
+    const node = map[f.nodeId];
+    div.innerHTML = `<div class="fname">dfs(${node?.val ?? '?'})</div><div class="fval">left=${f.left} right=${f.right} [${f.phase}]</div>`;
+    sl.appendChild(div);
+  });
+  if (stackCopy.length === 0) sl.innerHTML = '<div style="color:#475569;font-size:12px">empty</div>';
+
+  // controls
+  document.getElementById('btn-prev').disabled = stepIdx === 0;
+  document.getElementById('btn-next').disabled = stepIdx === steps.length - 1;
+  document.getElementById('step-counter').textContent = `Step ${stepIdx} / ${steps.length - 1}`;
+}
+
+document.getElementById('btn-next').addEventListener('click', () => { if (stepIdx < steps.length-1) { stepIdx++; render(); } });
+document.getElementById('btn-prev').addEventListener('click', () => { if (stepIdx > 0) { stepIdx--; render(); } });
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') { if (stepIdx < steps.length-1) { stepIdx++; render(); } }
+  if (e.key === 'ArrowLeft')  { if (stepIdx > 0) { stepIdx--; render(); } }
+});
+document.getElementById('case-select').addEventListener('change', e => loadCase(parseInt(e.target.value)));
+
+loadCase(0);
+</script>
+</body>
+</html>
