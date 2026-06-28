@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LC 110 — Balanced Binary Tree</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #1c2038; color: #c9d1d9; font-family: system-ui, sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+.header { background: #141722; border-bottom: 1px solid #2e3560; padding: 10px 20px; display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.title { font-size: 15px; font-weight: 600; color: #e6edf3; margin-right: 4px; }
+.approach-btn { padding: 5px 14px; border: 1px solid #2e3560; border-radius: 6px; background: #1c2038; color: #8b949e; cursor: pointer; font-size: 13px; }
+.approach-btn.active { background: #7c6af7; border-color: #7c6af7; color: white; }
+select { padding: 5px 10px; background: #141722; border: 1px solid #2e3560; border-radius: 6px; color: #c9d1d9; font-size: 12px; }
+
+.main { display: flex; flex: 1; overflow: hidden; }
+
+.left-panel { flex: 1; display: flex; flex-direction: column; padding: 14px; gap: 10px; min-width: 0; }
+.tree-area { flex: 1; }
+svg { width: 100%; height: 100%; }
+
+.step-row { display: flex; align-items: center; gap: 10px; background: #141722; border: 1px solid #2e3560; border-radius: 8px; padding: 9px 14px; flex-shrink: 0; }
+.badge { padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; color: #1c2038; white-space: nowrap; }
+.step-text { font-size: 13px; flex: 1; }
+.step-num { color: #6e7681; font-size: 12px; white-space: nowrap; }
+
+.nav-row { display: flex; gap: 8px; flex-shrink: 0; }
+.btn { padding: 7px 20px; border-radius: 6px; border: 1px solid #2e3560; background: #141722; color: #c9d1d9; cursor: pointer; font-size: 13px; }
+.btn:hover:not(:disabled) { background: #2e3560; }
+.btn:disabled { opacity: 0.35; cursor: default; }
+
+.right-panel { width: 340px; border-left: 1px solid #2e3560; display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
+.panel-section { border-bottom: 1px solid #2e3560; flex-shrink: 0; }
+.panel-section.code-sec { flex: 1; overflow-y: auto; min-height: 0; }
+.plabel { font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: #6e7681; padding: 7px 14px 3px; }
+
+pre.code { font-family: 'Menlo', 'Monaco', monospace; font-size: 11.5px; line-height: 1.75; padding-bottom: 8px; }
+.cl { display: block; padding: 0 14px; white-space: pre; color: #8b949e; }
+.cl.active { background: rgba(124,106,247,.18); color: #e6edf3; border-left: 2px solid #7c6af7; padding-left: 12px; }
+
+.vars-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 6px 14px 10px; }
+.vitem { background: #141722; border: 1px solid #2e3560; border-radius: 5px; padding: 4px 8px; font-family: monospace; }
+.vname { font-size: 10px; color: #79c0ff; }
+.vval { font-size: 13px; font-weight: 600; color: #e6edf3; }
+
+.stack-list { padding: 5px 14px 10px; display: flex; flex-direction: column-reverse; gap: 3px; max-height: 100px; overflow-y: auto; }
+.sframe { background: #141722; border: 1px solid #2e3560; border-radius: 4px; padding: 3px 8px; font-size: 12px; font-family: monospace; color: #6e7681; }
+.sframe.top { border-color: #7c6af7; color: #c9d1d9; }
+
+.legend { display: flex; gap: 12px; flex-wrap: wrap; padding: 8px 14px; border-top: 1px solid #2e3560; flex-shrink: 0; }
+.li { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #8b949e; }
+.ld { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+/* SVG node styles */
+.nd circle { fill: #1c2038; stroke: #4e5a8e; stroke-width: 2; }
+.na circle { fill: #7c6af7; stroke: #7c6af7; stroke-width: 2; }
+.np circle { fill: #fbbf24; stroke: #fbbf24; stroke-width: 2; }
+.nb circle { fill: #34d399; stroke: #34d399; stroke-width: 2; }
+.nu circle { fill: #f87171; stroke: #f87171; stroke-width: 2; }
+.nd text { fill: #8b949e; }
+.na text { fill: white; }
+.np text { fill: #1c2038; }
+.nb text { fill: #1c2038; }
+.nu text { fill: white; }
+.edge { stroke: #4e5a8e; stroke-width: 1.5; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="title">LC 110 — Balanced Binary Tree</span>
+  <button class="approach-btn active" id="btn-sentinel" onclick="switchApproach('sentinel')">Sentinel (−1)</button>
+  <button class="approach-btn" id="btn-closure" onclick="switchApproach('closure')">Closure Variable</button>
+  <select id="tc" onchange="loadTC()">
+    <option value="0">Empty tree → true</option>
+    <option value="1">Single node [1] → true</option>
+    <option value="2" selected>Balanced [3,9,20,_,_,15,7] → true</option>
+    <option value="3">Left-heavy [1,2,null,3] → false</option>
+    <option value="4">Deep unbalanced [1,2,2,3,3,_,_,4,4] → false</option>
+  </select>
+</div>
+
+<div class="main">
+  <div class="left-panel">
+    <div class="tree-area"><svg id="svg"></svg></div>
+    <div class="step-row">
+      <span class="badge" id="badge">START</span>
+      <span class="step-text" id="expl"></span>
+      <span class="step-num" id="snum">1 / 1</span>
+    </div>
+    <div class="nav-row">
+      <button class="btn" id="bp" onclick="prev()">← Prev</button>
+      <button class="btn" id="bn" onclick="next()">Next →</button>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="panel-section code-sec">
+      <div class="plabel">Code</div>
+      <pre class="code" id="code"></pre>
+    </div>
+    <div class="panel-section">
+      <div class="plabel">Variables</div>
+      <div class="vars-grid" id="vars"></div>
+    </div>
+    <div class="panel-section">
+      <div class="plabel">Call Stack</div>
+      <div class="stack-list" id="stack"></div>
+    </div>
+    <div class="legend">
+      <div class="li"><div class="ld" style="background:#7c6af7"></div>Active</div>
+      <div class="li"><div class="ld" style="background:#fbbf24"></div>On path</div>
+      <div class="li"><div class="ld" style="background:#34d399"></div>Balanced</div>
+      <div class="li"><div class="ld" style="background:#f87171"></div>Unbalanced</div>
+      <div class="li"><div class="ld" style="background:#4e5a8e"></div>Unvisited</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Tree utilities ────────────────────────────────────────────────────────────
+
+let uid = 0;
+function buildTree(arr) {
+  uid = 0;
+  if (!arr.length || arr[0] === null) return null;
+  const root = mk(arr[0]);
+  const q = [root]; let i = 1;
+  while (q.length && i < arr.length) {
+    const n = q.shift();
+    if (arr[i] != null) { n.left = mk(arr[i]); q.push(n.left); } i++;
+    if (i < arr.length && arr[i] != null) { n.right = mk(arr[i]); q.push(n.right); } i++;
+  }
+  return root;
+}
+function mk(v) { return { val: v, id: uid++, left: null, right: null }; }
+
+function layout(n, depth, ctr) {
+  if (!n) return;
+  layout(n.left, depth + 1, ctr);
+  n.lx = ctr.v++; n.ly = depth;
+  layout(n.right, depth + 1, ctr);
+}
+function allNodes(n, a = []) { if (!n) return a; a.push(n); allNodes(n.left, a); allNodes(n.right, a); return a; }
+function initStates(n, s = {}) { if (!n) return s; s[n.id] = 'd'; initStates(n.left, s); initStates(n.right, s); return s; }
+
+// ── Code text ─────────────────────────────────────────────────────────────────
+
+const CODE = {
+  sentinel: [
+    'function isBalanced(root) {',
+    '    if (root === null) return true;',
+    '    function dfs(node) {',
+    '        if (node === null) return 0;',
+    '        const leftHeight  = dfs(node.left);',
+    '        const rightHeight = dfs(node.right);',
+    '        if (leftHeight===-1 || rightHeight===-1) return -1;',
+    '        if (Math.abs(leftHeight - rightHeight) > 1) return -1;',
+    '        return 1 + Math.max(leftHeight, rightHeight);',
+    '    }',
+    '    if (dfs(root) === -1) return false;',
+    '    else return true;',
+    '}',
+  ],
+  closure: [
+    'function isBalanced(root) {',
+    '    let balanced = true;',
+    '    function dfs(node) {',
+    '        if (node === null) return 0;',
+    '        const leftHeight  = dfs(node.left);',
+    '        const rightHeight = dfs(node.right);',
+    '        if (leftHeight===undefined||rightHeight===undefined) return;',
+    '        if (Math.abs(leftHeight - rightHeight) > 1) {',
+    '            balanced = false;',
+    '            return;',
+    '        }',
+    '        return 1 + Math.max(leftHeight, rightHeight);',
+    '    }',
+    '    dfs(root);',
+    '    return balanced;',
+    '}',
+  ],
+};
+
+// ── Simulation — Sentinel ─────────────────────────────────────────────────────
+
+function simSentinel(root) {
+  const steps = [], ns = initStates(root), cs = [];
+  const snap = (line, badge, text, vars) =>
+    steps.push({ ns: {...ns}, cs: cs.map(x=>({...x})), line, badge, text, vars: vars||{} });
+
+  if (!root) {
+    snap(1,'NULL ROOT','root is null → return true immediately',{result:'true'});
+    return steps;
+  }
+  snap(10,'START','Call dfs(root). Contract: returns height if balanced, −1 if not.',{});
+
+  function dfs(node) {
+    if (!node) {
+      snap(3,'BASE CASE','node is null → return 0  (empty tree has height 0)',{returnVal:0});
+      return 0;
+    }
+    ns[node.id] = 'a'; cs.push({val: node.val});
+    snap(2,'ENTER',`dfs(${node.val}) — recurse both subtrees, then check`,{});
+
+    snap(4,'RECURSE LEFT',`Calling dfs(${node.left?node.left.val:'null'})`,{});
+    ns[node.id] = 'p';
+    const L = dfs(node.left);
+    ns[node.id] = 'a';
+    snap(4,'← LEFT',`leftHeight = ${L}`,{leftHeight:L});
+
+    snap(5,'RECURSE RIGHT',`Calling dfs(${node.right?node.right.val:'null'})`,{leftHeight:L});
+    ns[node.id] = 'p';
+    const R = dfs(node.right);
+    ns[node.id] = 'a';
+    snap(5,'← RIGHT',`rightHeight = ${R}`,{leftHeight:L,rightHeight:R});
+
+    if (L === -1 || R === -1) {
+      snap(6,'PROPAGATE −1',`A subtree returned −1 — failure already detected; propagate up`,{leftHeight:L,rightHeight:R,returnVal:'-1'});
+      ns[node.id] = 'u'; cs.pop(); return -1;
+    }
+    snap(6,'SENTINEL OK',`Neither subtree returned −1 — no failure to propagate`,{leftHeight:L,rightHeight:R});
+
+    const diff = Math.abs(L - R);
+    if (diff > 1) {
+      snap(7,'UNBALANCED',`|${L} − ${R}| = ${diff} > 1 → unbalanced here → return −1`,{leftHeight:L,rightHeight:R,returnVal:'-1'});
+      ns[node.id] = 'u'; cs.pop(); return -1;
+    }
+    snap(7,'BALANCED ✓',`|${L} − ${R}| = ${diff} ≤ 1 — OK at node ${node.val}`,{leftHeight:L,rightHeight:R});
+
+    const h = 1 + Math.max(L, R);
+    snap(8,'RETURN HEIGHT',`return 1 + max(${L}, ${R}) = ${h}`,{leftHeight:L,rightHeight:R,returnVal:h});
+    ns[node.id] = 'b'; cs.pop(); return h;
+  }
+
+  const res = dfs(root);
+  snap(res===-1?10:11,'RESULT',
+    res===-1 ? `dfs(root) = −1 → tree is NOT balanced → return false`
+             : `dfs(root) = ${res} (not −1) → tree IS balanced → return true`,
+    {result: String(res !== -1)});
+  return steps;
+}
+
+// ── Simulation — Closure ──────────────────────────────────────────────────────
+
+function simClosure(root) {
+  const steps = [], ns = initStates(root), cs = [];
+  let balanced = true;
+  const snap = (line, badge, text, vars) =>
+    steps.push({ ns: {...ns}, cs: cs.map(x=>({...x})), line, badge, text, vars: {balanced, ...vars} });
+
+  snap(13,'START','balanced = true. Call dfs(root) — sets balanced=false if any node violates the rule.',{});
+
+  function dfs(node) {
+    if (!node) {
+      snap(3,'BASE CASE','node is null → return 0',{returnVal:0});
+      return 0;
+    }
+    ns[node.id] = 'a'; cs.push({val: node.val});
+    snap(2,'ENTER',`dfs(${node.val}) — recurse both subtrees`,{});
+
+    snap(4,'RECURSE LEFT',`Calling dfs(${node.left?node.left.val:'null'})`,{});
+    ns[node.id] = 'p';
+    const L = dfs(node.left);
+    ns[node.id] = 'a';
+    snap(4,'← LEFT',`leftHeight = ${L===undefined?'undefined':L}`,{leftHeight:L===undefined?'undef':L});
+
+    snap(5,'RECURSE RIGHT',`Calling dfs(${node.right?node.right.val:'null'})`,{leftHeight:L===undefined?'undef':L});
+    ns[node.id] = 'p';
+    const R = dfs(node.right);
+    ns[node.id] = 'a';
+    snap(5,'← RIGHT',`rightHeight = ${R===undefined?'undefined':R}`,
+      {leftHeight:L===undefined?'undef':L, rightHeight:R===undefined?'undef':R});
+
+    if (L === undefined || R === undefined) {
+      snap(6,'PROPAGATE','A child returned undefined — already unbalanced; propagate up',
+        {leftHeight:L===undefined?'undef':L, rightHeight:R===undefined?'undef':R, returnVal:'undef'});
+      ns[node.id] = 'u'; cs.pop(); return undefined;
+    }
+    snap(6,'UNDEF OK',`Neither child returned undefined — continue`,{leftHeight:L,rightHeight:R});
+
+    const diff = Math.abs(L - R);
+    if (diff > 1) {
+      balanced = false;
+      snap(8,'UNBALANCED',`|${L} − ${R}| = ${diff} > 1 → balanced = false, return undefined`,
+        {leftHeight:L,rightHeight:R,returnVal:'undef'});
+      ns[node.id] = 'u'; cs.pop(); return undefined;
+    }
+    snap(7,'BALANCED ✓',`|${L} − ${R}| = ${diff} ≤ 1 — OK at node ${node.val}`,{leftHeight:L,rightHeight:R});
+
+    const h = 1 + Math.max(L, R);
+    snap(11,'RETURN HEIGHT',`return 1 + max(${L}, ${R}) = ${h}`,{leftHeight:L,rightHeight:R,returnVal:h});
+    ns[node.id] = 'b'; cs.pop(); return h;
+  }
+
+  dfs(root);
+  snap(14,'RESULT',`dfs complete. balanced = ${balanced} → return ${balanced}`,{result:String(balanced)});
+  return steps;
+}
+
+// ── Rendering ─────────────────────────────────────────────────────────────────
+
+const STATE_CLASS = { d:'nd', a:'na', p:'np', b:'nb', u:'nu' };
+const NS = 'http://www.w3.org/2000/svg';
+
+function renderTree(root, nodeStates) {
+  const svg = document.getElementById('svg');
+  const W = svg.clientWidth || 580, H = svg.clientHeight || 300;
+  svg.innerHTML = '';
+
+  if (!root) {
+    const t = document.createElementNS(NS,'text');
+    t.setAttribute('x',W/2); t.setAttribute('y',H/2);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('fill','#6e7681');
+    t.setAttribute('font-size','14'); t.textContent = 'Empty tree (null root)';
+    svg.appendChild(t); return;
+  }
+
+  layout(root, 0, {v:0});
+  const nodes = allNodes(root);
+  const maxLX = nodes.reduce((m,n) => Math.max(m,n.lx), 0);
+  const maxLY = nodes.reduce((m,n) => Math.max(m,n.ly), 0);
+  const PAD = 48;
+  const xs = maxLX > 0 ? (W - PAD*2) / maxLX : 0;
+  const ys = maxLY > 0 ? Math.min((H - PAD*2) / maxLY, 78) : 0;
+  const R  = maxLX > 0 ? Math.min(19, xs * 0.36) : 22;
+  const px = n => maxLX > 0 ? PAD + n.lx * xs : W/2;
+  const py = n => maxLY > 0 ? PAD + n.ly * ys : H/2;
+
+  // edges
+  nodes.forEach(n => {
+    ['left','right'].forEach(side => {
+      if (!n[side]) return;
+      const l = document.createElementNS(NS,'line');
+      l.setAttribute('x1',px(n));  l.setAttribute('y1',py(n));
+      l.setAttribute('x2',px(n[side])); l.setAttribute('y2',py(n[side]));
+      l.setAttribute('class','edge'); svg.appendChild(l);
+    });
+  });
+
+  // nodes
+  nodes.forEach(n => {
+    const state = nodeStates[n.id] || 'd';
+    const g = document.createElementNS(NS,'g');
+    g.setAttribute('class', STATE_CLASS[state]);
+    const c = document.createElementNS(NS,'circle');
+    c.setAttribute('cx',px(n)); c.setAttribute('cy',py(n)); c.setAttribute('r',R);
+    g.appendChild(c);
+    const t = document.createElementNS(NS,'text');
+    t.setAttribute('x',px(n)); t.setAttribute('y',py(n)+1);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('dominant-baseline','middle');
+    t.setAttribute('font-size',Math.min(13,R*0.9)); t.setAttribute('font-family','system-ui');
+    t.setAttribute('font-weight','600'); t.textContent = n.val;
+    g.appendChild(t); svg.appendChild(g);
+  });
+}
+
+function renderCode(line, approach) {
+  const lines = CODE[approach];
+  document.getElementById('code').innerHTML = lines.map((l,i) =>
+    `<span class="cl${i===line?' active':''}">${esc(l)}</span>`
+  ).join('');
+}
+
+function renderVars(vars) {
+  const el = document.getElementById('vars');
+  const entries = Object.entries(vars);
+  if (!entries.length) { el.innerHTML = '<div style="color:#6e7681;font-size:12px;padding:2px 0">—</div>'; return; }
+  el.innerHTML = entries.map(([k,v]) => {
+    const display = v === undefined || v === 'undef'
+      ? `<span style="color:#f87171">undefined</span>`
+      : `<span>${v}</span>`;
+    return `<div class="vitem"><div class="vname">${k}</div><div class="vval">${display}</div></div>`;
+  }).join('');
+}
+
+function renderStack(cs) {
+  const el = document.getElementById('stack');
+  if (!cs.length) { el.innerHTML = '<div style="color:#6e7681;font-size:12px;padding:2px 0">empty</div>'; return; }
+  el.innerHTML = cs.map((f,i) =>
+    `<div class="sframe${i===cs.length-1?' top':''}">dfs(${f.val})</div>`
+  ).join('');
+}
+
+const BADGE_COLORS = {
+  'START':'#79c0ff','NULL ROOT':'#6e7681','BASE CASE':'#6e7681',
+  'ENTER':'#7c6af7','RECURSE LEFT':'#fbbf24','RECURSE RIGHT':'#fbbf24',
+  '← LEFT':'#fbbf24','← RIGHT':'#fbbf24',
+  'SENTINEL OK':'#34d399','PROPAGATE −1':'#f87171',
+  'UNDEF OK':'#34d399','PROPAGATE':'#f87171',
+  'BALANCED ✓':'#34d399','UNBALANCED':'#f87171',
+  'RETURN HEIGHT':'#34d399','RESULT':'#79c0ff',
+};
+
+function showStep(i) {
+  const s = steps[i];
+  renderTree(root, s.ns);
+  renderCode(s.line, approach);
+  renderVars(s.vars);
+  renderStack(s.cs);
+  const badge = document.getElementById('badge');
+  badge.textContent = s.badge;
+  badge.style.background = BADGE_COLORS[s.badge] || '#4e5a8e';
+  document.getElementById('expl').textContent = s.text;
+  document.getElementById('snum').textContent = `${i+1} / ${steps.length}`;
+  document.getElementById('bp').disabled = i === 0;
+  document.getElementById('bn').disabled = i === steps.length - 1;
+}
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── State & Controls ──────────────────────────────────────────────────────────
+
+let root, steps, approach = 'sentinel', step = 0;
+
+const TEST_CASES = [
+  [],
+  [1],
+  [3,9,20,null,null,15,7],
+  [1,2,null,3],
+  [1,2,2,3,3,null,null,4,4],
+];
+
+function rebuild() {
+  step = 0;
+  steps = approach === 'sentinel' ? simSentinel(root) : simClosure(root);
+  showStep(0);
+}
+function loadTC() {
+  const idx = parseInt(document.getElementById('tc').value);
+  root = buildTree(TEST_CASES[idx]);
+  rebuild();
+}
+function switchApproach(a) {
+  approach = a;
+  document.getElementById('btn-sentinel').classList.toggle('active', a === 'sentinel');
+  document.getElementById('btn-closure').classList.toggle('active', a === 'closure');
+  rebuild();
+}
+function prev() { if (step > 0) showStep(--step); }
+function next() { if (step < steps.length - 1) showStep(++step); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft')  prev();
+  if (e.key === 'ArrowRight') next();
+});
+
+window.addEventListener('load', () => {
+  document.getElementById('tc').value = '2';
+  loadTC();
+});
+</script>
+</body>
+</html>

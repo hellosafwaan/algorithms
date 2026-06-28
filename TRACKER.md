@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-28 (Count Complete Tree Nodes)
+Last updated: 2026-06-29 (Balanced Binary Tree)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-06-28 (Count Complete Tree Nodes)
 | Metric | Count |
 |--------|-------|
 | Total problems | 167 |
-| ✅ Complete | 41 |
+| ✅ Complete | 42 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 125 |
+| ⏳ Not started | 124 |
 
 ---
 
@@ -30,7 +30,7 @@ Last updated: 2026-06-28 (Count Complete Tree Nodes)
 | 6 | Linked List | 11 | 0 | 2026-06-22 | ⏳ |
 | 7 | 1D Dynamic Programming | 12 | 0 | 2026-06-29 | ⏳ |
 | 8 | 2D Dynamic Programming | 11 | 0 | 2026-07-05 | ⏳ |
-| 9 | Trees | 15 | 0 | 2026-07-14 | ⏳ |
+| 9 | Trees | 15 | 5 | 2026-07-14 | 🔄 In Progress |
 | 10 | Tries | 3 | 0 | 2026-07-16 | ⏳ |
 | 11 | Heap / Priority Queue | 7 | 0 | 2026-07-20 | ⏳ |
 | 12 | Backtracking | 9 | 0 | 2026-07-25 | ⏳ |
@@ -173,7 +173,7 @@ Last updated: 2026-06-28 (Count Complete Tree Nodes)
 | 1 | Invert Binary Tree | Easy | [#226](https://leetcode.com/problems/invert-binary-tree/) | DFS | ✅ | 2026-06-27 | [learnings](binary-tree/226-invert-a-binary-tree/learnings.md) |
 | 2 | Max Depth of Binary Tree | Easy | [#104](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | DFS | ✅ | 2026-06-27 | [learnings](binary-tree/104-maximum-depth-of-binary-tree/learnings.md) |
 | 3 | Diameter of Binary Tree | Easy | [#543](https://leetcode.com/problems/diameter-of-binary-tree/) | DFS — Post-order, closure variable | ✅ | 2026-06-28 | [learnings](binary-tree/543-diameter-of-a-binary-tree/learnings.md) |
-| 4 | Balanced Binary Tree | Easy | [#110](https://leetcode.com/problems/balanced-binary-tree/) | DFS | ⏳ | — | — |
+| 4 | Balanced Binary Tree | Easy | [#110](https://leetcode.com/problems/balanced-binary-tree/) | DFS — Sentinel (-1) for early termination | ✅ | 2026-06-29 | [learnings](binary-tree/110-balanced-tree/learnings.md) |
 | 5 | Same Tree | Easy | [#100](https://leetcode.com/problems/same-tree/) | DFS | ✅ | 2026-06-27 | [learnings](binary-tree/100-same-tree/learnings.md) |
 | 6 | Subtree of Another Tree | Easy | [#572](https://leetcode.com/problems/subtree-of-another-tree/) | DFS | ⏳ | — | — |
 | 7 | LCA of BST | Medium | [#235](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | BST | ⏳ | — | — |

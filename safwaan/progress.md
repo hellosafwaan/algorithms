@@ -13,6 +13,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Balanced Binary Tree (LC #110) — 2026-06-29 — Phase 9, DFS + sentinel (-1) for early exit, 83rd percentile, needed sentinel concept explained; independently attempted closure variant after
 - Diameter of Binary Tree (LC #543) — 2026-06-28 — Phase 9, DFS post-order + closure variable, 87th percentile, struggled with two-output distinction (return vs best update), unlocked via scaffold + visualizer
 - Count Complete Tree Nodes (LC #222) — 2026-06-28 — Phase 9 bonus, O(n)×3 cold + O(log²n) guided, 100th percentile optimal
 - Path Sum (LC #112) — 2026-06-28 — Phase 9 bonus, iterative DFS cold + recursive guided, 100th percentile recursive

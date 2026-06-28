@@ -84,3 +84,26 @@ function dfs(node) {
 - `1 + max(left, right)` = longest single arm downward → return to parent
 
 Seen in: LC 543 (Diameter), LC 124 (Max Path Sum — harder variant).
+
+---
+
+## DFS with Sentinel Return Value
+
+**When you need to signal two things from one return type:** use a sentinel — a special value that means "something failed below." Keeps the return type uniform (no boolean/number mixing).
+
+```js
+function dfs(node) {
+    if (node === null) return 0;
+    const left = dfs(node.left);
+    const right = dfs(node.right);
+    if (left === -1 || right === -1) return -1;   // propagate failure
+    if (Math.abs(left - right) > 1) return -1;    // signal new failure
+    return 1 + Math.max(left, right);              // normal height
+}
+```
+
+**Contract:** returns height if subtree is balanced, `-1` if not. Callers check for `-1` before any other logic.
+
+**vs closure variable:** Sentinel keeps everything in the return value. Closure uses a side-effect on an outer variable. Both solve the same "two outputs" tension.
+
+Seen in: LC 110 (Balanced Binary Tree).

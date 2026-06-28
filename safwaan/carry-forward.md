@@ -3,7 +3,8 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
-| At LC 543, `dfs` has two outputs: a return value for the parent and a side-effect on `best`. Can he explain cold what each one is computing and why they're different? | Trees — DFS + closure | 543 | open — needed scaffold + visualizer; probe cold next trees session |
+| At LC 543, `dfs` has two outputs: a return value for the parent and a side-effect on `best`. Can he explain cold what each one is computing and why they're different? | Trees — DFS + closure | 543 | partial — 2026-06-29: knew direction (best=current node, return=parent) but not the why (branching path can't continue). Needed direct answer. Probe again at LC 124. |
+| Sentinel pattern cold — at LC 110, can he write the `-1` sentinel contract for `dfs` without being told the pattern name? | Trees — DFS sentinel | 110 | open — concept explained this session, not yet demonstrated cold |
 | `^` vs `**` in JavaScript — `^` is XOR, `**` is exponentiation. Can he recall this cold before writing power calculations in trees? | JS toolkit | 222 | open — used `^` for exponentiation this session, corrected when caught |
 | Complete tree shortcut: can he state cold what "measure all-left and all-right from same root" tells you, and why equal heights → perfect? | Trees — complete tree | 222 | open — needed guided questions to arrive at this |
 | **Recursive returns** — how does a return value travel upward through the call stack? When do you return a value vs return nothing (void/undefined)? He self-identified this as a gap during LC 226. Wants a dedicated session on this. | Recursion fundamentals | 226 | open — explicitly requested by Safwaan 2026-06-27 |
