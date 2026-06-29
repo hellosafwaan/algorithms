@@ -278,6 +278,7 @@ function dp(n, cache = {}) {
 | LC 222 — Count Complete Tree Nodes | Complete tree shortcut (O(log²n)) | Measure leftmost height and rightmost height from same root. If equal → perfect subtree → `2**h - 1`. Else: `1 + recurse(left) + recurse(right)`. Shortcut fires at multiple levels. |
 | LC 543 — Diameter of Binary Tree | DFS post-order + closure variable | Two outputs: `best = Math.max(best, left+right)` (global diameter candidate) and `return 1 + Math.max(left, right)` (single arm for parent). Closure variable is the key. |
 | LC 110 — Balanced Binary Tree | DFS post-order + sentinel return | Return `-1` to signal "unbalanced" — keeps return type uniform. Propagate `-1` up immediately. Return `1 + Math.max(left, right)` when valid. |
+| LC 111 — Minimum Depth of Binary Tree | DFS — null-child-aware minimum | `Math.min` breaks when one child is null (returns 0). If left===0, return `1+right`. If right===0, return `1+left`. Only take `Math.min` when both sides are real. |
 
 ---
 

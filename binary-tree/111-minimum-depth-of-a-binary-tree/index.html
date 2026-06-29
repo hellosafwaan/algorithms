@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LC 111 — Minimum Depth of Binary Tree</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #1c2038; color: #c9d1d9; font-family: system-ui, sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+.header { background: #141722; border-bottom: 1px solid #2e3560; padding: 10px 20px; display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.title { font-size: 15px; font-weight: 600; color: #e6edf3; margin-right: 4px; }
+select { padding: 5px 10px; background: #141722; border: 1px solid #2e3560; border-radius: 6px; color: #c9d1d9; font-size: 12px; }
+
+.main { display: flex; flex: 1; overflow: hidden; }
+
+.left-panel { flex: 1; display: flex; flex-direction: column; padding: 14px; gap: 10px; min-width: 0; }
+.tree-area { flex: 1; }
+svg { width: 100%; height: 100%; }
+
+.step-row { display: flex; align-items: center; gap: 10px; background: #141722; border: 1px solid #2e3560; border-radius: 8px; padding: 9px 14px; flex-shrink: 0; }
+.badge { padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; color: #1c2038; white-space: nowrap; }
+.step-text { font-size: 13px; flex: 1; }
+.step-num { color: #6e7681; font-size: 12px; white-space: nowrap; }
+
+.nav-row { display: flex; gap: 8px; flex-shrink: 0; }
+.btn { padding: 7px 20px; border-radius: 6px; border: 1px solid #2e3560; background: #141722; color: #c9d1d9; cursor: pointer; font-size: 13px; }
+.btn:hover:not(:disabled) { background: #2e3560; }
+.btn:disabled { opacity: 0.35; cursor: default; }
+
+.right-panel { width: 340px; border-left: 1px solid #2e3560; display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
+.panel-section { border-bottom: 1px solid #2e3560; flex-shrink: 0; }
+.panel-section.code-sec { flex: 1; overflow-y: auto; min-height: 0; }
+.plabel { font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: #6e7681; padding: 7px 14px 3px; }
+
+pre.code { font-family: 'Menlo', 'Monaco', monospace; font-size: 11.5px; line-height: 1.75; padding-bottom: 8px; }
+.cl { display: block; padding: 0 14px; white-space: pre; color: #8b949e; }
+.cl.active { background: rgba(124,106,247,.18); color: #e6edf3; border-left: 2px solid #7c6af7; padding-left: 12px; }
+
+.vars-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 6px 14px 10px; }
+.vitem { background: #141722; border: 1px solid #2e3560; border-radius: 5px; padding: 4px 8px; font-family: monospace; }
+.vname { font-size: 10px; color: #79c0ff; }
+.vval { font-size: 13px; font-weight: 600; color: #e6edf3; }
+
+.stack-list { padding: 5px 14px 10px; display: flex; flex-direction: column-reverse; gap: 3px; max-height: 120px; overflow-y: auto; }
+.sframe { background: #141722; border: 1px solid #2e3560; border-radius: 4px; padding: 3px 8px; font-size: 12px; font-family: monospace; color: #6e7681; }
+.sframe.top { border-color: #7c6af7; color: #c9d1d9; }
+
+.legend { display: flex; gap: 12px; flex-wrap: wrap; padding: 8px 14px; border-top: 1px solid #2e3560; flex-shrink: 0; }
+.li { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #8b949e; }
+.ld { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+/* SVG node styles */
+.nd circle { fill: #1c2038; stroke: #4e5a8e; stroke-width: 2; }
+.na circle { fill: #7c6af7; stroke: #7c6af7; stroke-width: 2; }
+.np circle { fill: #fbbf24; stroke: #fbbf24; stroke-width: 2; }
+.nb circle { fill: #34d399; stroke: #34d399; stroke-width: 2; }
+.nu circle { fill: #f87171; stroke: #f87171; stroke-width: 2; }
+.nd text { fill: #8b949e; }
+.na text { fill: white; }
+.np text { fill: #1c2038; }
+.nb text { fill: #1c2038; }
+.nu text { fill: white; }
+.edge { stroke: #4e5a8e; stroke-width: 1.5; }
+
+/* depth label on nodes */
+.depth-label { font-size: 10px; fill: #fbbf24; font-family: monospace; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="title">LC 111 — Minimum Depth of Binary Tree</span>
+  <select id="tc" onchange="loadTC()">
+    <option value="0">Empty tree → 0</option>
+    <option value="1">Single node [1] → 1</option>
+    <option value="2" selected>Left-only [1,2] → 2  ← the trap</option>
+    <option value="3">Balanced [3,9,20,null,null,15,7] → 2</option>
+    <option value="4">Left-skewed [1,2,3,4] → 4</option>
+    <option value="5">Right-only [1,null,2,null,3] → 3</option>
+  </select>
+</div>
+
+<div class="main">
+  <div class="left-panel">
+    <div class="tree-area"><svg id="svg"></svg></div>
+    <div class="step-row">
+      <span class="badge" id="badge">START</span>
+      <span class="step-text" id="expl"></span>
+      <span class="step-num" id="snum">1 / 1</span>
+    </div>
+    <div class="nav-row">
+      <button class="btn" id="bp" onclick="prev()">← Prev</button>
+      <button class="btn" id="bn" onclick="next()">Next →</button>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="panel-section code-sec">
+      <div class="plabel">Code</div>
+      <pre class="code" id="code"></pre>
+    </div>
+    <div class="panel-section">
+      <div class="plabel">Variables</div>
+      <div class="vars-grid" id="vars"></div>
+    </div>
+    <div class="panel-section">
+      <div class="plabel">Call Stack</div>
+      <div class="stack-list" id="stack"></div>
+    </div>
+    <div class="legend">
+      <div class="li"><div class="ld" style="background:#7c6af7"></div>Active</div>
+      <div class="li"><div class="ld" style="background:#fbbf24"></div>On path</div>
+      <div class="li"><div class="ld" style="background:#34d399"></div>Resolved</div>
+      <div class="li"><div class="ld" style="background:#f87171"></div>Ignored (null child)</div>
+      <div class="li"><div class="ld" style="background:#4e5a8e"></div>Unvisited</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Tree utilities ────────────────────────────────────────────────────────────
+
+let uid = 0;
+function buildTree(arr) {
+  uid = 0;
+  if (!arr.length || arr[0] === null) return null;
+  const root = mk(arr[0]);
+  const q = [root]; let i = 1;
+  while (q.length && i < arr.length) {
+    const n = q.shift();
+    if (arr[i] != null) { n.left = mk(arr[i]); q.push(n.left); } i++;
+    if (i < arr.length && arr[i] != null) { n.right = mk(arr[i]); q.push(n.right); } i++;
+  }
+  return root;
+}
+function mk(v) { return { val: v, id: uid++, left: null, right: null }; }
+
+function layout(n, depth, ctr) {
+  if (!n) return;
+  layout(n.left, depth + 1, ctr);
+  n.lx = ctr.v++; n.ly = depth;
+  layout(n.right, depth + 1, ctr);
+}
+function allNodes(n, a = []) { if (!n) return a; a.push(n); allNodes(n.left, a); allNodes(n.right, a); return a; }
+function initStates(n, s = {}) { if (!n) return s; s[n.id] = 'd'; initStates(n.left, s); initStates(n.right, s); return s; }
+
+// ── Code text ─────────────────────────────────────────────────────────────────
+
+const CODE = [
+  'function minDepth(root) {',            // 0
+  '    if (root === null) return 0;',     // 1
+  '    const left  = minDepth(root.left);',  // 2
+  '    const right = minDepth(root.right);', // 3
+  '    if (left === 0) return 1 + right;',   // 4
+  '    if (right === 0) return 1 + left;',   // 5
+  '    return 1 + Math.min(left, right);',   // 6
+  '}',                                        // 7
+];
+
+// ── Simulation ────────────────────────────────────────────────────────────────
+
+function simulate(root) {
+  const steps = [], ns = initStates(root), cs = [];
+  // depthLabels: nodeId → string to show above node (the return value)
+  const dl = {};
+
+  const snap = (line, badge, text, vars) =>
+    steps.push({ ns: {...ns}, cs: cs.map(x=>({...x})), dl: {...dl}, line, badge, text, vars: vars||{} });
+
+  if (!root) {
+    snap(1, 'NULL ROOT', 'root is null → return 0 immediately', { returnVal: 0 });
+    return steps;
+  }
+
+  snap(0, 'START', 'Call minDepth(root). Returns minimum depth to any leaf.', {});
+
+  function dfs(node) {
+    if (!node) {
+      snap(1, 'NULL', 'node is null → return 0  (signals "no child here")', { returnVal: 0 });
+      return 0;
+    }
+
+    ns[node.id] = 'a';
+    cs.push({ val: node.val });
+    snap(0, 'ENTER', `minDepth(${node.val}) — will recurse both subtrees`, {});
+
+    // recurse left
+    snap(2, 'RECURSE LEFT', `Calling minDepth(${node.left ? node.left.val : 'null'})`, {});
+    ns[node.id] = 'p';
+    const L = dfs(node.left);
+    ns[node.id] = 'a';
+    snap(2, '← LEFT', `left = ${L}${L === 0 ? '  (no left child)' : ''}`, { left: L });
+
+    // recurse right
+    snap(3, 'RECURSE RIGHT', `Calling minDepth(${node.right ? node.right.val : 'null'})`, { left: L });
+    ns[node.id] = 'p';
+    const R = dfs(node.right);
+    ns[node.id] = 'a';
+    snap(3, '← RIGHT', `right = ${R}${R === 0 ? '  (no right child)' : ''}`, { left: L, right: R });
+
+    let ret;
+    if (L === 0 && R === 0) {
+      // leaf
+      ret = 1;
+      snap(4, 'LEAF ✓', `Both sides 0 → this is a leaf. left===0 fires → return 1 + 0 = 1`, { left: L, right: R, returnVal: ret });
+      dl[node.id] = String(ret);
+      ns[node.id] = 'b';
+    } else if (L === 0) {
+      ret = 1 + R;
+      ns[node.id] = 'u'; // left side is null — mark active node with "null child" context
+      snap(4, 'LEFT NULL', `left===0 means no left child — can't go left. Use right: return 1 + ${R} = ${ret}`, { left: L, right: R, returnVal: ret });
+      ns[node.id] = 'b';
+      dl[node.id] = String(ret);
+    } else if (R === 0) {
+      ret = 1 + L;
+      ns[node.id] = 'u';
+      snap(5, 'RIGHT NULL', `right===0 means no right child — can't go right. Use left: return 1 + ${L} = ${ret}`, { left: L, right: R, returnVal: ret });
+      ns[node.id] = 'b';
+      dl[node.id] = String(ret);
+    } else {
+      ret = 1 + Math.min(L, R);
+      snap(6, 'TAKE MIN', `Both children exist: 1 + min(${L}, ${R}) = ${ret}`, { left: L, right: R, returnVal: ret });
+      dl[node.id] = String(ret);
+      ns[node.id] = 'b';
+    }
+
+    cs.pop();
+    return ret;
+  }
+
+  const result = dfs(root);
+  snap(6, 'RESULT', `Minimum depth = ${result}`, { result });
+  return steps;
+}
+
+// ── Rendering ─────────────────────────────────────────────────────────────────
+
+const STATE_CLASS = { d:'nd', a:'na', p:'np', b:'nb', u:'nu' };
+const NS_SVG = 'http://www.w3.org/2000/svg';
+
+function renderTree(root, nodeStates, depthLabels) {
+  const svg = document.getElementById('svg');
+  const W = svg.clientWidth || 580, H = svg.clientHeight || 300;
+  svg.innerHTML = '';
+
+  if (!root) {
+    const t = document.createElementNS(NS_SVG,'text');
+    t.setAttribute('x',W/2); t.setAttribute('y',H/2);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('fill','#6e7681');
+    t.setAttribute('font-size','14'); t.textContent = 'Empty tree (null root)';
+    svg.appendChild(t); return;
+  }
+
+  layout(root, 0, {v:0});
+  const nodes = allNodes(root);
+  const maxLX = nodes.reduce((m,n) => Math.max(m,n.lx), 0);
+  const maxLY = nodes.reduce((m,n) => Math.max(m,n.ly), 0);
+  const PAD = 48;
+  const xs = maxLX > 0 ? (W - PAD*2) / maxLX : 0;
+  const ys = maxLY > 0 ? Math.min((H - PAD*2) / maxLY, 78) : 0;
+  const R  = maxLX > 0 ? Math.min(19, xs * 0.36) : 22;
+  const px = n => maxLX > 0 ? PAD + n.lx * xs : W/2;
+  const py = n => maxLY > 0 ? PAD + n.ly * ys : H/2;
+
+  // edges
+  nodes.forEach(n => {
+    ['left','right'].forEach(side => {
+      if (!n[side]) return;
+      const l = document.createElementNS(NS_SVG,'line');
+      l.setAttribute('x1',px(n));  l.setAttribute('y1',py(n));
+      l.setAttribute('x2',px(n[side])); l.setAttribute('y2',py(n[side]));
+      l.setAttribute('class','edge'); svg.appendChild(l);
+    });
+  });
+
+  // nodes
+  nodes.forEach(n => {
+    const state = nodeStates[n.id] || 'd';
+    const g = document.createElementNS(NS_SVG,'g');
+    g.setAttribute('class', STATE_CLASS[state]);
+    const c = document.createElementNS(NS_SVG,'circle');
+    c.setAttribute('cx',px(n)); c.setAttribute('cy',py(n)); c.setAttribute('r',R);
+    g.appendChild(c);
+    const t = document.createElementNS(NS_SVG,'text');
+    t.setAttribute('x',px(n)); t.setAttribute('y',py(n)+1);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('dominant-baseline','middle');
+    t.setAttribute('font-size',Math.min(13,R*0.9)); t.setAttribute('font-family','system-ui');
+    t.setAttribute('font-weight','600'); t.textContent = n.val;
+    g.appendChild(t);
+
+    // depth return label above the node
+    if (depthLabels[n.id] !== undefined) {
+      const dl = document.createElementNS(NS_SVG,'text');
+      dl.setAttribute('x', px(n));
+      dl.setAttribute('y', py(n) - R - 4);
+      dl.setAttribute('text-anchor','middle');
+      dl.setAttribute('class','depth-label');
+      dl.textContent = '→' + depthLabels[n.id];
+      g.appendChild(dl);
+    }
+
+    svg.appendChild(g);
+  });
+}
+
+function renderCode(line) {
+  document.getElementById('code').innerHTML = CODE.map((l,i) =>
+    `<span class="cl${i===line?' active':''}">${esc(l)}</span>`
+  ).join('');
+}
+
+function renderVars(vars) {
+  const el = document.getElementById('vars');
+  const entries = Object.entries(vars);
+  if (!entries.length) { el.innerHTML = '<div style="color:#6e7681;font-size:12px;padding:2px 0">—</div>'; return; }
+  el.innerHTML = entries.map(([k,v]) =>
+    `<div class="vitem"><div class="vname">${k}</div><div class="vval">${v}</div></div>`
+  ).join('');
+}
+
+function renderStack(cs) {
+  const el = document.getElementById('stack');
+  if (!cs.length) { el.innerHTML = '<div style="color:#6e7681;font-size:12px;padding:2px 0">empty</div>'; return; }
+  el.innerHTML = cs.map((f,i) =>
+    `<div class="sframe${i===cs.length-1?' top':''}">minDepth(${f.val})</div>`
+  ).join('');
+}
+
+const BADGE_COLORS = {
+  'START':'#79c0ff','NULL ROOT':'#6e7681','NULL':'#6e7681',
+  'ENTER':'#7c6af7',
+  'RECURSE LEFT':'#fbbf24','RECURSE RIGHT':'#fbbf24',
+  '← LEFT':'#fbbf24','← RIGHT':'#fbbf24',
+  'LEAF ✓':'#34d399',
+  'LEFT NULL':'#f87171','RIGHT NULL':'#f87171',
+  'TAKE MIN':'#34d399',
+  'RESULT':'#79c0ff',
+};
+
+function showStep(i) {
+  const s = steps[i];
+  renderTree(root, s.ns, s.dl);
+  renderCode(s.line);
+  renderVars(s.vars);
+  renderStack(s.cs);
+  const badge = document.getElementById('badge');
+  badge.textContent = s.badge;
+  badge.style.background = BADGE_COLORS[s.badge] || '#4e5a8e';
+  document.getElementById('expl').textContent = s.text;
+  document.getElementById('snum').textContent = `${i+1} / ${steps.length}`;
+  document.getElementById('bp').disabled = i === 0;
+  document.getElementById('bn').disabled = i === steps.length - 1;
+}
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── State & Controls ──────────────────────────────────────────────────────────
+
+let root, steps, step = 0;
+
+const TEST_CASES = [
+  [],
+  [1],
+  [1, 2],
+  [3, 9, 20, null, null, 15, 7],
+  [1, 2, null, 3, null, null, null, 4],
+  [1, null, 2, null, null, null, 3],
+];
+
+function rebuild() {
+  step = 0;
+  steps = simulate(root);
+  showStep(0);
+}
+function loadTC() {
+  const idx = parseInt(document.getElementById('tc').value);
+  root = buildTree(TEST_CASES[idx]);
+  rebuild();
+}
+function prev() { if (step > 0) showStep(--step); }
+function next() { if (step < steps.length - 1) showStep(++step); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft')  prev();
+  if (e.key === 'ArrowRight') next();
+});
+
+window.addEventListener('load', () => {
+  document.getElementById('tc').value = '2';
+  loadTC();
+});
+</script>
+</body>
+</html>

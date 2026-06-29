@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-29 (Balanced Binary Tree)
+Last updated: 2026-06-29 (Minimum Depth of Binary Tree)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-06-29 (Balanced Binary Tree)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 167 |
-| ✅ Complete | 42 |
+| Total problems | 168 |
+| ✅ Complete | 43 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 124 |
 
@@ -188,6 +188,7 @@ Last updated: 2026-06-29 (Balanced Binary Tree)
 | *(bonus)* | Symmetric Tree | Easy | [#101](https://leetcode.com/problems/symmetric-tree/) | DFS | ✅ | 2026-06-27 | [learnings](binary-tree/101-symmetric-tree/learnings.md) |
 | *(bonus)* | Path Sum | Easy | [#112](https://leetcode.com/problems/path-sum/) | DFS | ✅ | 2026-06-28 | [learnings](binary-tree/112-path-sum/learnings.md) |
 | *(bonus)* | Count Complete Tree Nodes | Medium | [#222](https://leetcode.com/problems/count-complete-tree-nodes/) | DFS — Complete Tree Shortcut (O(log²n)) | ✅ | 2026-06-28 | [learnings](binary-tree/222-count-complete-tree-nodes/learnings.md) |
+| *(bonus)* | Minimum Depth of Binary Tree | Easy | [#111](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | DFS — Null-child-aware minimum | ✅ | 2026-06-29 | [learnings](binary-tree/111-minimum-depth-of-a-binary-tree/learnings.md) |
 
 ## Phase 10 — Tries ⏳
 

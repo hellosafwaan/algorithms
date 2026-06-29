@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 111 — Minimum Depth of Binary Tree | DFS — null-child-aware minimum | 2026-06-29 | 2026-07-20 | ⏳ |
 | LC 110 — Balanced Binary Tree | DFS + sentinel (-1) for early exit | 2026-06-29 | 2026-07-20 | ⏳ |
 | LC 543 — Diameter of Binary Tree | DFS post-order + closure variable (two-output pattern) | 2026-06-28 | 2026-07-19 | ⏳ |
 | LC 222 — Count Complete Tree Nodes | Complete tree shortcut O(log²n) | 2026-06-28 | 2026-07-19 | ⏳ |
