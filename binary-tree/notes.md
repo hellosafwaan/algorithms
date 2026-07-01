@@ -107,3 +107,30 @@ function dfs(node) {
 **vs closure variable:** Sentinel keeps everything in the return value. Closure uses a side-effect on an outer variable. Both solve the same "two outputs" tension.
 
 Seen in: LC 110 (Balanced Binary Tree).
+
+---
+
+## DFS — Traversal Order (Pre/In/Post)
+
+**Same base shape as every other DFS-combine problem** — null check, recurse both children, combine, return up. The only thing that changes across the three traversal orders is *where* `root.val` sits relative to `left` and `right` in the combine step.
+
+```js
+function preorder(root) {
+    if (root === null) return [];
+    return [root.val, ...preorder(root.left), ...preorder(root.right)];   // root first
+}
+
+function inorder(root) {
+    if (root === null) return [];
+    return [...inorder(root.left), root.val, ...inorder(root.right)];    // root middle
+}
+
+function postorder(root) {
+    if (root === null) return [];
+    return [...postorder(root.left), ...postorder(root.right), root.val]; // root last
+}
+```
+
+**Why this matters beyond the traversal problems themselves:** postorder's shape — "combine after both children have answered" — is exactly the shape used in Diameter, Balanced Tree, and Count Complete Tree Nodes. Those problems are doing postorder traversal implicitly, just combining into a number instead of building a list. Inorder on a BST specifically produces sorted output — that guarantee doesn't hold for a general binary tree.
+
+Seen in: LC 144 (Preorder), LC 94 (Inorder), LC 145 (Postorder).

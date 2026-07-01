@@ -157,6 +157,9 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Breakthrough Moments
 
+### Clean transfer of DFS combine pattern to traversal order — LC 144/94/145 (2026-07-01)
+Solved all three traversal problems (preorder, inorder, postorder) independently outside a coaching session, all 100th percentile runtime, no reported mistakes. All three use the identical recursive shape (`if root===null return []`, recurse both children, combine) — the only change across all three is *where* `root.val` sits in the returned array. This confirms the DFS "ask subtrees, combine, return up" pattern (established at LC 104/100/226) has generalized cleanly to a new output shape (ordering, not accumulation). Self-directed — no hints needed, brought working solutions to session for logging only.
+
 ### Cross-session knowledge transfer — Single Number (LC 136, 2026-06-16)
 Built a bit manipulation cheat sheet ahead of time, then applied XOR self-cancellation (`a^a=0`, `a^0=a`, commutative/associative) cold with zero hints — explained the why before writing code, then traced the result correctly on `[4,1,2,1,2]`. First session this sprint with zero mistakes and zero hints. Confirms that when foundational knowledge is solid going in, execution is clean — supports investing in toolkit/concept review before new patterns (echoes the toolkit recall gap noted elsewhere).
 

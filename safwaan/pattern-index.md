@@ -282,6 +282,20 @@ function dp(n, cache = {}) {
 
 ---
 
+## DFS — Traversal Order (Pre/In/Post)
+
+**Core idea:** Same recursive shape as the accumulate-a-value DFS pattern above (`null → []`, recurse both children, combine, return up) — but here the combine step is building an *ordered list*, not a number. The only thing that changes between preorder/inorder/postorder is where `root.val` sits relative to `left` and `right` in the returned array.
+
+**When to reach for it:** Any "return the X-order traversal" problem. Recognize it as a variant of the same base-case-plus-combine shape used for depth/path problems, not a new pattern from scratch.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 144 — Binary Tree Preorder Traversal | root-left-right | `[root.val, ...left, ...right]` |
+| LC 94 — Binary Tree Inorder Traversal | left-root-right | `[...left, root.val, ...right]` |
+| LC 145 — Binary Tree Postorder Traversal | left-right-root | `[...left, ...right, root.val]` |
+
+---
+
 ## Bit Manipulation — Mask & Shift
 
 **Core idea:** `n & 1` reads the last bit (AND with 1 wipes every other bit). `n = n >>> 1` shifts the next bit into the last position. Loop while `n !== 0`.

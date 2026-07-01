@@ -3,6 +3,7 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| Can he explain cold why moving `root.val`'s position in the return array is the only thing that changes across pre/in/postorder? (Not asked directly this session — he confirmed "all good" but didn't walk through the reasoning.) | DFS — Traversal Order | 144, 94, 145 | open — probe at next traversal-adjacent problem (e.g. LC 105 Construct Tree from Preorder/Inorder) |
 | At LC 543, `dfs` has two outputs: a return value for the parent and a side-effect on `best`. Can he explain cold what each one is computing and why they're different? | Trees — DFS + closure | 543 | partial — 2026-06-29: knew direction (best=current node, return=parent) but not the why (branching path can't continue). Needed direct answer. Probe again at LC 124. |
 | Sentinel pattern cold — at LC 110, can he write the `-1` sentinel contract for `dfs` without being told the pattern name? | Trees — DFS sentinel | 110 | open — concept explained this session, not yet demonstrated cold |
 | `^` vs `**` in JavaScript — `^` is XOR, `**` is exponentiation. Can he recall this cold before writing power calculations in trees? | JS toolkit | 222 | open — used `^` for exponentiation this session, corrected when caught |

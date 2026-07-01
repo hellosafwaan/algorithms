@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases, 154 problems + 11 bonus problems = 165 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111 are bonus)
+Total: 18 phases, 154 problems + 14 bonus problems = 168 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145 are bonus)
 
 ---
 
@@ -190,6 +190,9 @@ Total: 18 phases, 154 problems + 11 bonus problems = 165 total (LC #383, #205, #
 | 14 | Binary Tree Maximum Path Sum | Hard | [LC #124](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | DFS |
 | 15 | Serialize and Deserialize Binary Tree | Hard | [LC #297](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) | BFS / DFS |
 | — | Minimum Depth of Binary Tree *(bonus)* | Easy | [LC #111](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | DFS — Null-child-aware minimum |
+| — | Binary Tree Preorder Traversal *(bonus)* | Easy | [LC #144](https://leetcode.com/problems/binary-tree-preorder-traversal/) | DFS — Traversal Order |
+| — | Binary Tree Inorder Traversal *(bonus)* | Easy | [LC #94](https://leetcode.com/problems/binary-tree-inorder-traversal/) | DFS — Traversal Order |
+| — | Binary Tree Postorder Traversal *(bonus)* | Easy | [LC #145](https://leetcode.com/problems/binary-tree-postorder-traversal/) | DFS — Traversal Order |
 
 ---
 

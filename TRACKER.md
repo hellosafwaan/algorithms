@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-06-29 (Minimum Depth of Binary Tree)
+Last updated: 2026-07-01 (Binary Tree Preorder/Inorder/Postorder Traversal)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-06-29 (Minimum Depth of Binary Tree)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 168 |
-| ✅ Complete | 43 |
+| Total problems | 171 |
+| ✅ Complete | 46 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 124 |
 
@@ -189,6 +189,9 @@ Last updated: 2026-06-29 (Minimum Depth of Binary Tree)
 | *(bonus)* | Path Sum | Easy | [#112](https://leetcode.com/problems/path-sum/) | DFS | ✅ | 2026-06-28 | [learnings](binary-tree/112-path-sum/learnings.md) |
 | *(bonus)* | Count Complete Tree Nodes | Medium | [#222](https://leetcode.com/problems/count-complete-tree-nodes/) | DFS — Complete Tree Shortcut (O(log²n)) | ✅ | 2026-06-28 | [learnings](binary-tree/222-count-complete-tree-nodes/learnings.md) |
 | *(bonus)* | Minimum Depth of Binary Tree | Easy | [#111](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | DFS — Null-child-aware minimum | ✅ | 2026-06-29 | [learnings](binary-tree/111-minimum-depth-of-a-binary-tree/learnings.md) |
+| *(bonus)* | Binary Tree Preorder Traversal | Easy | [#144](https://leetcode.com/problems/binary-tree-preorder-traversal/) | DFS — Traversal Order (root-left-right) | ✅ 100th pct | 2026-07-01 | [learnings](binary-tree/144-binary-tree-preorder-traversal/learnings.md) |
+| *(bonus)* | Binary Tree Inorder Traversal | Easy | [#94](https://leetcode.com/problems/binary-tree-inorder-traversal/) | DFS — Traversal Order (left-root-right) | ✅ 100th pct | 2026-07-01 | [learnings](binary-tree/94-binary-tree-inorder-traversal/learnings.md) |
+| *(bonus)* | Binary Tree Postorder Traversal | Easy | [#145](https://leetcode.com/problems/binary-tree-postorder-traversal/) | DFS — Traversal Order (left-right-root) | ✅ 100th pct | 2026-07-01 | [learnings](binary-tree/145-binary-tree-postorder-traversal/learnings.md) |
 
 ## Phase 10 — Tries ⏳
 

@@ -10,6 +10,9 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 145 — Binary Tree Postorder Traversal | DFS — Traversal Order (left-right-root) | 2026-07-01 | 2026-07-22 | ⏳ |
+| LC 94 — Binary Tree Inorder Traversal | DFS — Traversal Order (left-root-right) | 2026-07-01 | 2026-07-22 | ⏳ |
+| LC 144 — Binary Tree Preorder Traversal | DFS — Traversal Order (root-left-right) | 2026-07-01 | 2026-07-22 | ⏳ |
 | LC 111 — Minimum Depth of Binary Tree | DFS — null-child-aware minimum | 2026-06-29 | 2026-07-20 | ⏳ |
 | LC 110 — Balanced Binary Tree | DFS + sentinel (-1) for early exit | 2026-06-29 | 2026-07-20 | ⏳ |
 | LC 543 — Diameter of Binary Tree | DFS post-order + closure variable (two-output pattern) | 2026-06-28 | 2026-07-19 | ⏳ |
