@@ -311,6 +311,7 @@ function dp(n, cache = {}) {
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 200 — Number of Islands | Count components (boolean signal) | One `true` per island — the first cell the scan reaches is the only flood origin; all later cells of that island fail the visited check |
+| LC 130 — Surrounded Regions | Region decision (collect array, decide after, two-pass act) | Walk hands back every coordinate touched, not just a boolean. Verdict (safe/captured) only computable once the whole region is walked — never decide or stop early. Decide-then-act as two separate passes over the array. Alternative: border-first flood (flood only from border cells, board itself as visited-tracker via a placeholder marker, one final pass) — O(1) aux space instead of O(m·n). **Not yet self-owned — flag for follow-up.** |
 
 ---
 

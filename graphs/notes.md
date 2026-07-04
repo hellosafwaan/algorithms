@@ -30,3 +30,15 @@ Template: see [200-number-of-islands/learnings.md](200-number-of-islands/learnin
 
 ## Complexity of grid flood fill
 O(m·n) time — each cell is marked at most once; rejected probes are O(1) and bounded by 4 per cell. Not O((m·n)²) despite the outer loop calling the helper everywhere: visited makes repeat calls constant-time bounces. Space O(m·n): visited Set + worst-case recursion depth (snake-shaped single island).
+
+## Flood Fill — Region Decision variant (LC 130, Surrounded Regions)
+Sometimes a per-cell boolean signal (LC 200's "did this flood a new island?") isn't enough — you need to know a property of the *whole region* before deciding what to do with any of its cells (e.g., "does this region touch the border?"). Extend the flood fill:
+1. The walk **collects every coordinate it touches into a per-region array**, not just a boolean.
+2. The verdict (safe / captured) can only be computed once the walk is fully complete — never decide mid-walk, and never stop the walk early even if you already know the answer (the rest of the region still needs to be marked `visited`, or the outer loop will re-discover it and redo the work).
+3. **Decide, then act, as two separate passes** over the collected array. You can't merge "check the condition" with "apply the consequence" — a disqualifying cell found late would otherwise invalidate action already taken on earlier cells.
+
+**Canonical alternative — Border-first flood fill:** instead of walking from every cell and checking after the fact, flood *only from the cells already on the border*, marking everything reachable as safe (mutate the board itself, e.g. `'O'` → `'#'`, using the board as the visited-tracker — no separate Set needed). One final full-board pass: anything still in the original "unsafe" state was never reached, so it gets the fate applied; anything marked safe gets restored. Same O(m·n) time, but O(1) auxiliary space instead of O(m·n) for a Set + per-region arrays. See [130-surronded-regions/learnings.md](130-surronded-regions/learnings.md) for both versions side by side, plus an interactive comparison visualiser.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 130 — Surrounded Regions | Region decision (walk full region, decide after) | Collect per-region array during the walk; decide safe/captured only once complete; two separate passes (decide, then act) |

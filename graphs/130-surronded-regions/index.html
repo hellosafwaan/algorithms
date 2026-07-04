@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LC 130 — Surrounded Regions — Two Solutions Compared</title>
+<style>
+  :root {
+    --active: #7c6af7;
+    --path: #fbbf24;
+    --done: #34d399;
+    --dead: #f87171;
+    --unvisited: #1c2038;
+    --border: #2e3560;
+    --bg: #12152b;
+    --panel: #181c36;
+    --text: #e2e6f5;
+    --muted: #8b93b8;
+    --water: #0e1e3a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "SF Pro Text", "Segoe UI", sans-serif;
+    padding: 24px;
+  }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+
+  .mode-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .mode-tab {
+    background: var(--panel);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    flex: 1;
+    text-align: left;
+  }
+  .mode-tab .mt-title { font-weight: 700; color: var(--text); font-size: 14px; }
+  .mode-tab .mt-sub { font-size: 12px; margin-top: 2px; }
+  .mode-tab.active { border-color: var(--active); background: rgba(124,106,247,0.12); }
+  .mode-tab.active .mt-title { color: var(--active); }
+
+  .diff-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .diff-panel div span.k { color: var(--muted); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+  .diff-panel div span.v { color: var(--text); }
+  .diff-panel div span.v.hl { color: var(--path); font-weight: 600; }
+
+  .layout { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+  .main-col { flex: 1 1 480px; min-width: 420px; }
+  .side-col { flex: 0 0 420px; display: flex; flex-direction: column; gap: 14px; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .panel h2 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .controls { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+  select, button {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  button:hover:not(:disabled) { border-color: var(--active); }
+  button:disabled { opacity: 0.35; cursor: default; }
+  button.playing { border-color: var(--done); color: var(--done); }
+  .step-count { color: var(--muted); font-size: 13px; margin-left: auto; }
+
+  .grid-wrap { display: flex; justify-content: center; padding: 18px 10px; }
+  .grid { display: inline-grid; gap: 5px; }
+  .cell {
+    width: 48px; height: 48px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 600;
+    position: relative;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .cell .coord {
+    position: absolute; top: 2px; left: 4px;
+    font-size: 8px; font-weight: 400; color: var(--muted);
+  }
+  .cell.water     { background: var(--water); color: #3d5a8a; }
+  .cell.unvisited { background: var(--unvisited); color: var(--text); }
+  .cell.active    { background: var(--active); border-color: var(--active); color: #fff; }
+  .cell.pending   { background: var(--path); border-color: var(--path); color: #1c2038; }
+  .cell.safe      { background: var(--done); border-color: var(--done); color: #0c2b1e; }
+  .cell.hashed    { background: #163a2c; border-color: var(--done); color: var(--done); }
+  .cell.flipped   { background: var(--dead); border-color: var(--dead); color: #fff; }
+  .cell.scan::after {
+    content: ""; position: absolute; inset: -3px;
+    border: 2px dashed var(--active); border-radius: 10px;
+  }
+  .empty-msg { color: var(--muted); padding: 30px; text-align: center; font-size: 14px; }
+
+  .explain { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; min-height: 66px; }
+  .badge {
+    flex-shrink: 0;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+    padding: 4px 10px; border-radius: 20px;
+    background: var(--active); color: #fff;
+    white-space: nowrap;
+  }
+  .badge.b-out, .badge.b-water, .badge.b-seen { background: var(--dead); }
+  .badge.b-mark { background: var(--path); color: #1c2038; }
+  .badge.b-found, .badge.b-done, .badge.b-safe { background: var(--done); color: #0c2b1e; }
+  .badge.b-back { background: var(--unvisited); color: var(--muted); border: 1px solid var(--border); }
+  .badge.b-flip { background: var(--dead); }
+  .explain-text { font-size: 14px; line-height: 1.5; }
+
+  .code {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 11.5px; line-height: 1.55;
+    overflow-x: auto;
+  }
+  .code .line { padding: 0 8px; white-space: pre; border-radius: 4px; color: #aab2d5; }
+  .code .line.hl { background: rgba(124, 106, 247, 0.25); color: #fff; }
+
+  .stack { display: flex; flex-direction: column-reverse; gap: 5px; min-height: 34px; }
+  .frame {
+    font-family: "SF Mono", Menlo, monospace; font-size: 12px;
+    padding: 6px 10px; border-radius: 6px;
+    background: var(--unvisited); border: 1px solid var(--border);
+    color: var(--path);
+  }
+  .frame.top { border-color: var(--active); background: rgba(124, 106, 247, 0.18); color: #fff; }
+  .stack-empty { color: var(--muted); font-size: 12px; padding: 6px 2px; }
+
+  .vars { font-family: "SF Mono", Menlo, monospace; font-size: 12px; line-height: 1.9; }
+  .vars .k { color: var(--muted); }
+  .vars .v { color: var(--path); }
+  .vars .list-val { color: var(--done); word-break: break-all; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .swatch { width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--border); display: inline-block; }
+</style>
+</head>
+<body>
+
+<h1>LC 130 — Surrounded Regions</h1>
+<div class="subtitle">Two solutions, same problem — compare how each one walks the board</div>
+
+<div class="mode-tabs">
+  <div class="mode-tab active" id="tabA">
+    <div class="mt-title">Solution A — Yours</div>
+    <div class="mt-sub">Check every cell → collect region → decide after the fact</div>
+  </div>
+  <div class="mode-tab" id="tabB">
+    <div class="mt-title">Solution B — Border-first flood</div>
+    <div class="mt-sub">Flood inward from the border only → one final pass</div>
+  </div>
+</div>
+
+<div class="diff-panel" id="diffPanel"></div>
+
+<div class="controls">
+  <select id="testcase"></select>
+  <button id="prev">← Prev</button>
+  <button id="next">Next →</button>
+  <button id="play">▶ Play</button>
+  <span class="step-count" id="stepCount"></span>
+</div>
+
+<div class="layout">
+  <div class="main-col">
+    <div class="panel">
+      <div class="grid-wrap" id="gridWrap"></div>
+      <div class="explain">
+        <span class="badge" id="badge">START</span>
+        <span class="explain-text" id="explainText"></span>
+      </div>
+    </div>
+    <div class="panel" style="margin-top: 14px;">
+      <h2>Legend</h2>
+      <div class="legend">
+        <span><i class="swatch" style="background: var(--water)"></i> water — original 'X', never touched</span>
+        <span><i class="swatch" style="background: var(--unvisited)"></i> land 'O', not yet processed</span>
+        <span><i class="swatch" style="background: var(--active)"></i> current cell (top of call stack)</span>
+        <span><i class="swatch" style="background: var(--path)"></i> on the call stack right now</span>
+        <span><i class="swatch" style="background: #163a2c; border-color: var(--done);"></i> marked '#' (Solution B only) — board literally holds '#', not restored yet</span>
+        <span><i class="swatch" style="background: var(--done)"></i> confirmed safe — board shows 'O'</span>
+        <span><i class="swatch" style="background: var(--dead)"></i> confirmed surrounded — flipped to 'X'</span>
+        <span><i class="swatch" style="border: 2px dashed var(--active); background: none;"></i> outer-loop scan cursor</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="side-col">
+    <div class="panel">
+      <h2 id="codeTitle">Code — Solution A</h2>
+      <div class="code" id="codePanel"></div>
+    </div>
+    <div class="panel">
+      <h2 id="stackTitle">Call Stack</h2>
+      <div class="stack" id="stackPanel"></div>
+    </div>
+    <div class="panel">
+      <h2>Variables</h2>
+      <div class="vars" id="varsPanel"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ CODE DISPLAY ============
+const CODE_A = [
+  "function solve(board) {",
+  "    const visited = new Set();",
+  "    for (let i = 0; i < board.length; i++) {",
+  "        for (let j = 0; j < board[0].length; j++) {",
+  "            const currentRegion = explore(board, i, j, visited, []);",
+  "            let isSurroundedRegion = true;",
+  "            if (currentRegion) {",
+  "                for (const element of currentRegion) {",
+  "                    const [r, c] = element;",
+  "                    if (r === 0 || r === board.length-1 || c === 0 || c === board[0].length-1) {",
+  "                        isSurroundedRegion = false;",
+  "                        break;",
+  "                    }",
+  "                }",
+  "                if (isSurroundedRegion) {",
+  "                    for (const element of currentRegion) {",
+  "                        const [r, c] = element;",
+  "                        board[r][c] = 'X';",
+  "                    }",
+  "                }",
+  "            }",
+  "        }",
+  "    }",
+  "}",
+  "",
+  "function explore(board, i, j, visited, currentRegion) {",
+  "    const rowInbounds = 0 <= i && i < board.length;",
+  "    const colInbounds = 0 <= j && j < board[0].length;",
+  "    if (!rowInbounds || !colInbounds) return false;",
+  "    const pos = i + ',' + j;",
+  "    if (board[i][j] === 'X') return false;",
+  "    if (visited.has(pos)) return false;",
+  "    visited.add(pos);",
+  "    currentRegion.push([i, j]);",
+  "    explore(board, i - 1, j, visited, currentRegion);",
+  "    explore(board, i + 1, j, visited, currentRegion);",
+  "    explore(board, i, j - 1, visited, currentRegion);",
+  "    explore(board, i, j + 1, visited, currentRegion);",
+  "    return currentRegion;",
+  "}"
+];
+const LA = {
+  scan: 4, ifRegion: 6, borderCheckLoop: 7, borderIf: 9, breakLine: 11,
+  flipIf: 13, flipLoop: 15, flipLine: 17,
+  bounds: 27, water: 29, seen: 30, mark: 32, push: 32,
+  probes: [33, 34, 35, 36], ret: 37
+};
+
+const CODE_B = [
+  "function solve(board) {",
+  "    const rows = board.length;",
+  "    const cols = board[0].length;",
+  "",
+  "    for (let i = 0; i < rows; i++) {",
+  "        markSafe(board, i, 0);",
+  "        markSafe(board, i, cols - 1);",
+  "    }",
+  "    for (let j = 0; j < cols; j++) {",
+  "        markSafe(board, 0, j);",
+  "        markSafe(board, rows - 1, j);",
+  "    }",
+  "",
+  "    for (let i = 0; i < rows; i++) {",
+  "        for (let j = 0; j < cols; j++) {",
+  "            if (board[i][j] === 'O') board[i][j] = 'X';",
+  "            else if (board[i][j] === '#') board[i][j] = 'O';",
+  "        }",
+  "    }",
+  "}",
+  "",
+  "function markSafe(board, i, j) {",
+  "    const rowInbounds = 0 <= i && i < board.length;",
+  "    const colInbounds = 0 <= j && j < board[0].length;",
+  "    if (!rowInbounds || !colInbounds) return;",
+  "    if (board[i][j] !== 'O') return;",
+  "    board[i][j] = '#';",
+  "    markSafe(board, i - 1, j);",
+  "    markSafe(board, i + 1, j);",
+  "    markSafe(board, i, j - 1);",
+  "    markSafe(board, i, j + 1);",
+  "}"
+];
+const LB = {
+  rowLoopLeft: 5, rowLoopRight: 6, colLoopTop: 9, colLoopBottom: 10,
+  finalCheckO: 14, finalCheckHash: 15,
+  bounds: 23, notO: 24, mark: 25, probes: [26, 27, 28, 29]
+};
+
+// ============ TEST CASES ============
+const TEST_CASES = [
+  { name: "Classic — one region flips, one survives",
+    grid: [
+      ["X","X","X","X"],
+      ["X","O","O","X"],
+      ["X","X","O","X"],
+      ["X","O","X","X"]
+    ] },
+  { name: "Fully interior — fully captured",
+    grid: [
+      ["X","X","X","X","X"],
+      ["X","X","X","X","X"],
+      ["X","X","O","X","X"],
+      ["X","X","X","X","X"],
+      ["X","X","X","X","X"]
+    ] },
+  { name: "Touches bottom border — nothing captured",
+    grid: [
+      ["X","X","X","X"],
+      ["X","O","X","X"],
+      ["X","O","X","X"],
+      ["X","O","X","X"]
+    ] },
+  { name: "Single cell — O (trivially on border)", grid: [["O"]] },
+  { name: "Single cell — X", grid: [["X"]] },
+  { name: "All water — no O's at all", grid: [["X","X","X"],["X","X","X"],["X","X","X"]] }
+];
+
+// ============ SOLUTION A: build steps ============
+function buildStepsA(initialGrid) {
+  const rows = initialGrid.length;
+  const cols = rows > 0 ? initialGrid[0].length : 0;
+  const board = initialGrid.map(row => row.slice());
+  const cellState = {};
+  for (let i = 0; i < rows; i++)
+    for (let j = 0; j < cols; j++)
+      cellState[i + ',' + j] = initialGrid[i][j] === 'X' ? 'water' : 'unvisited';
+
+  const visited = new Set();
+  const stack = [];
+  const steps = [];
+
+  function snapBoardChar() {
+    const bc = {};
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) bc[r + ',' + c] = board[r][c];
+    return bc;
+  }
+
+  function snap(line, badge, badgeClass, text, opts = {}) {
+    steps.push({
+      line, badge, badgeClass, text,
+      cellState: { ...cellState },
+      boardChar: snapBoardChar(),
+      stack: [...stack],
+      scan: opts.scan || null,
+      flash: opts.flash || null,
+      vars: opts.vars || {}
+    });
+  }
+
+  snap(null, "START", "", "solve() scans every cell. explore() bounces off cells that are water, already visited, or out of bounds — but for a fresh 'O' it walks the whole connected region and hands back every coordinate in it.");
+
+  function explore(i, j, currentRegion) {
+    const pos = i + ',' + j;
+    stack.push(pos);
+    const rowIn = i >= 0 && i < rows;
+    const colIn = j >= 0 && j < cols;
+
+    if (!rowIn || !colIn) {
+      snap(LA.bounds, "OUT", "b-out", `explore(${i}, ${j}) — out of bounds. return false.`, { vars: { i, j } });
+      stack.pop();
+      return false;
+    }
+    snap(LA.bounds, "CHECK", "", `explore(${i}, ${j}) — in bounds, keep going.`, { vars: { i, j } });
+
+    if (board[i][j] === 'X') {
+      snap(LA.water, "WATER", "b-water", `board[${i}][${j}] === 'X' — this is water (or already-flipped from an earlier region). return false.`, { flash: pos, vars: { i, j } });
+      stack.pop();
+      return false;
+    }
+    snap(LA.water, "CHECK", "", `board[${i}][${j}] === 'O' — land. Keep going.`, { vars: { i, j } });
+
+    if (visited.has(pos)) {
+      snap(LA.seen, "SEEN", "b-seen", `pos = '${pos}' already in visited — this cell belongs to a region already fully walked. return false.`, { flash: pos, vars: { i, j } });
+      stack.pop();
+      return false;
+    }
+    snap(LA.seen, "CHECK", "", `pos = '${pos}' — not in visited. Fresh land!`, { vars: { i, j } });
+
+    visited.add(pos);
+    currentRegion.push([i, j]);
+    cellState[pos] = 'pending';
+    snap(LA.push, "MARK", "b-mark", `visited.add('${pos}'); currentRegion.push([${i}, ${j}]) — claim this cell for the current region, then probe all 4 directions.`, { vars: { i, j, pos: `'${pos}'` } });
+
+    const dirs = [
+      { dr: -1, dc: 0, name: "up ↑", line: LA.probes[0] },
+      { dr: 1, dc: 0, name: "down ↓", line: LA.probes[1] },
+      { dr: 0, dc: -1, name: "left ←", line: LA.probes[2] },
+      { dr: 0, dc: 1, name: "right →", line: LA.probes[3] }
+    ];
+    for (let k = 0; k < dirs.length; k++) {
+      const d = dirs[k];
+      const ni = i + d.dr, nj = j + d.dc;
+      snap(d.line, "CALL", "", `From (${i}, ${j}): call explore(${ni}, ${nj}) — probing ${d.name}.`, { vars: { i, j } });
+      const res = explore(ni, nj, currentRegion);
+      const next = k < dirs.length - 1 ? `Next: probe ${dirs[k + 1].name}.` : `That was the last direction — next line is return currentRegion.`;
+      snap(d.line, "BACK", "b-back", `Back in explore(${i}, ${j}) — the ${d.name} probe ${res ? "walked into new territory" : "returned false"}. ${next}`, { vars: { i, j } });
+    }
+
+    snap(LA.ret, "RETURN", "", `explore(${i}, ${j}) — all 4 directions done. return currentRegion (now holds ${currentRegion.length} cell${currentRegion.length === 1 ? "" : "s"}).`, { vars: { i, j } });
+    stack.pop();
+    return currentRegion;
+  }
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      const pos = i + ',' + j;
+      snap(LA.scan, "SCAN", "", `Outer loop at (${i}, ${j}): call explore(board, ${i}, ${j}, visited, []).`, { scan: pos, vars: { i, j } });
+
+      const currentRegion = explore(i, j, []);
+
+      snap(LA.ifRegion, "CHECK", "", currentRegion ? `currentRegion is truthy — a real region (${currentRegion.length} cells) was returned. Time to decide its fate.` : `currentRegion is false — that call bounced off immediately (water / seen / bounds). Nothing to decide. Move on.`, { scan: pos, vars: { i, j } });
+
+      if (currentRegion) {
+        let isSurroundedRegion = true;
+        for (const [r, c] of currentRegion) {
+          const p = r + ',' + c;
+          const isBorder = r === 0 || r === rows - 1 || c === 0 || c === cols - 1;
+          snap(LA.borderCheckLoop, "CHECK", "", `Checking (${r}, ${c}) in currentRegion — ${isBorder ? "this IS on the border!" : "not on the border."}`, { flash: isBorder ? p : null, vars: { r, c } });
+          if (isBorder) {
+            isSurroundedRegion = false;
+            snap(LA.breakLine, "BREAK", "", `isSurroundedRegion = false. break — no need to check the rest, one border cell is enough to save the whole region.`, { vars: { r, c } });
+            break;
+          }
+        }
+
+        if (isSurroundedRegion) {
+          for (const [r, c] of currentRegion) {
+            const p = r + ',' + c;
+            board[r][c] = 'X';
+            cellState[p] = 'flipped';
+            snap(LA.flipLine, "FLIP", "b-flip", `board[${r}][${c}] = 'X' — no border cell was found anywhere in this region, so it's fully surrounded. Captured.`, { flash: p, vars: { r, c } });
+          }
+        } else {
+          for (const [r, c] of currentRegion) cellState[r + ',' + c] = 'safe';
+          snap(LA.flipIf, "SAFE", "b-safe", `isSurroundedRegion is false — this region touches the border somewhere, so it survives untouched. All ${currentRegion.length} cells stay 'O'.`, { vars: {} });
+        }
+      }
+    }
+  }
+
+  snap(null, "DONE", "b-done", `Every cell scanned, every region decided. Board is final.`, {});
+  return steps;
+}
+
+// ============ SOLUTION B: build steps ============
+function buildStepsB(initialGrid) {
+  const rows = initialGrid.length;
+  const cols = rows > 0 ? initialGrid[0].length : 0;
+  const board = initialGrid.map(row => row.slice());
+  const cellState = {};
+  for (let i = 0; i < rows; i++)
+    for (let j = 0; j < cols; j++)
+      cellState[i + ',' + j] = initialGrid[i][j] === 'X' ? 'water' : 'unvisited';
+
+  const stack = [];
+  const steps = [];
+
+  function snapBoardChar() {
+    const bc = {};
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) bc[r + ',' + c] = board[r][c];
+    return bc;
+  }
+
+  function snap(line, badge, badgeClass, text, opts = {}) {
+    steps.push({
+      line, badge, badgeClass, text,
+      cellState: { ...cellState },
+      boardChar: snapBoardChar(),
+      stack: [...stack],
+      scan: opts.scan || null,
+      flash: opts.flash || null,
+      vars: opts.vars || {}
+    });
+  }
+
+  snap(null, "START", "", "solve() floods inward starting ONLY from border 'O' cells, marking everything reachable as '#' (safe). Anything never reached must be fully surrounded.");
+
+  function markSafe(i, j) {
+    const pos = i + ',' + j;
+    stack.push(pos);
+    const rowIn = i >= 0 && i < rows;
+    const colIn = j >= 0 && j < cols;
+
+    if (!rowIn || !colIn) {
+      snap(LB.bounds, "OUT", "b-out", `markSafe(${i}, ${j}) — out of bounds. return.`, { vars: { i, j } });
+      stack.pop();
+      return;
+    }
+    snap(LB.bounds, "CHECK", "", `markSafe(${i}, ${j}) — in bounds, keep going.`, { vars: { i, j } });
+
+    if (board[i][j] !== 'O') {
+      const reason = board[i][j] === 'X' ? "water" : "already marked safe ('#') by an earlier border walk";
+      snap(LB.notO, board[i][j] === 'X' ? "WATER" : "SEEN", "b-water", `board[${i}][${j}] !== 'O' — it's ${reason}. return.`, { flash: pos, vars: { i, j } });
+      stack.pop();
+      return;
+    }
+    snap(LB.notO, "CHECK", "", `board[${i}][${j}] === 'O' — fresh, reachable land. Mark it safe.`, { vars: { i, j } });
+
+    board[i][j] = '#';
+    cellState[pos] = 'hashed';
+    snap(LB.mark, "MARK", "b-mark", `board[${i}][${j}] = '#' — the board itself now literally contains '#' here (not 'O' anymore). This IS the visited-marker; there's no separate Set. Now probe all 4 directions.`, { vars: { i, j } });
+
+    const dirs = [
+      { dr: -1, dc: 0, name: "up ↑", line: LB.probes[0] },
+      { dr: 1, dc: 0, name: "down ↓", line: LB.probes[1] },
+      { dr: 0, dc: -1, name: "left ←", line: LB.probes[2] },
+      { dr: 0, dc: 1, name: "right →", line: LB.probes[3] }
+    ];
+    for (let k = 0; k < dirs.length; k++) {
+      const d = dirs[k];
+      const ni = i + d.dr, nj = j + d.dc;
+      snap(d.line, "CALL", "", `From (${i}, ${j}): call markSafe(${ni}, ${nj}) — probing ${d.name}.`, { vars: { i, j } });
+      markSafe(ni, nj);
+      const next = k < dirs.length - 1 ? `Next: probe ${dirs[k + 1].name}.` : `That was the last direction — this call returns (void).`;
+      snap(d.line, "BACK", "b-back", `Back in markSafe(${i}, ${j}). ${next}`, { vars: { i, j } });
+    }
+    stack.pop();
+  }
+
+  for (let i = 0; i < rows; i++) {
+    snap(LB.rowLoopLeft, "SCAN", "", `Border scan, left column: call markSafe(${i}, 0).`, { scan: i + ',0', vars: { i } });
+    markSafe(i, 0);
+    snap(LB.rowLoopRight, "SCAN", "", `Border scan, right column: call markSafe(${i}, ${cols - 1}).`, { scan: i + ',' + (cols - 1), vars: { i } });
+    markSafe(i, cols - 1);
+  }
+  for (let j = 0; j < cols; j++) {
+    snap(LB.colLoopTop, "SCAN", "", `Border scan, top row: call markSafe(0, ${j}).`, { scan: '0,' + j, vars: { j } });
+    markSafe(0, j);
+    snap(LB.colLoopBottom, "SCAN", "", `Border scan, bottom row: call markSafe(${rows - 1}, ${j}).`, { scan: (rows - 1) + ',' + j, vars: { j } });
+    markSafe(rows - 1, j);
+  }
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      const pos = i + ',' + j;
+      if (board[i][j] === 'O') {
+        board[i][j] = 'X';
+        cellState[pos] = 'flipped';
+        snap(LB.finalCheckO, "FLIP", "b-flip", `Final pass at (${i}, ${j}): still 'O' — never reached by the border flood. Surrounded. board[${i}][${j}] = 'X'.`, { scan: pos, flash: pos, vars: { i, j } });
+      } else if (board[i][j] === '#') {
+        board[i][j] = 'O';
+        cellState[pos] = 'safe';
+        snap(LB.finalCheckHash, "RESTORE", "b-safe", `Final pass at (${i}, ${j}): marked '#' — reached from the border. Restore board[${i}][${j}] = 'O'.`, { scan: pos, vars: { i, j } });
+      } else {
+        snap(LB.finalCheckO, "SKIP", "", `Final pass at (${i}, ${j}): still 'X' — was always water, never touched. Skip.`, { scan: pos, vars: { i, j } });
+      }
+    }
+  }
+
+  snap(null, "DONE", "b-done", `Border flood complete, final pass complete. Board is final.`, {});
+  return steps;
+}
+
+// ============ RENDERING ============
+const els = {
+  tabA: document.getElementById("tabA"),
+  tabB: document.getElementById("tabB"),
+  diffPanel: document.getElementById("diffPanel"),
+  testcase: document.getElementById("testcase"),
+  prev: document.getElementById("prev"),
+  next: document.getElementById("next"),
+  play: document.getElementById("play"),
+  stepCount: document.getElementById("stepCount"),
+  gridWrap: document.getElementById("gridWrap"),
+  badge: document.getElementById("badge"),
+  explainText: document.getElementById("explainText"),
+  codeTitle: document.getElementById("codeTitle"),
+  codePanel: document.getElementById("codePanel"),
+  stackTitle: document.getElementById("stackTitle"),
+  stackPanel: document.getElementById("stackPanel"),
+  varsPanel: document.getElementById("varsPanel")
+};
+
+let mode = "A";
+let grid = [], steps = [], idx = 0;
+let timer = null;
+
+TEST_CASES.forEach((tc, i) => {
+  const o = document.createElement("option");
+  o.value = i; o.textContent = tc.name;
+  els.testcase.appendChild(o);
+});
+
+function renderDiffPanel() {
+  els.diffPanel.innerHTML = `
+    <div><span class="k">Approach</span><span class="v ${mode==='A'?'hl':''}">${mode === 'A' ? "Scan every cell → walk whole region → decide after" : "Flood only from border O's → one final pass"}</span></div>
+    <div><span class="k">Visited tracking</span><span class="v">${mode === 'A' ? "Set of 'r,c' strings + per-region array" : "Board itself ('#' marker) — no Set, no array"}</span></div>
+    <div><span class="k">Extra space</span><span class="v ${mode==='A'?'':'hl'}">${mode === 'A' ? "O(m·n) — Set + arrays" : "O(1) auxiliary — reuses the board"}</span></div>
+    <div><span class="k">Time</span><span class="v">O(m·n) — same for both</span></div>
+  `;
+}
+
+function loadCase(i) {
+  stopPlay();
+  grid = TEST_CASES[i].grid;
+  steps = mode === "A" ? buildStepsA(grid) : buildStepsB(grid);
+  idx = 0;
+  render();
+}
+
+function switchMode(newMode) {
+  if (mode === newMode) return;
+  mode = newMode;
+  els.tabA.classList.toggle("active", mode === "A");
+  els.tabB.classList.toggle("active", mode === "B");
+  els.codeTitle.textContent = "Code — Solution " + mode;
+  els.stackTitle.textContent = mode === "A" ? "Call Stack — explore()" : "Call Stack — markSafe()";
+  renderDiffPanel();
+  loadCase(Number(els.testcase.value));
+}
+
+function render() {
+  const s = steps[idx];
+  const CODE = mode === "A" ? CODE_A : CODE_B;
+
+  els.gridWrap.innerHTML = "";
+  if (grid.length === 0) {
+    els.gridWrap.innerHTML = '<div class="empty-msg">(empty grid)</div>';
+  } else {
+    const g = document.createElement("div");
+    g.className = "grid";
+    g.style.gridTemplateColumns = `repeat(${grid[0].length}, 48px)`;
+    const top = s.stack[s.stack.length - 1];
+    for (let r = 0; r < grid.length; r += 1) {
+      for (let c = 0; c < grid[0].length; c += 1) {
+        const pos = r + "," + c;
+        const cell = document.createElement("div");
+        let cls;
+        if (s.flash === pos) cls = "flipped";
+        else if (pos === top) cls = "active";
+        else if (s.stack.includes(pos)) cls = "pending";
+        else cls = s.cellState[pos] || "unvisited";
+        const displayChar = s.boardChar[pos];
+        cell.className = "cell " + cls + (s.scan === pos ? " scan" : "");
+        cell.innerHTML = `<span class="coord">${r},${c}</span>${displayChar}`;
+        g.appendChild(cell);
+      }
+    }
+    els.gridWrap.appendChild(g);
+  }
+
+  els.badge.textContent = s.badge;
+  els.badge.className = "badge " + (s.badgeClass || "");
+  els.explainText.textContent = s.text;
+
+  els.codePanel.innerHTML = CODE.map((ln, i) =>
+    `<div class="line${i === s.line ? " hl" : ""}">${ln === "" ? " " : ln.replace(/</g, "&lt;")}</div>`
+  ).join("");
+
+  if (s.stack.length === 0) {
+    els.stackPanel.innerHTML = '<div class="stack-empty">(empty — back in solve())</div>';
+  } else {
+    els.stackPanel.innerHTML = s.stack.map((f, i) => {
+      const label = mode === "A" ? "explore" : "markSafe";
+      return `<div class="frame${i === s.stack.length - 1 ? " top" : ""}">${label}(${f.split(",").join(", ")})</div>`;
+    }).join("");
+  }
+
+  const v = s.vars;
+  els.varsPanel.innerHTML =
+    Object.entries(v).map(([k, val]) => `<div><span class="k">${k}</span> = <span class="v">${val}</span></div>`).join("") +
+    (Object.keys(v).length === 0 ? '<div class="stack-empty">(no locals at this step)</div>' : "");
+
+  els.stepCount.textContent = `Step ${idx + 1} / ${steps.length}`;
+  els.prev.disabled = idx === 0;
+  els.next.disabled = idx === steps.length - 1;
+}
+
+function stepTo(newIdx) {
+  idx = Math.max(0, Math.min(steps.length - 1, newIdx));
+  render();
+}
+function stopPlay() {
+  if (timer) { clearInterval(timer); timer = null; }
+  els.play.textContent = "▶ Play";
+  els.play.classList.remove("playing");
+}
+function togglePlay() {
+  if (timer) { stopPlay(); return; }
+  if (idx >= steps.length - 1) idx = 0;
+  els.play.textContent = "⏸ Pause";
+  els.play.classList.add("playing");
+  timer = setInterval(() => {
+    if (idx >= steps.length - 1) { stopPlay(); return; }
+    stepTo(idx + 1);
+  }, 400);
+}
+
+els.tabA.addEventListener("click", () => switchMode("A"));
+els.tabB.addEventListener("click", () => switchMode("B"));
+els.prev.addEventListener("click", () => { stopPlay(); stepTo(idx - 1); });
+els.next.addEventListener("click", () => { stopPlay(); stepTo(idx + 1); });
+els.play.addEventListener("click", togglePlay);
+els.testcase.addEventListener("change", e => loadCase(Number(e.target.value)));
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") { e.preventDefault(); stopPlay(); stepTo(idx - 1); }
+  if (e.key === "ArrowRight") { e.preventDefault(); stopPlay(); stepTo(idx + 1); }
+  if (e.key === " ") { e.preventDefault(); togglePlay(); }
+});
+
+renderDiffPanel();
+loadCase(0);
+</script>
+</body>
+</html>

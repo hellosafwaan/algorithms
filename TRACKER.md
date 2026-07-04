@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-05 (Number of Islands)
+Last updated: 2026-07-05 (Surrounded Regions)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-07-05 (Number of Islands)
 | Metric | Count |
 |--------|-------|
 | Total problems | 171 |
-| ✅ Complete | 47 |
+| ✅ Complete | 48 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 123 |
+| ⏳ Not started | 122 |
 
 ---
 
@@ -34,7 +34,7 @@ Last updated: 2026-07-05 (Number of Islands)
 | 10 | Tries | 3 | 0 | 2026-07-16 | ⏳ |
 | 11 | Heap / Priority Queue | 7 | 0 | 2026-07-20 | ⏳ |
 | 12 | Backtracking | 9 | 0 | 2026-07-25 | ⏳ |
-| 13 | Graphs | 13 | 1 | 2026-08-01 | 🔄 In Progress |
+| 13 | Graphs | 13 | 2 | 2026-08-01 | 🔄 In Progress |
 | 14 | Advanced Graphs | 6 | 0 | 2026-08-05 | ⏳ |
 | 15 | Greedy | 8 | 0 | 2026-08-09 | ⏳ |
 | 16 | Intervals | 6 | 0 | 2026-08-13 | ⏳ |
@@ -235,7 +235,7 @@ Last updated: 2026-07-05 (Number of Islands)
 | 2 | Clone Graph | Medium | [#133](https://leetcode.com/problems/clone-graph/) | DFS | ⏳ | — | — |
 | 3 | Max Area of Island | Medium | [#695](https://leetcode.com/problems/max-area-of-island/) | DFS | ⏳ | — | — |
 | 4 | Pacific Atlantic Water Flow | Medium | [#417](https://leetcode.com/problems/pacific-atlantic-water-flow/) | BFS / DFS | ⏳ | — | — |
-| 5 | Surrounded Regions | Medium | [#130](https://leetcode.com/problems/surrounded-regions/) | DFS | ⏳ | — | — |
+| 5 | Surrounded Regions | Medium | [#130](https://leetcode.com/problems/surrounded-regions/) | DFS — Region Decision (walk full region, decide after) | ✅ | 2026-07-05 | [→](graphs/130-surronded-regions/learnings.md) |
 | 6 | Rotting Oranges | Medium | [#994](https://leetcode.com/problems/rotting-oranges/) | BFS | ⏳ | — | — |
 | 7 | Walls and Gates | Medium | [#286](https://leetcode.com/problems/walls-and-gates/) | BFS | ⏳ | — | — |
 | 8 | Course Schedule | Medium | [#207](https://leetcode.com/problems/course-schedule/) | Topological Sort | ⏳ | — | — |

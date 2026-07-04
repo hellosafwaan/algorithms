@@ -171,7 +171,19 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 43. Pushes back on repeated re-explanation once a concept has landed
+- **Seen in:** LC 130 (2026-07-05)
+- **What happened:** After several rounds of Socratic questioning that successfully unlocked the region-vs-cell insight, was asked to verbally re-explain the full assembled plan one more time before coding. Responded with visible frustration ("I'll just quote it, bro. Why do you want me to keep on explaining this shit?").
+- **Read:** Not a comprehension problem — he'd already demonstrated every piece correctly across the preceding exchange. The ask was redundant from his position, and he correctly called it out.
+- **Fix:** Once he's independently produced every component of a plan (trigger condition, per-cell logic, decision step, action) across a conversation, don't ask for one more full verbal replay before he codes — that's re-litigating something already established. Let him go straight to code; catch remaining gaps via tracing the code itself instead.
+- **Status:** Respected in the moment (backed off immediately). Apply proactively next time: track whether all sub-questions of a plan have already been answered piecemeal before asking for a consolidated verbal walkthrough.
+
+---
+
 ## Breakthrough Moments
+
+### Fully self-derived algorithm via Socratic tracing — LC 130 (2026-07-05)
+Same day as the video-assisted LC 200 solve, but the opposite mode entirely. Arrived with a plan that had a real conceptual hole (thought per-cell edge position determined capture, not per-region connectivity) and, through targeted trace-based questions, independently derived: the region-not-cell insight, the "walk fully before deciding" ordering (and *why* — outer-loop `visited` correctness), the per-region coordinate array as the collection mechanism, the full border condition (`i===0 || i===rows-1 || j===0 || j===cols-1`, initially missed the far edges until traced on a concrete corner), and the two-pass check-then-flip structure. Coach gave exactly two direct fixes (bounds-check direction, `r`/`c` typo), both only after he explicitly asked. This is the clean contrast case for the LC 200 ownership question raised earlier the same day — proof the trace-based Socratic method produces full ownership when he engages with it, and a useful before/after for calibrating how much scaffolding he actually needs versus how much was given at LC 200.
 
 ### DFS vs BFS distinction landed via call-stack trace — LC 200 (2026-07-05)
 Started graphs with a genuine misconception (sequential recursive calls = BFS), stated it as confident pushback rather than a question — which is his best learning mode. One call-stack trace table later, he got the real distinction: the traversal order is determined by the data structure holding pending work (call stack = DFS, queue = BFS), not by how the code reads. This is the load-bearing fact for the whole graphs phase, and it arrived through his own wrong-but-articulated model being contradicted by a trace.
