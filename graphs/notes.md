@@ -42,3 +42,12 @@ Sometimes a per-cell boolean signal (LC 200's "did this flood a new island?") is
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 130 — Surrounded Regions | Region decision (walk full region, decide after) | Collect per-region array during the walk; decide safe/captured only once complete; two separate passes (decide, then act) |
+
+## In-degree / Out-degree Counting
+When a problem defines a special node by its relationship to *every other* node in a directed graph (not just local structure), track both directions separately — one counter per direction, built in a single pass over the edge list. A single adjacency list only captures one direction and will miss half of a two-sided condition (e.g., "trusts nobody AND is trusted by everyone").
+
+**Isolated-node trap:** looping over the keys of a map built from the edge list misses any node with zero edges at all. Loop over the known range (`1..n`) instead, defaulting missing map entries with `?? 0`.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 997 — Find the Town Judge | Two-sided directed-graph condition | Judge = out-degree 0 AND in-degree n-1. Track both counts in one pass; loop 1..n (not map keys) so isolated people are checked; default missing counts with `?? 0` |

@@ -315,6 +315,18 @@ function dp(n, cache = {}) {
 
 ---
 
+## Graph — In-degree / Out-degree Counting
+
+**Core idea:** When a special node is defined by its relationship to *every other* node in a directed graph, track in-degree and out-degree as two separate counters built in one pass over the edge list. A single adjacency list only captures one direction.
+
+**Isolated-node trap:** loop over the known range (`1..n`), not over the keys of a map built from the edges — a node with zero edges won't be a key in any map. Default missing counts with `?? 0`.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 997 — Find the Town Judge | Two-sided directed-graph condition | Judge = out-degree 0 AND in-degree n-1 (checking only one side is the classic trap); loop 1..n, not map keys, so isolated people get checked; `?? 0` default before comparing |
+
+---
+
 ## Bit Manipulation — Mask & Shift
 
 **Core idea:** `n & 1` reads the last bit (AND with 1 wipes every other bit). `n = n >>> 1` shifts the next bit into the last position. Loop while `n !== 0`.

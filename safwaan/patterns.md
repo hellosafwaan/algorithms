@@ -180,6 +180,27 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 44. Checks only one direction of a two-sided graph condition
+- **Seen in:** LC 997 — Find the Town Judge (2026-07-05)
+- **What happened:** Built an adjacency list of who-trusts-whom, then declared "the judge" to be anyone with zero *outgoing* trust (trusts nobody). Never checked the other half of the definition — that the judge must also be trusted by every other person (in-degree = n-1). Caught via a counterexample (`n=3, trust=[[1,3],[2,1]]`) where person 3 has out-degree 0 but is only trusted by 1 of the 2 other people, and the code wrongly returned them as judge.
+- **Root cause:** When a problem's definition has two independent conditions ("X and Y"), easy to fully solve for one and treat it as the whole answer, especially when the one solved condition is the more visually obvious one (a person appearing with an empty array "looks like" the answer).
+- **Fix:** When a definition involves a node's relationship to *all other* nodes (not just its own local structure), check whether you need both an out-degree AND an in-degree condition — building one directed structure only tells you one side.
+- **Status:** Corrected via trace, not self-caught initially — first response to the counterexample was to (correctly, but separately) flag a different real gap (isolated nodes missing from the graph object) rather than see the in-degree issue directly. Needed the trace fully walked before the missing condition became clear.
+
+### 45. `=` vs `===` inside a compound boolean condition
+- **Seen in:** LC 997 (2026-07-05)
+- **What happened:** Wrote `if(inDegreeCount[node] = n - 1 && outDegreeCount[node] === 0)` — single `=` assigns `n-1 && ...` to `inDegreeCount[node]` instead of comparing. Silent bug (no syntax error), would have produced wrong results without an obvious crash.
+- **How it was caught:** Asked to name the specific operator sitting between the two operands — spotted it immediately once isolated that way.
+- **Status:** One-question catch. Add to general debugging checklist: when a boolean condition silently misbehaves (no exceptions thrown, just wrong output), check every `=` in it first.
+
+### 46. `??` (nullish coalescing) recall gap under fatigue
+- **Seen in:** LC 997 (2026-07-05, ~3am)
+- **What happened:** Needed to default a missing map entry to `0` before comparing — the exact pattern he'd used before in Ransom Note (`?? 0`). Could not recall the operator even after being pointed directly at the prior problem where he used it ("You've done exactly this before... what did you use there?"). Answered "idk" twice.
+- **Context:** Late in a long three-problem session (LC 200, LC 130, LC 997 all same day), explicitly said "it's 3am, I wanna sleep." Likely fatigue-driven recall failure rather than a fresh gap — contrast with his normal toolkit-recall issues (Set/Map/Array.from at 3Sum), which showed up fresh, not after hours of prior work.
+- **Status:** Given directly per his request. Don't read this as a genuine new toolkit gap without a same-operator re-test in a fresh, non-fatigued session — LC 383 (Ransom Note) is on the revisit queue already and will show whether `?? 0` is actually solid.
+
+---
+
 ## Breakthrough Moments
 
 ### Fully self-derived algorithm via Socratic tracing — LC 130 (2026-07-05)

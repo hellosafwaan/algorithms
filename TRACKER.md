@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-05 (Surrounded Regions)
+Last updated: 2026-07-05 (Find the Town Judge)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-05 (Surrounded Regions)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 171 |
-| ✅ Complete | 48 |
+| Total problems | 172 |
+| ✅ Complete | 49 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 122 |
 
@@ -34,7 +34,7 @@ Last updated: 2026-07-05 (Surrounded Regions)
 | 10 | Tries | 3 | 0 | 2026-07-16 | ⏳ |
 | 11 | Heap / Priority Queue | 7 | 0 | 2026-07-20 | ⏳ |
 | 12 | Backtracking | 9 | 0 | 2026-07-25 | ⏳ |
-| 13 | Graphs | 13 | 2 | 2026-08-01 | 🔄 In Progress |
+| 13 | Graphs | 14 | 3 | 2026-08-01 | 🔄 In Progress |
 | 14 | Advanced Graphs | 6 | 0 | 2026-08-05 | ⏳ |
 | 15 | Greedy | 8 | 0 | 2026-08-09 | ⏳ |
 | 16 | Intervals | 6 | 0 | 2026-08-13 | ⏳ |
@@ -244,6 +244,7 @@ Last updated: 2026-07-05 (Surrounded Regions)
 | 11 | Number of Connected Components | Medium | [#323](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | Union Find | ⏳ | — | — |
 | 12 | Graph Valid Tree | Medium | [#261](https://leetcode.com/problems/graph-valid-tree/) | Union Find | ⏳ | — | — |
 | 13 | Word Ladder | Hard | [#127](https://leetcode.com/problems/word-ladder/) | BFS | ⏳ | — | — |
+| *(bonus)* | Find the Town Judge | Easy | [#997](https://leetcode.com/problems/find-the-town-judge/) | Graph — In-degree / Out-degree Counting | ✅ | 2026-07-05 | [→](graphs/997-find-the-town-judge/learnings.md) |
 
 ## Phase 14 — Advanced Graphs ⏳
 
