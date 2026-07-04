@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LC 200 — Number of Islands — Visualiser</title>
+<style>
+  :root {
+    --active: #7c6af7;
+    --path: #fbbf24;
+    --done: #34d399;
+    --dead: #f87171;
+    --unvisited: #1c2038;
+    --border: #2e3560;
+    --bg: #12152b;
+    --panel: #181c36;
+    --text: #e2e6f5;
+    --muted: #8b93b8;
+    --water: #0e1e3a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "SF Pro Text", "Segoe UI", sans-serif;
+    padding: 24px;
+  }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+
+  .layout { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+  .main-col { flex: 1 1 480px; min-width: 420px; }
+  .side-col { flex: 0 0 420px; display: flex; flex-direction: column; gap: 14px; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .panel h2 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  /* Controls */
+  .controls { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+  select, button {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  button:hover:not(:disabled) { border-color: var(--active); }
+  button:disabled { opacity: 0.35; cursor: default; }
+  button.playing { border-color: var(--done); color: var(--done); }
+  .step-count { color: var(--muted); font-size: 13px; margin-left: auto; }
+
+  /* Grid */
+  .grid-wrap { display: flex; justify-content: center; padding: 18px 10px; }
+  .grid { display: inline-grid; gap: 5px; }
+  .cell {
+    width: 52px; height: 52px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 600;
+    position: relative;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .cell .coord {
+    position: absolute; top: 2px; left: 4px;
+    font-size: 8px; font-weight: 400; color: var(--muted);
+  }
+  .cell.water   { background: var(--water); color: #3d5a8a; }
+  .cell.land    { background: var(--unvisited); color: var(--text); }
+  .cell.active  { background: var(--active); border-color: var(--active); color: #fff; }
+  .cell.path    { background: var(--path); border-color: var(--path); color: #1c2038; }
+  .cell.visited { background: var(--done); border-color: var(--done); color: #0c2b1e; }
+  .cell.flash   { background: var(--dead); border-color: var(--dead); color: #fff; }
+  .cell.scan::after {
+    content: ""; position: absolute; inset: -3px;
+    border: 2px dashed var(--active); border-radius: 10px;
+  }
+  .empty-msg { color: var(--muted); padding: 30px; text-align: center; font-size: 14px; }
+
+  /* Explanation */
+  .explain { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; min-height: 66px; }
+  .badge {
+    flex-shrink: 0;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+    padding: 4px 10px; border-radius: 20px;
+    background: var(--active); color: #fff;
+  }
+  .badge.b-out, .badge.b-water, .badge.b-seen { background: var(--dead); }
+  .badge.b-mark { background: var(--path); color: #1c2038; }
+  .badge.b-found, .badge.b-done { background: var(--done); color: #0c2b1e; }
+  .badge.b-back { background: var(--unvisited); color: var(--muted); border: 1px solid var(--border); }
+  .explain-text { font-size: 14px; line-height: 1.5; }
+
+  /* Island counter */
+  .count-box { display: flex; align-items: baseline; gap: 10px; margin-top: 12px; }
+  .count-num { font-size: 32px; font-weight: 700; color: var(--done); }
+  .count-label { color: var(--muted); font-size: 13px; }
+
+  /* Code */
+  .code {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 12px; line-height: 1.6;
+    overflow-x: auto;
+  }
+  .code .line { padding: 0 8px; white-space: pre; border-radius: 4px; color: #aab2d5; }
+  .code .line.hl { background: rgba(124, 106, 247, 0.25); color: #fff; }
+
+  /* Call stack */
+  .stack { display: flex; flex-direction: column-reverse; gap: 5px; min-height: 34px; }
+  .frame {
+    font-family: "SF Mono", Menlo, monospace; font-size: 12px;
+    padding: 6px 10px; border-radius: 6px;
+    background: var(--unvisited); border: 1px solid var(--border);
+    color: var(--path);
+  }
+  .frame.top { border-color: var(--active); background: rgba(124, 106, 247, 0.18); color: #fff; }
+  .stack-empty { color: var(--muted); font-size: 12px; padding: 6px 2px; }
+
+  /* Variables */
+  .vars { font-family: "SF Mono", Menlo, monospace; font-size: 12px; line-height: 1.9; }
+  .vars .k { color: var(--muted); }
+  .vars .v { color: var(--path); }
+  .vars .set-val { color: var(--done); word-break: break-all; }
+
+  /* Legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .swatch { width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--border); display: inline-block; }
+</style>
+</head>
+<body>
+
+<h1>LC 200 — Number of Islands</h1>
+<div class="subtitle">Graph DFS on a grid (flood fill) — stepping through your exact solution, line by line</div>
+
+<div class="controls">
+  <select id="testcase"></select>
+  <button id="prev">← Prev</button>
+  <button id="next">Next →</button>
+  <button id="play">▶ Play</button>
+  <span class="step-count" id="stepCount"></span>
+</div>
+
+<div class="layout">
+  <div class="main-col">
+    <div class="panel">
+      <div class="grid-wrap" id="gridWrap"></div>
+      <div class="explain">
+        <span class="badge" id="badge">START</span>
+        <span class="explain-text" id="explainText"></span>
+      </div>
+      <div class="count-box">
+        <span class="count-num" id="countNum">0</span>
+        <span class="count-label">islands counted</span>
+      </div>
+    </div>
+    <div class="panel" style="margin-top: 14px;">
+      <h2>Legend</h2>
+      <div class="legend">
+        <span><i class="swatch" style="background: var(--water)"></i> water ('0')</span>
+        <span><i class="swatch" style="background: var(--unvisited)"></i> land, not yet visited</span>
+        <span><i class="swatch" style="background: var(--active)"></i> current cell (top of stack)</span>
+        <span><i class="swatch" style="background: var(--path)"></i> on the DFS path (in stack)</span>
+        <span><i class="swatch" style="background: var(--done)"></i> visited — flooded</span>
+        <span><i class="swatch" style="background: var(--dead)"></i> rejected (water / seen / bounds)</span>
+        <span><i class="swatch" style="border: 2px dashed var(--active); background: none;"></i> outer-loop scan</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="side-col">
+    <div class="panel">
+      <h2>Code</h2>
+      <div class="code" id="codePanel"></div>
+    </div>
+    <div class="panel">
+      <h2>Call Stack — explore()</h2>
+      <div class="stack" id="stackPanel"></div>
+    </div>
+    <div class="panel">
+      <h2>Variables (current call)</h2>
+      <div class="vars" id="varsPanel"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- Your exact solution, displayed line by line ----
+const CODE_LINES = [
+  "const numIslands = (grid) => {",
+  "  const visited = new Set()",
+  "  let count = 0;",
+  "  for(let r=0; r < grid.length; r += 1) {",
+  "    for(let c = 0; c < grid[0].length; c += 1) {",
+  "      if(explore(grid, r, c, visited) === true) {",
+  "        count++",
+  "      }",
+  "    }",
+  "  }",
+  "  return count;",
+  "};",
+  "",
+  "function explore(grid, r, c, visited) {",
+  "  const rowInbounds = 0 <= r && r < grid.length;",
+  "  const columnInbounds = 0 <= c && c < grid[0].length;",
+  "  if(!rowInbounds || !columnInbounds) return false;",
+  "  if(grid[r][c] === '0') return false;",
+  "",
+  "  const pos = r + ',' + c;",
+  "  if(visited.has(pos)) return false;",
+  "  visited.add(pos);",
+  "  explore(grid, r -1, c, visited);",
+  "  explore(grid, r + 1, c, visited);",
+  "  explore(grid, r, c - 1, visited);",
+  "  explore(grid, r, c + 1, visited);",
+  "  return true;",
+  "}"
+];
+// line indexes into CODE_LINES (0-based)
+const L = {
+  outerCall: 5, countInc: 6, ret: 10,
+  bounds: 16, water: 17, pos: 19, seen: 20, mark: 21,
+  probes: [22, 23, 24, 25], retTrue: 26
+};
+const DIRS = [
+  { dr: -1, dc: 0, name: "up ↑",    line: L.probes[0] },
+  { dr: 1,  dc: 0, name: "down ↓",  line: L.probes[1] },
+  { dr: 0,  dc: -1, name: "left ←", line: L.probes[2] },
+  { dr: 0,  dc: 1,  name: "right →", line: L.probes[3] }
+];
+
+const TEST_CASES = [
+  {
+    name: "LC example — 3 islands",
+    grid: [
+      ["1","1","0","0","0"],
+      ["1","1","0","0","0"],
+      ["0","0","1","0","0"],
+      ["0","0","0","1","1"]
+    ]
+  },
+  {
+    name: "One snake island (edge shape)",
+    grid: [
+      ["1","0","1"],
+      ["1","0","1"],
+      ["1","1","1"]
+    ]
+  },
+  { name: "All water — no match", grid: [["0","0","0"],["0","0","0"],["0","0","0"]] },
+  { name: "Single cell — land", grid: [["1"]] },
+  { name: "Single cell — water", grid: [["0"]] },
+  { name: "Empty grid", grid: [] }
+];
+
+// ---- Step generation ----
+// Runs your algorithm exactly, snapshotting one step per executed line,
+// like a debugger: call → guards → mark → 4 probes (with explicit
+// "back in the caller" steps after each return) → return.
+function buildSteps(grid) {
+  const steps = [];
+  const visited = new Set();
+  const stack = []; // frames: "r,c"
+  let count = 0;
+
+  function snap(line, badge, badgeClass, text, opts = {}) {
+    steps.push({
+      line, badge, badgeClass, text,
+      visited: new Set(visited),
+      stack: [...stack],
+      count,
+      scan: opts.scan || null,   // "r,c" outer-loop cursor
+      flash: opts.flash || null, // "r,c" rejected cell
+      vars: opts.vars || {}
+    });
+  }
+
+  snap(null, "START", "", "numIslands scans every cell with the outer double loop, handing each one to explore(). Step forward (or press Play) to follow the execution line by line.", {});
+
+  // returns { ok, reason } so the caller step can say WHY it came back
+  function explore(r, c) {
+    const pos = r + "," + c;
+    const rowIn = 0 <= r && r < grid.length;
+    const colIn = 0 <= c && c < grid[0].length;
+    stack.push(pos);
+
+    // line 17: bounds guard (uses rowInbounds/columnInbounds from lines 15-16)
+    if (!rowIn || !colIn) {
+      snap(L.bounds, "OUT", "b-out",
+        `explore(${r}, ${c}): rowInbounds = ${rowIn}, columnInbounds = ${colIn} → off the grid. return false.`,
+        { vars: { r, c, rowInbounds: rowIn, columnInbounds: colIn } });
+      stack.pop();
+      return { ok: false, reason: "out of bounds" };
+    }
+    snap(L.bounds, "CHECK", "",
+      `explore(${r}, ${c}): rowInbounds = true, columnInbounds = true → in bounds, keep going.`,
+      { vars: { r, c, rowInbounds: true, columnInbounds: true } });
+
+    // line 18: water guard
+    if (grid[r][c] === "0") {
+      snap(L.water, "WATER", "b-water",
+        `grid[${r}][${c}] === '0' → water. return false. The flood stops here.`,
+        { flash: pos, vars: { r, c, [`grid[${r}][${c}]`]: "'0'" } });
+      stack.pop();
+      return { ok: false, reason: "water" };
+    }
+    snap(L.water, "CHECK", "",
+      `grid[${r}][${c}] === '1' → land, not water. Keep going.`,
+      { vars: { r, c, [`grid[${r}][${c}]`]: "'1'" } });
+
+    // lines 20-21: visited guard
+    if (visited.has(pos)) {
+      snap(L.seen, "SEEN", "b-seen",
+        `pos = '${pos}' is already in visited → this land was flooded earlier. return false. (Without this check, neighbours would call each other back and forth forever.)`,
+        { flash: pos, vars: { r, c, pos: `'${pos}'` } });
+      stack.pop();
+      return { ok: false, reason: "already visited" };
+    }
+    snap(L.seen, "CHECK", "",
+      `pos = '${pos}' — not in visited yet. This is fresh land!`,
+      { vars: { r, c, pos: `'${pos}'` } });
+
+    // line 22: mark visited
+    visited.add(pos);
+    snap(L.mark, "MARK", "b-mark",
+      `visited.add('${pos}') — claim this cell BEFORE recursing, so no neighbour can process it again. Now probe all 4 directions in order: up, down, left, right.`,
+      { vars: { r, c, pos: `'${pos}'` } });
+
+    // lines 23-26: the four probes
+    for (let i = 0; i < DIRS.length; i += 1) {
+      const d = DIRS[i];
+      const nr = r + d.dr, nc = c + d.dc;
+
+      snap(d.line, "CALL", "",
+        `From (${r}, ${c}): call explore(${nr}, ${nc}) — probing ${d.name}. A new frame goes on the stack.`,
+        { vars: { r, c } });
+
+      const res = explore(nr, nc);
+
+      const next = i < DIRS.length - 1
+        ? `Next line: probe ${DIRS[i + 1].name}.`
+        : "That was the last direction — next line is return true.";
+      snap(d.line, "BACK", "b-back",
+        `Back in explore(${r}, ${c}) — the ${d.name} probe ${res.ok ? "returned true (it flooded new land)" : `returned false (${res.reason})`}. ${next}`,
+        { vars: { r, c } });
+    }
+
+    // line 27: return true
+    snap(L.retTrue, "RETURN", "",
+      `explore(${r}, ${c}): all 4 directions done. return true — this call flooded new land. Frame pops off the stack.`,
+      { vars: { r, c } });
+    stack.pop();
+    return { ok: true, reason: "flooded new land" };
+  }
+
+  for (let r = 0; r < grid.length; r += 1) {
+    for (let c = 0; c < grid[0].length; c += 1) {
+      snap(L.outerCall, "SCAN", "",
+        `Outer loop at (${r}, ${c}): call explore(grid, ${r}, ${c}, visited) and check if it returns true.`,
+        { scan: r + "," + c, vars: { r, c } });
+
+      const res = explore(r, c);
+
+      if (res.ok) {
+        count += 1;
+        snap(L.countInc, "ISLAND +1", "b-found",
+          `explore(${r}, ${c}) === true → a brand-new island was discovered and fully flooded from this cell. count++ → ${count}.`,
+          { scan: r + "," + c, vars: { r, c } });
+      } else {
+        snap(L.outerCall, "NO COUNT", "b-back",
+          `explore(${r}, ${c}) returned false (${res.reason}) → the if fails, count stays at ${count}. Loop moves to the next cell.`,
+          { scan: r + "," + c, vars: { r, c } });
+      }
+    }
+  }
+
+  snap(L.ret, "DONE", "b-done",
+    `Scan complete — every cell was offered to explore(). Exactly ${count} call${count === 1 ? "" : "s"} returned true, one per island. return ${count}.`, {});
+  return steps;
+}
+
+// ---- Rendering ----
+const els = {
+  testcase: document.getElementById("testcase"),
+  prev: document.getElementById("prev"),
+  next: document.getElementById("next"),
+  play: document.getElementById("play"),
+  stepCount: document.getElementById("stepCount"),
+  gridWrap: document.getElementById("gridWrap"),
+  badge: document.getElementById("badge"),
+  explainText: document.getElementById("explainText"),
+  countNum: document.getElementById("countNum"),
+  codePanel: document.getElementById("codePanel"),
+  stackPanel: document.getElementById("stackPanel"),
+  varsPanel: document.getElementById("varsPanel")
+};
+
+let grid = [], steps = [], idx = 0;
+let timer = null;
+
+TEST_CASES.forEach((tc, i) => {
+  const o = document.createElement("option");
+  o.value = i; o.textContent = tc.name;
+  els.testcase.appendChild(o);
+});
+
+function loadCase(i) {
+  stopPlay();
+  grid = TEST_CASES[i].grid;
+  steps = buildSteps(grid);
+  idx = 0;
+  render();
+}
+
+function render() {
+  const s = steps[idx];
+
+  // grid
+  els.gridWrap.innerHTML = "";
+  if (grid.length === 0) {
+    els.gridWrap.innerHTML = '<div class="empty-msg">(empty grid — the outer loop never runs)</div>';
+  } else {
+    const g = document.createElement("div");
+    g.className = "grid";
+    g.style.gridTemplateColumns = `repeat(${grid[0].length}, 52px)`;
+    const top = s.stack[s.stack.length - 1];
+    for (let r = 0; r < grid.length; r += 1) {
+      for (let c = 0; c < grid[0].length; c += 1) {
+        const pos = r + "," + c;
+        const cell = document.createElement("div");
+        let cls;
+        if (s.flash === pos) cls = "flash";
+        else if (pos === top) cls = "active";
+        else if (s.stack.includes(pos)) cls = "path";
+        else if (s.visited.has(pos)) cls = "visited";
+        else if (grid[r][c] === "0") cls = "water";
+        else cls = "land";
+        cell.className = "cell " + cls + (s.scan === pos ? " scan" : "");
+        cell.innerHTML = `<span class="coord">${r},${c}</span>${grid[r][c]}`;
+        g.appendChild(cell);
+      }
+    }
+    els.gridWrap.appendChild(g);
+  }
+
+  // explanation
+  els.badge.textContent = s.badge;
+  els.badge.className = "badge " + (s.badgeClass || "");
+  els.explainText.textContent = s.text;
+  els.countNum.textContent = s.count;
+
+  // code panel
+  els.codePanel.innerHTML = CODE_LINES.map((ln, i) =>
+    `<div class="line${i === s.line ? " hl" : ""}">${ln === "" ? " " : ln.replace(/</g, "&lt;")}</div>`
+  ).join("");
+
+  // call stack (rendered bottom-up via flex-direction: column-reverse)
+  if (s.stack.length === 0) {
+    els.stackPanel.innerHTML = '<div class="stack-empty">(empty — back in numIslands)</div>';
+  } else {
+    els.stackPanel.innerHTML = s.stack.map((f, i) =>
+      `<div class="frame${i === s.stack.length - 1 ? " top" : ""}">explore(${f.split(",").join(", ")})</div>`
+    ).join("");
+  }
+
+  // variables
+  const v = s.vars;
+  const setPreview = [...s.visited].map(p => `'${p}'`).join(", ");
+  els.varsPanel.innerHTML =
+    Object.entries(v).map(([k, val]) => `<div><span class="k">${k}</span> = <span class="v">${val}</span></div>`).join("") +
+    `<div><span class="k">count</span> = <span class="v">${s.count}</span></div>` +
+    `<div><span class="k">visited</span> (${s.visited.size}) = <span class="set-val">{ ${setPreview} }</span></div>`;
+
+  // controls
+  els.stepCount.textContent = `Step ${idx + 1} / ${steps.length}`;
+  els.prev.disabled = idx === 0;
+  els.next.disabled = idx === steps.length - 1;
+}
+
+function stepTo(newIdx) {
+  idx = Math.max(0, Math.min(steps.length - 1, newIdx));
+  render();
+}
+function stopPlay() {
+  if (timer) { clearInterval(timer); timer = null; }
+  els.play.textContent = "▶ Play";
+  els.play.classList.remove("playing");
+}
+function togglePlay() {
+  if (timer) { stopPlay(); return; }
+  if (idx >= steps.length - 1) idx = 0;
+  els.play.textContent = "⏸ Pause";
+  els.play.classList.add("playing");
+  timer = setInterval(() => {
+    if (idx >= steps.length - 1) { stopPlay(); return; }
+    stepTo(idx + 1);
+  }, 450);
+}
+
+els.prev.addEventListener("click", () => { stopPlay(); stepTo(idx - 1); });
+els.next.addEventListener("click", () => { stopPlay(); stepTo(idx + 1); });
+els.play.addEventListener("click", togglePlay);
+els.testcase.addEventListener("change", e => loadCase(Number(e.target.value)));
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") { e.preventDefault(); stopPlay(); stepTo(idx - 1); }
+  if (e.key === "ArrowRight") { e.preventDefault(); stopPlay(); stepTo(idx + 1); }
+  if (e.key === " ") { e.preventDefault(); togglePlay(); }
+});
+
+loadCase(0);
+</script>
+</body>
+</html>

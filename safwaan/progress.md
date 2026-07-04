@@ -1,7 +1,7 @@
 # Safwaan — Progress
 
 ## Current Phase
-**Phase 9 — Trees (started 2026-06-27, prioritized over Phase 3–8 to finish by weekend)**
+**Phase 13 — Graphs (started 2026-07-05 with LC 200; graph fundamentals self-studied beforehand). Phase 9 — Trees still open (5/15 curriculum problems done, next: LC 572).**
 Phase 2 complete as of 2026-06-09 (LC #42 done)
 Returning from ~1 week break (SQL + interview prep). Interview was 2026-06-19.
 ⚠️ LC 42 two-pointer redo still deferred
@@ -13,6 +13,7 @@ For full curriculum and problem status → [TRACKER.md](../TRACKER.md)
 ---
 
 ## Recently Completed
+- Number of Islands (LC #200) — 2026-07-05 — Phase 13 (first graphs problem), Graph DFS — Flood Fill on grid + visited Set. **Video-assisted solve** (learned approach from a video, flagged this himself — honest). Declined to explain solution in own words at wrap-up → recognized, not yet owned; short-fuse cold redo scheduled 2026-07-19. Key conceptual moment: believed 4 sequential recursive calls = BFS ("visiting all surrounding nodes"); corrected via call-stack trace table — first call runs to completion before second starts. Stack → DFS, queue → BFS.
 - Binary Tree Preorder/Inorder/Postorder Traversal (LC #144, #94, #145) — 2026-07-01 — Phase 9 bonus (self-solved, brought pre-written solutions to session for wrap-up), DFS — Traversal Order, all three 100th percentile runtime, clean solves
 - Minimum Depth of Binary Tree (LC #111) — 2026-06-29 — Phase 9 bonus, DFS null-child-aware minimum, 43rd percentile, self-diagnosed the Math.min null-child bug
 - Balanced Binary Tree (LC #110) — 2026-06-29 — Phase 9, DFS + sentinel (-1) for early exit, 83rd percentile, needed sentinel concept explained; independently attempted closure variant after

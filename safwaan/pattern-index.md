@@ -296,6 +296,24 @@ function dp(n, cache = {}) {
 
 ---
 
+## Graph DFS — Flood Fill (Grid)
+
+**Core idea:** Treat the grid as a graph (cell = node, 4-directional neighbours = edges). Outer double loop offers every cell to a recursive helper; the helper guards itself at the top (bounds → invalid → visited), marks visited *before* recursing, then floods all 4 directions. It returns a signal ("did I discover new territory?") — exactly one cell per connected component can return true, so the outer loop counts components by counting true returns.
+
+**When to reach for it:** Counting/measuring islands, regions, connected areas in a grid; any "flood everything reachable from here" requirement.
+
+**Key facts:**
+- Stack (recursion) → DFS; queue → BFS. Sequential recursive calls do NOT execute as a layer — the first runs to completion before the second starts.
+- Visited Set keys must be primitives (`'r,c'` strings) — arrays fail on reference equality.
+- Mark visited before recursing or neighbours re-enter each other forever.
+- O(m·n) time despite the outer loop calling the helper on every cell — visited makes repeat calls O(1) bounces.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 200 — Number of Islands | Count components (boolean signal) | One `true` per island — the first cell the scan reaches is the only flood origin; all later cells of that island fail the visited check |
+
+---
+
 ## Bit Manipulation — Mask & Shift
 
 **Core idea:** `n & 1` reads the last bit (AND with 1 wipes every other bit). `n = n >>> 1` shifts the next bit into the last position. Loop while `n !== 0`.

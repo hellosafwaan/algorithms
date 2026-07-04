@@ -31,3 +31,8 @@ Every improvement that was applied to the system — what changed, why, and when
 **Triggered by:** Safwaan request for external accountability (laid off, needs interview-ready fast)
 **What changed:** Daily morning agent (9am IST), EOD report agent (10pm IST), daily-log.md at wrap-up, phase deadlines in TRACKER.md
 **Impact:** Daily push notifications on pace, automatic tracking of progress
+
+### 2026-07-05 — Visualiser step engines are now debugger-style line-by-line
+**Triggered by:** Safwaan feedback on the LC 200 visualiser — steps skipped lines and jumped back up the recursion without explanation
+**What changed:** LC 200 visualiser rebuilt (explicit CALL/BACK steps for every recursive call and return, every guard check shown pass or fail, Play button for auto-stepping). CLAUDE.md Visualiser System section updated to make this the standard for all future visualisers.
+**Impact:** Step sequences can be read literally like a debugger — no inferred control flow, which is where the confusion came from

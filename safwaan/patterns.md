@@ -155,7 +155,26 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 41. Reads sequential recursive calls as a BFS layer
+- **Seen in:** LC 200 (2026-07-05)
+- **What happened:** Looking at four recursive calls written in a row (`explore(up); explore(down); explore(left); explore(right)`), concluded the algorithm was breadth-first — "we chose a node and then we chose all the surrounding nodes." Pushed back confidently on it being called DFS.
+- **Root cause:** Reading code textually rather than tracing execution. The four calls *look* like visiting a layer, but the first call runs to completion (floods everything reachable) before the second one starts.
+- **How it was caught:** Call-stack trace table — showed the stack 4 deep at `explore(0,1)` (a neighbour-of-a-neighbour-of-a-neighbour) while `explore(0,0)`'s left/right probes hadn't run yet. Clicked immediately: "This is actually Depth First Search. I got it."
+- **Fix:** Stack → depth-first. Queue → breadth-first. Sequential calls ≠ a layer; recursion depth hides inside the first call.
+- **Status:** Corrected via trace (consistent with his trace-tables-over-verbal-explanation preference). Probe cold at LC 102 (Level Order Traversal, real BFS) and LC 695 (Max Area of Island, same DFS shape): "which one is this, and what data structure tells you?"
+
+### 42. Video-assisted solve, declined own-words explanation — recognition vs ownership
+- **Seen in:** LC 200 (2026-07-05)
+- **What happened:** Solved via a video walkthrough (flagged this honestly, unprompted — good). At wrap-up, declined to explain the solution in his own words ("you can just explain it to yourself"). Counting-mechanism answer was directionally right but imprecise until sharpened.
+- **Why it matters:** First time he's skipped the own-words explanation. Video → working code → "felt easy" is the classic recognition trap; the explanation step is the ownership test, and it was skipped exactly on the problem where it mattered most.
+- **Status:** Cold redo scheduled on a short fuse (2026-07-19, ~2 weeks). At the redo, require the verbal walkthrough *before* coding. Watch whether video-solves recur and whether the explanation-skip becomes a habit on them.
+
+---
+
 ## Breakthrough Moments
+
+### DFS vs BFS distinction landed via call-stack trace — LC 200 (2026-07-05)
+Started graphs with a genuine misconception (sequential recursive calls = BFS), stated it as confident pushback rather than a question — which is his best learning mode. One call-stack trace table later, he got the real distinction: the traversal order is determined by the data structure holding pending work (call stack = DFS, queue = BFS), not by how the code reads. This is the load-bearing fact for the whole graphs phase, and it arrived through his own wrong-but-articulated model being contradicted by a trace.
 
 ### Clean transfer of DFS combine pattern to traversal order — LC 144/94/145 (2026-07-01)
 Solved all three traversal problems (preorder, inorder, postorder) independently outside a coaching session, all 100th percentile runtime, no reported mistakes. All three use the identical recursive shape (`if root===null return []`, recurse both children, combine) — the only change across all three is *where* `root.val` sits in the returned array. This confirms the DFS "ask subtrees, combine, return up" pattern (established at LC 104/100/226) has generalized cleanly to a new output shape (ordering, not accumulation). Self-directed — no hints needed, brought working solutions to session for logging only.

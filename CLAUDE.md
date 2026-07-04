@@ -69,7 +69,8 @@ When Safwaan asks for a visualiser, build one at `[topic]/[problem-folder]/visua
 **Stack:** vanilla HTML/CSS/JS — no dependencies, opens directly in browser.
 
 **Always included across all patterns:**
-- Step-by-step with Prev/Next buttons + `←` `→` arrow key support
+- Step-by-step with Prev/Next buttons + `←` `→` arrow key support, plus a Play/Pause auto-step button (spacebar) for long runs
+- **Debugger-faithful stepping (Safwaan feedback, 2026-07-05):** the step engine must follow real execution line by line — every guard check gets a step (pass or fail), every recursive/function call gets an explicit CALL step at the call line, and every return gets a BACK step in the caller stating what returned and which line runs next. Never snapshot only "interesting" lines: skipped lines and silent jumps back up the call stack read as wrongness to him.
 - Code panel with active line highlighted
 - Step explanation box (badge + text describing what just happened)
 - Multiple test cases in a dropdown — always cover: empty input, single element, match found, no match, skewed/edge structure
@@ -94,6 +95,7 @@ When Safwaan asks for a visualiser, build one at `[topic]/[problem-folder]/visua
 | Stack / Monotonic Stack | Array row + stack panel that pushes/pops visually | Variables panel |
 | Hash Map / Hash Set | Array row + map/set panel showing entries being added/checked | Variables panel |
 | BFS | Queue panel + graph/tree canvas, nodes color-coded by visited state | Queue contents panel |
+| Grid DFS / Flood Fill | Grid of cells color-coded by state (water / unvisited land / active / on-stack path / flooded / rejected flash), dashed outline for outer-loop scan cursor | Call stack panel + variables panel |
 
 *This system is iterated as new patterns are encountered.*
 
@@ -130,6 +132,8 @@ Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/Ty
 - **Threads guard logic through recursion instead of using a top-level guard** — when handling a special case (e.g., negative n), tries to handle it at every recursive level rather than one clean check at the top. Prompt: "can you handle this once at the top and keep the rest clean?"
 - **Reaches for `if/else` instead of `Math.max()` / `Math.min()`** — when the logic is "keep the larger/smaller of two values," writes a comparison block instead of using the built-in. Self-identified this as a recurring habit (LC 121, 2026-06-13). Prompt: "is there a built-in that does exactly this?"
 - **Abstract-to-code bridge can be thin on new patterns** — understands the concept but can't start the loop. A concrete trace of what the variables look like after each iteration is often what unlocks the code. When stuck coding an understood concept, ask: "what are your two variables after the first iteration?"
+- **Reads sequential recursive calls as a BFS layer** — at LC 200 (2026-07-05), read four recursive calls written in a row as "visiting all surrounding nodes = breadth search" and pushed back confidently on it being DFS. Reads code textually rather than tracing execution. A call-stack trace table (stack 4 deep while sibling calls sat frozen) resolved it instantly. Rule that landed: stack → DFS, queue → BFS — the data structure holding pending work defines the traversal. Probe cold on the next traversal problem.
+- **Video-assisted solves need an ownership gate** — at LC 200 he solved via a video walkthrough (flagged it honestly himself — reinforce that honesty), said it "felt easy," then declined to explain the solution in his own words at wrap-up. Recognition, not ownership. For any video-assisted solve: schedule the cold redo on a ~2-week fuse instead of 3, and at the redo require the verbal walkthrough BEFORE he writes code.
 - **Verbal explanations of bit operators (shift, OR) don't land — concrete trace tables do.** At Reverse Bits (LC 190), got stuck on shift-then-OR vs OR-then-shift ordering; a verbal explanation didn't resolve it, but an iteration-by-iteration trace table (showing `lastBit`, `result` after each op, `n` after) for both the wrong and right order made it click immediately. He explicitly confirmed this approach and asked for more of it ("reason like this, remember to do this more often", 2026-06-16). Default to trace tables over verbal explanation whenever he's stuck on operator semantics or ordering, not just index math.
 
 ## Core Rules

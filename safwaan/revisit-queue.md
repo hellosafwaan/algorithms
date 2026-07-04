@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 200 — Number of Islands | Graph DFS — Flood Fill (grid) | 2026-07-05 | 2026-07-19 ⚡ short fuse — video-assisted solve, own-words explanation skipped; require verbal walkthrough before coding | ⏳ |
 | LC 145 — Binary Tree Postorder Traversal | DFS — Traversal Order (left-right-root) | 2026-07-01 | 2026-07-22 | ⏳ |
 | LC 94 — Binary Tree Inorder Traversal | DFS — Traversal Order (left-root-right) | 2026-07-01 | 2026-07-22 | ⏳ |
 | LC 144 — Binary Tree Preorder Traversal | DFS — Traversal Order (root-left-right) | 2026-07-01 | 2026-07-22 | ⏳ |

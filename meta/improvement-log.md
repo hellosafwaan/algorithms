@@ -26,4 +26,9 @@ If an observation has been actioned, it's marked ✅ with a note on what changed
 **Safwaan's words:** "This is what you should, reason like this, remember to do this more often."
 **Action:** ✅ Updated CLAUDE.md Expertise Calibration — when he's stuck on a bit/index-precision detail, default to a concrete trace table (iteration-by-iteration values) rather than verbal explanation alone.
 
+### 2026-07-05 — Visualiser step engine must be debugger-faithful
+**Observed:** First version of the LC 200 visualiser snapshotted only "interesting" lines (guards that fired, marks, returns) and silently jumped back up the recursion when calls returned. Safwaan flagged it as confusing — "it should go line by line... it's going back up sometimes so it's confusing." He reads the step sequence literally, like a debugger; skipped lines and unexplained jumps read as wrongness.
+**Safwaan's words:** "The explanation and the code-execution is not that correct — it should go line by line... it's going back up sometimes so it's confusing."
+**Action:** ✅ Rebuilt the step engine debugger-style: every executed guard gets a step (pass or fail), every recursive call gets an explicit CALL step at the call line, every return gets a BACK step in the caller stating what returned and what runs next. Added a Play button for the longer runs this produces. CLAUDE.md Visualiser System updated.
+
 <!-- New entries added here -->
