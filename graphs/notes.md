@@ -51,3 +51,12 @@ When a problem defines a special node by its relationship to *every other* node 
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 997 — Find the Town Judge | Two-sided directed-graph condition | Judge = out-degree 0 AND in-degree n-1. Track both counts in one pass; loop 1..n (not map keys) so isolated people are checked; default missing counts with `?? 0` |
+
+## Graph Traversal — Clone-and-Reuse via Map
+When duplicating a graph (or any cyclic structure), track original→clone with a `Map` (not a `Set` — you need to retrieve the clone, not just know it exists). Register a node's clone the instant it's discovered (before recursing/enqueueing further) — this is what breaks cycles, regardless of whether you use recursion, a queue, or a stack.
+
+**DFS vs BFS is purely about which end of the pending-work list you take from** — not recursion vs loops. An iterative BFS and iterative DFS solution to the same problem can be identical code except for one line: `queue.shift()` (oldest first → BFS) vs `stack.pop()` (newest first → DFS).
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 133 — Clone Graph | Clone-and-reuse via Map, 3 traversal variants | Register clone before recursing (cycle-safety); Map for reference-keyed lookup; DFS/BFS distinction proven by a one-line diff between iterative versions |

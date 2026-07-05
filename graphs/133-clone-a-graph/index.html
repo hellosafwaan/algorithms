@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LC 133 — Clone Graph — Three Solutions Compared</title>
+<style>
+  :root {
+    --active: #7c6af7;
+    --path: #fbbf24;
+    --done: #34d399;
+    --dead: #f87171;
+    --unvisited: #1c2038;
+    --border: #2e3560;
+    --bg: #12152b;
+    --panel: #181c36;
+    --text: #e2e6f5;
+    --muted: #8b93b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, "SF Pro Text", "Segoe UI", sans-serif; padding: 24px; }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+
+  .mode-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .mode-tab {
+    background: var(--panel); color: var(--muted); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 14px; font-size: 13px; cursor: pointer; flex: 1; text-align: left;
+  }
+  .mode-tab .mt-title { font-weight: 700; color: var(--text); font-size: 13.5px; }
+  .mode-tab .mt-sub { font-size: 11.5px; margin-top: 2px; }
+  .mode-tab.active { border-color: var(--active); background: rgba(124,106,247,0.12); }
+  .mode-tab.active .mt-title { color: var(--active); }
+
+  .diff-panel {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; margin-bottom: 16px; font-size: 12px; display: flex; gap: 28px; flex-wrap: wrap;
+  }
+  .diff-panel div span.k { color: var(--muted); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+  .diff-panel div span.v { color: var(--text); }
+  .diff-panel div span.v.hl { color: var(--path); font-weight: 600; }
+
+  .layout { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+  .main-col { flex: 1 1 560px; min-width: 480px; }
+  .side-col { flex: 0 0 400px; display: flex; flex-direction: column; gap: 14px; }
+
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .panel h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 10px; }
+
+  .controls { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+  select, button {
+    background: var(--panel); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 14px; font-size: 14px; cursor: pointer;
+  }
+  button:hover:not(:disabled) { border-color: var(--active); }
+  button:disabled { opacity: 0.35; cursor: default; }
+  button.playing { border-color: var(--done); color: var(--done); }
+  .step-count { color: var(--muted); font-size: 13px; margin-left: auto; }
+
+  .graphs-row { display: flex; gap: 14px; }
+  .graph-box { flex: 1; }
+  .graph-box h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px; text-align: center; }
+  svg.graph-svg { width: 100%; height: 260px; background: #0d1026; border-radius: 8px; border: 1px solid var(--border); }
+  .gnode-label { font-size: 13px; font-weight: 700; fill: #fff; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .gedge { stroke: #3a4270; stroke-width: 2; }
+  .gedge.clone-edge { stroke: var(--done); stroke-width: 2.5; }
+
+  .empty-msg { color: var(--muted); padding: 60px 0; text-align: center; font-size: 14px; }
+
+  .explain { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; min-height: 60px; }
+  .badge { flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; padding: 4px 10px; border-radius: 20px; background: var(--active); color: #fff; white-space: nowrap; }
+  .badge.b-seen { background: var(--dead); }
+  .badge.b-mark { background: var(--path); color: #1c2038; }
+  .badge.b-done { background: var(--done); color: #0c2b1e; }
+  .explain-text { font-size: 14px; line-height: 1.5; }
+
+  .code { font-family: "SF Mono", Menlo, monospace; font-size: 11.5px; line-height: 1.55; overflow-x: auto; }
+  .code .line { padding: 0 8px; white-space: pre; border-radius: 4px; color: #aab2d5; }
+  .code .line.hl { background: rgba(124, 106, 247, 0.25); color: #fff; }
+
+  .stack { display: flex; flex-direction: column-reverse; gap: 5px; min-height: 34px; }
+  .queue { display: flex; flex-direction: row; gap: 5px; min-height: 34px; flex-wrap: wrap; }
+  .frame {
+    font-family: "SF Mono", Menlo, monospace; font-size: 12px; padding: 6px 10px; border-radius: 6px;
+    background: var(--unvisited); border: 1px solid var(--border); color: var(--path);
+  }
+  .frame.top { border-color: var(--active); background: rgba(124, 106, 247, 0.18); color: #fff; }
+  .stack-empty { color: var(--muted); font-size: 12px; padding: 6px 2px; }
+
+  .vars { font-family: "SF Mono", Menlo, monospace; font-size: 12px; line-height: 1.9; }
+  .vars .k { color: var(--muted); }
+  .vars .v { color: var(--path); }
+  .vars .map-val { color: var(--done); word-break: break-all; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .swatch { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--border); display: inline-block; }
+</style>
+</head>
+<body>
+
+<h1>LC 133 — Clone Graph</h1>
+<div class="subtitle">Three solutions, same problem — recursive DFS, iterative BFS, and iterative DFS side by side</div>
+
+<div class="mode-tabs">
+  <div class="mode-tab active" id="tabDFS">
+    <div class="mt-title">Recursive DFS</div>
+    <div class="mt-sub">Call stack is the pending-work structure</div>
+  </div>
+  <div class="mode-tab" id="tabBFS">
+    <div class="mt-title">Iterative BFS</div>
+    <div class="mt-sub">Explicit queue — oldest discovered, processed first</div>
+  </div>
+  <div class="mode-tab" id="tabIter">
+    <div class="mt-title">Iterative DFS</div>
+    <div class="mt-sub">Explicit stack — same code as BFS, one line different</div>
+  </div>
+</div>
+
+<div class="diff-panel" id="diffPanel"></div>
+
+<div class="controls">
+  <select id="testcase"></select>
+  <button id="prev">← Prev</button>
+  <button id="next">Next →</button>
+  <button id="play">▶ Play</button>
+  <span class="step-count" id="stepCount"></span>
+</div>
+
+<div class="layout">
+  <div class="main-col">
+    <div class="panel">
+      <div class="graphs-row" id="graphsRow">
+        <div class="graph-box">
+          <h3>Original Graph</h3>
+          <svg class="graph-svg" id="svgOriginal" viewBox="0 0 300 300"></svg>
+        </div>
+        <div class="graph-box">
+          <h3>Clone Graph (being built)</h3>
+          <svg class="graph-svg" id="svgClone" viewBox="0 0 300 300"></svg>
+        </div>
+      </div>
+      <div class="explain">
+        <span class="badge" id="badge">START</span>
+        <span class="explain-text" id="explainText"></span>
+      </div>
+    </div>
+    <div class="panel" style="margin-top: 14px;">
+      <h2>Legend</h2>
+      <div class="legend">
+        <span><i class="swatch" style="background: #0d1026; border: 2px dashed #3a4270;"></i> not yet discovered (clone side)</span>
+        <span><i class="swatch" style="background: var(--path)"></i> stub — created, not fully wired yet</span>
+        <span><i class="swatch" style="background: var(--done)"></i> complete — all neighbors wired</span>
+        <span><i class="swatch" style="border: 3px solid var(--active); background: none;"></i> currently active node</span>
+        <span><i class="swatch" style="background: var(--dead)"></i> reused — already cloned, cycle stopped here</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="side-col">
+    <div class="panel">
+      <h2 id="codeTitle">Code — Recursive DFS</h2>
+      <div class="code" id="codePanel"></div>
+    </div>
+    <div class="panel">
+      <h2 id="pendingTitle">Call Stack — clone()</h2>
+      <div id="pendingPanel"></div>
+    </div>
+    <div class="panel">
+      <h2>Variables + clonedNodes Map</h2>
+      <div class="vars" id="varsPanel"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ CODE ============
+const CODE_DFS = [
+  "function cloneGraph(node) {",
+  "    if (node === null) return null;",
+  "    const clonedNodes = new Map();",
+  "    return cloneDFS(node, clonedNodes);",
+  "}",
+  "",
+  "function cloneDFS(node, clonedNodes) {",
+  "    if (clonedNodes.has(node)) return clonedNodes.get(node);",
+  "",
+  "    const clonedNode = new _Node(node.val, []);",
+  "    clonedNodes.set(node, clonedNode);",
+  "",
+  "    const clonedNeighbours = [];",
+  "    for (const neighbor of node.neighbors) {",
+  "        clonedNeighbours.push(cloneDFS(neighbor, clonedNodes));",
+  "    }",
+  "    clonedNode.neighbors = clonedNeighbours;",
+  "    return clonedNode;",
+  "}"
+];
+const LD = { hasCheck: 7, create: 9, setMap: 10, neighboursInit: 12, loopHeader: 13, loopCall: 14, wireAll: 16, ret: 17 };
+
+const CODE_BFS = [
+  "function cloneGraphBFS(node) {",
+  "    if (node === null) return null;",
+  "",
+  "    const clonedNodes = new Map();",
+  "    clonedNodes.set(node, new _Node(node.val, []));",
+  "    const queue = [node];",
+  "",
+  "    while (queue.length > 0) {",
+  "        const current = queue.shift();",
+  "        for (const neighbor of current.neighbors) {",
+  "            if (!clonedNodes.has(neighbor)) {",
+  "                clonedNodes.set(neighbor, new _Node(neighbor.val, []));",
+  "                queue.push(neighbor);",
+  "            }",
+  "            clonedNodes.get(current).neighbors.push(clonedNodes.get(neighbor));",
+  "        }",
+  "    }",
+  "",
+  "    return clonedNodes.get(node);",
+  "}"
+];
+const LB = { init: 4, dequeue: 8, forHeader: 9, hasCheck: 10, register: 11, push: 12, wire: 14 };
+
+const CODE_ITER = [
+  "function cloneGraphIterativeDFS(node) {",
+  "    if (node === null) return null;",
+  "",
+  "    const clonedNodes = new Map();",
+  "    clonedNodes.set(node, new _Node(node.val, []));",
+  "    const stack = [node];",
+  "",
+  "    while (stack.length > 0) {",
+  "        const current = stack.pop();",
+  "        for (const neighbor of current.neighbors) {",
+  "            if (!clonedNodes.has(neighbor)) {",
+  "                clonedNodes.set(neighbor, new _Node(neighbor.val, []));",
+  "                stack.push(neighbor);",
+  "            }",
+  "            clonedNodes.get(current).neighbors.push(clonedNodes.get(neighbor));",
+  "        }",
+  "    }",
+  "",
+  "    return clonedNodes.get(node);",
+  "}"
+];
+const LI = LB; // identical line offsets
+
+// ============ TEST CASES ============
+// adjacency uses 1-indexed vals, matching LC's display convention
+const TEST_CASES = [
+  { name: "Classic 4-cycle (1-2-3-4-1)",
+    adjacency: { 1: [2, 4], 2: [1, 3], 3: [2, 4], 4: [1, 3] },
+    positions: { 1: [150, 40], 2: [260, 150], 3: [150, 260], 4: [40, 150] } },
+  { name: "Two-node cycle (A ↔ B)",
+    adjacency: { 1: [2], 2: [1] },
+    positions: { 1: [90, 150], 2: [210, 150] } },
+  { name: "Triangle — everyone connected",
+    adjacency: { 1: [2, 3], 2: [1, 3], 3: [1, 2] },
+    positions: { 1: [150, 40], 2: [250, 220], 3: [50, 220] } },
+  { name: "Tree shape — no cycle",
+    adjacency: { 1: [2, 3], 2: [1], 3: [1, 4], 4: [3] },
+    positions: { 1: [150, 40], 2: [60, 140], 3: [240, 140], 4: [240, 240] } },
+  { name: "Single node, no neighbors", adjacency: { 1: [] }, positions: { 1: [150, 150] } },
+  { name: "Empty graph (node = null)", adjacency: null, positions: {} }
+];
+
+function buildGraphFromAdjacency(adjacency) {
+  const nodesByVal = {};
+  for (const val in adjacency) nodesByVal[val] = { val: Number(val), neighbors: [] };
+  for (const val in adjacency) nodesByVal[val].neighbors = adjacency[val].map(nv => nodesByVal[nv]);
+  return nodesByVal;
+}
+function computeUndirectedEdges(adjacency) {
+  const seen = new Set(); const edges = [];
+  for (const a in adjacency) for (const b of adjacency[a]) {
+    const key = Number(a) < b ? `${a}-${b}` : `${b}-${a}`;
+    if (!seen.has(key)) { seen.add(key); edges.push([Number(a), b]); }
+  }
+  return edges;
+}
+function edgeKey(a, b) { return a < b ? `${a}-${b}` : `${b}-${a}`; }
+
+// ============ STEP BUILDER: Recursive DFS ============
+// One snapshot per executed line, with a real per-call-frame "locals"
+// table (val + clonedNeighbours-so-far) so you can watch clonedNeighbours
+// fill in, one push at a time, exactly like a debugger's locals pane.
+function buildStepsDFS(nodesByVal) {
+  const steps = [];
+  const cloneState = {}; for (const v in nodesByVal) cloneState[v] = "undiscovered";
+  const cloneEdges = new Set();
+  const mapKeys = new Set();
+  const stack = [];
+  const frames = []; // parallel to stack: { val, clonedNeighbours: [vals...] }
+
+  function snap(line, badge, badgeClass, text, opts = {}) {
+    steps.push({
+      line, badge, badgeClass, text,
+      cloneState: { ...cloneState }, cloneEdges: new Set(cloneEdges),
+      pending: [...stack], originalActive: stack.length ? stack[stack.length - 1] : null,
+      frames: frames.map(f => ({ val: f.val, clonedNeighbours: [...f.clonedNeighbours] })),
+      vars: opts.vars || {}, mapKeys: new Set(mapKeys)
+    });
+  }
+
+  const vals = Object.keys(nodesByVal).map(Number);
+  if (vals.length === 0) { snap(null, "DONE", "b-done", "Empty graph — node is null, return null immediately."); return steps; }
+  const startVal = 1;
+  snap(null, "START", "", "cloneGraph(node) calls the recursive helper clone(node, clonedNodes) on the starting node.");
+
+  function clone(val) {
+    stack.push(val);
+    frames.push({ val, clonedNeighbours: [] });
+
+    if (mapKeys.has(val)) {
+      snap(LD.hasCheck, "SEEN", "b-seen", `clonedNodes.has(${val}) is true — already cloned (or currently mid-clone, on the stack). return clonedNodes.get(${val}) — reuse it, this is exactly what stops an infinite loop on a cycle.`, { vars: { node: val } });
+      stack.pop(); frames.pop();
+      return;
+    }
+    snap(LD.hasCheck, "CHECK", "", `clonedNodes.has(${val}) is false — fresh node, need to clone it.`, { vars: { node: val } });
+
+    const clonedNode = val; // represent "the clone of val" by val itself for display purposes
+    snap(LD.create, "CREATE", "b-mark", `const clonedNode = new _Node(${val}, []) — a new node object, with an EMPTY neighbors array for now.`, { vars: { node: val, "clonedNode.val": val, "clonedNode.neighbors": "[]" } });
+
+    cloneState[val] = "stub";
+    mapKeys.add(val);
+    snap(LD.setMap, "REGISTER", "b-mark", `clonedNodes.set(${val}, clonedNode) — register it RIGHT NOW, before recursing into any neighbor. This is the line that stops infinite loops on cycles.`, { vars: { node: val } });
+
+    snap(LD.neighboursInit, "INIT", "", `const clonedNeighbours = [] — start the list that will collect ${val}'s cloned neighbors, one push at a time.`, { vars: { node: val, clonedNeighbours: "[]" } });
+
+    const neighbors = nodesByVal[val].neighbors.map(n => n.val);
+    if (neighbors.length === 0) {
+      snap(LD.loopHeader, "CHECK", "", `node.neighbors is empty — the for loop body never runs.`, { vars: { node: val, clonedNeighbours: "[]" } });
+    }
+    for (const nv of neighbors) {
+      const frame = frames[frames.length - 1];
+      snap(LD.loopHeader, "CHECK", "", `for...of: next original neighbor of ${val} is ${nv}.`, { vars: { node: val, neighbor: nv, clonedNeighbours: `[${frame.clonedNeighbours.join(", ")}]` } });
+      snap(LD.loopCall, "CALL", "", `clone(${nv}, clonedNodes) — recurse into neighbor ${nv} before this push can complete.`, { vars: { node: val, neighbor: nv, clonedNeighbours: `[${frame.clonedNeighbours.join(", ")}]` } });
+      clone(nv);
+      frame.clonedNeighbours.push(nv);
+      cloneEdges.add(edgeKey(val, nv));
+      snap(LD.loopCall, "WIRE", "b-mark", `clonedNeighbours.push(cloneOf(${nv})) — clonedNeighbours is now [${frame.clonedNeighbours.join(", ")}].`, { vars: { node: val, neighbor: nv, clonedNeighbours: `[${frame.clonedNeighbours.join(", ")}]` } });
+    }
+
+    const finalFrame = frames[frames.length - 1];
+    snap(LD.wireAll, "WIRE-ALL", "b-mark", `clonedNode.neighbors = clonedNeighbours — ${val}'s clone now points at [${finalFrame.clonedNeighbours.join(", ")}].`, { vars: { node: val, "clonedNode.neighbors": `[${finalFrame.clonedNeighbours.join(", ")}]` } });
+    cloneState[val] = "complete";
+    snap(LD.ret, "RETURN", "b-done", `return clonedNode — clone(${val}) is fully built. Frame pops off the call stack.`, { vars: { node: val } });
+    stack.pop(); frames.pop();
+  }
+
+  clone(startVal);
+  snap(null, "DONE", "b-done", "Every reachable node has been cloned exactly once and all edges wired.");
+  return steps;
+}
+
+// ============ STEP BUILDER: Iterative BFS / DFS (shared shape) ============
+// One snapshot per executed line. `wired` tracks, per node, the actual
+// growing contents of clonedNodes.get(that node).neighbors — so you can
+// watch that array fill up one push at a time, same as clonedNeighbours
+// in the recursive version.
+function buildStepsIterative(nodesByVal, mode) {
+  const steps = [];
+  const cloneState = {}; for (const v in nodesByVal) cloneState[v] = "undiscovered";
+  const cloneEdges = new Set();
+  const mapKeys = new Set();
+  const pending = [];
+  const wired = {}; // val -> array of neighbor vals already pushed into its clone's neighbors
+  const L = mode === "bfs" ? LB : LI;
+  const takeWord = mode === "bfs" ? "oldest discovered" : "most recently discovered";
+  const structWord = mode === "bfs" ? "queue" : "stack";
+
+  function snap(line, badge, badgeClass, text, opts = {}) {
+    steps.push({
+      line, badge, badgeClass, text,
+      cloneState: { ...cloneState }, cloneEdges: new Set(cloneEdges),
+      pending: [...pending], originalActive: opts.originalActive ?? null,
+      wired: JSON.parse(JSON.stringify(wired)),
+      vars: opts.vars || {}, mapKeys: new Set(mapKeys)
+    });
+  }
+
+  const vals = Object.keys(nodesByVal).map(Number);
+  if (vals.length === 0) { snap(null, "DONE", "b-done", "Empty graph — node is null, return null immediately."); return steps; }
+  const startVal = 1;
+  snap(null, "START", "", `Register the start node, push it into the ${structWord}, then process nodes ${mode === "bfs" ? "oldest-first" : "most-recently-added-first"}.`);
+
+  cloneState[startVal] = "stub";
+  mapKeys.add(startVal);
+  wired[startVal] = [];
+  pending.push(startVal);
+  snap(L.init, "INIT", "b-mark", `clonedNodes.set(${startVal}, new _Node(${startVal}, [])) — register the start node up front (neighbors starts empty), then push it onto the ${structWord}.`, { originalActive: startVal, vars: { node: startVal, "clone.neighbors": "[]" } });
+
+  while (pending.length > 0) {
+    const current = mode === "bfs" ? pending.shift() : pending.pop();
+    snap(L.dequeue, mode === "bfs" ? "DEQUEUE" : "POP", "", `const current = ${current} — the ${takeWord} node still pending.`, { originalActive: current, vars: { current, "clone.neighbors": `[${wired[current].join(", ")}]` } });
+
+    const neighbors = nodesByVal[current].neighbors.map(n => n.val);
+    if (neighbors.length === 0) {
+      snap(L.forHeader, "CHECK", "", `current.neighbors is empty for ${current} — loop body never runs.`, { originalActive: current, vars: { current, "clone.neighbors": `[${wired[current].join(", ")}]` } });
+    }
+    for (const nv of neighbors) {
+      snap(L.forHeader, "CHECK", "", `for...of: next original neighbor of ${current} is ${nv}.`, { originalActive: current, vars: { current, neighbor: nv, "clone.neighbors": `[${wired[current].join(", ")}]` } });
+
+      if (!mapKeys.has(nv)) {
+        snap(L.hasCheck, "NEW", "", `clonedNodes.has(${nv}) is false — hasn't been cloned yet.`, { originalActive: current, vars: { current, neighbor: nv, "clone.neighbors": `[${wired[current].join(", ")}]` } });
+        cloneState[nv] = "stub";
+        mapKeys.add(nv);
+        wired[nv] = [];
+        snap(L.register, "CREATE", "b-mark", `clonedNodes.set(${nv}, new _Node(${nv}, [])) — register it as a stub, its own neighbors starts empty.`, { originalActive: current, vars: { current, neighbor: nv, "clone.neighbors": `[${wired[current].join(", ")}]` } });
+        pending.push(nv);
+        snap(L.push, mode === "bfs" ? "ENQUEUE" : "PUSH", "b-mark", `${structWord}.push(${nv}) — so it gets processed later. ${structWord} is now [${pending.join(", ")}].`, { originalActive: current, vars: { current, neighbor: nv, "clone.neighbors": `[${wired[current].join(", ")}]` } });
+      } else {
+        snap(L.hasCheck, "SEEN", "b-seen", `clonedNodes.has(${nv}) is true — already cloned or already pending. No new node needed.`, { originalActive: current, vars: { current, neighbor: nv, "clone.neighbors": `[${wired[current].join(", ")}]` } });
+      }
+
+      cloneEdges.add(edgeKey(current, nv));
+      wired[current].push(nv);
+      snap(L.wire, "WIRE", "b-mark", `clonedNodes.get(${current}).neighbors.push(clonedNodes.get(${nv})) — ${current}'s clone.neighbors is now [${wired[current].join(", ")}].`, { originalActive: current, vars: { current, neighbor: nv, "clone.neighbors": `[${wired[current].join(", ")}]` } });
+    }
+
+    cloneState[current] = "complete";
+    snap(L.forHeader, "COMPLETE", "b-done", `${current}'s clone now has every neighbor wired — [${wired[current].join(", ")}]. Fully complete.`, { originalActive: current, vars: { current, "clone.neighbors": `[${wired[current].join(", ")}]` } });
+  }
+
+  snap(null, "DONE", "b-done", "Every reachable node discovered, registered, and wired exactly once.");
+  return steps;
+}
+
+// ============ RENDERING ============
+const els = {
+  tabDFS: document.getElementById("tabDFS"), tabBFS: document.getElementById("tabBFS"), tabIter: document.getElementById("tabIter"),
+  diffPanel: document.getElementById("diffPanel"),
+  testcase: document.getElementById("testcase"),
+  prev: document.getElementById("prev"), next: document.getElementById("next"), play: document.getElementById("play"),
+  stepCount: document.getElementById("stepCount"),
+  svgOriginal: document.getElementById("svgOriginal"), svgClone: document.getElementById("svgClone"),
+  badge: document.getElementById("badge"), explainText: document.getElementById("explainText"),
+  codeTitle: document.getElementById("codeTitle"), codePanel: document.getElementById("codePanel"),
+  pendingTitle: document.getElementById("pendingTitle"), pendingPanel: document.getElementById("pendingPanel"),
+  varsPanel: document.getElementById("varsPanel")
+};
+
+let mode = "dfs"; // 'dfs' | 'bfs' | 'iter'
+let tcIndex = 0, steps = [], idx = 0, timer = null;
+let nodesByVal = {}, edges = [], positions = {};
+
+TEST_CASES.forEach((tc, i) => {
+  const o = document.createElement("option"); o.value = i; o.textContent = tc.name;
+  els.testcase.appendChild(o);
+});
+
+const DIFFS = {
+  dfs:  { approach: "Recursive — call stack IS the pending-work structure", pending: "JS call stack (implicit)", risk: "Deep recursion on very large/chained graphs can hit a stack-depth limit" },
+  bfs:  { approach: "Iterative — explicit queue, oldest-discovered processed first", pending: "Array used as a queue (shift from front)", risk: "None — no recursion at all" },
+  iter: { approach: "Iterative — explicit stack, most-recent-discovered processed first", pending: "Array used as a stack (pop from back)", risk: "None — same DFS order as the recursive version, no recursion" }
+};
+
+function renderDiffPanel() {
+  const d = DIFFS[mode];
+  els.diffPanel.innerHTML = `
+    <div><span class="k">Approach</span><span class="v hl">${d.approach}</span></div>
+    <div><span class="k">Pending-work structure</span><span class="v">${d.pending}</span></div>
+    <div><span class="k">Risk</span><span class="v">${d.risk}</span></div>
+    <div><span class="k">Time / Space</span><span class="v">O(V+E) / O(V) — same for all three</span></div>
+  `;
+}
+
+function loadCase(i) {
+  stopPlay();
+  tcIndex = i;
+  const tc = TEST_CASES[i];
+  nodesByVal = tc.adjacency ? buildGraphFromAdjacency(tc.adjacency) : {};
+  edges = tc.adjacency ? computeUndirectedEdges(tc.adjacency) : [];
+  positions = tc.positions;
+  steps = mode === "dfs" ? buildStepsDFS(nodesByVal) : buildStepsIterative(nodesByVal, mode);
+  idx = 0;
+  render();
+}
+
+function switchMode(newMode) {
+  if (mode === newMode) return;
+  mode = newMode;
+  els.tabDFS.classList.toggle("active", mode === "dfs");
+  els.tabBFS.classList.toggle("active", mode === "bfs");
+  els.tabIter.classList.toggle("active", mode === "iter");
+  els.codeTitle.textContent = "Code — " + (mode === "dfs" ? "Recursive DFS" : mode === "bfs" ? "Iterative BFS" : "Iterative DFS");
+  els.pendingTitle.textContent = mode === "dfs" ? "Call Stack — clone()" : mode === "bfs" ? "Queue (explicit array)" : "Stack (explicit array)";
+  renderDiffPanel();
+  loadCase(tcIndex);
+}
+
+function nodeColor(val, s) {
+  const cs = s.cloneState[val];
+  if (cs === "undiscovered") return null; // ghost
+  if (cs === "stub") return "var(--path)";
+  if (cs === "complete") return "var(--done)";
+  return null;
+}
+
+function renderGraphSVG(svgEl, isClone, s) {
+  const vals = Object.keys(positions).map(Number);
+  let html = "";
+  // edges first (so nodes draw on top)
+  const edgeList = isClone ? edges.filter(([a, b]) => s.cloneEdges.has(edgeKey(a, b))) : edges;
+  for (const [a, b] of edgeList) {
+    const [x1, y1] = positions[a], [x2, y2] = positions[b];
+    html += `<line class="gedge${isClone ? " clone-edge" : ""}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" />`;
+  }
+  for (const v of vals) {
+    const [x, y] = positions[v];
+    const isActive = s.originalActive === v;
+    if (isClone) {
+      const color = nodeColor(v, s);
+      if (color === null) {
+        html += `<circle cx="${x}" cy="${y}" r="22" fill="#0d1026" stroke="#3a4270" stroke-width="2" stroke-dasharray="4,3" />`;
+        if (isActive) html += `<circle cx="${x}" cy="${y}" r="26" fill="none" stroke="var(--active)" stroke-width="3" />`;
+      } else {
+        html += `<circle cx="${x}" cy="${y}" r="22" fill="${color}" stroke="${isActive ? 'var(--active)' : 'transparent'}" stroke-width="3" />`;
+        html += `<text class="gnode-label" x="${x}" y="${y}" fill="${color === 'var(--path)' ? '#1c2038' : '#0c2b1e'}">${v}</text>`;
+      }
+    } else {
+      html += `<circle cx="${x}" cy="${y}" r="22" fill="var(--unvisited)" stroke="${isActive ? 'var(--active)' : 'var(--border)'}" stroke-width="${isActive ? 3 : 1}" />`;
+      html += `<text class="gnode-label" x="${x}" y="${y}">${v}</text>`;
+    }
+  }
+  svgEl.innerHTML = html;
+}
+
+function render() {
+  if (steps.length === 0) {
+    els.svgOriginal.innerHTML = ""; els.svgClone.innerHTML = "";
+    els.badge.textContent = "DONE"; els.explainText.textContent = "Empty graph — nothing to do.";
+    els.codePanel.innerHTML = ""; els.pendingPanel.innerHTML = ""; els.varsPanel.innerHTML = "";
+    els.stepCount.textContent = "Step 0 / 0";
+    els.prev.disabled = true; els.next.disabled = true;
+    return;
+  }
+  const s = steps[idx];
+  const CODE = mode === "dfs" ? CODE_DFS : mode === "bfs" ? CODE_BFS : CODE_ITER;
+
+  if (Object.keys(positions).length === 0) {
+    els.svgOriginal.innerHTML = '<text x="150" y="150" fill="#8b93b8" text-anchor="middle" font-size="13">node = null</text>';
+    els.svgClone.innerHTML = '<text x="150" y="150" fill="#8b93b8" text-anchor="middle" font-size="13">null</text>';
+  } else {
+    renderGraphSVG(els.svgOriginal, false, s);
+    renderGraphSVG(els.svgClone, true, s);
+  }
+
+  els.badge.textContent = s.badge;
+  els.badge.className = "badge " + (s.badgeClass || "");
+  els.explainText.textContent = s.text;
+
+  els.codePanel.innerHTML = CODE.map((ln, i) =>
+    `<div class="line${i === s.line ? " hl" : ""}">${ln === "" ? " " : ln.replace(/</g, "&lt;")}</div>`
+  ).join("");
+
+  if (mode === "dfs") {
+    els.pendingPanel.innerHTML = s.pending.length === 0
+      ? '<div class="stack-empty">(empty — back in cloneGraph)</div>'
+      : `<div class="stack">${s.pending.map((v, i) => `<div class="frame${i === s.pending.length - 1 ? " top" : ""}">clone(${v})</div>`).join("")}</div>`;
+  } else if (mode === "bfs") {
+    els.pendingPanel.innerHTML = s.pending.length === 0
+      ? '<div class="stack-empty">(empty)</div>'
+      : `<div class="queue">${s.pending.map((v, i) => `<div class="frame${i === 0 ? " top" : ""}">${v}${i === 0 ? " ←next" : ""}</div>`).join("")}</div>`;
+  } else {
+    els.pendingPanel.innerHTML = s.pending.length === 0
+      ? '<div class="stack-empty">(empty)</div>'
+      : `<div class="stack">${s.pending.map((v, i) => `<div class="frame${i === s.pending.length - 1 ? " top" : ""}">${v}</div>`).join("")}</div>`;
+  }
+
+  const v = s.vars;
+  const mapPreview = [...s.mapKeys].join(", ");
+  let varsHtml = Object.entries(v).map(([k, val]) => `<div><span class="k">${k}</span> = <span class="v">${val}</span></div>`).join("");
+
+  if (mode === "dfs" && s.frames && s.frames.length > 0) {
+    varsHtml += `<div style="margin-top:8px; border-top:1px solid var(--border); padding-top:8px;"><span class="k">Active call frames (bottom → top)</span></div>`;
+    varsHtml += s.frames.map((f, i) =>
+      `<div style="margin:2px 0; ${i === s.frames.length - 1 ? 'color:#fff;' : ''}">clone(<span class="v">${f.val}</span>).clonedNeighbours = <span class="map-val">[${f.clonedNeighbours.join(", ")}]</span></div>`
+    ).join("");
+  }
+
+  varsHtml += `<div style="margin-top:8px;"><span class="k">clonedNodes keys</span> = <span class="map-val">{ ${mapPreview} }</span></div>`;
+  els.varsPanel.innerHTML = varsHtml;
+
+  els.stepCount.textContent = `Step ${idx + 1} / ${steps.length}`;
+  els.prev.disabled = idx === 0;
+  els.next.disabled = idx === steps.length - 1;
+}
+
+function stepTo(newIdx) { idx = Math.max(0, Math.min(steps.length - 1, newIdx)); render(); }
+function stopPlay() { if (timer) { clearInterval(timer); timer = null; } els.play.textContent = "▶ Play"; els.play.classList.remove("playing"); }
+function togglePlay() {
+  if (timer) { stopPlay(); return; }
+  if (idx >= steps.length - 1) idx = 0;
+  els.play.textContent = "⏸ Pause"; els.play.classList.add("playing");
+  timer = setInterval(() => { if (idx >= steps.length - 1) { stopPlay(); return; } stepTo(idx + 1); }, 450);
+}
+
+els.tabDFS.addEventListener("click", () => switchMode("dfs"));
+els.tabBFS.addEventListener("click", () => switchMode("bfs"));
+els.tabIter.addEventListener("click", () => switchMode("iter"));
+els.prev.addEventListener("click", () => { stopPlay(); stepTo(idx - 1); });
+els.next.addEventListener("click", () => { stopPlay(); stepTo(idx + 1); });
+els.play.addEventListener("click", togglePlay);
+els.testcase.addEventListener("change", e => loadCase(Number(e.target.value)));
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") { e.preventDefault(); stopPlay(); stepTo(idx - 1); }
+  if (e.key === "ArrowRight") { e.preventDefault(); stopPlay(); stepTo(idx + 1); }
+  if (e.key === " ") { e.preventDefault(); togglePlay(); }
+});
+
+renderDiffPanel();
+loadCase(0);
+</script>
+</body>
+</html>

@@ -13,6 +13,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 | LC 200 — Number of Islands | Graph DFS — Flood Fill (grid) | 2026-07-05 | 2026-07-19 ⚡ short fuse — video-assisted solve, own-words explanation skipped; require verbal walkthrough before coding | ⏳ |
 | LC 130 — Surrounded Regions | Graph DFS — Region Decision (walk full region, decide after) | 2026-07-05 | 2026-07-26 — standard fuse, fully self-derived. At redo, also re-attempt Solution B (border-first flood) from scratch — he flagged that one as not yet owned | ⏳ |
 | LC 997 — Find the Town Judge | Graph — In-degree/Out-degree Counting | 2026-07-05 | 2026-07-19 — slightly shorter fuse; session ran late (3am, third problem of the day), several answers given directly under fatigue rather than derived | ⏳ |
+| LC 133 — Clone Graph | Graph Traversal — Clone-and-Reuse via Map | 2026-07-05 | 2026-07-26 — standard fuse, mostly self-driven with only mechanical nudges. At redo, attempt all three variants (recursive DFS, iterative BFS, iterative DFS) cold, not just one | ⏳ |
 | LC 145 — Binary Tree Postorder Traversal | DFS — Traversal Order (left-right-root) | 2026-07-01 | 2026-07-22 | ⏳ |
 | LC 94 — Binary Tree Inorder Traversal | DFS — Traversal Order (left-root-right) | 2026-07-01 | 2026-07-22 | ⏳ |
 | LC 144 — Binary Tree Preorder Traversal | DFS — Traversal Order (root-left-right) | 2026-07-01 | 2026-07-22 | ⏳ |

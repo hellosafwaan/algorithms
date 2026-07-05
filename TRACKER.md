@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-05 (Find the Town Judge)
+Last updated: 2026-07-05 (Clone Graph)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-07-05 (Find the Town Judge)
 | Metric | Count |
 |--------|-------|
 | Total problems | 172 |
-| ✅ Complete | 49 |
+| ✅ Complete | 50 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 122 |
+| ⏳ Not started | 121 |
 
 ---
 
@@ -34,7 +34,7 @@ Last updated: 2026-07-05 (Find the Town Judge)
 | 10 | Tries | 3 | 0 | 2026-07-16 | ⏳ |
 | 11 | Heap / Priority Queue | 7 | 0 | 2026-07-20 | ⏳ |
 | 12 | Backtracking | 9 | 0 | 2026-07-25 | ⏳ |
-| 13 | Graphs | 14 | 3 | 2026-08-01 | 🔄 In Progress |
+| 13 | Graphs | 14 | 4 | 2026-08-01 | 🔄 In Progress |
 | 14 | Advanced Graphs | 6 | 0 | 2026-08-05 | ⏳ |
 | 15 | Greedy | 8 | 0 | 2026-08-09 | ⏳ |
 | 16 | Intervals | 6 | 0 | 2026-08-13 | ⏳ |
@@ -232,7 +232,7 @@ Last updated: 2026-07-05 (Find the Town Judge)
 | # | Problem | Difficulty | LC | Pattern | Status | Solved | Learnings |
 |---|---------|------------|----|---------|--------|--------|-----------|
 | 1 | Number of Islands | Medium | [#200](https://leetcode.com/problems/number-of-islands/) | DFS — Flood Fill (grid) | ✅ | 2026-07-05 | [→](graphs/200-number-of-islands/learnings.md) |
-| 2 | Clone Graph | Medium | [#133](https://leetcode.com/problems/clone-graph/) | DFS | ⏳ | — | — |
+| 2 | Clone Graph | Medium | [#133](https://leetcode.com/problems/clone-graph/) | Graph Traversal — Clone-and-Reuse via Map | ✅ | 2026-07-05 | [→](graphs/133-clone-a-graph/learnings.md) |
 | 3 | Max Area of Island | Medium | [#695](https://leetcode.com/problems/max-area-of-island/) | DFS | ⏳ | — | — |
 | 4 | Pacific Atlantic Water Flow | Medium | [#417](https://leetcode.com/problems/pacific-atlantic-water-flow/) | BFS / DFS | ⏳ | — | — |
 | 5 | Surrounded Regions | Medium | [#130](https://leetcode.com/problems/surrounded-regions/) | DFS — Region Decision (walk full region, decide after) | ✅ | 2026-07-05 | [→](graphs/130-surronded-regions/learnings.md) |

@@ -327,6 +327,18 @@ function dp(n, cache = {}) {
 
 ---
 
+## Graph Traversal — Clone-and-Reuse via Map
+
+**Core idea:** Duplicating a graph (or any cyclic structure) requires a `Map` from original → clone, not a `Set` — you need to retrieve the specific clone object, not just know one exists. Register a node's clone the instant it's discovered, before recursing/enqueueing further — this is what breaks cycles.
+
+**DFS vs BFS distinction, proven concretely:** an iterative BFS and iterative DFS solution can be identical code except for one line — `queue.shift()` (oldest first) vs `stack.pop()` (newest first). The traversal order comes entirely from which end of the pending-work list you pull from, not from recursion vs loops.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 133 — Clone Graph | Clone-and-reuse via Map, 3 traversal variants (recursive DFS, iterative BFS, iterative DFS) | Register clone before recursing/enqueueing (cycle-safety); Map for reference-keyed lookup; one-line diff between BFS/iterative-DFS proves the traversal-order rule |
+
+---
+
 ## Bit Manipulation — Mask & Shift
 
 **Core idea:** `n & 1` reads the last bit (AND with 1 wipes every other bit). `n = n >>> 1` shifts the next bit into the last position. Loop while `n !== 0`.

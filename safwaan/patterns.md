@@ -201,7 +201,36 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 47. Constructor called without `new`
+- **Seen in:** LC 133 — Clone Graph (2026-07-05)
+- **What happened:** Wrote `_Node(node.val, node.neighbors)` to create a clone — a constructor function (has `this.val = ...` inside), called without `new`. Without `new`, `this` inside the function doesn't bind to a fresh object, and the function returns nothing, so the result would be `undefined`.
+- **How it was caught:** One direct question ("what keyword do you normally need before calling a constructor function to get a new object back?") — answered correctly immediately, no trace needed.
+- **Status:** Quick recall gap, not a reasoning gap — resolved in one exchange.
+
+### 48. Passed the original (un-cloned) reference where a clone was needed
+- **Seen in:** LC 133 (2026-07-05)
+- **What happened:** Wrote `new _Node(node.val, node.neighbors)` — passing the ORIGINAL node's `neighbors` array directly into the clone. This means the "clone" would share the same array object as the original and contain references to un-cloned original neighbor nodes — defeating the entire point of cloning.
+- **How it was caught:** Asked directly what would end up inside `clonedNode.neighbors` with that line — self-identified once posed as a concrete question, though needed the question to see it (didn't self-generate the concern).
+- **Status:** One-question catch. This is a variant of a recurring theme — reusing a reference/structure where a fresh copy is required (echoes the LC130 "board mutation must be literal, not inferred" feedback, and general reference-vs-value equality gaps from 3Sum/LC217).
+
+### 49. Loop variable shadowing the outer parameter it depends on
+- **Seen in:** LC 133 (2026-07-05)
+- **What happened:** Wrote `for (const node of node.neighbors)`, reusing `node` as the loop variable while it was also the enclosing function's parameter. Mechanically this happens to still work in JS (the iterable expression is evaluated in the outer scope before the loop's per-iteration binding takes effect), but it's a serious readability trap and nearly caused a second bug (used the shadowed `node` inside the loop body where the neighbor was intended).
+- **Fix:** Flagged directly, renamed to `neighbor`. General rule worth remembering: never reuse an outer parameter's name as a loop variable, even when JS scoping rules technically permit it.
+- **Status:** Resolved via direct explanation of the scoping subtlety, since this is genuinely obscure JS behavior not obviously discoverable by tracing alone.
+
+### 50. Registered a node in the map AFTER recursing into its neighbors, not before
+- **Seen in:** LC 133 (2026-07-05)
+- **What happened:** Despite correctly ARTICULATING the rule moments earlier ("we add it before recursing... else infinite loop" — direct echo of the LC 200 lesson), the actual code built the full neighbor list (requiring recursion) *before* creating and registering the clone in the map. Classic gap between stated understanding and implemented order.
+- **How it was caught:** Traced the exact same A/B two-node cycle example against the literal code, step by step, until the infinite recursion was self-predicted ("Infinite loop").
+- **Status:** Good sign — the trace-based method caught what a purely verbal check would have missed (he'd have said "yes I know to register before recursing" if just asked, since he'd just said it). Reinforces: verify stated understanding against the actual code order, don't take a correct verbal rule as proof the implementation follows it.
+
+---
+
 ## Breakthrough Moments
+
+### Three-solution comparison cements DFS/BFS as a pending-work-structure choice — LC 133 (2026-07-05)
+Built recursive DFS, iterative BFS, and iterative DFS (explicit stack) for the same problem back to back. The iterative BFS and iterative DFS versions are byte-for-byte identical except for one line (`queue.shift()` vs `stack.pop()`), which makes the "stack→DFS, queue→BFS" rule from LC 200 concrete in the clearest possible way: it's not about recursion vs loops, or the code's shape at all — it's entirely about which end of the pending-work list gets pulled from. Combined with the LC 200 misconception earlier this same day (reading sequential recursive calls as a BFS layer), this session closes the loop on that concept with a clean, direct demonstration rather than just a corrected trace.
 
 ### Fully self-derived algorithm via Socratic tracing — LC 130 (2026-07-05)
 Same day as the video-assisted LC 200 solve, but the opposite mode entirely. Arrived with a plan that had a real conceptual hole (thought per-cell edge position determined capture, not per-region connectivity) and, through targeted trace-based questions, independently derived: the region-not-cell insight, the "walk fully before deciding" ordering (and *why* — outer-loop `visited` correctness), the per-region coordinate array as the collection mechanism, the full border condition (`i===0 || i===rows-1 || j===0 || j===cols-1`, initially missed the far edges until traced on a concrete corner), and the two-pass check-then-flip structure. Coach gave exactly two direct fixes (bounds-check direction, `r`/`c` typo), both only after he explicitly asked. This is the clean contrast case for the LC 200 ownership question raised earlier the same day — proof the trace-based Socratic method produces full ownership when he engages with it, and a useful before/after for calibrating how much scaffolding he actually needs versus how much was given at LC 200.
