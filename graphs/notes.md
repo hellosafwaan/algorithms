@@ -60,3 +60,14 @@ When duplicating a graph (or any cyclic structure), track original→clone with 
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 133 — Clone Graph | Clone-and-reuse via Map, 3 traversal variants | Register clone before recursing (cycle-safety); Map for reference-keyed lookup; DFS/BFS distinction proven by a one-line diff between iterative versions |
+
+## Weighted Graph DFS — Search-and-Accumulate with a Sentinel
+When a graph problem asks you to find *any one* valid path and compute something along it (not just check reachability), the DFS needs to accumulate a running value (e.g., a product) AND use a sentinel (a value impossible as a real answer, like `-1`) to distinguish "this branch found the target" from "this branch dead-ended."
+
+**Critical structural point:** return **immediately** the moment a branch succeeds (`result !== sentinel`) — don't keep looping through remaining neighbors. Otherwise a dead branch's placeholder/failure value can get combined into an already-correct answer from an earlier successful branch.
+
+Each "equation" style input (`a op b = value`) often models as **two** directed edges: the given relationship, and its inverse (e.g., division → reciprocal weight).
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 399 — Evaluate Division | Weighted graph, search + accumulate product | Each equation → 2 directed edges (value + reciprocal); DFS multiplies weights along the path; `-1` sentinel for dead ends; return immediately on success, don't keep looping. Canonical alternative: Weighted Union-Find (near-O(1) queries after graph build) — not yet implemented, flagged for when Union-Find is formally introduced (Redundant Connection, Connected Components, Graph Valid Tree). |

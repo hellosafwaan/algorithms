@@ -227,7 +227,30 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ---
 
+### 51. Destructured a value but never used it in the computation
+- **Seen in:** LC 399 — Evaluate Division (2026-07-05)
+- **What happened:** Built the DFS correctly enough to destructure `[neighbor, weight]` from each edge, but the accumulation line only multiplied by the recursive call's result — `weight` was never actually used anywhere. The entire point of the weighted graph (accumulating the ratio) was silently missing.
+- **How it was caught:** Traced the simplest possible case (`a/b` with one direct edge) and asked what value `weight` played in the final multiplication line — self-corrected once the question isolated that specific line.
+- **Status:** One-question catch on the simple case. Distinct from — and simpler than — the deeper "return on first success" bug below.
+
+### 52. Multiply-across-all-branches instead of return-on-first-success (new sentinel pattern)
+- **Seen in:** LC 399 (2026-07-05)
+- **What happened:** After fixing the missing base case and the missing `weight` multiplication, the DFS still multiplied the result of *every* neighbor branch into a shared `answer`, rather than stopping at the first branch that actually reached `dst`. A dead-end branch (one that never reaches the target) returned whatever `answer` happened to be (starting at `1`, never touched) — a false "success" value — which then got multiplied into the real answer from a valid branch, corrupting it.
+- **Root cause:** No `-1`-style sentinel distinguishing "this branch found the destination" from "this branch dead-ended." Without that, there's no way to know which branches to ignore.
+- **How it was caught:** A branching counterexample (two neighbors, only one of which reaches the target) exposed it, but he could not resolve it himself after several rounds ("I don't know what I'm doing wrong" / "idk") — needed the corrected `dfs` function given directly, including the `if (result !== -1) return weight * result` early-return structure and the final `return -1`.
+- **Status:** Genuinely new pattern (first time combining "search for ANY valid path" with "accumulate a value along the way" — different from LC 130's collect-then-decide and LC 133's clone-and-combine). Given directly after repeated stuck attempts, late in a 5-problem day. Probe cold on the next "find a valid path and compute something along it" problem — don't assume this landed on one guided pass.
+
+### 53. Complexity reasoning across multiple independent traversals (queries) — recurring difficulty
+- **Seen in:** LC 399 (2026-07-05)
+- **What happened:** Explicitly said complexity reasoning felt hard here ("hard ass problem... it's really hard for me to reason the time complexity"). Needed the same piece-by-piece scaffolding as the log-based complexity walkthrough at LC 191 — break into building the graph (O(E)), one query's traversal (O(N+E)), then combine across Q queries.
+- **Status:** Once broken into pieces, he correctly assembled each one and arrived at O(E + Q(N+E)) himself. Confirms the established pattern: complexity intimidation is about not knowing where to start decomposing, not an inability to reason once decomposed. Keep defaulting to the piece-by-piece approach for any multi-part complexity question (multiple loops, multiple queries, nested structures).
+
+---
+
 ## Breakthrough Moments
+
+### From "I have no idea" to a fully self-derived graph model — LC 399 (2026-07-05)
+Opened this problem with zero starting intuition. Through pure Socratic questioning (no hints given until the DFS combining logic itself), independently arrived at: division equations model a weighted directed graph, each equation produces two directed edges (value and its reciprocal), queries are path searches between two nodes, a `visited` set prevents infinite bouncing on the bidirectional edges, and the two failure edge cases (`src`/`dst` missing entirely, or no path) both return `-1`. This is a full graph-modeling insight built from nothing, on the fifth problem of the day — genuinely strong work, even though the final DFS combining logic (return-on-first-success + `-1` sentinel) needed to be given directly once he got stuck.
 
 ### Three-solution comparison cements DFS/BFS as a pending-work-structure choice — LC 133 (2026-07-05)
 Built recursive DFS, iterative BFS, and iterative DFS (explicit stack) for the same problem back to back. The iterative BFS and iterative DFS versions are byte-for-byte identical except for one line (`queue.shift()` vs `stack.pop()`), which makes the "stack→DFS, queue→BFS" rule from LC 200 concrete in the clearest possible way: it's not about recursion vs loops, or the code's shape at all — it's entirely about which end of the pending-work list gets pulled from. Combined with the LC 200 misconception earlier this same day (reading sequential recursive calls as a BFS layer), this session closes the loop on that concept with a clean, direct demonstration rather than just a corrected trace.

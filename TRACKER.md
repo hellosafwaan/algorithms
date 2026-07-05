@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-05 (Clone Graph)
+Last updated: 2026-07-05 (Evaluate Division)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-05 (Clone Graph)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 172 |
-| ✅ Complete | 50 |
+| Total problems | 173 |
+| ✅ Complete | 51 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 121 |
 
@@ -34,7 +34,7 @@ Last updated: 2026-07-05 (Clone Graph)
 | 10 | Tries | 3 | 0 | 2026-07-16 | ⏳ |
 | 11 | Heap / Priority Queue | 7 | 0 | 2026-07-20 | ⏳ |
 | 12 | Backtracking | 9 | 0 | 2026-07-25 | ⏳ |
-| 13 | Graphs | 14 | 4 | 2026-08-01 | 🔄 In Progress |
+| 13 | Graphs | 15 | 5 | 2026-08-01 | 🔄 In Progress |
 | 14 | Advanced Graphs | 6 | 0 | 2026-08-05 | ⏳ |
 | 15 | Greedy | 8 | 0 | 2026-08-09 | ⏳ |
 | 16 | Intervals | 6 | 0 | 2026-08-13 | ⏳ |
@@ -245,6 +245,7 @@ Last updated: 2026-07-05 (Clone Graph)
 | 12 | Graph Valid Tree | Medium | [#261](https://leetcode.com/problems/graph-valid-tree/) | Union Find | ⏳ | — | — |
 | 13 | Word Ladder | Hard | [#127](https://leetcode.com/problems/word-ladder/) | BFS | ⏳ | — | — |
 | *(bonus)* | Find the Town Judge | Easy | [#997](https://leetcode.com/problems/find-the-town-judge/) | Graph — In-degree / Out-degree Counting | ✅ | 2026-07-05 | [→](graphs/997-find-the-town-judge/learnings.md) |
+| *(bonus)* | Evaluate Division | Medium | [#399](https://leetcode.com/problems/evaluate-division/) | Weighted Graph DFS | ✅ | 2026-07-05 | [→](graphs/399-evaluate-division/learnings.md) |
 
 ## Phase 14 — Advanced Graphs ⏳
 

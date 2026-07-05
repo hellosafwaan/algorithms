@@ -339,6 +339,18 @@ function dp(n, cache = {}) {
 
 ---
 
+## Weighted Graph DFS — Search-and-Accumulate with a Sentinel
+
+**Core idea:** When searching for *any one* valid path and computing something along it (not just reachability), the DFS accumulates a running value and uses a sentinel (impossible as a real answer, e.g. `-1`) to mark "this branch dead-ended." Return **immediately** on success — don't keep looping, or a dead branch's placeholder can corrupt an already-found correct answer.
+
+**Modeling tip:** equation-style inputs (`a op b = value`) often become **two** directed edges — the given relationship plus its inverse (division → reciprocal weight).
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 399 — Evaluate Division | Weighted graph, search + accumulate product | 2 directed edges per equation (value + reciprocal); DFS multiplies weights; `-1` sentinel for dead ends; return immediately on success. Canonical alternative: Weighted Union-Find. |
+
+---
+
 ## Bit Manipulation — Mask & Shift
 
 **Core idea:** `n & 1` reads the last bit (AND with 1 wipes every other bit). `n = n >>> 1` shifts the next bit into the last position. Loop while `n !== 0`.

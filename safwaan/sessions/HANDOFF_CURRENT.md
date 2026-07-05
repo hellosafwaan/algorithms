@@ -1,50 +1,50 @@
-# Handoff — 2026-07-05 (four-problem graphs day)
+# Handoff — 2026-07-05 (five-problem graphs marathon)
 
 ## What Was Just Completed
 
-Four problems in one day, spanning the full range of session quality — a genuinely rich dataset on how Safwaan performs under different conditions:
+Five problems in one day — the fullest graphs-phase session yet:
 
 1. **LC 200 — Number of Islands** (video-assisted, own-words explanation skipped → short-fuse cold redo 2026-07-19)
-2. **LC 130 — Surrounded Regions** (fully self-derived via Socratic tracing — the ownership reference case)
+2. **LC 130 — Surrounded Regions** (fully self-derived — the ownership reference case)
 3. **LC 997 — Find the Town Judge** (bonus, ran to 3am, needed direct answers under fatigue)
-4. **LC 133 — Clone Graph** — energy fully recovered, sharp session again. Built and compared THREE full solutions (recursive DFS, iterative BFS, iterative DFS with explicit stack). Only mechanical nudges needed: constructor `new` keyword, passing the original (un-cloned) neighbors array by mistake, a loop-variable-shadowing trap, and — interestingly — implementing the map-registration order *wrong* despite having just correctly *stated* the rule verbally (caught via re-tracing, not by re-asking the verbal question). Wrote all three solutions into `index.js` with detailed comments and built a three-way comparison visualiser per his request (`graphs/133-clone-a-graph/index.html`) — side-by-side original/clone graph SVG rendering with mode tabs.
-
-**Key proof landed this session:** the iterative BFS and iterative DFS solutions are identical except for one line (`queue.shift()` vs `stack.pop()`) — this is now the second, more concrete demonstration of the "stack→DFS, queue→BFS" rule first introduced at LC 200 earlier the same day.
+4. **LC 133 — Clone Graph** — energy recovered, sharp again, built/compared 3 solutions
+5. **LC 399 — Evaluate Division** (bonus) — started from genuine "I have no idea." Fully self-derived the entire graph model (equations → weighted directed graph with reciprocal edges, DFS with running product, visited set, dual `-1` failure cases) with zero hints. Got stuck hard on the actual DFS combining logic — needed the corrected function (sentinel `-1` + return-immediately-on-success) given directly after several failed attempts. Complexity reasoning also needed piece-by-piece scaffolding (same shape as the old LC 191 log-complexity difficulty), but he assembled it correctly once broken down: O(E + Q(N+E)). Learned what Union-Find is, conceptually only — not implemented, flagged for later.
 
 ---
 
 ## Safwaan's Current State
 
-**Focus:** Phase 13 (Graphs), 2/13 curriculum + 2 bonus (LC 997, effectively LC 133 is curriculum #2) done in one day. Phase 9 (Trees) still open at 5/15.
+**Focus:** Phase 13 (Graphs), 2/13 curriculum + 3 bonus (LC 997, LC 399, and LC 133 counts as curriculum #2) done in one marathon day. Phase 9 (Trees) still open at 5/15.
 
-**What's solid from today:**
-- Grid-as-graph flood fill (LC 200), region-decision pattern (LC 130)
-- Clone-and-reuse via Map: register on discovery, before recursing/enqueueing further (LC 133) — clean transfer of the LC 200 mark-before-recurse principle to a new structure
-- Map (not Set) for object-reference-keyed lookups where you need to retrieve a specific value, not just check membership
-- DFS/BFS as a "which end of the pending-work list" choice, proven via the one-line BFS/iterative-DFS diff
+**What's newly solid:**
+- Recognizing "equation/relationship between pairs of things" as a weighted directed graph, including the reciprocal-edge insight — self-derived cleanly, zero hints.
+- Complexity decomposition habit (build cost + per-query cost + combine across queries) works once he's prompted to break it into pieces — same pattern as LC 191.
 
-**Gaps to probe:**
+**Genuinely new and NOT yet owned:**
+- **Search-and-accumulate DFS with a sentinel + return-on-first-success** (pattern #52) — this is a new shape distinct from every graph pattern earlier this session (not "collect then decide" like LC 130, not "combine all children" like LC 133). Given directly after real struggle. **Do not assume this transferred** — probe on the next "find a valid path, compute something along it" problem.
+- **Union-Find** — pure concept only (what it solves, find/union, path compression, union by rank). Zero implementation. Will need real teaching when Redundant Connection / Graph Valid Tree come up.
+
+**Gaps still open from earlier in the day:**
 - LC 200 cold redo 2026-07-19 — verbal walkthrough required before code.
-- LC 130 border-first flood fill — still not self-owned, probe at LC 417.
-- `?? 0` recall (LC 997) — retest at LC 383 (Ransom Note) revisit, uncertain if fatigue or real gap.
-- Two-sided directed-graph condition trap (LC 997) — watch on next in-degree/out-degree problem.
-- **New:** does the "which end of the list" DFS/BFS framing (from LC 133) stick better than the LC 200 stack/queue framing? This is the second explanation of the same fact in one day — if a third problem still shows confusion, try a different framing entirely.
-- **New:** LC 133's clone-and-reuse-via-map pattern connects directly to LC 138 (Copy List with Random Pointer, already on the Phase 6 curriculum) — good test of cross-structure pattern transfer when that problem comes up.
-- **Revisit queue still badly overdue** — flagged across six straight handoffs now. Genuinely non-negotiable at the next session start.
+- LC 130 border-first flood fill — not self-owned, probe at LC 417.
+- `?? 0` recall (LC 997) — retest at LC 383 revisit.
+- Two-sided directed-graph condition trap (LC 997).
+- DFS/BFS "which end of the list" framing (LC 133) — does it stick better than LC 200's framing?
 
-**Pacing note (still relevant):** the LC 997 vs LC 133 contrast on the same day (rough at 3am, sharp again later) confirms the earlier pacing observation wasn't a one-off. Keep this in mind, but don't over-index — four solid problems with only one rough patch is still a strong day overall.
+**Pacing:** five problems in one day is a lot. The 3am LC 997 dip was the clear low point; LC 399 (problem 5) held together better than expected for how late in the day it was, though the repeated "idk" on the DFS combining logic may partly reflect accumulated fatigue rather than pure difficulty. Worth a genuine, warm check-in next session about whether this pace feels sustainable to him — not a lecture, just checking in.
 
 ---
 
 ## Suggested Next Problems
 
-1. **Cold redo from revisit queue — truly non-negotiable now.** Pick the oldest overdue item.
+1. **Cold redo from revisit queue — genuinely overdue across seven straight handoffs now.** This is no longer optional.
 2. **LC 695 — Max Area of Island** — LC 200 ownership test.
-3. **LC 417 — Pacific Atlantic Water Flow** — home for the unowned border-first flood pattern.
-4. **LC 138 — Copy List with Random Pointer** (Phase 6) — natural test of whether the clone-and-reuse-via-map pattern transfers to a non-graph structure.
+3. **LC 417 — Pacific Atlantic Water Flow** — border-first flood test.
+4. **LC 138 — Copy List with Random Pointer** — clone-and-reuse-via-map transfer test.
+5. Watch for another "search a path + accumulate + sentinel" problem to retest pattern #52 cold.
 
 ## Coach Notes
 
-- At LC 417 and LC 138: don't assume pattern transfer from visualiser exposure alone — both were explicitly flagged as needing real testing, not assumed ownership.
-- Watch for the "verbal rule stated correctly, code doesn't follow it" gap (pattern #50) — when he states a rule correctly, still verify the implementation against it via trace rather than taking the correct statement as proof.
-- Continue defaulting to trace tables over verbal explanation for anything involving execution order or JS scoping subtleties (e.g., the loop-variable-shadowing case this session needed direct explanation since it's obscure JS behavior, not discoverable by tracing).
+- Don't over-credit LC 399 as "solved independently" in future recall — the graph modeling was genuinely his, but the core algorithmic mechanism (the part that actually makes the code correct) was given directly. Log it accurately as guided, not self-derived, when referencing this session later.
+- When introducing Union-Find properly later, he already has the vocabulary (find, union, path compression, union by rank) from this session's conceptual preview — can move faster than a cold introduction would require.
+- Continue the practice of breaking complexity questions into named pieces (build cost / per-operation cost / combine across N operations) rather than asking for the total in one shot — this has now worked twice (LC 191, LC 399).

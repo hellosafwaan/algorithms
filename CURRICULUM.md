@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases, 154 problems + 18 bonus problems = 172 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997 are bonus)
+Total: 18 phases, 154 problems + 19 bonus problems = 173 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399 are bonus)
 
 ---
 
@@ -266,6 +266,7 @@ Total: 18 phases, 154 problems + 18 bonus problems = 172 total (LC #383, #205, #
 | 12 | Graph Valid Tree | Medium | [LC #261](https://leetcode.com/problems/graph-valid-tree/) | Union Find |
 | 13 | Word Ladder | Hard | [LC #127](https://leetcode.com/problems/word-ladder/) | BFS |
 | *(bonus)* | Find the Town Judge | Easy | [LC #997](https://leetcode.com/problems/find-the-town-judge/) | Graph |
+| *(bonus)* | Evaluate Division | Medium | [LC #399](https://leetcode.com/problems/evaluate-division/) | Graph |
 
 ---
 
