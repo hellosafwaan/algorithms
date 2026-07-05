@@ -311,6 +311,7 @@ function dp(n, cache = {}) {
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 200 — Number of Islands | Count components (boolean signal) | One `true` per island — the first cell the scan reaches is the only flood origin; all later cells of that island fail the visited check |
+| LC 695 — Max Area of Island | Accumulate a value (size) instead of a boolean | `return 1 + sum of 4 recursive calls` instead of `true`/`false`. Confirmed cold transfer of the LC 200 pattern with zero re-teaching. Mutate-in-place variant drops the Set (77th→22nd percentile jump reversed, i.e. big win). |
 | LC 130 — Surrounded Regions | Region decision (collect array, decide after, two-pass act) | Walk hands back every coordinate touched, not just a boolean. Verdict (safe/captured) only computable once the whole region is walked — never decide or stop early. Decide-then-act as two separate passes over the array. Alternative: border-first flood (flood only from border cells, board itself as visited-tracker via a placeholder marker, one final pass) — O(1) aux space instead of O(m·n). **Not yet self-owned — flag for follow-up.** |
 
 ---

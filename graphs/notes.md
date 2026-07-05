@@ -24,6 +24,8 @@ Introduced at LC 200. Structure:
 
 Template: see [200-number-of-islands/learnings.md](200-number-of-islands/learnings.md).
 
+**Generalizes beyond boolean signals:** LC 695 (Max Area of Island) confirms the same walk can accumulate any region property — return `1 + sum of 4 recursive calls` instead of `true`/`false` to get region size instead of existence. Successfully transferred cold with zero re-teaching, confirming the LC 200 pattern was genuinely retained despite that problem's video-assisted origin.
+
 ## Visited tracking options
 - **Set of `'r,c'` strings** — keys must be primitives; `Set.has([r,c])` is always false (reference equality).
 - **Mutate the grid** (`'1'` → `'0'` as you flood) — O(1) auxiliary space, but mutates input; name the trade-off out loud in an interview.

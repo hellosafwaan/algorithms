@@ -15,6 +15,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 | LC 997 — Find the Town Judge | Graph — In-degree/Out-degree Counting | 2026-07-05 | 2026-07-19 — slightly shorter fuse; session ran late (3am, third problem of the day), several answers given directly under fatigue rather than derived | ⏳ |
 | LC 133 — Clone Graph | Graph Traversal — Clone-and-Reuse via Map | 2026-07-05 | 2026-07-26 — standard fuse, mostly self-driven with only mechanical nudges. At redo, attempt all three variants (recursive DFS, iterative BFS, iterative DFS) cold, not just one | ⏳ |
 | LC 399 — Evaluate Division | Weighted Graph DFS — search + accumulate with sentinel | 2026-07-05 | 2026-07-19 — shorter fuse; graph modeling was fully self-derived, but the core DFS combining logic (sentinel + return-on-success) was given directly after real struggle, so that specific mechanism needs a true cold retest | ⏳ |
+| LC 695 — Max Area of Island | Graph DFS — Flood Fill (accumulate area) | 2026-07-06 | 2026-07-27 — standard fuse. This one already served as a successful cold-transfer test of LC 200; treat this redo as confirming durability over time, not as first-time verification | ⏳ |
 | LC 145 — Binary Tree Postorder Traversal | DFS — Traversal Order (left-right-root) | 2026-07-01 | 2026-07-22 | ⏳ |
 | LC 94 — Binary Tree Inorder Traversal | DFS — Traversal Order (left-root-right) | 2026-07-01 | 2026-07-22 | ⏳ |
 | LC 144 — Binary Tree Preorder Traversal | DFS — Traversal Order (root-left-right) | 2026-07-01 | 2026-07-22 | ⏳ |
