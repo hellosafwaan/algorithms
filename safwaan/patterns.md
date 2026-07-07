@@ -6,6 +6,19 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 56. Assumed left-to-right scanning works without checking sort order
+- **Seen in:** LC 56 — Merge Intervals (2026-07-07)
+- **What happened:** Opened with "iterate left to right, non-overlapping → push, overlapping → merge," without questioning whether the input array was actually ordered in a way that makes a single left-to-right pass valid. Unlike Insert Interval (explicitly sorted/non-overlapping in the problem statement), Merge Intervals gives no such guarantee.
+- **How it was caught:** One direct question ("is the array guaranteed sorted?") — immediately identified that it wasn't and that sorting was needed first.
+- **Status:** Quick catch once asked, but didn't self-generate the question this time despite having just worked an adjacent problem where sort-order was the very first thing checked. Worth probing at the next interval/array problem: does he check the ordering guarantee unprompted before committing to a scanning strategy?
+
+### 57. Stated an overlap condition abstractly before it was correct
+- **Seen in:** LC 56 (2026-07-07)
+- **What happened:** First articulation of the two-interval overlap check was "current start <= next end" — a condition that's true for nearly any two valid intervals and doesn't actually test overlap. Corrected immediately once asked to write it with concrete numbers from a real example instead of abstract current/next labels.
+- **Status:** Consistent with the established pattern (#15) that abstract index/condition reasoning is unreliable in his head but resolves fast with concrete numbers. Same fix as always — force the trace.
+
+---
+
 ### 54. `const` on a variable reassigned later in the same loop — third recurrence
 - **Seen in:** LC 57 — Insert Interval (2026-07-07)
 - **What happened:** Declared `const newIntervalAdded = false`, then reassigned `newIntervalAdded = true` later inside the loop. Same shape as pattern #10 (LC 167, LC 977) — a variable that needs to change state across iterations declared as `const`.
@@ -263,6 +276,9 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 ---
 
 ## Breakthrough Moments
+
+### Loop-invariant reasoning + bug-shape recognition transfer cold to a new problem — LC 56 (2026-07-07)
+Same day as LC 57, on the very next problem. Two clean transfers of the previous session's insights, in new forms rather than exact repeats: (1) re-derived that once the array is sorted, `a<=d` is always true for adjacent intervals — same "recognize what an earlier guarantee already covers" reasoning as the LC 57 loop-invariant, but applied to a `min`/`max` call instead of a boolean condition, and (2) self-connected a missing-final-push bug to the *identical* bug shape from Insert Interval, unprompted, the moment it was named as "the same shape as a bug from last session." Also caught a second, independent instance of a dead `else if` branch using the same redundant-check instinct. Closed with a genuine metacognitive question — "why couldn't I think of the cleaner refactor myself" — reasoning correctly that noticing two variables tracking the same fact is an easier catch after a working solution exists than during first-draft construction. Strong evidence these aren't one-off insights from LC 57 but generalizing habits.
 
 ### Unprompted code-quality curiosity + correct loop-invariant reasoning — LC 57 (2026-07-07)
 After the solution was already accepted, unprompted asked "is there a better way to solve this?" — and, when asked to clarify, explicitly separated the question from time/space complexity: he meant the code itself, not performance. This led to a cleaner three-while-loop refactor (no boolean flag). He then independently pushed back on one of its conditions, asking why the merge loop didn't just reuse the full original overlap check instead of a reduced one. Walked through it correctly: since the prior loop's exit condition already guarantees half of the original check is true, re-checking it would be redundant, not wrong — a genuine loop-invariant argument, reasoned through rather than accepted on faith. First clearly logged instance of him treating code cleanliness/redundancy as a distinct axis worth interrogating, separate from correctness or Big-O.

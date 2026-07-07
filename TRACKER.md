@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-07 (Insert Interval)
+Last updated: 2026-07-07 (Merge Intervals)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-07-07 (Insert Interval)
 | Metric | Count |
 |--------|-------|
 | Total problems | 173 |
-| ✅ Complete | 53 |
+| ✅ Complete | 54 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 119 |
+| ⏳ Not started | 118 |
 
 ---
 
@@ -37,7 +37,7 @@ Last updated: 2026-07-07 (Insert Interval)
 | 13 | Graphs | 15 | 6 | 2026-08-01 | 🔄 In Progress |
 | 14 | Advanced Graphs | 6 | 0 | 2026-08-05 | ⏳ |
 | 15 | Greedy | 8 | 0 | 2026-08-09 | ⏳ |
-| 16 | Intervals | 6 | 1 | 2026-08-13 | 🔄 In Progress |
+| 16 | Intervals | 6 | 2 | 2026-08-13 | 🔄 In Progress |
 | 17 | Math & Geometry | 8 | 0 | 2026-08-17 | ⏳ |
 | 18 | Bit Manipulation | 7 | 2 | 2026-08-22 | 🔄 In Progress |
 
@@ -277,7 +277,7 @@ Last updated: 2026-07-07 (Insert Interval)
 |---|---------|------------|----|---------|--------|--------|-----------|
 | 1 | Meeting Rooms | Easy | [#252](https://leetcode.com/problems/meeting-rooms/) | Intervals | ⏳ | — | — |
 | 2 | Insert Interval | Medium | [#57](https://leetcode.com/problems/insert-interval/) | Intervals | ✅ | 2026-07-07 | [→](intervals/57-insert-intervals/learnings.md) |
-| 3 | Merge Intervals | Medium | [#56](https://leetcode.com/problems/merge-intervals/) | Intervals | ⏳ | — | — |
+| 3 | Merge Intervals | Medium | [#56](https://leetcode.com/problems/merge-intervals/) | Intervals | ✅ | 2026-07-07 | [→](intervals/56-merge-intervals/learnings.md) |
 | 4 | Non-Overlapping Intervals | Medium | [#435](https://leetcode.com/problems/non-overlapping-intervals/) | Greedy | ⏳ | — | — |
 | 5 | Meeting Rooms II | Medium | [#253](https://leetcode.com/problems/meeting-rooms-ii/) | Heap | ⏳ | — | — |
 | 6 | Minimum Interval to Include Each Query | Hard | [#2402](https://leetcode.com/problems/minimum-interval-to-include-each-query/) | Heap | ⏳ | — | — |

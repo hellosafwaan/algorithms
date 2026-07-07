@@ -1,23 +1,28 @@
-# Handoff — 2026-07-07
+# Handoff — 2026-07-07 (second problem of the day)
 
 ## What Was Just Completed
 
-**LC 57 — Insert Interval** (Phase 16 — Intervals, first problem in this phase). Self-directed jump ahead of curriculum order — Phase 13 (Graphs) is still at 6/15 and Phase 9 (Trees) at 5/15, both open.
+**LC 56 — Merge Intervals** (Phase 16 — Intervals, second problem in this phase, same day as LC 57). Revisit queue declined a second straight time — this time stated directly ("no redos now") rather than offered as a choice.
 
-Opened as a genuine blank ("I don't even know how to solve this"). Through Socratic questioning, fully self-derived the core insight before writing any code: given the sorted/non-overlapping guarantee, classify each existing interval relative to `newInterval` into one of three buckets — strictly before, overlapping (merge via `min` of starts / `max` of ends), or strictly after. Coding surfaced real bugs, all self-caught via tracing except one: the mechanism for pushing the merged interval *exactly once* needed to be taught directly after two stuck "idk" responses (landed via a light-switch metaphor → boolean flag). Bugs along the way: `const` reassignment (third recurrence of this exact habit — LC 167, 977, now 57), a `Math.min`/`Math.max` mixup in the merge formula, and a missing post-loop push for the case where `newInterval` never triggers the "after" branch.
+Opened incompletely: assumed a left-to-right scan alone would find overlaps, without checking whether the input was sorted (it isn't, unlike Insert Interval's guarantee) — corrected in one question. First stated overlap condition was abstract and wrong ("current start <= next end"); corrected once asked to write it with concrete numbers instead of labels. Strong transfer session from there: independently re-derived the LC 57 loop-invariant insight in a new form (once sorted, `a<=c` is always true, so `min(a,c)` always equals `a` — no real work being done by that call), and — the standout moment — self-connected a missing-final-push bug to the *identical* bug shape from Insert Interval the instant it was named as "the same shape as last session's bug," without needing the mechanism re-explained. Also independently fixed a boundary-condition bug (strict `<` vs `<=` for the "no overlap" check — touching intervals like `[1,4]`/`[4,5]` must merge) and caught a second dead-branch redundancy (an `else if` whose condition is the negation of the preceding `if`).
 
-After acceptance (59th/55th percentile), unprompted asked "is there a better way to write this" — explicitly about code cleanliness, not complexity. Walked through a cleaner three-while-loop refactor (no flag, structurally guarantees the one-time push), then independently pushed back on one of its conditions and correctly reasoned through a loop invariant: the merge loop only needs to check half of the original overlap condition, because the prior loop's exit condition already guarantees the other half. Genuinely new kind of engagement — first clearly logged instance of interrogating code quality/redundancy as its own axis, separate from correctness or Big-O.
+After acceptance (172/172, 6.82nd/36.27th percentile), asked "is there a better way to write this" again — same code-cleanliness framing as last session, confirming it wasn't a one-off. This time, energy visibly dropped during the refactor discussion (terse one-word answers, asked directly to be shown the code rather than deriving it) — a contrast to the sharper engagement during the core algorithm derivation earlier in the same session. Closed with a genuine unprompted metacognitive question: "why was I unable to think this in the first place?" — reasoned correctly, once walked through it, that noticing two variables track the same fact is an easier catch after a working solution exists to study than during first-draft construction under pressure.
 
 ---
 
 ## Safwaan's Current State
 
-**Focus:** Phase 16 (Intervals) just started, 1/6 done. Phase 13 (Graphs) open at 6/15. Phase 9 (Trees) open at 5/15.
+**Focus:** Phase 16 (Intervals), 2/6 done (LC 57, LC 56), both same day. Phase 13 (Graphs) open at 6/15. Phase 9 (Trees) open at 5/15.
+
+**Resolved/confirmed this session:**
+- Classify-and-merge pattern transfers cleanly across Intervals problems, even with a structural difference added (sort-first, since LC 56 isn't pre-sorted).
+- Loop-invariant reasoning is now confirmed generalizing, not a one-off from LC 57 — applied it cold in a new form (a `min`/`max` call instead of a boolean condition) and caught a second unrelated instance (dead `else if`) in the same session.
+- The "is there a better way to write this" code-cleanliness question recurred — worth treating as an emerging habit now, not a single spike.
 
 **New this session:**
-- Classify-and-merge single-pass pattern for Intervals — fully self-derived conceptually, two implementation shapes now on file (flag-gated, three-phase).
-- One-time-push mechanism (boolean flag / structural loop split) — new pattern, given directly, needs a cold retest.
-- Loop-invariant reasoning — new strength, first appearance, worth testing again to see if it's a durable instinct or a one-off.
+- "Notice two variables tracking the same fact" redundant-state insight (collapsing `currentInterval` into `result`'s last element) — new, given directly after he asked, but followed by a genuine self-reflective question about why it didn't occur to him first. Probe whether this becomes a review-time habit like the loop-invariant check did.
+- Didn't self-check whether the input was sorted before committing to a scan strategy this time, despite having just done exactly that one problem earlier at LC 57 — needed one direct prompt. Worth watching whether this becomes automatic or needs repeated prompting.
+- Noticeable energy drop specifically during post-acceptance refactor discussion — not obviously fatigue (early evening submission), possibly just interest tapering once the core problem was solved. Watch for recurrence.
 
 **Still open from before this session (untouched):**
 - LC 130 border-first flood fill — not self-owned, probe at LC 417 (Pacific Atlantic Water Flow).
@@ -26,18 +31,20 @@ After acceptance (59th/55th percentile), unprompted asked "is there a better way
 - DFS/BFS "which end of the list" framing (LC 133) vs the LC 200 stack/queue framing — which stuck? Probe at the next traversal problem.
 - Search-and-accumulate DFS with sentinel + return-on-first-success (LC 399, pattern #52) — given directly, not yet self-derived.
 - Union-Find — concept only, zero implementation.
-- **Revisit queue is severely overdue — flagged across NINE straight handoffs now.** Explicitly offered as a choice this session (revisit-first vs. new material); Safwaan chose to proceed with Insert Interval. Oldest overdue item: LC 3 (Longest Substring Without Repeating Characters), due since 2026-06-18. This needs to stop being optional at the next session — do it before anything else, don't ask again.
+- One-time-push mechanism (boolean flag / structural loop split, from LC 57) — still not cold-retested (LC 56 didn't need it, since it uses a running `currentInterval` and a single trailing push, not a mid-loop one-time push).
+- `const`-on-mutable-variable — did NOT recur this session (good sign, but only one data point).
+- **Revisit queue is severely overdue — flagged across TEN straight handoffs now.** Declined a second straight session, this time stated directly rather than asked. Oldest overdue item: LC 3, due since 2026-06-18. Stop offering it as optional — the next session should simply do it first, or flag loudly if he redirects again.
 
 ---
 
 ## Suggested Next Problems
 
-1. **Cold redo from revisit queue — force this, don't offer it as a choice again.** Pick LC 3 (oldest overdue) or another item flagged in `revisit-queue.md`.
-2. **LC 56 — Merge Intervals** — natural next Intervals problem, tests whether the classify-and-merge pattern (and the one-time-push mechanism) transfers without the "insert a new interval" framing.
-3. **LC 252 — Meeting Rooms** — first problem in Phase 16 per curriculum order, still open (simpler, good warm-up before Merge Intervals).
+1. **Cold redo from revisit queue — do not ask again, just do it first.** Pick LC 3 (oldest overdue) or another flagged item.
+2. **LC 252 — Meeting Rooms** — still open, first curriculum problem in Phase 16, simpler than the two just done.
+3. **LC 435 — Non-Overlapping Intervals** or **LC 253 — Meeting Rooms II** — next natural Intervals/Greedy problems if he wants to keep the Intervals momentum going.
 
 ## Coach Notes
 
-- The revisit-queue deferral is now a hard risk to data quality — nine sessions of new patterns stacking up (region-decision, clone-and-reuse, in/out-degree, weighted-DFS-with-sentinel, classify-and-merge, one-time-push) with zero cold verification since 2026-06-18. At the next session, do not present it as an optional choice — state that it's happening first.
-- The unprompted "is there a better way to write this" moment (separate from complexity) is worth watching for again — if it recurs, it's a genuine shift toward senior-engineer instincts, not just problem-solving.
-- `const`-on-mutable-variable (pattern #10/#54) has now recurred three times across a month. Consider naming it explicitly at the start of the coding phase on the next few problems rather than waiting for it to surface again.
+- The revisit-queue backlog is now a genuine risk, not just a nag — ten sessions of new patterns stacking up with zero cold verification since 2026-06-18. At the next session, don't ask; state plainly that a cold redo happens first, and only skip it if he explicitly redirects again after that.
+- Loop-invariant reasoning and the "is there a better way to write the code" curiosity are both now two-session-confirmed habits, not single spikes — safe to treat these as part of his developing toolkit going forward rather than re-testing them from scratch every time.
+- The energy drop during the refactor discussion is a new, small observation — not worth over-indexing on yet, but worth checking if it recurs specifically in "code cleanliness" discussions that happen after a problem is already accepted.
