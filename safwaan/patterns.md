@@ -6,6 +6,21 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 54. `const` on a variable reassigned later in the same loop — third recurrence
+- **Seen in:** LC 57 — Insert Interval (2026-07-07)
+- **What happened:** Declared `const newIntervalAdded = false`, then reassigned `newIntervalAdded = true` later inside the loop. Same shape as pattern #10 (LC 167, LC 977) — a variable that needs to change state across iterations declared as `const`.
+- **How it was caught:** One question ("what happens when the reassignment line runs?") — self-corrected immediately, as usual.
+- **Status:** Recurring across a wide span of sessions now (2026-06-03 to 2026-07-07). Catches fast every time when prompted, but doesn't yet pre-empt it. Worth flagging proactively at the start of the coding phase on any problem involving a loop-scoped state variable, rather than waiting for it to resurface again.
+
+### 55. One-time-push mechanism — needed the mechanism taught directly
+- **Seen in:** LC 57 (2026-07-07)
+- **What happened:** After correctly deriving all three interval cases (before/overlap/after) himself, could not figure out how to guarantee a merged value gets pushed to the result exactly once, even after two different framings of the same question ("idk" both times). Landed only after a concrete metaphor (light switch — starts off, flips once, never flips back) prompted "a boolean."
+- **Root cause:** New mechanism — using a stateful flag to gate a one-time action inside a loop hadn't come up in his prior problems (visited Sets/Maps track *many* items, not a single one-time event).
+- **Fix:** When a value needs to enter a result exactly once, but the trigger condition can fire multiple times, a boolean flag (or restructuring the loop so the action is structurally guaranteed to happen once, as in the three-phase alternative) is the tool.
+- **Status:** Genuinely new pattern, given after real struggle. Probe cold on the next problem with a similar "do X exactly once, but the check for X could pass multiple times" shape (e.g. Merge Intervals, or any problem inserting a single value into a sorted structure).
+
+---
+
 ### 1. Missing return on recursive call
 - **Seen in:** Sum 1 to N (Session 1)
 - **What happened:** Wrote `fibonacci(n-1) + fibonacci(n-2)` without returning it
@@ -248,6 +263,9 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 ---
 
 ## Breakthrough Moments
+
+### Unprompted code-quality curiosity + correct loop-invariant reasoning — LC 57 (2026-07-07)
+After the solution was already accepted, unprompted asked "is there a better way to solve this?" — and, when asked to clarify, explicitly separated the question from time/space complexity: he meant the code itself, not performance. This led to a cleaner three-while-loop refactor (no boolean flag). He then independently pushed back on one of its conditions, asking why the merge loop didn't just reuse the full original overlap check instead of a reduced one. Walked through it correctly: since the prior loop's exit condition already guarantees half of the original check is true, re-checking it would be redundant, not wrong — a genuine loop-invariant argument, reasoned through rather than accepted on faith. First clearly logged instance of him treating code cleanliness/redundancy as a distinct axis worth interrogating, separate from correctness or Big-O.
 
 ### LC 200 flood-fill ownership CONFIRMED via cold transfer — LC 695 (2026-07-06)
 LC 200 (Number of Islands) was video-assisted, and the concern logged at the time was "recognition, not ownership" — he'd followed a video, then declined to explain it in his own words at wrap-up. LC 695 (Max Area of Island) was specifically chosen as the transfer test: same self-guarding recursion shape (bounds → water → visited → mark → recurse), but requiring area-accumulation instead of a boolean return. Given zero mention of Number of Islands or flood fill beforehand, he reproduced the entire pattern from memory on the first attempt — only two small, self-corrected bugs (a `const` reassignment, and a missing water-check guard caught via one trace) plus one edge case (all-water grid needing `maxArea` to start at `0` instead of `-Infinity`). This is strong evidence the pattern transferred despite the video-assisted origin. Recommend still running the scheduled LC 200 cold redo (2026-07-19) since a video-solve's verbal-explanation gate was never actually passed, but this result meaningfully de-risks that concern.

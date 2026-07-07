@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 57 — Insert Interval | Intervals — Classify-and-Merge Single Pass | 2026-07-07 | 2026-07-28 — standard fuse. Fully self-derived the three cases and merge formula; only the one-time-push mechanism was given directly. At redo, check whether both implementation shapes (flag-gated, three-phase) come back, not just one. | ⏳ |
 | LC 200 — Number of Islands | Graph DFS — Flood Fill (grid) | 2026-07-05 | 2026-07-19 ⚡ short fuse — video-assisted solve, own-words explanation skipped; require verbal walkthrough before coding | ⏳ |
 | LC 130 — Surrounded Regions | Graph DFS — Region Decision (walk full region, decide after) | 2026-07-05 | 2026-07-26 — standard fuse, fully self-derived. At redo, also re-attempt Solution B (border-first flood) from scratch — he flagged that one as not yet owned | ⏳ |
 | LC 997 — Find the Town Judge | Graph — In-degree/Out-degree Counting | 2026-07-05 | 2026-07-19 — slightly shorter fuse; session ran late (3am, third problem of the day), several answers given directly under fatigue rather than derived | ⏳ |

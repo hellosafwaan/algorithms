@@ -4,6 +4,20 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Intervals — Classify-and-Merge Single Pass
+
+**Core idea:** Given a sorted, non-overlapping interval array and one new interval to place, classify each existing interval into exactly one of three buckets in a single pass: strictly before (push as-is), overlapping (merge into the new interval via `min` of starts / `max` of ends, push nothing), strictly after (push the merged interval — exactly once — then push the rest as-is).
+
+**One-time-push mechanism:** the merged interval must enter the result exactly once, even though the "no longer overlapping" check could pass on several subsequent intervals. Either gate it with a boolean flag (plus a post-loop fallback push, in case it never triggers inside the loop), or restructure into three sequential `while` loops sharing one index so the push is structurally guaranteed to happen once.
+
+**When to reach for it:** "Insert this interval into a sorted list," any single-new-item merge into an already-normalized interval set.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 57 — Insert Interval | Flag-gated single pass / three-phase loop (no flag) | Merge formula: `min` of starts, `max` of ends. Merge loop in the three-phase version only needs `current[0] <= newInterval[1]` — the other half of the overlap condition is already guaranteed by the prior loop's exit condition. |
+
+---
+
 ## Two Pointers
 
 **Core idea:** Use two indices to avoid a nested loop. Works when the array has a property (sorted, structure) that makes pointer movement deterministic.

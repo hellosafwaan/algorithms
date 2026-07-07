@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-06 (Max Area of Island)
+Last updated: 2026-07-07 (Insert Interval)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-07-06 (Max Area of Island)
 | Metric | Count |
 |--------|-------|
 | Total problems | 173 |
-| ✅ Complete | 52 |
+| ✅ Complete | 53 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 120 |
+| ⏳ Not started | 119 |
 
 ---
 
@@ -37,7 +37,7 @@ Last updated: 2026-07-06 (Max Area of Island)
 | 13 | Graphs | 15 | 6 | 2026-08-01 | 🔄 In Progress |
 | 14 | Advanced Graphs | 6 | 0 | 2026-08-05 | ⏳ |
 | 15 | Greedy | 8 | 0 | 2026-08-09 | ⏳ |
-| 16 | Intervals | 6 | 0 | 2026-08-13 | ⏳ |
+| 16 | Intervals | 6 | 1 | 2026-08-13 | 🔄 In Progress |
 | 17 | Math & Geometry | 8 | 0 | 2026-08-17 | ⏳ |
 | 18 | Bit Manipulation | 7 | 2 | 2026-08-22 | 🔄 In Progress |
 
@@ -271,12 +271,12 @@ Last updated: 2026-07-06 (Max Area of Island)
 | 7 | Partition Labels | Medium | [#763](https://leetcode.com/problems/partition-labels/) | Greedy | ⏳ | — | — |
 | 8 | Valid Parenthesis String | Medium | [#678](https://leetcode.com/problems/valid-parenthesis-string/) | Greedy | ⏳ | — | — |
 
-## Phase 16 — Intervals ⏳
+## Phase 16 — Intervals 🔄
 
 | # | Problem | Difficulty | LC | Pattern | Status | Solved | Learnings |
 |---|---------|------------|----|---------|--------|--------|-----------|
 | 1 | Meeting Rooms | Easy | [#252](https://leetcode.com/problems/meeting-rooms/) | Intervals | ⏳ | — | — |
-| 2 | Insert Interval | Medium | [#57](https://leetcode.com/problems/insert-interval/) | Intervals | ⏳ | — | — |
+| 2 | Insert Interval | Medium | [#57](https://leetcode.com/problems/insert-interval/) | Intervals | ✅ | 2026-07-07 | [→](intervals/57-insert-intervals/learnings.md) |
 | 3 | Merge Intervals | Medium | [#56](https://leetcode.com/problems/merge-intervals/) | Intervals | ⏳ | — | — |
 | 4 | Non-Overlapping Intervals | Medium | [#435](https://leetcode.com/problems/non-overlapping-intervals/) | Greedy | ⏳ | — | — |
 | 5 | Meeting Rooms II | Medium | [#253](https://leetcode.com/problems/meeting-rooms-ii/) | Heap | ⏳ | — | — |

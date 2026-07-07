@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Insert Interval — Visualiser</title>
+<style>
+  :root {
+    --purple: #7c6af7;
+    --yellow: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+    --dark: #1c2038;
+    --border: #2e3560;
+    --bg: #12141f;
+    --panel: #181b2c;
+    --text: #e5e7eb;
+    --muted: #8b91a7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding: 24px;
+  }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+
+  .top-controls {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  select, button {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  button:hover, select:hover { border-color: var(--purple); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  label { font-size: 13px; color: var(--muted); margin-right: 6px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .panel h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+
+  /* Number line visual */
+  .ruler {
+    position: relative;
+    height: 20px;
+    margin-left: 130px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tick {
+    position: absolute;
+    font-size: 10px;
+    color: var(--muted);
+    transform: translateX(-50%);
+    bottom: 2px;
+  }
+  .track-row {
+    display: flex;
+    align-items: center;
+    height: 34px;
+    margin-bottom: 4px;
+  }
+  .row-label {
+    width: 130px;
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: monospace;
+  }
+  .track {
+    position: relative;
+    flex: 1;
+    height: 24px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 4px;
+  }
+  .bar {
+    position: absolute;
+    top: 0;
+    height: 24px;
+    border-radius: 4px;
+    border: 1.5px solid var(--border);
+    background: var(--dark);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: left 0.25s ease, width 0.25s ease, background 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+    font-family: monospace;
+  }
+  .bar.current { background: var(--purple); border-color: var(--purple); color: #fff; z-index: 3; }
+  .bar.pushed { background: var(--green); border-color: var(--green); color: #06281d; }
+  .bar.merged { background: var(--green); border-color: var(--green); opacity: 0.32; color: #06281d; }
+  .bar.newinterval-growing { background: var(--yellow); border-color: var(--yellow); color: #3a2a02; z-index: 2; }
+  .bar.newinterval-final { background: var(--green); border-color: var(--green); color: #06281d; z-index: 2; }
+  .bar.empty-msg { position: static; width: 100%; background: transparent; border: 1px dashed var(--border); color: var(--muted); }
+
+  .result-row-wrap { margin-top: 4px; min-height: 34px; }
+  .result-empty { font-size: 12px; color: var(--muted); font-style: italic; padding: 6px 0 0 130px; }
+
+  /* Code panel */
+  pre.code {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.65;
+    font-family: "SF Mono", Consolas, monospace;
+    overflow-x: auto;
+  }
+  .code-line {
+    display: block;
+    padding: 1px 8px;
+    border-radius: 4px;
+    white-space: pre;
+  }
+  .code-line.active {
+    background: rgba(124, 106, 247, 0.25);
+    border-left: 3px solid var(--purple);
+    padding-left: 5px;
+  }
+
+  /* Step explanation */
+  .step-box {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-top: 14px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .badge {
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+  }
+  .badge.init { background: var(--border); color: var(--text); }
+  .badge.check-true { background: var(--green); color: #06281d; }
+  .badge.check-false { background: var(--red); color: #2a0d0d; }
+  .badge.action { background: var(--purple); color: #fff; }
+  .badge.done { background: var(--green); color: #06281d; }
+  .step-text { font-size: 13px; line-height: 1.5; }
+
+  /* Variables panel */
+  .vars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 12.5px;
+  }
+  .var-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+  .var-item .k { color: var(--muted); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; display:block; margin-bottom: 2px;}
+  .var-item .v { font-family: monospace; }
+
+  /* Nav controls */
+  .nav {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 16px;
+  }
+  .nav .spacer { flex: 1; }
+  .step-counter { font-size: 12px; color: var(--muted); font-family: monospace; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend .item { display: flex; align-items: center; gap: 6px; }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+</style>
+</head>
+<body>
+
+<h1>Insert Interval — LC 57</h1>
+<div class="sub">Classify-and-merge single pass · step through the exact execution of both solution variants</div>
+
+<div class="top-controls">
+  <div>
+    <label for="testcase">Test case</label>
+    <select id="testcase"></select>
+  </div>
+  <div>
+    <label for="solution">Solution</label>
+    <select id="solution">
+      <option value="flag">1 — Single pass, boolean flag</option>
+      <option value="threephase">2 — Three while loops, no flag</option>
+    </select>
+  </div>
+</div>
+
+<div class="layout">
+  <div>
+    <div class="panel" id="visual-panel">
+      <h2>Intervals</h2>
+      <div class="ruler" id="ruler"></div>
+      <div id="rows"></div>
+      <div class="result-row-wrap">
+        <div class="track-row">
+          <div class="row-label">Result</div>
+        </div>
+        <div id="result-rows"></div>
+        <div class="result-empty" id="result-empty">— nothing pushed yet —</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="item"><span class="swatch" style="background:var(--purple)"></span>active / current</div>
+      <div class="item"><span class="swatch" style="background:var(--yellow)"></span>newInterval, still growing</div>
+      <div class="item"><span class="swatch" style="background:var(--green)"></span>confirmed / pushed / done</div>
+      <div class="item"><span class="swatch" style="background:var(--red)"></span>guard check failed</div>
+      <div class="item"><span class="swatch" style="background:var(--dark);border:1px solid var(--border)"></span>not yet processed</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel">
+      <h2>Code</h2>
+      <pre class="code" id="code"></pre>
+      <div class="step-box">
+        <span class="badge" id="badge">INIT</span>
+        <div class="step-text" id="step-text">Ready.</div>
+      </div>
+      <div class="nav">
+        <button id="prev">&larr; Prev</button>
+        <button id="next">Next &rarr;</button>
+        <button id="play">&#9654; Play</button>
+        <span class="spacer"></span>
+        <span class="step-counter" id="counter">0 / 0</span>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:16px;">
+      <h2>Variables</h2>
+      <div class="vars" id="vars"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const TEST_CASES = [
+  { name: "Empty intervals", intervals: [], newInterval: [5,7] },
+  { name: "Single interval — no overlap", intervals: [[3,5]], newInterval: [7,9] },
+  { name: "Single interval — merges fully", intervals: [[1,5]], newInterval: [2,3] },
+  { name: "Classic — gap in the middle", intervals: [[1,3],[6,9]], newInterval: [2,5] },
+  { name: "Multiple consecutive overlaps", intervals: [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval: [4,8] },
+  { name: "Skewed — newInterval after everything", intervals: [[1,2],[3,4],[5,6]], newInterval: [8,10] },
+];
+
+const CODE_FLAG = [
+  "function insert(intervals, newInterval) {",
+  "  let newIntervalAdded = false;",
+  "  const result = [];",
+  "  for (let i = 0; i < n; i++) {",
+  "    const current = intervals[i];",
+  "    if (current[1] < newInterval[0]) {",
+  "      result.push(current);",
+  "    } else if (current[0] > newInterval[1]) {",
+  "      if (!newIntervalAdded) {",
+  "        result.push(newInterval);",
+  "        newIntervalAdded = true;",
+  "      }",
+  "      result.push(current);",
+  "    } else {",
+  "      newInterval[0] = Math.min(newInterval[0], current[0]);",
+  "      newInterval[1] = Math.max(newInterval[1], current[1]);",
+  "    }",
+  "  }",
+  "  if (!newIntervalAdded) result.push(newInterval);",
+  "  return result;",
+  "}",
+];
+
+const CODE_THREEPHASE = [
+  "function insertThreePass(intervals, newInterval) {",
+  "  const result = [];",
+  "  let i = 0;",
+  "  while (i < n && intervals[i][1] < newInterval[0]) {",
+  "    result.push(intervals[i]);",
+  "    i++;",
+  "  }",
+  "  while (i < n && intervals[i][0] <= newInterval[1]) {",
+  "    newInterval[0] = Math.min(newInterval[0], intervals[i][0]);",
+  "    newInterval[1] = Math.max(newInterval[1], intervals[i][1]);",
+  "    i++;",
+  "  }",
+  "  result.push(newInterval);",
+  "  while (i < n) {",
+  "    result.push(intervals[i]);",
+  "    i++;",
+  "  }",
+  "  return result;",
+  "}",
+];
+
+// ---------- Step generators (debugger-faithful: every guard, every branch) ----------
+
+function generateStepsFlag(intervals, newIntervalInput) {
+  const steps = [];
+  const newInterval = newIntervalInput.slice();
+  const result = [];
+  let newIntervalAdded = false;
+  const n = intervals.length;
+
+  const snap = (extra) => Object.assign({
+    result: result.map(r => r.slice()),
+    newInterval: newInterval.slice(),
+    flag: newIntervalAdded,
+  }, extra);
+
+  steps.push(snap({ line: 1, badge: "init", text: `Initialize: newIntervalAdded = false, result = [], n = ${n}` }));
+
+  let i = 0;
+  while (true) {
+    const cond = i < n;
+    steps.push(snap({ line: 3, badge: cond ? "check-true" : "check-false", i,
+      text: `Loop check: i (${i}) < n (${n}) &rarr; ${cond}${cond ? "" : ", exit loop"}` }));
+    if (!cond) break;
+
+    const current = intervals[i];
+    steps.push(snap({ line: 4, badge: "action", i, current: current.slice(),
+      text: `current = intervals[${i}] = [${current}]` }));
+
+    const beforeCheck = current[1] < newInterval[0];
+    steps.push(snap({ line: 5, badge: beforeCheck ? "check-true" : "check-false", i, current: current.slice(),
+      text: `Check: current[1] (${current[1]}) &lt; newInterval[0] (${newInterval[0]}) &rarr; ${beforeCheck}` }));
+
+    if (beforeCheck) {
+      result.push(current.slice());
+      steps.push(snap({ line: 6, badge: "action", i, current: current.slice(),
+        text: `current ends before newInterval starts &mdash; push [${current}] to result` }));
+    } else {
+      const afterCheck = current[0] > newInterval[1];
+      steps.push(snap({ line: 7, badge: afterCheck ? "check-true" : "check-false", i, current: current.slice(),
+        text: `Check: current[0] (${current[0]}) &gt; newInterval[1] (${newInterval[1]}) &rarr; ${afterCheck}` }));
+
+      if (afterCheck) {
+        const flagCond = !newIntervalAdded;
+        steps.push(snap({ line: 8, badge: flagCond ? "check-true" : "check-false", i, current: current.slice(),
+          text: `Check: !newIntervalAdded &rarr; ${flagCond}` }));
+
+        if (flagCond) {
+          result.push(newInterval.slice());
+          steps.push(snap({ line: 9, badge: "action", i, current: current.slice(),
+            text: `Push merged newInterval [${newInterval}] to result &mdash; first time it's after this interval` }));
+          newIntervalAdded = true;
+          steps.push(snap({ line: 10, badge: "action", i, current: current.slice(),
+            text: `Set newIntervalAdded = true (won't push newInterval again)` }));
+        }
+        result.push(current.slice());
+        steps.push(snap({ line: 12, badge: "action", i, current: current.slice(),
+          text: `Push current [${current}] to result` }));
+      } else {
+        const oldNI = newInterval.slice();
+        newInterval[0] = Math.min(newInterval[0], current[0]);
+        steps.push(snap({ line: 14, badge: "action", i, current: current.slice(), merging: true,
+          text: `Overlap &mdash; merge start: newInterval[0] = min(${oldNI[0]}, ${current[0]}) = ${newInterval[0]}` }));
+        newInterval[1] = Math.max(newInterval[1], current[1]);
+        steps.push(snap({ line: 15, badge: "action", i, current: current.slice(), merging: true,
+          text: `merge end: newInterval[1] = max(${oldNI[1]}, ${current[1]}) = ${newInterval[1]}` }));
+      }
+    }
+    i++;
+  }
+
+  const postFlagCheck = !newIntervalAdded;
+  steps.push(snap({ line: 18, badge: postFlagCheck ? "check-true" : "check-false", i: n,
+    text: `Loop finished. Check: !newIntervalAdded &rarr; ${postFlagCheck}` }));
+  if (postFlagCheck) {
+    result.push(newInterval.slice());
+    steps.push(snap({ line: 18, badge: "action", i: n,
+      text: `newInterval never triggered the "after" case inside the loop &mdash; push it now: [${newInterval}]` }));
+  }
+  steps.push(snap({ line: 19, badge: "done", i: n, done: true,
+    text: `Return result: ${JSON.stringify(result)}` }));
+
+  return steps;
+}
+
+function generateStepsThreePhase(intervals, newIntervalInput) {
+  const steps = [];
+  const newInterval = newIntervalInput.slice();
+  const result = [];
+  const n = intervals.length;
+  let i = 0;
+
+  const snap = (extra) => Object.assign({
+    result: result.map(r => r.slice()),
+    newInterval: newInterval.slice(),
+  }, extra);
+
+  steps.push(snap({ line: 1, badge: "init", i, text: `Initialize: result = [], i = 0, n = ${n}` }));
+
+  // Phase 1
+  while (true) {
+    const cond = i < n && intervals[i][1] < newInterval[0];
+    const detail = i < n ? `intervals[${i}][1] (${intervals[i][1]}) < newInterval[0] (${newInterval[0]})` : `i (${i}) < n (${n}) is false`;
+    steps.push(snap({ line: 3, badge: cond ? "check-true" : "check-false", i, phase: 1,
+      text: `Phase 1 check: ${detail} &rarr; ${cond}${cond ? "" : ", exit phase 1"}` }));
+    if (!cond) break;
+    result.push(intervals[i].slice());
+    steps.push(snap({ line: 4, badge: "action", i, phase: 1,
+      text: `Push intervals[${i}] = [${intervals[i]}] &mdash; entirely before newInterval` }));
+    i++;
+    steps.push(snap({ line: 5, badge: "action", i, phase: 1, text: `i++ &rarr; i = ${i}` }));
+  }
+
+  // Phase 2
+  while (true) {
+    const cond = i < n && intervals[i][0] <= newInterval[1];
+    const detail = i < n ? `intervals[${i}][0] (${intervals[i][0]}) <= newInterval[1] (${newInterval[1]})` : `i (${i}) < n (${n}) is false`;
+    steps.push(snap({ line: 7, badge: cond ? "check-true" : "check-false", i, phase: 2,
+      text: `Phase 2 check: ${detail} &rarr; ${cond}${cond ? "" : ", exit phase 2"}` }));
+    if (!cond) break;
+    const oldNI = newInterval.slice();
+    newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+    steps.push(snap({ line: 8, badge: "action", i, phase: 2,
+      text: `Merge start: newInterval[0] = min(${oldNI[0]}, ${intervals[i][0]}) = ${newInterval[0]}` }));
+    newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+    steps.push(snap({ line: 9, badge: "action", i, phase: 2,
+      text: `Merge end: newInterval[1] = max(${oldNI[1]}, ${intervals[i][1]}) = ${newInterval[1]}` }));
+    i++;
+    steps.push(snap({ line: 10, badge: "action", i, phase: 2, text: `i++ &rarr; i = ${i}` }));
+  }
+
+  result.push(newInterval.slice());
+  steps.push(snap({ line: 12, badge: "action", i, phase: 3,
+    text: `Push newInterval [${newInterval}] &mdash; exactly once, by construction, between phase 2 and phase 3` }));
+
+  // Phase 3
+  while (true) {
+    const cond = i < n;
+    steps.push(snap({ line: 13, badge: cond ? "check-true" : "check-false", i, phase: 3,
+      text: `Phase 3 check: i (${i}) < n (${n}) &rarr; ${cond}${cond ? "" : ", exit phase 3"}` }));
+    if (!cond) break;
+    result.push(intervals[i].slice());
+    steps.push(snap({ line: 14, badge: "action", i, phase: 3,
+      text: `Push intervals[${i}] = [${intervals[i]}] &mdash; entirely after newInterval` }));
+    i++;
+    steps.push(snap({ line: 15, badge: "action", i, phase: 3, text: `i++ &rarr; i = ${i}` }));
+  }
+
+  steps.push(snap({ line: 17, badge: "done", i, phase: 3, done: true,
+    text: `Return result: ${JSON.stringify(result)}` }));
+
+  return steps;
+}
+
+// ---------- Rendering ----------
+
+let currentSteps = [];
+let currentIndex = 0;
+let playTimer = null;
+let scaleMin = 0, scaleMax = 10;
+
+const testcaseSel = document.getElementById("testcase");
+const solutionSel = document.getElementById("solution");
+const codeEl = document.getElementById("code");
+const rowsEl = document.getElementById("rows");
+const rulerEl = document.getElementById("ruler");
+const resultRowsEl = document.getElementById("result-rows");
+const resultEmptyEl = document.getElementById("result-empty");
+const badgeEl = document.getElementById("badge");
+const stepTextEl = document.getElementById("step-text");
+const varsEl = document.getElementById("vars");
+const counterEl = document.getElementById("counter");
+
+TEST_CASES.forEach((tc, idx) => {
+  const opt = document.createElement("option");
+  opt.value = idx;
+  opt.textContent = tc.name;
+  testcaseSel.appendChild(opt);
+});
+
+function pct(v) {
+  return ((v - scaleMin) / (scaleMax - scaleMin)) * 100;
+}
+
+function computeScale(tc) {
+  const values = [];
+  tc.intervals.forEach(iv => { values.push(iv[0], iv[1]); });
+  values.push(tc.newInterval[0], tc.newInterval[1]);
+  if (values.length === 0) { scaleMin = 0; scaleMax = 10; return; }
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const pad = Math.max(1, (max - min) * 0.12);
+  scaleMin = Math.max(0, min - pad);
+  scaleMax = max + pad;
+  if (scaleMax === scaleMin) scaleMax = scaleMin + 10;
+}
+
+function renderRuler() {
+  rulerEl.innerHTML = "";
+  const steps = 5;
+  for (let k = 0; k <= steps; k++) {
+    const val = scaleMin + (scaleMax - scaleMin) * (k / steps);
+    const tick = document.createElement("div");
+    tick.className = "tick";
+    tick.style.left = pct(val) + "%";
+    tick.textContent = Math.round(val);
+    rulerEl.appendChild(tick);
+  }
+}
+
+function renderCode() {
+  const which = solutionSel.value === "flag" ? CODE_FLAG : CODE_THREEPHASE;
+  codeEl.innerHTML = which.map((line, idx) =>
+    `<span class="code-line" data-line="${idx}">${escapeHtml(line)}</span>`
+  ).join("");
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function buildSteps() {
+  const tc = TEST_CASES[testcaseSel.value];
+  computeScale(tc);
+  renderRuler();
+  if (solutionSel.value === "flag") {
+    currentSteps = generateStepsFlag(tc.intervals, tc.newInterval);
+  } else {
+    currentSteps = generateStepsThreePhase(tc.intervals, tc.newInterval);
+  }
+  currentIndex = 0;
+  renderCode();
+  renderStep();
+}
+
+function renderStep() {
+  const tc = TEST_CASES[testcaseSel.value];
+  const step = currentSteps[currentIndex];
+
+  // highlight code line
+  document.querySelectorAll(".code-line").forEach(el => el.classList.remove("active"));
+  const activeLine = document.querySelector(`.code-line[data-line="${step.line}"]`);
+  if (activeLine) activeLine.scrollIntoView({ block: "nearest" });
+  if (activeLine) activeLine.classList.add("active");
+
+  // badge + text
+  const badgeMap = {
+    "init": ["INIT", "init"],
+    "check-true": ["TRUE", "check-true"],
+    "check-false": ["FALSE", "check-false"],
+    "action": ["ACTION", "action"],
+    "done": ["DONE", "done"],
+  };
+  const [label, cls] = badgeMap[step.badge] || ["", "init"];
+  badgeEl.textContent = label;
+  badgeEl.className = "badge " + cls;
+  stepTextEl.innerHTML = step.text;
+
+  // rows for original intervals
+  rowsEl.innerHTML = "";
+  if (tc.intervals.length === 0) {
+    const row = document.createElement("div");
+    row.className = "track-row";
+    row.innerHTML = `<div class="row-label">intervals</div><div class="track"><div class="bar empty-msg">(empty array)</div></div>`;
+    rowsEl.appendChild(row);
+  } else {
+    tc.intervals.forEach((iv, idx) => {
+      const row = document.createElement("div");
+      row.className = "track-row";
+      const label = document.createElement("div");
+      label.className = "row-label";
+      label.textContent = `intervals[${idx}]`;
+      const track = document.createElement("div");
+      track.className = "track";
+      const bar = document.createElement("div");
+      bar.textContent = `[${iv}]`;
+      bar.style.left = pct(iv[0]) + "%";
+      bar.style.width = Math.max(4, pct(iv[1]) - pct(iv[0])) + "%";
+
+      const isCurrent = step.i === idx && !step.done;
+      const wasPushedDirectly = step.result.some(r => r[0] === iv[0] && r[1] === iv[1]);
+      const wasMerged = (() => {
+        // merged if it's "behind" us (idx < step.i, or idx === step.i on a merge-branch step) and NOT found directly in result
+        if (wasPushedDirectly) return false;
+        if (step.i === undefined) return false;
+        return idx < step.i || (idx === step.i && (step.phase === 2 || step.merging));
+      })();
+
+      bar.className = "bar";
+      if (isCurrent) bar.classList.add("current");
+      else if (wasPushedDirectly) bar.classList.add("pushed");
+      else if (wasMerged) bar.classList.add("merged");
+
+      track.appendChild(bar);
+      row.appendChild(label);
+      row.appendChild(track);
+      rowsEl.appendChild(row);
+    });
+  }
+
+  // newInterval row
+  const niRow = document.createElement("div");
+  niRow.className = "track-row";
+  const niLabel = document.createElement("div");
+  niLabel.className = "row-label";
+  niLabel.textContent = "newInterval";
+  const niTrack = document.createElement("div");
+  niTrack.className = "track";
+  const niBar = document.createElement("div");
+  niBar.textContent = `[${step.newInterval}]`;
+  niBar.style.left = pct(step.newInterval[0]) + "%";
+  niBar.style.width = Math.max(4, pct(step.newInterval[1]) - pct(step.newInterval[0])) + "%";
+  const niFinal = step.result.some(r => r[0] === step.newInterval[0] && r[1] === step.newInterval[1]);
+  niBar.className = "bar " + (niFinal ? "newinterval-final" : "newinterval-growing");
+  niTrack.appendChild(niBar);
+  niRow.appendChild(niLabel);
+  niRow.appendChild(niTrack);
+  rowsEl.appendChild(niRow);
+
+  // result rows
+  resultRowsEl.innerHTML = "";
+  if (step.result.length === 0) {
+    resultEmptyEl.style.display = "block";
+  } else {
+    resultEmptyEl.style.display = "none";
+    step.result.forEach((r, idx) => {
+      const row = document.createElement("div");
+      row.className = "track-row";
+      const label = document.createElement("div");
+      label.className = "row-label";
+      label.textContent = `result[${idx}]`;
+      const track = document.createElement("div");
+      track.className = "track";
+      const bar = document.createElement("div");
+      bar.className = "bar pushed";
+      bar.textContent = `[${r}]`;
+      bar.style.left = pct(r[0]) + "%";
+      bar.style.width = Math.max(4, pct(r[1]) - pct(r[0])) + "%";
+      track.appendChild(bar);
+      row.appendChild(label);
+      row.appendChild(track);
+      resultRowsEl.appendChild(row);
+    });
+  }
+
+  // variables panel
+  varsEl.innerHTML = "";
+  const vars = [
+    ["i", step.i !== undefined ? step.i : "—"],
+    ["current", step.current ? `[${step.current}]` : "—"],
+    ["newInterval", `[${step.newInterval}]`],
+  ];
+  if (solutionSel.value === "flag") {
+    vars.push(["newIntervalAdded", step.flag !== undefined ? String(step.flag) : "—"]);
+  } else {
+    vars.push(["phase", step.phase !== undefined ? step.phase : "—"]);
+  }
+  vars.push(["result", JSON.stringify(step.result)]);
+  vars.forEach(([k, v]) => {
+    const item = document.createElement("div");
+    item.className = "var-item";
+    item.innerHTML = `<span class="k">${k}</span><span class="v">${escapeHtml(String(v))}</span>`;
+    varsEl.appendChild(item);
+  });
+
+  counterEl.textContent = `${currentIndex + 1} / ${currentSteps.length}`;
+  document.getElementById("prev").disabled = currentIndex === 0;
+  document.getElementById("next").disabled = currentIndex === currentSteps.length - 1;
+}
+
+document.getElementById("prev").addEventListener("click", () => {
+  if (currentIndex > 0) { currentIndex--; renderStep(); }
+});
+document.getElementById("next").addEventListener("click", () => {
+  if (currentIndex < currentSteps.length - 1) { currentIndex++; renderStep(); }
+});
+document.getElementById("play").addEventListener("click", (e) => {
+  if (playTimer) {
+    clearInterval(playTimer);
+    playTimer = null;
+    e.target.innerHTML = "&#9654; Play";
+  } else {
+    e.target.innerHTML = "&#10074;&#10074; Pause";
+    playTimer = setInterval(() => {
+      if (currentIndex < currentSteps.length - 1) {
+        currentIndex++;
+        renderStep();
+      } else {
+        clearInterval(playTimer);
+        playTimer = null;
+        document.getElementById("play").innerHTML = "&#9654; Play";
+      }
+    }, 900);
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") document.getElementById("next").click();
+  if (e.key === "ArrowLeft") document.getElementById("prev").click();
+  if (e.key === " ") { e.preventDefault(); document.getElementById("play").click(); }
+});
+
+testcaseSel.addEventListener("change", buildSteps);
+solutionSel.addEventListener("change", buildSteps);
+
+buildSteps();
+</script>
+</body>
+</html>
