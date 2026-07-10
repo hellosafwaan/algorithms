@@ -10,6 +10,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 
 | Problem | Pattern | First Solved | Revisit After | Status |
 |---------|---------|-------------|---------------|--------|
+| LC 252 — Meeting Rooms | Intervals — Classify-and-Merge Single Pass (reduced, overlap check only) | 2026-07-10 | 2026-07-31 — standard fuse. Fastest, cleanest Intervals solve yet — correct on first attempt, only the recurring const/let bug needed a prompt. At redo, check whether the simplified direct-index form comes back without needing to write the `current`/`next` version first. | ⏳ |
 | LC 57 — Insert Interval | Intervals — Classify-and-Merge Single Pass | 2026-07-07 | 2026-07-28 — standard fuse. Fully self-derived the three cases and merge formula; only the one-time-push mechanism was given directly. At redo, check whether both implementation shapes (flag-gated, three-phase) come back, not just one. | ⏳ |
 | LC 56 — Merge Intervals | Intervals — Classify-and-Merge Single Pass (sort first) | 2026-07-07 | 2026-07-28 — standard fuse. Strong transfer session — self-connected the missing-final-push bug to the identical LC 57 bug, and re-derived the loop-invariant reasoning in a new form. At redo, check whether "check if sorted first" happens unprompted this time. | ⏳ |
 | LC 200 — Number of Islands | Graph DFS — Flood Fill (grid) | 2026-07-05 | 2026-07-19 ⚡ short fuse — video-assisted solve, own-words explanation skipped; require verbal walkthrough before coding | ⏳ |

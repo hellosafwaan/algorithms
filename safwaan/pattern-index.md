@@ -16,6 +16,7 @@ When starting a new problem, check here first. Find the pattern, recall what you
 |---------|--------|-------------|
 | LC 57 — Insert Interval | Flag-gated single pass / three-phase loop (no flag) | Merge formula: `min` of starts, `max` of ends. Merge loop in the three-phase version only needs `current[0] <= newInterval[1]` — the other half of the overlap condition is already guaranteed by the prior loop's exit condition. |
 | LC 56 — Merge Intervals | Sort first (no ordering guarantee), then classify-and-merge | Sort by start, then adjacent `[a,b]`/`[c,d]` always has `a<=c` — so only `b>=c` matters, and merged start is always `a`. Track `currentInterval`, push on a genuine gap (strict `<`, since touching intervals merge), plus one trailing push after the loop. Cleaner alternative: skip the separate variable, mutate `result[result.length-1]` directly — no trailing push needed. |
+| LC 252 — Meeting Rooms | Reduced to yes/no overlap check, no result array | Sort by start, then just compare `intervals[i]` to `intervals[i-1]` directly (no separate current/next variables needed). Any `intervals[i][0] < intervals[i-1][1]` (strict `<`) means overlap → `false`. No length-0/1 guard needed — the loop naturally falls through to `true`. |
 
 ---
 

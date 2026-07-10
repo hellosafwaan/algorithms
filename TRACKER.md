@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-07 (Merge Intervals)
+Last updated: 2026-07-10 (Meeting Rooms)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-07-07 (Merge Intervals)
 | Metric | Count |
 |--------|-------|
 | Total problems | 173 |
-| ✅ Complete | 54 |
+| ✅ Complete | 55 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 118 |
+| ⏳ Not started | 117 |
 
 ---
 
@@ -275,7 +275,7 @@ Last updated: 2026-07-07 (Merge Intervals)
 
 | # | Problem | Difficulty | LC | Pattern | Status | Solved | Learnings |
 |---|---------|------------|----|---------|--------|--------|-----------|
-| 1 | Meeting Rooms | Easy | [#252](https://leetcode.com/problems/meeting-rooms/) | Intervals | ⏳ | — | — |
+| 1 | Meeting Rooms | Easy | [#252](https://leetcode.com/problems/meeting-rooms/) | Intervals | ✅ | 2026-07-10 | [→](intervals/252-meeting-rooms/learnings.md) |
 | 2 | Insert Interval | Medium | [#57](https://leetcode.com/problems/insert-interval/) | Intervals | ✅ | 2026-07-07 | [→](intervals/57-insert-intervals/learnings.md) |
 | 3 | Merge Intervals | Medium | [#56](https://leetcode.com/problems/merge-intervals/) | Intervals | ✅ | 2026-07-07 | [→](intervals/56-merge-intervals/learnings.md) |
 | 4 | Non-Overlapping Intervals | Medium | [#435](https://leetcode.com/problems/non-overlapping-intervals/) | Greedy | ⏳ | — | — |

@@ -6,6 +6,20 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 58. `const` on a variable reassigned later in the loop — fourth+ recurrence
+- **Seen in:** LC 252 — Meeting Rooms (2026-07-10)
+- **What happened:** Declared `const current = intervals[0]`, then reassigned `current = next` inside the loop. Identical shape to pattern #54 (LC 57) and pattern #10 (LC 167, LC 977) — a variable that needs to change state across iterations declared as `const`.
+- **How it was caught:** One question ("what happens when the reassignment line runs, given how you declared it?") — self-corrected immediately, as always.
+- **Status:** Now recurring across at least 5 problems spanning a month and a half. Continues to catch instantly when prompted but has not yet become something he checks for proactively before running/submitting code. Worth naming explicitly as a pre-submission checklist item rather than waiting for it to resurface again.
+
+### 59. Declined the wrap-up reflection questions — asked coach to answer from the transcript
+- **Seen in:** LC 252 — Meeting Rooms (2026-07-10)
+- **What happened:** At wrap-up, when asked how the problem felt, to explain the solution in his own words, and for a submission link, replied "You can read the chat and answer the questions" rather than answering directly.
+- **Context/distinction from LC 200:** At LC 200 this same skip was flagged as a red flag (video-assisted solve, declined explanation → recognition not ownership). Here the context is different: he actively wrote and traced every line of code himself across the session, self-caught the recurring `const` bug, correctly reasoned complexity and the touching-interval edge case unprompted, and drove two rounds of code-cleanliness refactoring largely independently (spotted the dead guard via a trace, then proposed the `current`/`next` removal himself when prompted only to "look for it"). The ownership evidence is already in the transcript — this reads as end-of-session low effort on an easy, fully-understood problem, not a comprehension gap.
+- **Status:** Watch whether this becomes a habit on quick/easy problems specifically (a "not worth re-typing what I just did" pattern) versus a genuine avoidance signal. If it recurs on a Medium/Hard problem or one with more struggle, treat it with the same weight as the LC 200 flag.
+
+---
+
 ### 56. Assumed left-to-right scanning works without checking sort order
 - **Seen in:** LC 56 — Merge Intervals (2026-07-07)
 - **What happened:** Opened with "iterate left to right, non-overlapping → push, overlapping → merge," without questioning whether the input array was actually ordered in a way that makes a single left-to-right pass valid. Unlike Insert Interval (explicitly sorted/non-overlapping in the problem statement), Merge Intervals gives no such guarantee.
@@ -276,6 +290,9 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 ---
 
 ## Breakthrough Moments
+
+### Code-cleanliness curiosity now three-session-confirmed, with independent dead-code detection — LC 252 (2026-07-10)
+Third straight Intervals session (after LC 57, LC 56) where he unprompted asked "is there a better way to write this?" after a solution was already correct — confirms this is a stable habit, not a spike. New this time: when pointed at the `if (intervals.length <= 1) return true` guard and asked whether it did anything, he traced it cold (`intervals=[[5,10]]` and the empty array both fall through the loop to the same `return true`) and concluded it was dead code himself. Then, after removing the `current`/`next` variables was suggested as a direction to explore, he wrote the simplified direct-index version (`intervals[i]` vs `intervals[i-1]`) without further guidance. Fast, clean session overall — one recurring self-caught bug (`const` reassignment, 5th+ recurrence) aside, this was closer to independent execution than guided derivation.
 
 ### Loop-invariant reasoning + bug-shape recognition transfer cold to a new problem — LC 56 (2026-07-07)
 Same day as LC 57, on the very next problem. Two clean transfers of the previous session's insights, in new forms rather than exact repeats: (1) re-derived that once the array is sorted, `a<=d` is always true for adjacent intervals — same "recognize what an earlier guarantee already covers" reasoning as the LC 57 loop-invariant, but applied to a `min`/`max` call instead of a boolean condition, and (2) self-connected a missing-final-push bug to the *identical* bug shape from Insert Interval, unprompted, the moment it was named as "the same shape as a bug from last session." Also caught a second, independent instance of a dead `else if` branch using the same redundant-check instinct. Closed with a genuine metacognitive question — "why couldn't I think of the cleaner refactor myself" — reasoning correctly that noticing two variables tracking the same fact is an easier catch after a working solution exists than during first-draft construction. Strong evidence these aren't one-off insights from LC 57 but generalizing habits.

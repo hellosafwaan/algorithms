@@ -32,3 +32,22 @@ function insert(intervals, newInterval) {
     return result;
 }
 ```
+
+## Meeting Rooms (LeetCode 252)
+
+**Pattern:** Classify-and-merge single pass, reduced to a yes/no overlap check
+
+**Core idea:** Sort by start (no ordering guarantee). Once sorted, a single pass only ever needs to compare each interval to the one immediately before it — if `intervals[i][0] < intervals[i-1][1]`, the current meeting starts before the previous one ends, which is a genuine overlap. Touching intervals (`end === nextStart`) are fine, since the check is strict `<`.
+
+**Simplification:** no separate `current`/`next` variables needed — index directly into the sorted array (`intervals[i]` vs `intervals[i-1]`). Also no length-0/1 guard needed — the loop (`i` starting at 1) naturally does nothing and falls through to `return true` when the array is that short.
+
+**Template:**
+```js
+function canAttendMeetings(intervals) {
+    intervals.sort((a, b) => a[0] - b[0]);
+    for (let i = 1; i < intervals.length; i++) {
+        if (intervals[i][0] < intervals[i - 1][1]) return false;
+    }
+    return true;
+}
+```
