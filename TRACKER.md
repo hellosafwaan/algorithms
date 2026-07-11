@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-11 (Interval List Intersections, bonus)
+Last updated: 2026-07-12 (Count Days Without Meetings, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-11 (Interval List Intersections, bonus)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 174 |
-| ✅ Complete | 56 |
+| Total problems | 175 |
+| ✅ Complete | 57 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 117 |
 
@@ -282,6 +282,7 @@ Last updated: 2026-07-11 (Interval List Intersections, bonus)
 | 5 | Meeting Rooms II | Medium | [#253](https://leetcode.com/problems/meeting-rooms-ii/) | Heap | ⏳ | — | — |
 | 6 | Minimum Interval to Include Each Query | Hard | [#2402](https://leetcode.com/problems/minimum-interval-to-include-each-query/) | Heap | ⏳ | — | — |
 | 7 *(bonus)* | Interval List Intersections | Medium | [#986](https://leetcode.com/problems/interval-list-intersections/) | Two Pointers | ✅ | 2026-07-11 | [→](intervals/986-interval-list-intersections/learnings.md) |
+| 8 *(bonus)* | Count Days Without Meetings | Medium | [#3169](https://leetcode.com/problems/count-days-without-meetings/) | Intervals | ✅ | 2026-07-12 | [→](intervals/3169-count-days-without-meetings/learnings.md) |
 
 ## Phase 17 — Math & Geometry ⏳
 

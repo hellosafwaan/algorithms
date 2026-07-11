@@ -77,3 +77,37 @@ function intervalIntersection(firstList, secondList) {
     return result;
 }
 ```
+
+## Count Days Without Meetings (LeetCode 3169, bonus)
+
+**Pattern:** Classify-and-merge (same as LC 57/56/252), followed by a gap-summation pass
+
+**Core idea:** Merge overlapping meetings into a clean, sorted, non-overlapping list — identical to Merge Intervals (sort by start, merge in place via `min`/`max`, `else`-push a new entry when there's no overlap). Then walk the merged list and sum free days: before the first meeting (`result[0][0] - 1`), between each consecutive pair (`next[0] - current[1] - 1` — the `-1` matters, since adjacent-but-non-overlapping meetings share no free day between them), and after the last meeting (`days - result[last][1]`).
+
+**When to reach for it:** Any "count the days/units NOT covered by a set of possibly-overlapping ranges" problem — merge first, then measure the complement.
+
+**Template:**
+```js
+function countDays(days, meetings) {
+    meetings.sort((a, b) => a[0] - b[0]);
+    const result = [meetings[0]];
+    for (let i = 1; i < meetings.length; i++) {
+        const current = result[result.length - 1];
+        const next = meetings[i];
+        if (next[0] <= current[1]) {
+            current[0] = Math.min(current[0], next[0]);
+            current[1] = Math.max(current[1], next[1]);
+        } else {
+            result.push(next);
+        }
+    }
+
+    let gap = 0;
+    for (let i = 1; i < result.length; i++) {
+        gap += result[i][0] - result[i - 1][1] - 1;
+    }
+    gap += result[0][0] - 1;
+    gap += days - result[result.length - 1][1];
+    return gap;
+}
+```

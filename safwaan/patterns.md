@@ -6,6 +6,31 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 62. `.push[x]` instead of `.push(x)` — bracket notation instead of a call
+- **Seen in:** LC 3169 — Count Days Without Meetings (2026-07-12)
+- **What happened:** Wrote `result.push[next];` — bracket-indexing into the `push` function object itself rather than calling it. No error thrown; the statement just silently evaluates to `undefined` and does nothing. `next` never entered `result`.
+- **How it was caught:** Asked directly since he requested a direct answer this time. New syntax-shape bug, but same *category* as pattern #45 (`=` vs `===` in a compound condition) — a single wrong character/token producing silent wrong behavior instead of a crash.
+- **Status:** First occurrence of this exact shape. Add to the general debugging checklist alongside #45: when something silently does nothing, check that method calls are actually using `()`, not `[]` or bare references.
+
+### 63. Push placed unconditionally instead of in the non-overlap `else` branch
+- **Seen in:** LC 3169 (2026-07-12)
+- **What happened:** After merging an overlapping interval in place (mutating `result[result.length-1]`), the code also pushed `next` as a brand-new entry — unconditionally, outside any `if`/`else`. This is the exact classify-and-merge shape from LC 57/56/252 done wrong: merge should replace, not merge-then-also-push.
+- **How it was caught:** Guided to trace a concrete overlapping example (`[1,5]` then `[3,7]`) with the syntax bug (#62) already fixed — he correctly predicted the corrupted result (`[[1,7],[3,7]]`) himself once the trace was walked step by step, then connected it to the negative-gap consequence when asked what the later gap-sum loop assumes about its input.
+- **Status:** Caught via trace, same as always. Once explicitly told "this is the same shape as LC 57/56, merge case → no push, else case → push," found the fix himself (moved `push` into an `else`).
+
+### 64. Independently added a missing `-1` to an interval-gap formula — genuine self-caught correctness bug
+- **Seen in:** LC 3169 (2026-07-12)
+- **What happened:** After fixing the two structural bugs above, the gap-sum loop originally read `gap += next[0] - current[1]`. Without being asked or prompted, the next code paste included `gap += next[0] - current[1] - 1`. This is a real, non-obvious fix: without it, two meetings that are adjacent-but-not-overlapping (e.g. `[1,3]` then `[4,6]` — no shared day, but also no free day between them) would incorrectly count 1 free day that doesn't exist.
+- **Status:** Genuine unprompted correctness catch — not something the coach flagged or hinted at. Verified via trace that the fix was actually necessary (without it, a test case with two adjacent-non-overlapping meetings produces a wrong, inflated answer). Worth asking directly next time whether this kind of catch is deliberate reasoning or something noticed while testing — he didn't get to answer this before ending the session.
+
+### 65. Declined ownership-check questions and ended the session — no recovery attempt, unlike LC 986
+- **Seen in:** LC 3169 (2026-07-12)
+- **What happened:** Video-assisted solve, disclosed honestly. At wrap-up, asked to explain the approach in his own words (why two loops, what each computes) — responded "you can't explain it by yourself? Don't ask me these questions today. I'm gonna go to bed" and ended the session.
+- **Context/distinction from LC 986 (previous session, same pattern family):** At LC 986, the same "I forgot, answer it for me" moment was followed by giving the answer once and then testing it with a fresh trace — full ownership was recovered in-session. Here, he shut down the attempt entirely and ended the session before any recovery could happen. Notably, mid-session he *did* show real independent work — traced the corrupted-result consequence himself and added the `-1` fix unprompted (#64) — so this isn't a case of zero engagement, just a refusal of the explicit wrap-up ritual specifically, at the end of a (likely late) session.
+- **Status:** Treat as closer to the LC 200 unresolved-ownership case than the LC 986 recovered case — schedule a shorter revisit fuse requiring the own-words explanation before coding at the redo. Don't push wrap-up reflection questions when he's stated he's ending the session (respect the stop), but don't skip logging the gap either.
+
+---
+
 ### 60. Traced a boolean condition and stated the wrong evaluation
 - **Seen in:** LC 986 — Interval List Intersections (2026-07-11)
 - **What happened:** While tracing `firstList[i]=[5,10]` vs `secondList[j]=[1,5]` (e1=10, e2=5), said "e1<e2 so j++" — the *action* (j++) was correct, but the stated condition is false (10 is not less than 5). Pattern-matched to the right branch without verifying the actual numeric comparison.
@@ -305,6 +330,9 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 ---
 
 ## Breakthrough Moments
+
+### Independent, unprompted correctness catch mid-debug — LC 3169 (2026-07-12)
+While fixing two structural bugs in a video-assisted solve (bracket-notation typo, unconditional push), the next code paste included an unrequested, unhinted fix: `gap += next[0] - current[1] - 1` (the `-1` wasn't there before). This is a genuinely non-obvious correctness detail — without it, adjacent-but-non-overlapping meetings would be miscounted as having a free day between them when they don't. Verified via trace that the fix was actually necessary and correct. This happened without any coach prompt pointing at the gap formula at all — real evidence that real debugging (not just accepting a video's code verbatim) was happening, even on a video-assisted problem, and even in a session that ended with a declined wrap-up.
 
 ### In-session ownership recovery on a video-assisted solve — LC 986 (2026-07-11)
 Disclosed a video-assisted solve honestly (same as LC 200). Initial wrap-up response to "why advance the pointer with the smaller end?" was "I forgot, could you answer that for me" — the same disengagement signature as LC 200. This time, instead of accepting that and moving on, the answer was given directly, immediately followed by a concrete trace request rather than a verbal recap. Over the trace, he correctly identified which pointer advances at each step, caught his own boolean-evaluation slip mid-trace (stated "e1<e2" for a step where it was actually false — pattern #60), and, when asked directly which interval was "exhausted" and why, gave a precise, correct answer tied to the actual numbers (`[1,5]` ends at 5, can't reach further, already got everything it could from `[5,10]`). Meaningfully different outcome from LC 200: ownership wasn't just claimed, it was demonstrated within the same session, on the same problem, without needing a separate cold redo to prove it. Suggests the fix for "I forgot" on a video-assisted solve isn't to accept it or schedule a redo — it's to answer once, then immediately verify via a fresh trace before moving on.

@@ -3,6 +3,9 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| Does the own-words explanation land at the LC 3169 redo — declined entirely at wrap-up this time, unlike LC 986 where it was recovered in-session. Require it BEFORE coding at the redo. | Video-assisted ownership | 3169 | open — session ended before this could be resolved |
+| Was the independent `-1` fix to the gap formula (LC 3169) deliberate off-by-one reasoning or noticed via mental testing? | Debugging / correctness intuition | 3169 | open — session ended before this could be asked |
+| Does the "merge replaces, doesn't also push" classify-and-merge shape (LC 57/56/252/3169) come back cleanly without needing the "same shape as before" reminder next time? | Intervals — classify-and-merge | 3169 | open — needed the explicit connection to LC 57/56 this time |
 | Does the "exhausted interval" reasoning (LC 986 — advance the pointer whose interval ends first) transfer cold to a similarly-shaped two-list problem without needing the direct explanation re-given? | Two Pointers — two independent lists | 986 | open — ownership recovered in-session via trace, not yet tested cold on a new problem |
 | Does the mid-trace boolean-evaluation slip (stated "e1<e2" when it was actually false, LC 986) recur on future two-pointer problems? | Debugging / tracing precision | 986 | open — first appearance, self-corrected in one question |
 | Does the dead-code-detection instinct (spotted the length<=1 guard was unnecessary via a trace at LC 252) show up unprompted on a future problem, or did it need the nudge to look for it this time? | Code cleanliness | 252 | open — first appearance, needed a nudge ("is this guard doing anything?") before the trace, but the trace itself was self-driven |
