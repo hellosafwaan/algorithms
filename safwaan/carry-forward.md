@@ -3,6 +3,8 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| Does the "exhausted interval" reasoning (LC 986 — advance the pointer whose interval ends first) transfer cold to a similarly-shaped two-list problem without needing the direct explanation re-given? | Two Pointers — two independent lists | 986 | open — ownership recovered in-session via trace, not yet tested cold on a new problem |
+| Does the mid-trace boolean-evaluation slip (stated "e1<e2" when it was actually false, LC 986) recur on future two-pointer problems? | Debugging / tracing precision | 986 | open — first appearance, self-corrected in one question |
 | Does the dead-code-detection instinct (spotted the length<=1 guard was unnecessary via a trace at LC 252) show up unprompted on a future problem, or did it need the nudge to look for it this time? | Code cleanliness | 252 | open — first appearance, needed a nudge ("is this guard doing anything?") before the trace, but the trace itself was self-driven |
 | Does the recurring `const`-reassignment bug (5th+ occurrence at LC 252) ever get caught before running the code, rather than only when asked about it? | JS toolkit — recurring habit | 252, 57, 167, 977 | open — still an instant catch when prompted, never proactive yet |
 | **ANSWERED 2026-07-07** — Does the classify-and-merge pattern transfer cold to LC 56? | Intervals | 57, 56 | answered — transferred cleanly in a modified form (sort-first added, since LC 56's input isn't pre-sorted); core overlap/merge reasoning carried over without re-teaching |

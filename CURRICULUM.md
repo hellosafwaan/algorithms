@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases, 154 problems + 19 bonus problems = 173 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399 are bonus)
+Total: 18 phases, 154 problems + 20 bonus problems = 174 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986 are bonus)
 
 ---
 
@@ -317,6 +317,7 @@ Total: 18 phases, 154 problems + 19 bonus problems = 173 total (LC #383, #205, #
 | 4 | Non-Overlapping Intervals | Medium | [LC #435](https://leetcode.com/problems/non-overlapping-intervals/) | Greedy |
 | 5 | Meeting Rooms II | Medium | [LC #253](https://leetcode.com/problems/meeting-rooms-ii/) | Heap |
 | 6 | Minimum Interval to Include Each Query | Hard | [LC #2402](https://leetcode.com/problems/minimum-interval-to-include-each-query/) | Heap |
+| 7 *(bonus)* | Interval List Intersections | Medium | [LC #986](https://leetcode.com/problems/interval-list-intersections/) | Two Pointers |
 
 ---
 

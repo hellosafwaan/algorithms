@@ -20,6 +20,18 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Two Pointers — Two Independent Sorted Lists
+
+**Core idea:** Different from comparing an array to itself (above) — here two *separate* sorted, non-overlapping interval lists are compared against each other with one pointer per list. Check overlap via the general condition `e1 >= s2 && e2 >= s1`; intersection is `[max(starts), min(ends)]`. Advance whichever pointer's interval has the smaller end — it's "exhausted" (can't overlap anything further, since the other list's remaining intervals only start later), while the interval with the larger end stays in play for the next comparison.
+
+**When to reach for it:** Two separate sorted lists that need to be compared/intersected against each other (not merged into one output, not one list scanned against itself).
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 986 — Interval List Intersections *(bonus)* | Two pointers, one per list | `e1 >= s2 && e2 >= s1` for overlap; `[max(s1,s2), min(e1,e2)]` for intersection; advance the pointer whose interval ends first (it's exhausted — can't overlap anything remaining in the other list) |
+
+---
+
 ## Two Pointers
 
 **Core idea:** Use two indices to avoid a nested loop. Works when the array has a property (sorted, structure) that makes pointer movement deterministic.

@@ -6,6 +6,21 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 60. Traced a boolean condition and stated the wrong evaluation
+- **Seen in:** LC 986 — Interval List Intersections (2026-07-11)
+- **What happened:** While tracing `firstList[i]=[5,10]` vs `secondList[j]=[1,5]` (e1=10, e2=5), said "e1<e2 so j++" — the *action* (j++) was correct, but the stated condition is false (10 is not less than 5). Pattern-matched to the right branch without verifying the actual numeric comparison.
+- **How it was caught:** One direct question ("is e1<e2 actually true here?") — caught and corrected immediately.
+- **Status:** New variant of the established "abstract reasoning is unreliable, concrete tracing is trustworthy" pattern (#15) — but this time the slip happened *during* a trace, not before one. Suggests the trace needs to be checked digit-by-digit, not just narrated. Watch whether this recurs on other two-pointer/branch-condition problems.
+
+### 61. Declined explanation, then rebuilt it under narrow questioning — partial ownership recovery
+- **Seen in:** LC 986 (2026-07-11)
+- **What happened:** Video-assisted solve, disclosed honestly upfront (like LC 200). At wrap-up, asked "why advance the pointer with the smaller end?" and initially said "I forgot, could you answer that for me." Given the answer directly, then asked to verify it against a concrete trace — over three follow-up questions (walk the trace, which pointer advances, why that one specifically), correctly rebuilt the full reasoning himself, including catching his own boolean-evaluation slip (#60) along the way.
+- **Root cause:** Video-assisted origin means the "why" was likely never internalized the first time, consistent with the LC 200 recognition-not-ownership concern.
+- **Fix applied:** Rather than accepting the "I forgot" and moving on (as happened at LC 200), gave the direct explanation once asked, then immediately tested it with a fresh concrete trace instead of a verbal re-ask. This surfaced and resolved a real gap (#60) within the same session.
+- **Status:** Meaningfully better outcome than LC 200 — ownership was recovered in-session rather than left as an open question requiring a separate cold redo. Still logged with a shortened revisit fuse (video-assisted origin), but not treated as unresolved. Template for handling future video-assisted "I forgot" moments: give the answer, then immediately verify via a fresh trace rather than a verbal recap.
+
+---
+
 ### 58. `const` on a variable reassigned later in the loop — fourth+ recurrence
 - **Seen in:** LC 252 — Meeting Rooms (2026-07-10)
 - **What happened:** Declared `const current = intervals[0]`, then reassigned `current = next` inside the loop. Identical shape to pattern #54 (LC 57) and pattern #10 (LC 167, LC 977) — a variable that needs to change state across iterations declared as `const`.
@@ -290,6 +305,9 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 ---
 
 ## Breakthrough Moments
+
+### In-session ownership recovery on a video-assisted solve — LC 986 (2026-07-11)
+Disclosed a video-assisted solve honestly (same as LC 200). Initial wrap-up response to "why advance the pointer with the smaller end?" was "I forgot, could you answer that for me" — the same disengagement signature as LC 200. This time, instead of accepting that and moving on, the answer was given directly, immediately followed by a concrete trace request rather than a verbal recap. Over the trace, he correctly identified which pointer advances at each step, caught his own boolean-evaluation slip mid-trace (stated "e1<e2" for a step where it was actually false — pattern #60), and, when asked directly which interval was "exhausted" and why, gave a precise, correct answer tied to the actual numbers (`[1,5]` ends at 5, can't reach further, already got everything it could from `[5,10]`). Meaningfully different outcome from LC 200: ownership wasn't just claimed, it was demonstrated within the same session, on the same problem, without needing a separate cold redo to prove it. Suggests the fix for "I forgot" on a video-assisted solve isn't to accept it or schedule a redo — it's to answer once, then immediately verify via a fresh trace before moving on.
 
 ### Code-cleanliness curiosity now three-session-confirmed, with independent dead-code detection — LC 252 (2026-07-10)
 Third straight Intervals session (after LC 57, LC 56) where he unprompted asked "is there a better way to write this?" after a solution was already correct — confirms this is a stable habit, not a spike. New this time: when pointed at the `if (intervals.length <= 1) return true` guard and asked whether it did anything, he traced it cold (`intervals=[[5,10]]` and the empty array both fall through the loop to the same `return true`) and concluded it was dead code himself. Then, after removing the `current`/`next` variables was suggested as a direction to explore, he wrote the simplified direct-index version (`intervals[i]` vs `intervals[i-1]`) without further guidance. Fast, clean session overall — one recurring self-caught bug (`const` reassignment, 5th+ recurrence) aside, this was closer to independent execution than guided derivation.

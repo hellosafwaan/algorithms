@@ -51,3 +51,29 @@ function canAttendMeetings(intervals) {
     return true;
 }
 ```
+
+## Interval List Intersections (LeetCode 986, bonus)
+
+**Pattern:** Two Pointers — two independent sorted lists (new sub-shape, distinct from single-list Intervals problems above)
+
+**Core idea:** Two pointers, one per list (`i` for `firstList`, `j` for `secondList`), both already internally sorted and non-overlapping. At each step, check overlap via the general two-interval condition `e1 >= s2 && e2 >= s1`; if true, push `[Math.max(s1, s2), Math.min(e1, e2)]`. Then advance whichever pointer's interval has the **smaller end** — that interval is "exhausted" (it can't reach any further, and everything remaining in the other list only starts later), while the interval with the larger end might still overlap the next interval in the list just advanced past.
+
+**When to reach for it:** Comparing two separate sorted interval lists against each other, as opposed to merging/scanning within one list (contrast with LC 57/56/252) or merging two arrays into one output stream (contrast with LC 88).
+
+**Template:**
+```js
+function intervalIntersection(firstList, secondList) {
+    const result = [];
+    let i = 0, j = 0;
+    while (i < firstList.length && j < secondList.length) {
+        const [s1, e1] = firstList[i];
+        const [s2, e2] = secondList[j];
+        if (e1 >= s2 && e2 >= s1) {
+            result.push([Math.max(s1, s2), Math.min(e1, e2)]);
+        }
+        if (e1 < e2) i++;
+        else j++;
+    }
+    return result;
+}
+```
