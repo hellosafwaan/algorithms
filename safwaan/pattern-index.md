@@ -21,6 +21,18 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Matrix — Row Sum Tracking
+
+**Core idea:** Nested loop over a 2D array. Inner loop reduces one row to a single number (sum, in this case); outer loop tracks a running best (max/min) across rows. Simplest matrix traversal shape — no boundary/diagonal/spiral movement.
+
+**When to reach for it:** Any "per-row aggregate, then compare across rows" matrix problem.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 1672 — Richest Customer Wealth *(bonus)* | Sum each row, `Math.max` across rows | Trivial reduction — no edge cases beyond an empty matrix. |
+
+---
+
 ## String Matching — Brute Force
 
 **Core idea:** Try every possible starting index in `haystack`; at each one, compare `needle` character by character from scratch, bailing on the first mismatch. No state carries between attempts, which is exactly what makes it O(m·n) — KMP fixes this with a precomputed LPS array (longest proper prefix that's also a suffix of `needle`) so a mismatch jumps the needle pointer instead of restarting at 0, and the haystack pointer never moves backward (O(m+n)).

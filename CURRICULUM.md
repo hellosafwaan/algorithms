@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases, 154 problems + 22 bonus problems = 176 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 23 bonus problems = 177 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672 are bonus)
 
 ---
 
@@ -324,21 +324,32 @@ Total: 18 phases, 154 problems + 22 bonus problems = 176 total (LC #383, #205, #
 ---
 
 ## Phase 17 — Math & Geometry
-**Why this order:** Standalone — matrix manipulation and number theory. Low prerequisite dependency.
+**Why this order:** Standalone — number theory. Low prerequisite dependency.
 **Interview weight:** 🟢 Medium
-**Problems:** 8 total (E: 2 / M: 6 / H: 0)
+**Problems:** 5 total (E: 2 / M: 3 / H: 0)
 
 | # | Problem | Difficulty | LeetCode | Pattern |
 |---|---------|------------|----------|---------|
 | 1 | Happy Number | Easy | [LC #202](https://leetcode.com/problems/happy-number/) | Math |
 | 2 | Plus One | Easy | [LC #66](https://leetcode.com/problems/plus-one/) | Math |
-| 3 | Rotate Image | Medium | [LC #48](https://leetcode.com/problems/rotate-image/) | Matrix |
-| 4 | Spiral Matrix | Medium | [LC #54](https://leetcode.com/problems/spiral-matrix/) | Matrix |
-| 5 | Set Matrix Zeroes | Medium | [LC #73](https://leetcode.com/problems/set-matrix-zeroes/) | Matrix |
-| 6 | Pow(x, n) | Medium | [LC #50](https://leetcode.com/problems/powx-n/) | Math |
+| 3 | Pow(x, n) | Medium | [LC #50](https://leetcode.com/problems/powx-n/) | Math |
 | — | Majority Element *(bonus — Top Interview 150)* | Easy | [LC #169](https://leetcode.com/problems/majority-element/) | Hash Map counting / Boyer-Moore Voting |
-| 7 | Multiply Strings | Medium | [LC #43](https://leetcode.com/problems/multiply-strings/) | Math |
-| 8 | Detect Squares | Medium | [LC #587](https://leetcode.com/problems/detect-squares/) | Math |
+| 4 | Multiply Strings | Medium | [LC #43](https://leetcode.com/problems/multiply-strings/) | Math |
+| 5 | Detect Squares | Medium | [LC #587](https://leetcode.com/problems/detect-squares/) | Math |
+
+---
+
+## Phase 17b — Matrix
+**Why this order:** Standalone — 2D array traversal and in-place manipulation. Low prerequisite dependency, grouped alongside Math & Geometry.
+**Interview weight:** 🟢 Medium
+**Problems:** 3 total (E: 0 / M: 3 / H: 0)
+
+| # | Problem | Difficulty | LeetCode | Pattern |
+|---|---------|------------|----------|---------|
+| 1 | Rotate Image | Medium | [LC #48](https://leetcode.com/problems/rotate-image/) | Matrix |
+| 2 | Spiral Matrix | Medium | [LC #54](https://leetcode.com/problems/spiral-matrix/) | Matrix |
+| 3 | Set Matrix Zeroes | Medium | [LC #73](https://leetcode.com/problems/set-matrix-zeroes/) | Matrix |
+| — | Richest Customer Wealth *(bonus)* | Easy | [LC #1672](https://leetcode.com/problems/richest-customer-wealth/) | Matrix — Row Sum Tracking |
 
 ---
 

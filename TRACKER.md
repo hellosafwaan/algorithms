@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-13 (Find the Index of the First Occurrence in a String, bonus)
+Last updated: 2026-07-14 (Richest Customer Wealth, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-13 (Find the Index of the First Occurrence in a String, bo
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 176 |
-| ✅ Complete | 58 |
+| Total problems | 177 |
+| ✅ Complete | 59 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 117 |
 
@@ -38,7 +38,8 @@ Last updated: 2026-07-13 (Find the Index of the First Occurrence in a String, bo
 | 14 | Advanced Graphs | 6 | 0 | 2026-08-05 | ⏳ |
 | 15 | Greedy | 8 | 0 | 2026-08-09 | ⏳ |
 | 16 | Intervals | 6 | 2 | 2026-08-13 | 🔄 In Progress |
-| 17 | Math & Geometry | 8 | 0 | 2026-08-17 | ⏳ |
+| 17 | Math & Geometry | 5 | 2 | 2026-08-17 | 🔄 In Progress |
+| 17b | Matrix | 3 | 0 | 2026-08-17 | ⏳ |
 | 18 | Bit Manipulation | 7 | 2 | 2026-08-22 | 🔄 In Progress |
 
 ---
@@ -291,13 +292,19 @@ Last updated: 2026-07-13 (Find the Index of the First Occurrence in a String, bo
 |---|---------|------------|----|---------|--------|--------|-----------|
 | 1 | Happy Number | Easy | [#202](https://leetcode.com/problems/happy-number/) | Hash Set — Cycle Detection / Digit Extraction via Modulo | ✅ | 2026-06-15 | [→](strings/202-happy-number/learnings.md) |
 | 2 | Plus One | Easy | [#66](https://leetcode.com/problems/plus-one/) | Math | ⏳ | — | — |
-| 3 | Rotate Image | Medium | [#48](https://leetcode.com/problems/rotate-image/) | Matrix | ⏳ | — | — |
-| 4 | Spiral Matrix | Medium | [#54](https://leetcode.com/problems/spiral-matrix/) | Matrix | ⏳ | — | — |
-| 5 | Set Matrix Zeroes | Medium | [#73](https://leetcode.com/problems/set-matrix-zeroes/) | Matrix | ⏳ | — | — |
-| 6 | Pow(x, n) | Medium | [#50](https://leetcode.com/problems/powx-n/) | Exponentiation by Squaring | ✅ | 2026-06-07 | [→](math/50-pow(x,n)/learnings.md) |
+| 3 | Pow(x, n) | Medium | [#50](https://leetcode.com/problems/powx-n/) | Exponentiation by Squaring | ✅ | 2026-06-07 | [→](math/50-pow(x,n)/learnings.md) |
 | — | Majority Element *(bonus — Top Interview 150)* | Easy | [#169](https://leetcode.com/problems/majority-element/) | Hash Map counting / Boyer-Moore Voting | ✅ 100th pct | 2026-06-07 | [→](arrays/169-majority-element/learnings.md) |
-| 7 | Multiply Strings | Medium | [#43](https://leetcode.com/problems/multiply-strings/) | Math | ⏳ | — | — |
-| 8 | Detect Squares | Medium | [#587](https://leetcode.com/problems/detect-squares/) | Math | ⏳ | — | — |
+| 4 | Multiply Strings | Medium | [#43](https://leetcode.com/problems/multiply-strings/) | Math | ⏳ | — | — |
+| 5 | Detect Squares | Medium | [#587](https://leetcode.com/problems/detect-squares/) | Math | ⏳ | — | — |
+
+## Phase 17b — Matrix ⏳
+
+| # | Problem | Difficulty | LC | Pattern | Status | Solved | Learnings |
+|---|---------|------------|----|---------|--------|--------|-----------|
+| 1 | Rotate Image | Medium | [#48](https://leetcode.com/problems/rotate-image/) | Matrix | ⏳ | — | — |
+| 2 | Spiral Matrix | Medium | [#54](https://leetcode.com/problems/spiral-matrix/) | Matrix | ⏳ | — | — |
+| 3 | Set Matrix Zeroes | Medium | [#73](https://leetcode.com/problems/set-matrix-zeroes/) | Matrix | ⏳ | — | — |
+| — | Richest Customer Wealth *(bonus)* | Easy | [#1672](https://leetcode.com/problems/richest-customer-wealth/) | Matrix — Row Sum Tracking | ✅ | 2026-07-14 | [→](arrays/matrix/1672-richest-customer-wealth/learnings.md) |
 
 ## Phase 18 — Bit Manipulation ⏳
 

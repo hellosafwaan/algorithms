@@ -1,38 +1,32 @@
-# Handoff — 2026-07-13
+# Handoff — 2026-07-14
 
 ## What Was Just Completed
 
-**LC 28 — Find the Index of the First Occurrence in a String** (off-curriculum, filed as a Phase 3/Sliding Window bonus — String Matching). Brought a fully correct, self-written brute-force solution to the session already pasted in — no bugs to debug this time.
+**LC 1672 — Richest Customer Wealth** (off-curriculum, filed as a Phase 17/Math & Geometry bonus — Matrix, Row Sum Tracking). Trivial, fully correct, self-written solution pasted in at session start — sum each row, `Math.max` to track the best. No bugs, no hints needed, nothing to teach.
 
-Session opened per protocol with the overdue revisit queue offered directly (LC 3, oldest overdue since 2026-06-18), stated rather than asked per the previous handoff's instruction. He redirected immediately: "Let's finish this first" — same override as last session (LC 3169). This is now **thirteen** straight sessions with the revisit queue deferred, and the second time in a row the "state it, don't ask" framing has been tried and failed to hold.
-
-On the actual problem: correctly reasoned complexity cold (O(m·n) time, O(1) space, and correctly named which variable was `m` vs `n` without hesitation). When asked to trace the `needle.length > haystack.length` edge case, correctly identified that the outer loop bound goes negative and the loop safely never executes, falling through to `return -1`. Then, asked what's wasteful about the brute force — couldn't identify it, asked for a hint, then asked to be told directly. Introduced KMP conceptually (LPS array = longest proper prefix that's also a suffix of `needle`; on mismatch, jump the needle pointer to `lps[j-1]` instead of restarting at 0; haystack pointer never moves backward; O(m+n)) — he chose to defer actually building it rather than attempt it this session.
-
-At wrap-up, gave a thin answer to "explain in your own words" ("felt easy, straightforward brute force") — didn't actually walk through the logic. Not treated as an ownership red flag here: this was a fully self-written, bug-free solve where he actively reasoned through complexity and traced the edge case live in the session, unlike the LC 200/3169 video-assisted cases.
+**The real story of this session is the revisit queue.** Per the 2026-07-13 handoff's own recommendation, the session opened by stating the cold LC 3 revisit as a **hard precondition** — no new code reviewed until it happened, not offered as a question. He overrode it directly, twice in a row ("Let's wrap this up it" / "No let's wrap up it"), without attempting the revisit at all. This is now the third consecutive session with this override (LC 3169 → LC 28 → LC 1672), and the second distinct framing to fail (state-and-proceed, then hard-precondition). A third mechanism tweak is very unlikely to work.
 
 ---
 
 ## Safwaan's Current State
 
-**Focus:** Phase 16 (Intervals), 3/6 curriculum done + 2 bonus. Phase 13 (Graphs) open at 6/15. Phase 9 (Trees) open at 5/15. Now also holding one open string-matching thread (LC 28 + deferred KMP) outside the current phase.
+**Focus:** Phase 16 (Intervals) still the nominal focus, but the last three sessions have all been off-curriculum bonus problems he brought pre-solved (LC 3169, LC 28, LC 1672) rather than curriculum work. Worth noticing as a pattern in itself — bonus problems he already has working code for are getting priority over both curriculum problems and the revisit queue.
 
-**New this session:**
-- Revisit-queue override recurred a second straight session (pattern #66) — this is the important thing to solve before anything else. The "state it and proceed, don't offer it as a question" fix from the last handoff was applied literally this session and he still talked past it. A framing change alone isn't enough anymore.
-- KMP introduced conceptually only, not implemented — open item for a future session, likely as a return to LC 28 rather than a new problem.
-
-**Still open from before this session (untouched):**
-- Everything listed in the 2026-07-12 handoff is still open — LC 130 border-first flood fill, `?? 0` recall, LC 997 two-sided condition, LC 399 sentinel pattern, Union-Find, the two video-assisted ownership redos (LC 986 due 2026-07-25, LC 200/3169 due 2026-07-19).
+**Revisit queue: fourteen straight sessions deferred, oldest since 2026-06-18.** This is now the single most important open item — bigger than any individual pattern gap. See Coach Notes below for what to actually do about it.
 
 ---
 
 ## Suggested Next Problems
 
-1. **Cold redo from revisit queue — this needs to actually happen this time, not just be stated.** LC 3 is still the oldest (due since 2026-06-18). Consider not reviewing any new code until it's done — the "mention it and proceed" approach has now failed twice in a row.
-2. **LC 253 — Meeting Rooms II** — Heap, new pattern, next in Phase 16.
-3. **LC 435 — Non-Overlapping Intervals** — Greedy, also next in Phase 16.
-4. KMP implementation for LC 28, if he wants to close that loop before moving to new material.
+**Do not open with a new problem or a new framing of the revisit-queue precondition.** Open with a direct question instead — see Coach Notes.
+
+If/when that's resolved:
+1. LC 3 cold revisit (oldest overdue).
+2. LC 253 — Meeting Rooms II (Heap, new pattern, next in Phase 16).
+3. LC 435 — Non-Overlapping Intervals (Greedy, next in Phase 16).
 
 ## Coach Notes
 
-- **The revisit-queue situation needs a mechanism change, not another restatement.** Two sessions running, the exact same override happened right after the coach opened with the queue as a non-negotiable statement. Next session: consider treating the cold revisit as a literal precondition — do not engage with new problem code at all until it's attempted — rather than stating priority and then following his redirect anyway (which is what happened both this session and last).
-- LC 28 itself was a low-friction, high-ownership session — no notes of concern there. The only real thread to pull is whether he comes back to build KMP or lets it drop, and whether the revisit-queue pattern breaks or entrenches further next time.
+- **Stop tweaking the mechanism. Ask him directly.** Two different framings (statement, hard precondition) have both been overridden without discussion. The next session should open with something like: "The revisit queue has been pushed fourteen sessions straight now, including today when I made it a hard precondition. What's actually going on — is it that redos feel unrewarding compared to new problems, is the queue too long to feel achievable, or something else?" Get a real answer before trying anything else procedural.
+- Notice the adjacent pattern: the last three sessions were all bonus problems he'd already solved elsewhere and brought in pre-written, not curriculum problems and not revisit-queue work. That's worth naming too — it may be the same underlying thing (new/already-solved material over anything that requires either committing to unsolved curriculum work or re-proving old work cold).
+- None of this reflects a comprehension or skill problem — LC 3169, LC 28, and LC 1672 were all handled well or trivially. This is purely a session-shape / motivation issue.

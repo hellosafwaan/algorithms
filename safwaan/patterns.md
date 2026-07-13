@@ -6,6 +6,11 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 67. Overrode the hard-precondition framing itself — third straight session
+- **Seen in:** LC 1672 (2026-07-14)
+- **What happened:** Following the 2026-07-13 handoff's explicit recommendation, the session opened by stating the cold LC 3 revisit as a non-negotiable precondition before any new code would be reviewed — not offered as a question. He overrode it directly, twice in a row ("Let's wrap this up it" / "No let's wrap up it"), without engaging with the revisit at all.
+- **Status:** This is the third consecutive session with this override (LC 3169 → LC 28 → LC 1672), and now the second distinct framing to fail (state-and-proceed at LC 28, hard-precondition at LC 1672). A mechanism change alone isn't going to fix this — worth raising directly with him next session as an explicit conversation about why the revisit queue keeps getting deferred, rather than trying a third framing.
+
 ### 66. Overrode the offered revisit-queue redo a second straight session
 - **Seen in:** LC 28 (2026-07-13)
 - **What happened:** Session opened per protocol with the overdue revisit queue offered directly (LC 3, oldest overdue since 2026-06-18), per the explicit instruction from the last handoff to state it and proceed rather than ask permission. He redirected immediately: "Let's finish this first" (referring to code he'd already pasted for LC 28). Same override shape as LC 3169 (2026-07-12) — now two sessions in a row.

@@ -213,6 +213,30 @@ var nextPermutation = function(nums) {
 
 ---
 
+## Richest Customer Wealth (LeetCode 1672)
+
+**Pattern:** Matrix — row sum tracking
+
+**Core idea:** Sum each row, keep the running max across rows with `Math.max`.
+
+```js
+function maximumWealth(accounts) {
+  let maxWealth = 0;
+  for (let row = 0; row < accounts.length; row++) {
+    let sum = 0;
+    for (let col = 0; col < accounts[row].length; col++) {
+      sum += accounts[row][col];
+    }
+    maxWealth = Math.max(maxWealth, sum);
+  }
+  return maxWealth;
+}
+```
+
+**Complexity:** O(rows × cols) time, O(1) space
+
+---
+
 ## Merge Sorted Array (LeetCode 88)
 
 **Pattern:** Two pointers — fill backwards (three pointers)
