@@ -111,3 +111,23 @@ function countDays(days, meetings) {
     return gap;
 }
 ```
+
+**Optimized variant — O(1) extra space, single pass:** if you only ever need the merged run's *boundary*, not the individual merged intervals, skip building `result` entirely. Track a running `maxEnd` scalar instead — same merge-and-measure logic, folded into one pass:
+```js
+function countDaysSinglePass(days, meetings) {
+    meetings.sort((a, b) => a[0] - b[0]);
+    let maxEnd = meetings[0][1];
+    let gap = 0;
+    for (let i = 1; i < meetings.length; i++) {
+        const [nextStart, nextEnd] = meetings[i];
+        if (nextStart > maxEnd) {
+            gap += nextStart - maxEnd - 1;
+        }
+        maxEnd = Math.max(maxEnd, nextEnd);
+    }
+    gap += meetings[0][0] - 1;
+    gap += days - maxEnd;
+    return gap;
+}
+```
+General lesson: in a classify-and-merge problem, before reaching for a `result` array, check whether you need the *individual merged intervals* later or only their running boundary. If only the boundary, a scalar tracker beats materializing the array.
