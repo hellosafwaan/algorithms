@@ -114,3 +114,17 @@ Loop terminates when `n === 0` (all digits consumed).
 | Problem | Key Insight |
 |---------|-------------|
 | LC 125 — Valid Palindrome | `left < right` guard must come before the regex/charCodeAt check — short-circuit prevents out-of-bounds |
+
+---
+
+### String Matching — Brute Force
+
+**When to reach for it:** Find the first index where one string appears as a contiguous substring of another.
+
+**Shape:** Outer loop over every valid starting index `i` in `haystack` (bounded by `haystack.length + 1 - needle.length`, so a `needle` longer than `haystack` makes the bound negative and the loop safely never runs). Inner loop compares `needle` char by char from that start; `break` on mismatch, return `i` on a full match.
+
+**Weakness:** No state carries between attempts at different `i` — every restart re-compares from scratch, giving O(m·n). KMP (Knuth-Morris-Pratt) fixes this with a precomputed LPS array (longest proper prefix that's also a suffix of `needle`) so a mismatch at `needle[j]` jumps `j` to `lps[j-1]` instead of restarting at 0, and `i` in `haystack` never moves backward — O(m+n).
+
+| Problem | Key Insight |
+|---------|-------------|
+| LC 28 — Find the Index of the First Occurrence in a String | Brute force clean first-pass solve. KMP optimization introduced conceptually, not yet implemented — open item. |

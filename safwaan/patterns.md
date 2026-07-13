@@ -6,6 +6,11 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 66. Overrode the offered revisit-queue redo a second straight session
+- **Seen in:** LC 28 (2026-07-13)
+- **What happened:** Session opened per protocol with the overdue revisit queue offered directly (LC 3, oldest overdue since 2026-06-18), per the explicit instruction from the last handoff to state it and proceed rather than ask permission. He redirected immediately: "Let's finish this first" (referring to code he'd already pasted for LC 28). Same override shape as LC 3169 (2026-07-12) — now two sessions in a row.
+- **Status:** The revisit queue is now thirteen straight sessions deferred. Escalating past "state it and proceed" — that framing was already tried this session and didn't hold. Needs a firmer approach next session (see progress.md note).
+
 ### 62. `.push[x]` instead of `.push(x)` — bracket notation instead of a call
 - **Seen in:** LC 3169 — Count Days Without Meetings (2026-07-12)
 - **What happened:** Wrote `result.push[next];` — bracket-indexing into the `push` function object itself rather than calling it. No error thrown; the statement just silently evaluates to `undefined` and does nothing. `next` never entered `result`.

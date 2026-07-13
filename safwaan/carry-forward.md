@@ -3,6 +3,8 @@
 Questions to probe at the start of the next session that uses the same pattern.
 
 | Question | Pattern | Problem | Status |
+| KMP (Knuth-Morris-Pratt) — introduced conceptually only (LPS array, why the haystack pointer never backtracks, O(m+n)). Can he build it from scratch given the concept, or does the mechanism itself need to be shown once first? | String Matching | 28 | open — deferred by Safwaan to a future session, not yet attempted |
+| Revisit-queue override — happened a SECOND straight session (LC 3169, then LC 28) even after the "state it and proceed, don't ask permission" framing was explicitly applied both times. Does a firmer mechanism (hard precondition before new-problem review) actually work, or does this need a direct conversation about why the queue keeps getting deferred? | Session behavior / revisit queue | 3169, 28 | open — same override shape twice in a row, framing fix already tried and failed twice |
 | Does the own-words explanation land at the LC 3169 redo — declined entirely at wrap-up this time, unlike LC 986 where it was recovered in-session. Require it BEFORE coding at the redo. | Video-assisted ownership | 3169 | open — session ended before this could be resolved |
 | Was the independent `-1` fix to the gap formula (LC 3169) deliberate off-by-one reasoning or noticed via mental testing? | Debugging / correctness intuition | 3169 | open — session ended before this could be asked |
 | Does the "merge replaces, doesn't also push" classify-and-merge shape (LC 57/56/252/3169) come back cleanly without needing the "same shape as before" reminder next time? | Intervals — classify-and-merge | 3169 | open — needed the explicit connection to LC 57/56 this time |

@@ -21,6 +21,18 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## String Matching — Brute Force
+
+**Core idea:** Try every possible starting index in `haystack`; at each one, compare `needle` character by character from scratch, bailing on the first mismatch. No state carries between attempts, which is exactly what makes it O(m·n) — KMP fixes this with a precomputed LPS array (longest proper prefix that's also a suffix of `needle`) so a mismatch jumps the needle pointer instead of restarting at 0, and the haystack pointer never moves backward (O(m+n)).
+
+**When to reach for it:** "Find the first index where one string appears as a substring of another."
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 28 — Find the Index of the First Occurrence in a String *(bonus)* | Nested loop, break on mismatch | Outer bound `haystack.length + 1 - needle.length` — goes negative and the loop safely never runs if `needle` is longer than `haystack`. KMP introduced conceptually as the optimization, not yet implemented. |
+
+---
+
 ## Two Pointers — Two Independent Sorted Lists
 
 **Core idea:** Different from comparing an array to itself (above) — here two *separate* sorted, non-overlapping interval lists are compared against each other with one pointer per list. Check overlap via the general condition `e1 >= s2 && e2 >= s1`; intersection is `[max(starts), min(ends)]`. Advance whichever pointer's interval has the smaller end — it's "exhausted" (can't overlap anything further, since the other list's remaining intervals only start later), while the interval with the larger end stays in play for the next comparison.
