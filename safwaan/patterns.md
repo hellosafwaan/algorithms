@@ -6,6 +6,12 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 68. Declined the LC-986 trace-recovery technique too — recovery isn't universal
+- **Seen in:** LC 704, LC 35, LC 69 (2026-07-14, second session that day)
+- **What happened:** Three video-assisted (Alvin's course) binary search problems, all correct and bug-free on arrival — nothing to debug. At wrap-up, declined the own-words explanation of why `return low` (LC 35, round up) vs `return high` (LC 69, round down) is correct on a miss ("U answer these questions"). Given the answer directly, then offered the exact recovery technique that worked at LC 986 — verify with a fresh concrete trace instead of a verbal recap. This was also declined ("No let's just wrap up").
+- **Why it matters:** Prior data (LC 986 recovered, LC 3169 didn't) suggested the trace-recovery technique was a reliable fix for "I forgot, answer it for me" moments. This session shows it isn't universal — it depends on whether he's willing to engage at all in that moment, not just on using the right technique. Also notable: this was the second session of the day, immediately following a session (LC 1672) that itself ended with an overridden revisit-queue conversation attempt — likely lower engagement reserve by this point, similar to the LC 997 late-session fatigue pattern.
+- **Status:** Don't assume the LC 986 recovery move will always land. Read the moment — if declined once, a second attempt at recovery in the same session is unlikely to succeed (respect the stop, as with LC 3169). Redo requires the own-words explanation before coding, not just before the redo starts.
+
 ### 67. Overrode the hard-precondition framing itself — third straight session
 - **Seen in:** LC 1672 (2026-07-14)
 - **What happened:** Following the 2026-07-13 handoff's explicit recommendation, the session opened by stating the cold LC 3 revisit as a non-negotiable precondition before any new code would be reviewed — not offered as a question. He overrode it directly, twice in a row ("Let's wrap this up it" / "No let's wrap up it"), without engaging with the revisit at all.

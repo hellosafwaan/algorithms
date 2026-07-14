@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 23 bonus problems = 177 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 25 bonus problems = 179 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69 are bonus)
 
 ---
 
@@ -101,6 +101,8 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | 5 | Search in Rotated Sorted Array | Medium | [LC #33](https://leetcode.com/problems/search-in-rotated-sorted-array/) | Binary Search |
 | 6 | Time Based Key-Value Store | Medium | [LC #981](https://leetcode.com/problems/time-based-key-value-store/) | Binary Search |
 | 7 | Median of Two Sorted Arrays | Hard | [LC #4](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary Search |
+| — | Search Insert Position *(bonus)* | Easy | [LC #35](https://leetcode.com/problems/search-insert-position/) | Binary Search |
+| — | Sqrt(x) *(bonus)* | Easy | [LC #69](https://leetcode.com/problems/sqrtx/) | Binary Search on Answer |
 
 ---
 

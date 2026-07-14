@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-14 (Richest Customer Wealth, bonus)
+Last updated: 2026-07-14 (Binary Search basics: LC 704, LC 35 bonus, LC 69 bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,10 +12,10 @@ Last updated: 2026-07-14 (Richest Customer Wealth, bonus)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 177 |
-| ✅ Complete | 59 |
+| Total problems | 179 |
+| ✅ Complete | 62 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 117 |
+| ⏳ Not started | 116 |
 
 ---
 
@@ -26,7 +26,7 @@ Last updated: 2026-07-14 (Richest Customer Wealth, bonus)
 | 2 | Two Pointers | 10 | 10 | 2026-06-02 | ✅ Complete |
 | 3 | Sliding Window | 7 | 2 | 2026-06-08 | 🔄 In Progress |
 | 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
-| 5 | Binary Search | 7 | 0 | 2026-06-16 | ⏳ |
+| 5 | Binary Search | 7 | 1 | 2026-06-16 | 🔄 In Progress |
 | 6 | Linked List | 11 | 0 | 2026-06-22 | ⏳ |
 | 7 | 1D Dynamic Programming | 12 | 0 | 2026-06-29 | ⏳ |
 | 8 | 2D Dynamic Programming | 11 | 0 | 2026-07-05 | ⏳ |
@@ -111,13 +111,15 @@ Last updated: 2026-07-14 (Richest Customer Wealth, bonus)
 
 | # | Problem | Difficulty | LC | Pattern | Status | Solved | Learnings |
 |---|---------|------------|----|---------|--------|--------|-----------|
-| 1 | Binary Search | Easy | [#704](https://leetcode.com/problems/binary-search/) | Binary Search | ⏳ | — | — |
+| 1 | Binary Search | Easy | [#704](https://leetcode.com/problems/binary-search/) | Binary Search | ✅ | 2026-07-14 | [→](binary-search/704-binary-search/learnings.md) |
 | 2 | Search a 2D Matrix | Medium | [#74](https://leetcode.com/problems/search-a-2d-matrix/) | Binary Search | ⏳ | — | — |
 | 3 | Koko Eating Bananas | Medium | [#875](https://leetcode.com/problems/koko-eating-bananas/) | Binary Search on Answer | ⏳ | — | — |
 | 4 | Find Minimum in Rotated Sorted Array | Medium | [#153](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | Binary Search | ⏳ | — | — |
 | 5 | Search in Rotated Sorted Array | Medium | [#33](https://leetcode.com/problems/search-in-rotated-sorted-array/) | Binary Search | ⏳ | — | — |
 | 6 | Time Based Key-Value Store | Medium | [#981](https://leetcode.com/problems/time-based-key-value-store/) | Binary Search | ⏳ | — | — |
 | 7 | Median of Two Sorted Arrays | Hard | [#4](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary Search | ⏳ | — | — |
+| — | Search Insert Position *(bonus)* | Easy | [#35](https://leetcode.com/problems/search-insert-position/) | Binary Search — round up (`return low`) | ✅ | 2026-07-14 | [→](binary-search/35-search-insert-position/learnings.md) |
+| — | Sqrt(x) *(bonus)* | Easy | [#69](https://leetcode.com/problems/sqrtx/) | Binary Search on Answer — round down (`return high`) | ✅ | 2026-07-14 | [→](binary-search/69-sqrtx/learnings.md) |
 
 ## Phase 6 — Linked List ⏳
 

@@ -4,6 +4,20 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Binary Search
+
+**Core idea:** Two pointers (`low`/`high`) define the current search boundary. Each step, check the midpoint and discard the half that can't contain the answer. Loop while `low <= high` (inclusive, so a single-element window still gets checked). What changes between variants: what gets compared at `mid` (an array element, or a computed value like `mid*mid`), and what you return on a miss (`-1`, `low` to round up, `high` to round down).
+
+**When to reach for it:** Sorted array search, "insert position," or any monotonic condition over a range of candidate answers ("binary search on the answer").
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 704 — Binary Search | Classic, array target | Baseline — `low`/`high` halving, return `-1` on miss |
+| LC 35 — Search Insert Position *(bonus)* | Round up | Return `low`/`start` on miss — it only ever moves past elements smaller than target, landing exactly at the insert point |
+| LC 69 — Sqrt(x) *(bonus)* | Binary search on the answer, round down | No real array — search `[0, x]`, compare `mid*mid` to `x`; return `high`/`right` — it only ever moves past elements too big, landing on the last valid (floor) candidate |
+
+---
+
 ## Intervals — Classify-and-Merge Single Pass
 
 **Core idea:** Given a sorted, non-overlapping interval array and one new interval to place, classify each existing interval into exactly one of three buckets in a single pass: strictly before (push as-is), overlapping (merge into the new interval via `min` of starts / `max` of ends, push nothing), strictly after (push the merged interval — exactly once — then push the rest as-is).
