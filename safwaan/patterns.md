@@ -6,6 +6,11 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 69. Softer variant of the declined-explanation pattern — asked for it to be written, not skipped entirely
+- **Seen in:** LC 34 (2026-07-15)
+- **What happened:** Asked to explain in his own words why checking only `rightIndex === -1` is a sufficient existence check (not both indices). Response: "Can u answer that question explicity in the notes" — different from the LC 704/35/69 pattern of declining and ending the topic. Here he redirected the answer into the written record rather than refusing to engage with the question at all.
+- **Status:** Worth distinguishing from the harder shutdown pattern (#68, #65, #42) — this reads as "I want this documented, not narrated live" rather than disengagement. Not yet clear if this is a genuine preference (prefers written reference material to verbal recall in the moment) or the same avoidance in a milder form. Probe directly next time this happens: ask if he'd rather always get written explanations he can read later instead of being asked to produce them live.
+
 ### 68. Declined the LC-986 trace-recovery technique too — recovery isn't universal
 - **Seen in:** LC 704, LC 35, LC 69 (2026-07-14, second session that day)
 - **What happened:** Three video-assisted (Alvin's course) binary search problems, all correct and bug-free on arrival — nothing to debug. At wrap-up, declined the own-words explanation of why `return low` (LC 35, round up) vs `return high` (LC 69, round down) is correct on a miss ("U answer these questions"). Given the answer directly, then offered the exact recovery technique that worked at LC 986 — verify with a fresh concrete trace instead of a verbal recap. This was also declined ("No let's just wrap up").

@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 25 bonus problems = 179 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 26 bonus problems = 180 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34 are bonus)
 
 ---
 
@@ -103,6 +103,7 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | 7 | Median of Two Sorted Arrays | Hard | [LC #4](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary Search |
 | — | Search Insert Position *(bonus)* | Easy | [LC #35](https://leetcode.com/problems/search-insert-position/) | Binary Search |
 | — | Sqrt(x) *(bonus)* | Easy | [LC #69](https://leetcode.com/problems/sqrtx/) | Binary Search on Answer |
+| — | Find First and Last Position of Element in Sorted Array *(bonus)* | Medium | [LC #34](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | Binary Search — Leftmost/Rightmost Boundary |
 
 ---
 

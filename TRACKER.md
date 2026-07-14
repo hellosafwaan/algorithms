@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-14 (Binary Search basics: LC 704, LC 35 bonus, LC 69 bonus)
+Last updated: 2026-07-15 (Find First and Last Position of Element in Sorted Array, LC 34, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-14 (Binary Search basics: LC 704, LC 35 bonus, LC 69 bonus
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 179 |
-| ✅ Complete | 62 |
+| Total problems | 180 |
+| ✅ Complete | 63 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 116 |
 
@@ -120,6 +120,7 @@ Last updated: 2026-07-14 (Binary Search basics: LC 704, LC 35 bonus, LC 69 bonus
 | 7 | Median of Two Sorted Arrays | Hard | [#4](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary Search | ⏳ | — | — |
 | — | Search Insert Position *(bonus)* | Easy | [#35](https://leetcode.com/problems/search-insert-position/) | Binary Search — round up (`return low`) | ✅ | 2026-07-14 | [→](binary-search/35-search-insert-position/learnings.md) |
 | — | Sqrt(x) *(bonus)* | Easy | [#69](https://leetcode.com/problems/sqrtx/) | Binary Search on Answer — round down (`return high`) | ✅ | 2026-07-14 | [→](binary-search/69-sqrtx/learnings.md) |
+| — | Find First and Last Position of Element in Sorted Array *(bonus)* | Medium | [#34](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | Binary Search — Leftmost/Rightmost Boundary | ✅ | 2026-07-15 | [→](binary-search/34-find-first-and-last-position/learnings.md) |
 
 ## Phase 6 — Linked List ⏳
 

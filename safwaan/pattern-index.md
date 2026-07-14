@@ -15,6 +15,7 @@ When starting a new problem, check here first. Find the pattern, recall what you
 | LC 704 — Binary Search | Classic, array target | Baseline — `low`/`high` halving, return `-1` on miss |
 | LC 35 — Search Insert Position *(bonus)* | Round up | Return `low`/`start` on miss — it only ever moves past elements smaller than target, landing exactly at the insert point |
 | LC 69 — Sqrt(x) *(bonus)* | Binary search on the answer, round down | No real array — search `[0, x]`, compare `mid*mid` to `x`; return `high`/`right` — it only ever moves past elements too big, landing on the last valid (floor) candidate |
+| LC 34 — Find First and Last Position of Element in Sorted Array *(bonus)* | Leftmost/Rightmost boundary search, composed | Search past a match instead of stopping (`right = mid - 1` after a match to keep finding leftmost; `left = mid + 1` to keep finding rightmost). Run both, combine into `[leftIndex, rightIndex]`. Only one needs an existence check — both searches see the same array/target, so one is `-1` iff the other is too. |
 
 ---
 
