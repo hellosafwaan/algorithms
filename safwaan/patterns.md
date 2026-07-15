@@ -6,6 +6,12 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 70. `Math.floor` reached for instead of `Math.trunc` on negative integer division
+- **Seen in:** LC 150 — Evaluate Reverse Polish Notation (2026-07-15)
+- **What happened:** Used `Math.floor(leftOperand / rightOperand)` for RPN's `/` operator. Fails whenever the division result is negative — `Math.floor` rounds toward negative infinity (`Math.floor(-2.333)` → `-3`), but the problem requires truncation toward zero (`-2`). First guess at a fix was `Math.round` (rounds to nearest, not toward zero — also wrong in general, e.g. `Math.round(2.75)` → `3`, not `2`). Needed the answer given directly for `Math.trunc` after two guesses.
+- **How it was caught:** Guided through a concrete trace (`Math.floor(-2.333)` → `-3`) that exposed the mismatch, then a second wrong guess (`Math.round`) before asking directly.
+- **Status:** New instance of a JS toolkit/library-recall gap (same category as past Set/Map/`?? 0` gaps) — knows *that* truncation toward zero is needed once shown the failing case, but the specific method name isn't yet at his fingertips. Probe cold on the next problem involving negative integer division.
+
 ### 69. Softer variant of the declined-explanation pattern — asked for it to be written, not skipped entirely
 - **Seen in:** LC 34 (2026-07-15), recurred at LC 394 (2026-07-15, same day)
 - **What happened:** LC 34 — asked to explain in his own words why checking only `rightIndex === -1` is a sufficient existence check. Response: "Can u answer that question explicity in the notes." LC 394 — same session-day, asked to walk through the Decode String solution in his own words after already correctly identifying it as the same pattern as `decompressBraces`; response: "You can explain it. Let's wrap up." Both times different in character from the LC 704/35/69 harder shutdown pattern (#68) — he stays engaged with the *content* (correctly named the pattern connection himself both times, and at LC 394 was actively discussing alternative approaches moments before) but declines to produce the verbal walkthrough specifically.

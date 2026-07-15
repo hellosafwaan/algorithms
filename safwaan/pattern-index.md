@@ -4,6 +4,18 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Stack — Postfix Expression Evaluation
+
+**Core idea:** Reverse Polish Notation puts operands before their operator, which is exactly what makes a stack the right tool. Push operands as seen; on an operator, pop the two most recent values (first pop = right operand, second pop = left operand — order matters for non-commutative ops), apply, push the result back. One value remains at the end — the answer.
+
+**When to reach for it:** "Evaluate an expression given in postfix/Reverse Polish Notation."
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 150 — Evaluate Reverse Polish Notation | Curriculum #3, new pattern | Near one-shot. Integer division needs `Math.trunc` (truncate toward zero), not `Math.floor` (rounds down, wrong on negative results) or `Math.round` (rounds to nearest, not toward zero). |
+
+---
+
 ## Stack — Auxiliary Min-Tracking Stack
 
 **Core idea:** Run a second stack (`minStack`) in lockstep with the main one, tracking "the minimum of everything currently in the stack" at its top. Push to both together (`minStack` gets `Math.min(newValue, currentMinTop)`, or just the value if empty), pop from both together. `getMin()` becomes a direct O(1) peek instead of a scan.

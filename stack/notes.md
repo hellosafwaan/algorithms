@@ -1,5 +1,31 @@
 # Stack — Phase 4 Notes
 
+## Core Shape — Postfix Expression Evaluation
+
+Reverse Polish Notation puts operands before their operator (`A B +` instead of `A + B`), which is exactly what makes a stack the right tool: push operands as they're seen, and when an operator shows up, the two values it needs are already sitting at the top of the stack in the right order.
+
+```js
+const operators = '+-*/';
+const stack = [];
+for (const token of tokens) {
+  if (operators.includes(token)) {
+    const right = stack.pop(); // pushed most recently
+    const left = stack.pop();  // pushed before that
+    if (token === '+') stack.push(left + right);
+    if (token === '-') stack.push(left - right);
+    if (token === '*') stack.push(left * right);
+    if (token === '/') stack.push(Math.trunc(left / right)); // truncate toward zero, not floor
+  } else {
+    stack.push(Number(token));
+  }
+}
+return stack[0];
+```
+
+**Pop order matters:** the first pop is always the *right* operand, the second is the *left* — getting this backwards silently breaks `-` and `/` (though `+`/`*` would still happen to work, since they're commutative).
+
+**Integer division:** `Math.trunc()`, not `Math.floor()` or `Math.round()`. `Math.floor` always rounds down (wrong when the result is negative — e.g. `Math.floor(-2.333)` gives `-3`, not the truncated `-2`). `Math.round` rounds to the *nearest* integer, not toward zero (e.g. `Math.round(2.75)` gives `3`, not `2`). Only `Math.trunc` chops the decimal regardless of sign.
+
 ## Core Shape — Push/Pop Reversal
 
 Use a stack to reverse a subset of characters within a string without disturbing the rest.
@@ -125,3 +151,4 @@ return stack.join('');
 | [394-decode-string](394-decode-string/learnings.md) *(bonus, Medium, real LC problem)* | Nested group decompression, marker-based, multi-digit | Direct cold transfer of the `4-decompress-braces` pattern, generalized to `[]` brackets and multi-digit counts via a `[` marker instead of a `typeof number` check. Third confirmed fundamentals→real-problem transfer in the same session, first at Medium difficulty. 100th percentile runtime. |
 | [856-score-of-parentheses](856-score-of-parentheses/learnings.md) *(bonus, Medium, real LC problem)* | Score accumulation, exact match | Direct cold transfer of the `5-nesting-score` pattern — unlike LC 394, needed zero adaptation, exact same algorithm. Fourth and final confirmed fundamentals→real-problem transfer in the same session — now a settled instinct. |
 | [155-min-stack](155-min-stack/learnings.md) *(curriculum #2, real LC problem)* | Auxiliary min-tracking stack | New pattern — no fundamentals mapping. Video-assisted (disclosed), but real bug found and self-fixed, plus genuine Socratic derivation of the space-optimized variant (deferred, not yet implemented). |
+| [150-evaluate-reverse-polish-notation](150-evaluate-reverse-polish-notation/learnings.md) *(curriculum #3, real LC problem)* | Postfix expression evaluation | New pattern, near one-shot solve. One bug: `Math.floor` instead of `Math.trunc` for integer division, fails on negative results. |
