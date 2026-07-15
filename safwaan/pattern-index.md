@@ -43,6 +43,19 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Stack — Score Accumulation
+
+**Core idea:** Seed the stack with a single `0` (the outermost "score so far"). On an opening bracket, push a fresh `0` — a new accumulator for whatever nests inside. On a closing bracket, pop the top and fold it into the new top: `+1` if the popped value is `0` (a direct, unnested match), or `popped * 2` if nonzero (a nested group just resolved and needs doubling). The final answer sits at `stack[0]`.
+
+**When to reach for it:** "Score/evaluate a nested bracket structure" where nesting means multiplying and adjacency means adding.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| [stack/fundamentals/5-nesting-score](../stack/fundamentals/5-nesting-score/README.md) | `()` only, `+1`/`×2` rules | One stack slot per nesting depth; a `0` popped means "nothing nested here" |
+| LC 856 — Score of Parentheses *(bonus, Medium)* | Same rules, real LC problem | Direct cold transfer — exact match, zero adaptation needed, unlike the LC 394 generalization. Fourth and final confirmed fundamentals→real-problem transfer in the same session; the instinct is now settled, not something to keep re-testing. |
+
+---
+
 ## Binary Search
 
 **Core idea:** Two pointers (`low`/`high`) define the current search boundary. Each step, check the midpoint and discard the half that can't contain the answer. Loop while `low <= high` (inclusive, so a single-element window still gets checked). What changes between variants: what gets compared at `mid` (an array element, or a computed value like `mid*mid`), and what you return on a miss (`-1`, `low` to round up, `high` to round down).

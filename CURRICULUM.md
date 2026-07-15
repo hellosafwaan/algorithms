@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 28 bonus problems = 182 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 29 bonus problems = 183 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856 are bonus)
 
 ---
 
@@ -86,6 +86,7 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | 7 | Largest Rectangle in Histogram | Hard | [LC #84](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Monotonic Stack |
 | — | Reverse Vowels of a String *(bonus)* | Easy | [LC #345](https://leetcode.com/problems/reverse-vowels-of-a-string/) | Stack |
 | — | Decode String *(bonus)* | Medium | [LC #394](https://leetcode.com/problems/decode-string/) | Stack |
+| — | Score of Parentheses *(bonus)* | Medium | [LC #856](https://leetcode.com/problems/score-of-parentheses/) | Stack |
 
 ---
 
