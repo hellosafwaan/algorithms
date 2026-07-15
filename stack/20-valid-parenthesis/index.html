@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valid Parentheses — Stack Visualiser</title>
+<style>
+  :root {
+    --purple: #7c6af7;
+    --yellow: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+    --dark: #1c2038;
+    --border: #2e3560;
+    --bg: #10122380;
+    --page-bg: #0d0f20;
+    --text: #e7e9fb;
+    --text-dim: #9198c9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px;
+    background: var(--page-bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  h1 {
+    font-size: 20px;
+    margin: 0 0 4px;
+  }
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .controls-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+  }
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .control-group label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+  }
+  select {
+    background: #161933;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    min-width: 260px;
+  }
+  .approach-toggle {
+    display: flex;
+    gap: 6px;
+    background: #161933;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px;
+  }
+  .approach-toggle button {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .approach-toggle button.active {
+    background: var(--purple);
+    color: white;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .panel {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    margin: 0 0 12px;
+  }
+  /* main visual row: string + stack side by side, always visible together */
+  .main-visual-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 16px;
+  }
+  .string-section {
+    flex: 1;
+    min-width: 0;
+  }
+  .stack-section {
+    width: 160px;
+    flex-shrink: 0;
+    border-left: 1px solid var(--border);
+    padding-left: 20px;
+  }
+  /* result banner */
+  .result-banner {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 16px;
+    display: none;
+    border: 1px solid;
+  }
+  .result-banner.show { display: block; }
+  .result-banner.true {
+    background: rgba(52,211,153,0.12);
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .result-banner.false {
+    background: rgba(248,113,113,0.12);
+    border-color: var(--red);
+    color: var(--red);
+  }
+  /* string row */
+  .string-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    min-height: 76px;
+    align-items: flex-end;
+  }
+  .empty-note {
+    color: var(--text-dim);
+    font-size: 13px;
+    font-style: italic;
+  }
+  .char-cell {
+    width: 46px;
+    height: 56px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.02);
+    transition: all 0.25s ease;
+    position: relative;
+  }
+  .char-cell .idx {
+    font-size: 10px;
+    color: var(--text-dim);
+    position: absolute;
+    top: 3px;
+    left: 5px;
+  }
+  .char-cell .val {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+  }
+  .char-cell.unvisited { border-color: var(--border); color: var(--text-dim); }
+  .char-cell.pending {
+    border-color: var(--yellow);
+    background: rgba(251,191,36,0.12);
+    color: var(--yellow);
+  }
+  .char-cell.matched {
+    border-color: var(--green);
+    background: rgba(52,211,153,0.12);
+    color: var(--green);
+  }
+  .char-cell.invalid {
+    border-color: var(--red);
+    background: rgba(248,113,113,0.15);
+    color: var(--red);
+  }
+  .char-cell.active {
+    box-shadow: 0 0 0 3px var(--purple), 0 0 14px rgba(124,106,247,0.7);
+    transform: translateY(-4px);
+  }
+  /* explanation box */
+  .explain-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #161933;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    min-height: 44px;
+  }
+  .badge {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: var(--purple);
+    color: white;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+  }
+  .badge.guard-fail { background: var(--red); }
+  .badge.guard-pass { background: var(--green); }
+  .badge.push { background: var(--yellow); color: #1c2038; }
+  .badge.pop { background: var(--green); }
+  .badge.ret { background: var(--purple); }
+  .explain-text { font-size: 13.5px; line-height: 1.5; }
+  /* nav controls */
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .nav-controls button {
+    background: #161933;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .nav-controls button:hover:not(:disabled) { border-color: var(--purple); color: var(--purple); }
+  .nav-controls button:disabled { opacity: 0.35; cursor: default; }
+  .nav-controls button.play { min-width: 76px; }
+  .step-counter {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-left: auto;
+  }
+  .key-hint {
+    font-size: 11px;
+    color: var(--text-dim);
+    width: 100%;
+    margin-top: 4px;
+  }
+  /* code panel */
+  pre.code {
+    margin: 0;
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.75;
+    overflow-x: auto;
+  }
+  .code-line {
+    padding: 1px 8px;
+    border-radius: 4px;
+    white-space: pre;
+  }
+  .code-line.active-line {
+    background: rgba(124,106,247,0.22);
+    box-shadow: inset 3px 0 0 var(--purple);
+  }
+  /* stack panel */
+  .stack-visual {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 6px;
+    min-height: 160px;
+    justify-content: flex-start;
+    padding: 10px 0 4px;
+    border-bottom: 3px solid var(--border);
+  }
+  .stack-floor-label {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+  .stack-item {
+    width: 90px;
+    padding: 8px 0;
+    text-align: center;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  .stack-item.top-marker {
+    border-color: var(--purple);
+  }
+  .stack-item.flash-push {
+    border-color: var(--yellow);
+    background: rgba(251,191,36,0.18);
+    color: var(--yellow);
+    animation: pop-in 0.35s ease;
+  }
+  .stack-item.flash-pop {
+    border-color: var(--green);
+    background: rgba(52,211,153,0.22);
+    color: var(--green);
+    animation: pulse-out 0.4s ease;
+  }
+  @keyframes pop-in {
+    from { transform: translateY(10px) scale(0.85); opacity: 0.2; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+  }
+  @keyframes pulse-out {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+  .stack-empty-note {
+    color: var(--text-dim);
+    font-size: 12px;
+    font-style: italic;
+    padding: 10px 0;
+  }
+  /* variables panel */
+  table.vars {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.vars td {
+    padding: 6px 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  table.vars td.key {
+    color: var(--text-dim);
+    width: 40%;
+  }
+  table.vars td.value {
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+    color: var(--text);
+  }
+  /* legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 18px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch {
+    width: 13px;
+    height: 13px;
+    border-radius: 3px;
+    border: 2px solid;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+
+<h1>Valid Parentheses (LC 20) — Stack Visualiser</h1>
+<div class="subtitle">Two equivalent approaches — push the expected closer, or push the opener and reverse-look-up the match. Step through either one, character by character.</div>
+
+<div class="controls-bar">
+  <div class="control-group">
+    <label>Approach</label>
+    <div class="approach-toggle">
+      <button id="btn-approach-1" class="active">Approach 1 — push closer</button>
+      <button id="btn-approach-2">Approach 2 — push opener</button>
+    </div>
+  </div>
+  <div class="control-group">
+    <label>Test Case</label>
+    <select id="test-case-select"></select>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- LEFT: main visual — string + stack together, always visible -->
+  <div>
+    <div id="result-banner" class="result-banner"></div>
+    <div class="panel">
+      <div class="main-visual-row">
+        <div class="string-section">
+          <h2>String</h2>
+          <div class="string-row" id="string-row"></div>
+        </div>
+        <div class="stack-section">
+          <h2>Stack</h2>
+          <div class="stack-visual" id="stack-visual"></div>
+          <div class="stack-floor-label">↑ top of stack</div>
+        </div>
+      </div>
+      <div class="explain-box">
+        <span class="badge" id="badge">START</span>
+        <div class="explain-text" id="explain-text">Ready.</div>
+      </div>
+      <div class="nav-controls">
+        <button id="btn-first" title="First step">⏮ First</button>
+        <button id="btn-prev" title="Previous (←)">← Prev</button>
+        <button id="btn-play" class="play" title="Play/Pause (space)">▶ Play</button>
+        <button id="btn-next" title="Next (→)">Next →</button>
+        <button id="btn-last" title="Last step">Last ⏭</button>
+        <span class="step-counter" id="step-counter">Step 0 / 0</span>
+        <div class="key-hint">Keyboard: ← → to step, space to play/pause</div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:20px;">
+      <h2>Legend</h2>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-swatch" style="border-color:var(--purple); background:rgba(124,106,247,0.15);"></span> Active / currently processing</div>
+        <div class="legend-item"><span class="legend-swatch" style="border-color:var(--yellow); background:rgba(251,191,36,0.15);"></span> Pending on stack (opener, unmatched)</div>
+        <div class="legend-item"><span class="legend-swatch" style="border-color:var(--green); background:rgba(52,211,153,0.15);"></span> Matched / confirmed</div>
+        <div class="legend-item"><span class="legend-swatch" style="border-color:var(--red); background:rgba(248,113,113,0.15);"></span> Mismatch / dangling / invalid</div>
+        <div class="legend-item"><span class="legend-swatch" style="border-color:var(--border);"></span> Not yet visited</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: code / variables -->
+  <div>
+    <div class="panel">
+      <h2>Code</h2>
+      <pre class="code" id="code-panel"></pre>
+    </div>
+
+    <div class="panel" style="margin-top:20px;">
+      <h2>Variables</h2>
+      <table class="vars" id="vars-table"></table>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------- Test cases ----------
+const TEST_CASES = [
+  { label: '"" — empty input', value: '' },
+  { label: '"()" — single pair (simplest match)', value: '()' },
+  { label: '"()[]{}" — match found, all bracket types', value: '()[]{}' },
+  { label: '"(]" — mismatched pair', value: '(]' },
+  { label: '"(((" — skewed, dangling openers', value: '(((' },
+  { label: '")(" — closer before opener, empty stack', value: ')(' },
+  { label: '"{[()()]}((){})" — bigger, mixed nesting + adjacency (14 chars)', value: '{[()()]}((){})' },
+  { label: '"((({{{[[[]]]}}})))" — deeply nested, one bracket type at a time (18 chars)', value: '((({{{[[[]]]}}})))' },
+  { label: '"()[]{}((]" — bigger, mismatch buried after several valid pairs (9 chars)', value: '()[]{}((]' },
+];
+
+// ---------- Code panels (line-numbered, matches computeSteps' `line` field) ----------
+const CODE = {
+  1: [
+    "function isValid(s) {",
+    "  const stack = [];",
+    "  const brackets = {",
+    "    '(': ')',",
+    "    '{': '}',",
+    "    '[': ']'",
+    "  };",
+    "  for (let i = 0; i < s.length; i++) {",
+    "    const elem = s[i];",
+    "    if (elem in brackets) {",
+    "      stack.push(brackets[elem]);",
+    "    } else {",
+    "      if (stack.length > 0 && stack[stack.length - 1] === elem) {",
+    "        stack.pop();",
+    "      } else {",
+    "        return false;",
+    "      }",
+    "    }",
+    "  }",
+    "  return stack.length === 0;",
+    "}"
+  ],
+  2: [
+    "function isValid(s) {",
+    "  const stack = [];",
+    "  const brackets = {",
+    "    ')': '(',",
+    "    '}': '{',",
+    "    ']': '['",
+    "  };",
+    "  for (let i = 0; i < s.length; i++) {",
+    "    const elem = s[i];",
+    "    if ('([{'.includes(elem)) {",
+    "      stack.push(elem);",
+    "    } else {",
+    "      if (stack.length > 0 && stack[stack.length - 1] === brackets[elem]) {",
+    "        stack.pop();",
+    "      } else {",
+    "        return false;",
+    "      }",
+    "    }",
+    "  }",
+    "  return stack.length === 0;",
+    "}"
+  ]
+};
+
+// ---------- Debugger-faithful step generator ----------
+function computeSteps(s, approach) {
+  const brackets1 = { '(': ')', '{': '}', '[': ']' };
+  const brackets2 = { ')': '(', '}': '{', ']': '[' };
+  const steps = [];
+  const stack = []; // {val, idx}
+  const charStates = new Array(s.length).fill('unvisited');
+
+  function snap(extra) {
+    return Object.assign({
+      stack: stack.map(x => x.val),
+      charStates: charStates.slice(),
+      i: null, elem: null, action: null, result: null
+    }, extra);
+  }
+
+  steps.push(snap({ line: 1, badge: 'start', badgeText: 'START', text: `isValid(${JSON.stringify(s)}) called` }));
+  steps.push(snap({ line: 2, badge: 'ret', badgeText: 'INIT', text: 'Initialize empty stack: stack = []' }));
+  steps.push(snap({
+    line: 3, badge: 'ret', badgeText: 'INIT',
+    text: approach === 1
+      ? 'Set up brackets map: opener → expected closer'
+      : 'Set up brackets map: closer → required opener'
+  }));
+
+  for (let i = 0; i <= s.length; i++) {
+    if (i < s.length) {
+      steps.push(snap({ line: 8, badge: 'ret', badgeText: 'LOOP', text: `Loop check: i=${i} < s.length=${s.length} → true, continue`, i }));
+      const elem = s[i];
+      steps.push(snap({ line: 9, badge: 'ret', badgeText: 'READ', text: `elem = s[${i}] = '${elem}'`, i, elem }));
+
+      const isOpener = approach === 1 ? (elem in brackets1) : '([{'.includes(elem);
+      steps.push(snap({
+        line: 10,
+        badge: isOpener ? 'guard-pass' : 'guard-fail',
+        badgeText: isOpener ? 'GUARD ✓' : 'GUARD ✗',
+        text: `Is '${elem}' an opener? → ${isOpener}`,
+        i, elem
+      }));
+
+      if (isOpener) {
+        const pushVal = approach === 1 ? brackets1[elem] : elem;
+        stack.push({ val: pushVal, idx: i });
+        charStates[i] = 'pending';
+        steps.push(snap({
+          line: 11, badge: 'push', badgeText: 'PUSH',
+          text: approach === 1
+            ? `Push expected closer '${pushVal}' onto stack`
+            : `Push opener '${pushVal}' onto stack`,
+          i, elem, action: 'push', actionTarget: stack.length - 1
+        }));
+      } else {
+        const matchVal = approach === 1 ? elem : brackets2[elem];
+        const top = stack.length ? stack[stack.length - 1] : null;
+        const guardPass = stack.length > 0 && top.val === matchVal;
+        steps.push(snap({
+          line: 13,
+          badge: guardPass ? 'guard-pass' : 'guard-fail',
+          badgeText: guardPass ? 'GUARD ✓' : 'GUARD ✗',
+          text: stack.length === 0
+            ? `Stack is empty — nothing to match '${elem}' against → false`
+            : `Top of stack ('${top.val}') vs expected ('${matchVal}') → ${guardPass}`,
+          i, elem
+        }));
+        if (guardPass) {
+          charStates[i] = 'matched';
+          charStates[top.idx] = 'matched';
+          // snapshot BEFORE popping, so the about-to-be-removed item is still visible & flashed
+          steps.push(snap({
+            line: 14, badge: 'pop', badgeText: 'POP',
+            text: `Pop '${top.val}' — matched with '${elem}' at index ${i}!`,
+            i, elem, action: 'pop', actionTarget: stack.length - 1
+          }));
+          stack.pop();
+        } else {
+          charStates[i] = 'invalid';
+          steps.push(snap({ line: 16, badge: 'ret', badgeText: 'RETURN', text: `Mismatch or empty stack → return false`, i, elem, result: false }));
+          return steps;
+        }
+      }
+    } else {
+      steps.push(snap({ line: 8, badge: 'ret', badgeText: 'LOOP', text: `Loop check: i=${i} < s.length=${s.length} → false, exit loop` }));
+    }
+  }
+
+  const result = stack.length === 0;
+  if (!result) {
+    stack.forEach(item => { charStates[item.idx] = 'invalid'; });
+  }
+  steps.push(snap({
+    line: 20, badge: 'ret', badgeText: 'RETURN',
+    text: `stack.length (${stack.length}) === 0 → ${result}`,
+    result, charStates: charStates.slice()
+  }));
+  return steps;
+}
+
+// ---------- State ----------
+let approach = 1;
+let testCaseIdx = 1; // default to "()"
+let steps = [];
+let stepIdx = 0;
+let playTimer = null;
+
+// ---------- DOM refs ----------
+const el = {
+  testSelect: document.getElementById('test-case-select'),
+  btnA1: document.getElementById('btn-approach-1'),
+  btnA2: document.getElementById('btn-approach-2'),
+  stringRow: document.getElementById('string-row'),
+  resultBanner: document.getElementById('result-banner'),
+  badge: document.getElementById('badge'),
+  explainText: document.getElementById('explain-text'),
+  codePanel: document.getElementById('code-panel'),
+  stackVisual: document.getElementById('stack-visual'),
+  varsTable: document.getElementById('vars-table'),
+  stepCounter: document.getElementById('step-counter'),
+  btnFirst: document.getElementById('btn-first'),
+  btnPrev: document.getElementById('btn-prev'),
+  btnNext: document.getElementById('btn-next'),
+  btnLast: document.getElementById('btn-last'),
+  btnPlay: document.getElementById('btn-play'),
+};
+
+// ---------- Init ----------
+function init() {
+  TEST_CASES.forEach((tc, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = tc.label;
+    el.testSelect.appendChild(opt);
+  });
+  el.testSelect.value = testCaseIdx;
+
+  el.testSelect.addEventListener('change', () => {
+    testCaseIdx = Number(el.testSelect.value);
+    rebuild();
+  });
+  el.btnA1.addEventListener('click', () => setApproach(1));
+  el.btnA2.addEventListener('click', () => setApproach(2));
+
+  el.btnFirst.addEventListener('click', () => { stopPlay(); goTo(0); });
+  el.btnPrev.addEventListener('click', () => { stopPlay(); goTo(stepIdx - 1); });
+  el.btnNext.addEventListener('click', () => { stopPlay(); goTo(stepIdx + 1); });
+  el.btnLast.addEventListener('click', () => { stopPlay(); goTo(steps.length - 1); });
+  el.btnPlay.addEventListener('click', togglePlay);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { stopPlay(); goTo(stepIdx + 1); }
+    else if (e.key === 'ArrowLeft') { stopPlay(); goTo(stepIdx - 1); }
+    else if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
+  });
+
+  rebuild();
+}
+
+function setApproach(n) {
+  approach = n;
+  el.btnA1.classList.toggle('active', n === 1);
+  el.btnA2.classList.toggle('active', n === 2);
+  rebuild();
+}
+
+function rebuild() {
+  stopPlay();
+  const s = TEST_CASES[testCaseIdx].value;
+  steps = computeSteps(s, approach);
+  renderCode();
+  goTo(0, true);
+}
+
+function renderCode() {
+  const lines = CODE[approach];
+  el.codePanel.innerHTML = lines.map((line, i) =>
+    `<div class="code-line" data-line="${i + 1}">${escapeHtml(line)}</div>`
+  ).join('');
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// ---------- Rendering per step ----------
+function goTo(idx, force) {
+  if (idx < 0 || idx >= steps.length) return;
+  if (idx === stepIdx && !force) return;
+  stepIdx = idx;
+  render();
+}
+
+function render() {
+  const s = TEST_CASES[testCaseIdx].value;
+  const step = steps[stepIdx];
+
+  // code highlight
+  document.querySelectorAll('.code-line').forEach(l => {
+    l.classList.toggle('active-line', Number(l.dataset.line) === step.line);
+  });
+
+  // string row
+  el.stringRow.innerHTML = '';
+  if (s.length === 0) {
+    el.stringRow.innerHTML = '<div class="empty-note">(empty string — loop never runs)</div>';
+  } else {
+    for (let i = 0; i < s.length; i++) {
+      const cell = document.createElement('div');
+      const state = step.charStates[i] || 'unvisited';
+      cell.className = 'char-cell ' + state + (step.i === i ? ' active' : '');
+      cell.innerHTML = `<span class="idx">${i}</span><span class="val">${escapeHtml(s[i])}</span>`;
+      el.stringRow.appendChild(cell);
+    }
+  }
+
+  // explain box
+  el.badge.textContent = step.badgeText;
+  el.badge.className = 'badge ' + step.badge;
+  el.explainText.textContent = step.text;
+
+  // stack panel
+  el.stackVisual.innerHTML = '';
+  if (step.stack.length === 0) {
+    el.stackVisual.innerHTML = '<div class="stack-empty-note">stack is empty</div>';
+  } else {
+    step.stack.forEach((val, j) => {
+      const item = document.createElement('div');
+      let cls = 'stack-item';
+      if (j === step.stack.length - 1) cls += ' top-marker';
+      if (step.action === 'push' && step.actionTarget === j) cls += ' flash-push';
+      if (step.action === 'pop' && step.actionTarget === j) cls += ' flash-pop';
+      item.className = cls;
+      item.textContent = val;
+      el.stackVisual.appendChild(item);
+    });
+  }
+
+  // variables panel
+  const rows = [
+    ['approach', approach === 1 ? '1 (push closer)' : '2 (push opener)'],
+    ['i', step.i === null ? '—' : step.i],
+    ['elem', step.elem === null || step.elem === undefined ? '—' : `'${step.elem}'`],
+    ['stack', '[' + step.stack.map(v => `'${v}'`).join(', ') + ']'],
+  ];
+  if (step.result !== null) rows.push(['result', String(step.result)]);
+  el.varsTable.innerHTML = rows.map(([k, v]) =>
+    `<tr><td class="key">${k}</td><td class="value">${escapeHtml(String(v))}</td></tr>`
+  ).join('');
+
+  // result banner
+  if (step.result !== null) {
+    el.resultBanner.className = 'result-banner show ' + String(step.result);
+    el.resultBanner.textContent = `Result: ${step.result} — ${step.result ? 'valid parentheses ✓' : 'invalid parentheses ✗'}`;
+  } else {
+    el.resultBanner.className = 'result-banner';
+    el.resultBanner.textContent = '';
+  }
+
+  // nav state
+  el.stepCounter.textContent = `Step ${stepIdx + 1} / ${steps.length}`;
+  el.btnFirst.disabled = stepIdx === 0;
+  el.btnPrev.disabled = stepIdx === 0;
+  el.btnNext.disabled = stepIdx === steps.length - 1;
+  el.btnLast.disabled = stepIdx === steps.length - 1;
+}
+
+// ---------- Play/Pause ----------
+function togglePlay() {
+  if (playTimer) stopPlay();
+  else startPlay();
+}
+function startPlay() {
+  if (stepIdx >= steps.length - 1) stepIdx = -1; // restart from beginning if at end
+  el.btnPlay.textContent = '⏸ Pause';
+  playTimer = setInterval(() => {
+    if (stepIdx >= steps.length - 1) { stopPlay(); return; }
+    goTo(stepIdx + 1);
+  }, 850);
+}
+function stopPlay() {
+  if (playTimer) { clearInterval(playTimer); playTimer = null; }
+  el.btnPlay.textContent = '▶ Play';
+}
+
+init();
+</script>
+</body>
+</html>
