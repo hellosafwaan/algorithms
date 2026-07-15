@@ -30,6 +30,19 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Stack — Nested Group Decompression
+
+**Core idea:** Push everything except a closing marker onto a stack. On the marker, pop-until-open-marker to gather the segment (prepending, since pops come out in reverse order), discard the open marker, pop the digit run that specifies the repeat count, then push `segment.repeat(count)` back as a single unit. Because a fully-resolved nested group re-enters the stack as one item, outer groups resolve correctly with no special-case code — innermost first, automatically.
+
+**When to reach for it:** "Decode/expand a compressed string with `count[contents]` groups, possibly nested."
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| [stack/fundamentals/4-decompress-braces](../stack/fundamentals/4-decompress-braces/README.md) | `{}` brackets, single-digit counts | Push digits as JS numbers (not strings) so `typeof` distinguishes them from characters at pop-time |
+| LC 394 — Decode String *(bonus, Medium)* | `[]` brackets, multi-digit counts | Direct cold transfer of the fundamentals pattern, generalized: an explicit `[` marker (not `typeof`) bounds the segment, and a `while` loop pops a full run of digit characters to support multi-digit counts. Third confirmed fundamentals→real-problem transfer in the same session, first at Medium difficulty. 100th percentile runtime. |
+
+---
+
 ## Binary Search
 
 **Core idea:** Two pointers (`low`/`high`) define the current search boundary. Each step, check the midpoint and discard the half that can't contain the answer. Loop while `low <= high` (inclusive, so a single-element window still gets checked). What changes between variants: what gets compared at `mid` (an array element, or a computed value like `mid*mid`), and what you return on a miss (`-1`, `low` to round up, `high` to round down).

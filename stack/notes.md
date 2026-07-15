@@ -56,11 +56,36 @@ return stack[0];
 
 Each stack slot represents "score accumulated so far at this nesting depth." Folding a finished level's result into the level below on close is what makes nested and adjacent cases fall out of the same code path.
 
+## Core Shape — Nested Group Decompression (Marker-Based, Multi-Digit)
+
+Generalized version of the fundamentals `4-decompress-braces` shape: instead of relying on `typeof` to tell a pushed number apart from a pushed character (which only works for single-digit counts), use an explicit marker character (`[`) to bound the segment, then pop a *run* of digit characters to build a possibly-multi-digit count.
+
+```js
+const stack = [];
+for (const char of s) {
+  if (char !== ']') stack.push(char);
+  else {
+    let segment = '';
+    while (stack[stack.length - 1] !== '[') segment = stack.pop() + segment;
+    stack.pop(); // discard '['
+    let num = '';
+    while (stack.length && stack[stack.length - 1] >= '0' && stack[stack.length - 1] <= '9') {
+      num = stack.pop() + num;
+    }
+    stack.push(segment.repeat(num));
+  }
+}
+return stack.join('');
+```
+
+**Why the marker matters here:** with multi-digit counts, digits are pushed onto the stack one character at a time (`'1'`, then `'2'` for `12[a]`) — `typeof` can't distinguish "a digit character" from "a letter character" the way it could distinguish a JS number from a string in the fundamentals version. Popping while the top is numerically a digit (`'0'`–`'9'` string comparison) handles the multi-digit case correctly.
+
 ## Watch Out For
 
 - `for (char of str)` without `let`/`const` creates an implicit global — always declare the loop variable.
 - Prepend, don't append, when reconstructing a segment by popping (`segment = popped + segment`, not `segment += popped`) — popping happens in reverse order.
 - `stack[stack.length - 1]` is the standard way to peek the top without removing it — no built-in `.peek()` in JS arrays.
+- `.repeat(numString)` works fine with a numeric *string* — JS coerces it automatically, no explicit `Number()` conversion needed.
 
 ## Problems
 
@@ -73,3 +98,4 @@ Each stack slot represents "score accumulated so far at this nesting depth." Fol
 | [5-nesting-score](fundamentals/5-nesting-score/README.md) | Score accumulation | Stack of running scores per nesting depth; fold child's score into parent's on close (`+1` if direct match, `*2` if nested) |
 | [345-reverse-vowels-of-a-string](345-reverse-vowels-of-a-string/learnings.md) *(bonus, real LC problem)* | Push/Pop Reversal | Direct cold transfer of the `1-reverse-some-chars` pattern — vowels are the target character set |
 | [20-valid-parenthesis](20-valid-parenthesis/learnings.md) *(curriculum #1, real LC problem)* | Matching brackets, multiple types — 2 solutions | Direct cold transfer of the `3-befitting-brackets` pattern. Two equivalent implementations: push the expected closer (Approach 1, matches fundamentals), or push the opener and reverse-lookup what it needs to match (Approach 2) — same logic, mirrored lookup direction. |
+| [394-decode-string](394-decode-string/learnings.md) *(bonus, Medium, real LC problem)* | Nested group decompression, marker-based, multi-digit | Direct cold transfer of the `4-decompress-braces` pattern, generalized to `[]` brackets and multi-digit counts via a `[` marker instead of a `typeof number` check. Third confirmed fundamentals→real-problem transfer in the same session, first at Medium difficulty. 100th percentile runtime. |

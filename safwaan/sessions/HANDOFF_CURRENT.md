@@ -1,35 +1,40 @@
-# Handoff — 2026-07-15 (session 2, continued)
+# Handoff — 2026-07-15 (session 2, continued — 3rd real problem)
 
 ## What Was Just Completed
 
-Built a full **Stack Fundamentals module** (`stack/fundamentals/`, off-curriculum course material, 5 problems): `1-reverse-some-chars`, `2-paired-parenthesis`, `3-befitting-brackets`, `4-decompress-braces`, `5-nesting-score`. Each got a README documenting problem statement, approach (matched to his actual implementation, noting any deviation from the source walkthrough), and complexity. `stack/notes.md` created summarizing the three core stack shapes that emerged.
+Extended today's Stack session with a third real LeetCode problem: **LC 394 — Decode String** (bonus, Medium — the first Medium-difficulty problem in today's stack work). Brought a fully correct, self-written, accepted solution (100th percentile runtime, 97.38th percentile memory) straight to wrap-up. **Unprompted connected it to `decompressBraces`** from the fundamentals module — same pop-until-marker/build-segment/repeat/push-back shape, generalized to `[]` brackets and multi-digit repeat counts (fundamentals only handled single digits via a `typeof number` check; LC 394 needed an explicit `[` marker plus a digit-run pop loop instead).
 
-Then, in the same session, solved two real LeetCode problems back to back, both independently and both explicitly self-connected to a fundamentals problem with zero prompting:
-1. **LC 345 — Reverse Vowels of a String** (bonus) → connected to `reverseSomeChars` (push/pop reversal).
-2. **LC 20 — Valid Parentheses** (official Phase 4 curriculum #1) → connected to `befittingBrackets` (matching brackets), plus gave a fully correct own-words explanation unprompted at wrap-up.
+This is the **third** confirmed instance today of a course-fundamentals pattern transferring cold to a real LeetCode problem (after LC 345 → `reverseSomeChars`, LC 20 → `befittingBrackets`) — now fully confirmed as a reliable instinct, holding even at Medium difficulty with real generalization required, not just Easy pattern-matching.
 
-**This is now a confirmed pattern, not a single data point** — two different fundamentals patterns, two different real LeetCode problems, same session, both self-recognized. Logged in patterns.md under "What's Solid." Full wrap-up run both times: TRACKER/CURRICULUM updated (181 total, 65 complete), session files, learnings.md files, pattern-index.md (two new sections), revisit-queue entries.
+At wrap-up, declined to give the own-words explanation live ("You can explain it. Let's wrap up.") — second occurrence of the same deflection seen at LC 34 earlier this week, logged as patterns.md #69. Notably this wasn't paired with broader disengagement — he'd been actively discussing alternative approaches (recursive descent, two-parallel-stacks) moments before, and asked to have them noted down for a future session rather than dropped.
+
+Full wrap-up run: TRACKER/CURRICULUM updated (182 total, 66 complete), session file, learnings.md, pattern-index.md (new "Stack — Nested Group Decompression" section), stack/notes.md, revisit-queue entry, carry-forward entries (alternative approaches deferred; explanation-style question).
 
 ---
 
 ## Safwaan's Current State
 
-**Stack is now a genuinely active phase**, not just bonus scattering: 1/7 official curriculum done (LC 20), 1 bonus real problem (LC 345), plus the 5-problem fundamentals module. TRACKER Phase 4 shows 🔄 In Progress.
+**Today was a genuinely large Stack day**: built the full 5-problem fundamentals module, then solved 3 real LeetCode problems (LC 345, LC 20, LC 394) each independently connected to a fundamentals pattern with zero hints. TRACKER Phase 4 now shows 1/7 curriculum + 2 bonus (LC 345, LC 394) — LC 20 is curriculum #1.
 
-**Revisit queue: still completely untouched across this entire multi-part session.** Sixteen+ straight sessions deferred, oldest since 2026-06-18. Never came up during the fundamentals module, LC 345, or LC 20 work — four procedural framings and two direct offers have all failed so far. Next session should try the lowest-friction option that hasn't been attempted: no framing at all, just "pick one problem off the queue yourself."
+**Fundamentals→real-problem transfer is now a settled, reliable instinct** — 3/3 today, including a Medium problem requiring real adaptation. Stop treating this as an open question; it's confirmed in patterns.md "What's Solid."
 
-**Fundamentals-transfer instinct is now trustworthy enough to lean on** — if more stack fundamentals problems appear (or fundamentals modules for other topics), expect the pattern to keep transferring to the matching curriculum/bonus problem without needing to point it out.
+**The "you can explain it" deflection is now 2/2 on live own-words explanations this week** (LC 34, then LC 394), both times without broader session disengagement. Worth asking directly next time: does he want written explanations as the standing default, rather than being asked to produce them live at every wrap-up?
+
+**Revisit queue: still completely untouched across all three problems today.** Sixteen+ straight sessions deferred, oldest since 2026-06-18. Never came up. The lowest-friction untried tactic ("pick one problem yourself, no framing") still hasn't been attempted.
+
+**Two alternative approaches to LC 394 were discussed but explicitly deferred**, not implemented: recursive descent (shared index pointer, recurse on `[`) and two-parallel-stacks (`countStack`/`stringStack`). Logged in carry-forward — good candidate for a future session or the eventual cold redo.
 
 ---
 
 ## Suggested Next Problems
 
-1. **Revisit queue — the untried lowest-friction tactic:** "Pick any one problem off the revisit queue yourself, no explanation needed first." Fifth straight session it hasn't come up at all — worth trying something concrete before another verbal ask.
-2. Continue Phase 4 (Stack) curriculum: **LC 155 — Min Stack** (curriculum #2) is next in order, and doesn't map cleanly to anything from the fundamentals module — good test of whether he reaches for a genuinely new stack shape (auxiliary min-tracking stack) rather than pattern-matching to something he's already built.
-3. Or continue Phase 16 (Intervals): LC 253 — Meeting Rooms II (Heap, new pattern) or LC 435 — Non-Overlapping Intervals (Greedy).
+1. **Revisit queue — the untried lowest-friction tactic:** "Pick any one problem off the revisit queue yourself, no explanation needed first." Now the entire day's session (3 problems) has passed without it coming up at all.
+2. **Ask directly about the explanation-style deflection** (patterns.md #69, now 2/2) — "would you rather I just write these explanations by default, instead of asking you to walk through it live each time?" Useful, actionable answer either way.
+3. Continue Phase 4 (Stack) curriculum: **LC 155 — Min Stack** is next in order and doesn't map to anything from the fundamentals module — good test of whether a genuinely new stack shape (auxiliary min-tracking stack) gets approached fresh rather than pattern-matched.
+4. Or revisit LC 394 alternative approaches (recursive descent, two-parallel-stacks) as a dedicated comparison session, per his own request to "note it down for later."
 
 ## Coach Notes
 
-- The README-per-fundamentals-problem + notes.md-per-topic pattern (stack/) worked well twice now — reuse for any future fundamentals modules.
-- Fundamentals→real-problem transfer is now confirmed (2/2 in one session, including a full unprompted explanation on the second) — safe to expect this going forward, not something to keep flagging as an open question each time. Do keep noting *when* it doesn't happen, since that'd be the more interesting signal now.
-- Revisit-queue escalation unchanged from the last handoff: four procedural framings tried, none landed. Don't add a fifth process tweak — either get traction with a maximally low-friction ask, or have the plain conversation about what's actually blocking it.
+- Fundamentals→real-problem transfer: fully confirmed, 3/3, don't keep re-testing it as if it's still an open question — watch instead for when/if it *fails* to transfer, since that'd now be the more informative signal.
+- Declined-explanation pattern (#69) is now recurring within the same week, same day even. Don't let this become "just write it every time" by default without actually asking him — the open carry-forward question specifically flags this needs a direct conversation, not another silent accommodation.
+- Revisit-queue escalation unchanged: four procedural framings tried, none landed, three real problems today with zero mention. The plain, low-friction ask is still the untried option.

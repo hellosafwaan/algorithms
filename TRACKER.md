@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-15 (Valid Parentheses, LC 20)
+Last updated: 2026-07-15 (Decode String, LC 394, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-15 (Valid Parentheses, LC 20)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 181 |
-| ✅ Complete | 65 |
+| Total problems | 182 |
+| ✅ Complete | 66 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 115 |
 
@@ -107,6 +107,7 @@ Last updated: 2026-07-15 (Valid Parentheses, LC 20)
 | 6 | Car Fleet | Medium | [#853](https://leetcode.com/problems/car-fleet/) | Monotonic Stack | ⏳ | — | — |
 | 7 | Largest Rectangle in Histogram | Hard | [#84](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Monotonic Stack | ⏳ | — | — |
 | — | Reverse Vowels of a String *(bonus)* | Easy | [#345](https://leetcode.com/problems/reverse-vowels-of-a-string/) | Stack | ✅ | 2026-07-15 | [→](stack/345-reverse-vowels-of-a-string/learnings.md) |
+| — | Decode String *(bonus)* | Medium | [#394](https://leetcode.com/problems/decode-string/) | Stack | ✅ 100th pct | 2026-07-15 | [→](stack/394-decode-string/learnings.md) |
 
 ## Phase 5 — Binary Search ⏳
 
