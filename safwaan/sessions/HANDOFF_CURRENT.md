@@ -1,31 +1,35 @@
-# Handoff — 2026-07-15 (session 2)
+# Handoff — 2026-07-15 (session 2, continued)
 
 ## What Was Just Completed
 
-Built a full **Stack Fundamentals module** (`stack/fundamentals/`, off-curriculum course material, 5 problems): `1-reverse-some-chars`, `2-paired-parenthesis`, `3-befitting-brackets`, `4-decompress-braces`, `5-nesting-score`. Each got a README documenting problem statement, approach (matched to his actual implementation, noting any deviation from the source walkthrough), and complexity. `stack/notes.md` created summarizing the three core stack shapes that emerged (push/pop reversal, matching-brackets, score-accumulation).
+Built a full **Stack Fundamentals module** (`stack/fundamentals/`, off-curriculum course material, 5 problems): `1-reverse-some-chars`, `2-paired-parenthesis`, `3-befitting-brackets`, `4-decompress-braces`, `5-nesting-score`. Each got a README documenting problem statement, approach (matched to his actual implementation, noting any deviation from the source walkthrough), and complexity. `stack/notes.md` created summarizing the three core stack shapes that emerged.
 
-Then, in the same session, solved **LC 345 — Reverse Vowels of a String** (bonus, off-curriculum) independently — brought a correct, self-written, bug-free solution straight to wrap-up. **He unprompted recognized it as the exact same pattern as `1-reverse-some-chars`** ("same stack pattern from reverseSomeChars, no bugs") — first clean instance of a course-fundamentals pattern transferring directly to a real LeetCode problem. Full wrap-up run: TRACKER/CURRICULUM updated (181 total, 64 complete), session file, learnings.md, pattern-index.md (new "Stack — Push/Pop Reversal" section), revisit-queue entry, patterns.md breakthrough logged.
+Then, in the same session, solved two real LeetCode problems back to back, both independently and both explicitly self-connected to a fundamentals problem with zero prompting:
+1. **LC 345 — Reverse Vowels of a String** (bonus) → connected to `reverseSomeChars` (push/pop reversal).
+2. **LC 20 — Valid Parentheses** (official Phase 4 curriculum #1) → connected to `befittingBrackets` (matching brackets), plus gave a fully correct own-words explanation unprompted at wrap-up.
+
+**This is now a confirmed pattern, not a single data point** — two different fundamentals patterns, two different real LeetCode problems, same session, both self-recognized. Logged in patterns.md under "What's Solid." Full wrap-up run both times: TRACKER/CURRICULUM updated (181 total, 65 complete), session files, learnings.md files, pattern-index.md (two new sections), revisit-queue entries.
 
 ---
 
 ## Safwaan's Current State
 
-**Off-curriculum stack work is now a real strand alongside Intervals/Binary Search/Graphs bonus work.** Phase 4 (Stack) in TRACKER now shows 🔄 In Progress with 1 bonus problem done, even though none of the 7 official curriculum Stack problems (LC 20, 155, 150, 22, 739, 853, 84) have been touched yet. The fundamentals module (not NeetCode 150 problems) doesn't count toward TRACKER at all — only LC 345 does.
+**Stack is now a genuinely active phase**, not just bonus scattering: 1/7 official curriculum done (LC 20), 1 bonus real problem (LC 345), plus the 5-problem fundamentals module. TRACKER Phase 4 shows 🔄 In Progress.
 
-**Revisit queue: still unresolved, untouched this sub-session too.** Same status as the 060 handoff — sixteen+ straight sessions deferred, oldest since 2026-06-18. Not raised at all during the fundamentals-module or LC 345 work. The planned "ask him to just pick ONE problem himself, no framing" tactic still hasn't been tried.
+**Revisit queue: still completely untouched across this entire multi-part session.** Sixteen+ straight sessions deferred, oldest since 2026-06-18. Never came up during the fundamentals module, LC 345, or LC 20 work — four procedural framings and two direct offers have all failed so far. Next session should try the lowest-friction option that hasn't been attempted: no framing at all, just "pick one problem off the queue yourself."
 
-**Pattern-transfer confidence is genuinely new data point.** Worth testing whether this repeats: the next fundamentals pattern to watch is bracket matching (`3-befitting-brackets`) against LC 20 — Valid Parentheses, which is actually the literal official curriculum entry for this phase.
+**Fundamentals-transfer instinct is now trustworthy enough to lean on** — if more stack fundamentals problems appear (or fundamentals modules for other topics), expect the pattern to keep transferring to the matching curriculum/bonus problem without needing to point it out.
 
 ---
 
 ## Suggested Next Problems
 
-1. **Revisit queue — try the lowest-friction tactic that hasn't been attempted yet:** "Pick any one problem off the revisit queue yourself, no explanation needed first." This is the fourth straight session it hasn't come up at all.
-2. **LC 20 — Valid Parentheses** (official Phase 4 curriculum #1) — natural next step given `3-befitting-brackets` was just built; good test of whether the fundamentals→real-problem transfer instinct repeats on a second pattern.
-3. If he brings more stack fundamentals problems (course material continues past `5-nesting-score`), same README/doc-matching-implementation flow as this session — read the code first, note any deviation from the source walkthrough, don't just transcribe the transcript verbatim.
+1. **Revisit queue — the untried lowest-friction tactic:** "Pick any one problem off the revisit queue yourself, no explanation needed first." Fifth straight session it hasn't come up at all — worth trying something concrete before another verbal ask.
+2. Continue Phase 4 (Stack) curriculum: **LC 155 — Min Stack** (curriculum #2) is next in order, and doesn't map cleanly to anything from the fundamentals module — good test of whether he reaches for a genuinely new stack shape (auxiliary min-tracking stack) rather than pattern-matching to something he's already built.
+3. Or continue Phase 16 (Intervals): LC 253 — Meeting Rooms II (Heap, new pattern) or LC 435 — Non-Overlapping Intervals (Greedy).
 
 ## Coach Notes
 
-- The README-per-fundamentals-problem + notes.md-per-topic pattern established this session (stack/) is a reusable template if other topics get their own fundamentals modules later — cross-reference `binary-search/fundamentals/` which already exists in the same shape.
-- Don't assume the fundamentals→real-problem transfer is now a stable habit off one data point — it's logged as an open carry-forward question, not yet a confirmed pattern in "What's Solid."
-- Revisit-queue escalation: four procedural framings have now been tried across sessions (state-and-proceed, hard precondition, direct offers ×2) and none have landed. Do not add a fifth process tweak — either get real traction with a maximally low-friction ask, or have the plain conversation about what's actually blocking it.
+- The README-per-fundamentals-problem + notes.md-per-topic pattern (stack/) worked well twice now — reuse for any future fundamentals modules.
+- Fundamentals→real-problem transfer is now confirmed (2/2 in one session, including a full unprompted explanation on the second) — safe to expect this going forward, not something to keep flagging as an open question each time. Do keep noting *when* it doesn't happen, since that'd be the more interesting signal now.
+- Revisit-queue escalation unchanged from the last handoff: four procedural framings tried, none landed. Don't add a fifth process tweak — either get traction with a maximally low-friction ask, or have the plain conversation about what's actually blocking it.

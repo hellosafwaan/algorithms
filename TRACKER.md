@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-15 (Reverse Vowels of a String, LC 345, bonus)
+Last updated: 2026-07-15 (Valid Parentheses, LC 20)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-07-15 (Reverse Vowels of a String, LC 345, bonus)
 | Metric | Count |
 |--------|-------|
 | Total problems | 181 |
-| ✅ Complete | 64 |
+| ✅ Complete | 65 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 116 |
+| ⏳ Not started | 115 |
 
 ---
 
@@ -25,7 +25,7 @@ Last updated: 2026-07-15 (Reverse Vowels of a String, LC 345, bonus)
 | 1 | Arrays & Hashing | 12 | 10 | 2026-06-05 | 🔄 In Progress |
 | 2 | Two Pointers | 10 | 10 | 2026-06-02 | ✅ Complete |
 | 3 | Sliding Window | 7 | 2 | 2026-06-08 | 🔄 In Progress |
-| 4 | Stack | 7 | 0 | 2026-06-12 | 🔄 In Progress |
+| 4 | Stack | 7 | 1 | 2026-06-12 | 🔄 In Progress |
 | 5 | Binary Search | 7 | 1 | 2026-06-16 | 🔄 In Progress |
 | 6 | Linked List | 11 | 0 | 2026-06-22 | ⏳ |
 | 7 | 1D Dynamic Programming | 12 | 0 | 2026-06-29 | ⏳ |
@@ -99,7 +99,7 @@ Last updated: 2026-07-15 (Reverse Vowels of a String, LC 345, bonus)
 
 | # | Problem | Difficulty | LC | Pattern | Status | Solved | Learnings |
 |---|---------|------------|----|---------|--------|--------|-----------|
-| 1 | Valid Parentheses | Easy | [#20](https://leetcode.com/problems/valid-parentheses/) | Stack | ⏳ | — | — |
+| 1 | Valid Parentheses | Easy | [#20](https://leetcode.com/problems/valid-parentheses/) | Stack | ✅ | 2026-07-15 | [→](stack/20-valid-parenthesis/learnings.md) |
 | 2 | Min Stack | Medium | [#155](https://leetcode.com/problems/min-stack/) | Stack | ⏳ | — | — |
 | 3 | Evaluate Reverse Polish Notation | Medium | [#150](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | Stack | ⏳ | — | — |
 | 4 | Generate Parentheses | Medium | [#22](https://leetcode.com/problems/generate-parentheses/) | Backtracking / Stack | ⏳ | — | — |

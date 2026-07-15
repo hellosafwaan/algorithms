@@ -352,8 +352,8 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Breakthrough Moments
 
-### Course-fundamentals pattern transfers cold to a real LeetCode problem — LC 345 (2026-07-15)
-Same session where he built a 5-problem stack fundamentals module (reverseSomeChars → nestingScore), he independently attempted LC 345 (Reverse Vowels of a String) and, unprompted, recognized it as the exact same shape as the first fundamentals problem: push target characters (vowels) onto a stack on a first pass, then pop them back in reverse order on a second pass to place them. Solved clean — no bugs, no hints. This is the first clear instance of a pattern learned from the course-style fundamentals module (not a NeetCode/curriculum problem) transferring directly and independently to an actual interview-style LeetCode problem, in his own words at wrap-up ("same stack pattern from reverseSomeChars"). Worth watching whether this becomes a habit as more fundamentals modules (e.g. bracket matching → LC 20 Valid Parentheses) get built.
+### Course-fundamentals pattern transfer confirmed twice in one session — LC 345 then LC 20 (2026-07-15)
+Same session where he built a 5-problem stack fundamentals module (reverseSomeChars → nestingScore): first, LC 345 (Reverse Vowels of a String) unprompted connected to `reverseSomeChars` (push/pop reversal). Then, immediately after, LC 20 — Valid Parentheses (the actual official curriculum #1 for this phase) unprompted connected to `befittingBrackets` (push the expected closer, match against stack top, pop or fail) — solved clean, no bugs, and gave a fully correct own-words explanation without any prompting or scaffolding needed. This closes the open question logged after LC 345 about whether the transfer was a one-off tied to recency: it's now two different fundamentals patterns, each transferring cleanly to a different real LeetCode problem, in the same sitting. Strong enough now to log as a general instinct rather than a single data point — see "What's Solid."
 
 ### Independent, unprompted correctness catch mid-debug — LC 3169 (2026-07-12)
 While fixing two structural bugs in a video-assisted solve (bracket-notation typo, unconditional push), the next code paste included an unrequested, unhinted fix: `gap += next[0] - current[1] - 1` (the `-1` wasn't there before). This is a genuinely non-obvious correctness detail — without it, adjacent-but-non-overlapping meetings would be miscounted as having a free day between them when they don't. Verified via trace that the fix was actually necessary and correct. This happened without any coach prompt pointing at the gap formula at all — real evidence that real debugging (not just accepting a video's code verbatim) was happening, even on a video-assisted problem, and even in a session that ended with a declined wrap-up.
@@ -420,6 +420,7 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 - Tracing through concrete examples — does this naturally
 - Questioning practicality of solutions — strong instinct
 - Self-correcting when guided — very consistent
+- Transferring course-fundamentals patterns to real LeetCode problems unprompted — confirmed twice in one session (2026-07-15): `reverseSomeChars`→LC 345 and `befittingBrackets`→LC 20, both self-recognized with zero hints and, on the second, a fully correct unprompted own-words explanation
 
 ### 13. Pointer movement justification — reasoning gap (not code bug)
 - **Seen in:** LC 11 (2026-06-04)

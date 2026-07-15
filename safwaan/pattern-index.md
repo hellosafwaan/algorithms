@@ -17,6 +17,19 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Stack — Matching Brackets
+
+**Core idea:** Push the *expected closer* (not the opener) onto the stack. When a closing character shows up, check it directly against the top of the stack — a match means pop, otherwise (or if the stack is empty) it's invalid. At the end, the string is only valid if the stack is empty (no dangling unclosed brackets).
+
+**When to reach for it:** "Are these brackets/parentheses correctly matched and nested?"
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| [stack/fundamentals/3-befitting-brackets](../stack/fundamentals/3-befitting-brackets/README.md) | Three bracket types | Push the closer via a lookup object; direct equality check against stack top |
+| LC 20 — Valid Parentheses | Same three bracket types, real LC problem (curriculum #1) | Direct cold transfer of the fundamentals pattern — self-recognized as identical, no hints needed, fully correct own-words explanation given unprompted. Second confirmed fundamentals→real-problem transfer in the same session (after LC 345). |
+
+---
+
 ## Binary Search
 
 **Core idea:** Two pointers (`low`/`high`) define the current search boundary. Each step, check the midpoint and discard the half that can't contain the answer. Loop while `low <= high` (inclusive, so a single-element window still gets checked). What changes between variants: what gets compared at `mid` (an array element, or a computed value like `mid*mid`), and what you return on a miss (`-1`, `low` to round up, `high` to round down).
