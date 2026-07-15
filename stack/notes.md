@@ -56,6 +56,30 @@ return stack[0];
 
 Each stack slot represents "score accumulated so far at this nesting depth." Folding a finished level's result into the level below on close is what makes nested and adjacent cases fall out of the same code path.
 
+## Core Shape — Auxiliary Min-Tracking Stack
+
+Run a second stack (`minStack`) in lockstep with the main one. `minStack`'s top always holds "the minimum of everything currently in the main stack" — so `getMin()` is a direct O(1) peek instead of a scan.
+
+```js
+const stack = [];
+const minStack = [];
+function push(value) {
+  stack.push(value);
+  minStack.push(minStack.length ? Math.min(value, minStack[minStack.length - 1]) : value);
+}
+function pop() {
+  stack.pop();
+  minStack.pop(); // always pop both together — they must stay the same length
+}
+function getMin() {
+  return minStack[minStack.length - 1];
+}
+```
+
+**Space-optimized variant:** only push to `minStack` when the incoming value is a new minimum (`<=` current min, not `<` — `<=` is needed so a duplicate minimum still gets its own entry, otherwise popping one copy would incorrectly lose track of the other). On `pop()`, only pop from `minStack` if the value being removed from `stack` equals `minStack`'s current top — that equality is exactly how you know the minimum needs to change, since anything popped that *isn't* the current min can't affect what the min is.
+
+**When to reach for it:** Any "design a data structure supporting O(1) `getMin`/`getMax` alongside normal stack operations" problem.
+
 ## Core Shape — Nested Group Decompression (Marker-Based, Multi-Digit)
 
 Generalized version of the fundamentals `4-decompress-braces` shape: instead of relying on `typeof` to tell a pushed number apart from a pushed character (which only works for single-digit counts), use an explicit marker character (`[`) to bound the segment, then pop a *run* of digit characters to build a possibly-multi-digit count.
@@ -100,3 +124,4 @@ return stack.join('');
 | [20-valid-parenthesis](20-valid-parenthesis/learnings.md) *(curriculum #1, real LC problem)* | Matching brackets, multiple types — 2 solutions | Direct cold transfer of the `3-befitting-brackets` pattern. Two equivalent implementations: push the expected closer (Approach 1, matches fundamentals), or push the opener and reverse-lookup what it needs to match (Approach 2) — same logic, mirrored lookup direction. |
 | [394-decode-string](394-decode-string/learnings.md) *(bonus, Medium, real LC problem)* | Nested group decompression, marker-based, multi-digit | Direct cold transfer of the `4-decompress-braces` pattern, generalized to `[]` brackets and multi-digit counts via a `[` marker instead of a `typeof number` check. Third confirmed fundamentals→real-problem transfer in the same session, first at Medium difficulty. 100th percentile runtime. |
 | [856-score-of-parentheses](856-score-of-parentheses/learnings.md) *(bonus, Medium, real LC problem)* | Score accumulation, exact match | Direct cold transfer of the `5-nesting-score` pattern — unlike LC 394, needed zero adaptation, exact same algorithm. Fourth and final confirmed fundamentals→real-problem transfer in the same session — now a settled instinct. |
+| [155-min-stack](155-min-stack/learnings.md) *(curriculum #2, real LC problem)* | Auxiliary min-tracking stack | New pattern — no fundamentals mapping. Video-assisted (disclosed), but real bug found and self-fixed, plus genuine Socratic derivation of the space-optimized variant (deferred, not yet implemented). |

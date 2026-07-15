@@ -1,37 +1,39 @@
-# Handoff — 2026-07-15 (session 2, continued — 4th real problem)
+# Handoff — 2026-07-15 (session 2, continued — 5th problem, curriculum #2)
 
 ## What Was Just Completed
 
-Fourth real LeetCode problem in today's Stack session: **LC 856 — Score of Parentheses** (bonus, Medium). Brought a fully correct, self-written, accepted solution straight to wrap-up. **Unprompted connected it to `nestingScore`** from the fundamentals module — and unlike LC 394 (which needed generalizing), this one transferred with zero changes: exact same seed-with-0/push-0-on-open/pop-and-fold-on-close algorithm.
+**LC 155 — Min Stack** (Phase 4 curriculum #2) — the first genuinely new stack shape in today's long Stack session, no fundamentals-module mapping. **Video-assisted (NeetCode), disclosed upfront.** Brought a two-parallel-stack (`stack` + `minStack`) implementation with one real bug: `pop()` referenced an undefined `value` variable (a leftover copy-paste from `push`'s parameter). Self-caught it in one guided question. Accepted after the fix, 41.11th percentile runtime, 42.18th percentile memory.
 
-This closes out today's Stack fundamentals→real-problem transfer arc at **4/4**: LC 345→`reverseSomeChars`, LC 20→`befittingBrackets`, LC 394→`decompressBraces` (generalized), LC 856→`nestingScore` (exact match). Logged as a settled instinct in patterns.md — stop verifying it per-problem going forward; watch instead for a case where it *doesn't* transfer.
+**Notably positive contrast to prior video-assisted sessions (LC 200, LC 3169):** when a follow-up space-optimization was raised (lazy `minStack` pushes — only push on a new minimum, pop conditionally), he engaged fully and correctly self-derived the core mechanism through pure Socratic questioning, zero direct answers given: "if the popped value equals the top of minStack, that means it's the current minimum, so pop it from minStack too." He explicitly deferred *implementing* it to a future session, but the reasoning itself was entirely his own. Logged as a breakthrough in patterns.md — video-assisted origin does not reliably predict disengagement; watch for actual engagement signals instead.
 
-Declined the live own-words explanation again — consistent with what he stated directly earlier this session (it's mood-dependent, not avoidance). Not pushed further, per his own stated preference.
-
-Full wrap-up run: TRACKER/CURRICULUM updated (183 total, 67 complete), session file, learnings.md, pattern-index.md (new "Stack — Score Accumulation" section), stack/notes.md, revisit-queue entry.
+Full wrap-up: TRACKER updated (183 total, 68 complete, Phase 4 now 2/7 curriculum), session file, learnings.md, pattern-index.md (new "Stack — Auxiliary Min-Tracking Stack" section), stack/notes.md, revisit-queue entry (shortened fuse for video-assisted origin, redo should include the deferred space-optimization), carry-forward entry for the deferred implementation.
 
 ---
 
 ## Safwaan's Current State
 
-**Today's Stack session is now very large**: built the full 5-problem fundamentals module, then solved FOUR real LeetCode problems (LC 345, LC 20, LC 394, LC 856), all self-connected to fundamentals with zero hints. TRACKER Phase 4 now shows 1/7 curriculum (LC 20) + 3 bonus (LC 345, LC 394, LC 856).
+**Today was an unusually large single-day Stack push**: built the 5-problem fundamentals module, then solved FIVE real LeetCode problems total — LC 345, LC 20, LC 394, LC 856 (all bonus, all self-connected to fundamentals with zero hints), and now LC 155 (curriculum #2, genuinely new pattern, video-assisted but well-engaged). TRACKER Phase 4 stands at 2/7 curriculum (LC 20, LC 155) + 3 bonus (LC 345, LC 394, LC 856).
 
-**Fundamentals→real-problem transfer: fully settled, 4/4, both Easy and Medium, both exact-match and generalized.** This is no longer an open question — treat it as a reliable instinct going forward.
+**Fundamentals→real-problem transfer: settled at 4/4** from earlier in the session — no longer needs re-verification.
 
-**Declined-live-explanation: resolved as mood-dependent**, confirmed directly by him this session ("it just depends on my mood... the time and the situation," "no ask me" when offered a written-by-default alternative). Standing protocol: ask every time, write it without pushback if declined, don't keep re-probing.
+**Video-assisted engagement quality is now a per-instance judgment, not a fixed flag** — LC 155 shows real debugging + real conceptual extension can happen even on video-assisted material. Contrast directly against LC 200/LC 3169 (declined ownership checks outright) in future coaching notes rather than treating "video-assisted" as inherently risky.
 
-**Revisit queue: still completely untouched across all four problems today.** Sixteen+ straight sessions deferred, oldest since 2026-06-18. The lowest-friction untried tactic ("pick one problem yourself, no framing") still hasn't been attempted — worth trying at the very start of the next session before any new code.
+**Declined-live-explanation:** still resolved as mood-dependent (confirmed directly by him earlier today) — not an issue this problem, he gave a full own-words walkthrough unprompted when asked.
+
+**Revisit queue: still completely untouched across all five problems today.** Sixteen+ straight sessions deferred, oldest since 2026-06-18. Still worth trying the lowest-friction untried tactic first thing next session.
+
+**Deferred work:** the space-optimized Min Stack variant (self-derived reasoning, not yet coded) and the LC 394 alternative approaches (recursive descent, two-parallel-stacks) are both logged in carry-forward.md for a future session.
 
 ---
 
 ## Suggested Next Problems
 
-1. **Revisit queue — the untried lowest-friction tactic:** "Pick any one problem off the revisit queue yourself, no explanation needed first." An entire multi-problem session day has now passed with zero mention.
-2. Continue Phase 4 (Stack) curriculum: **LC 155 — Min Stack** is next in order and doesn't map to anything from the fundamentals module — good test of whether a genuinely new stack shape (auxiliary min-tracking stack) gets approached fresh.
-3. Revisit LC 394's deferred alternative approaches (recursive descent, two-parallel-stacks) as a dedicated comparison session, per his own earlier request.
+1. **Revisit queue — the untried lowest-friction tactic:** "Pick any one problem off the revisit queue yourself, no explanation needed first." An entire five-problem session day has passed with zero mention — try this as the literal first message next time, before any new code.
+2. Continue Phase 4 (Stack) curriculum: **LC 150 — Evaluate Reverse Polish Notation** (#3) is next in order.
+3. Either deferred item — space-optimized Min Stack, or the LC 394 alternative-approaches comparison — would make a good focused mini-session.
 
 ## Coach Notes
 
-- Fundamentals→real-problem transfer: fully confirmed 4/4 today. Don't keep testing it — it's in "What's Solid."
-- Explanation-style: resolved via direct question, mood-dependent, standing protocol established (ask, don't push). No need to keep logging each decline as a new pattern instance.
-- Revisit-queue escalation unchanged: four procedural framings tried, none landed, four real problems today with zero mention. The plain, low-friction ask is still the untried option — try it first thing next session.
+- Fundamentals→real-problem transfer: fully confirmed 4/4, settled instinct, don't re-verify.
+- Video-assisted flag: stop treating it as an automatic ownership-risk signal. LC 155 is the counter-example to LC 200/3169 — watch actual engagement (does he debug real bugs himself, does he reason through follow-up extensions) rather than the video-assisted label alone.
+- Revisit-queue escalation unchanged: four procedural framings tried, none landed, five real problems today with zero mention. Try the plain, low-friction ask first thing next session.

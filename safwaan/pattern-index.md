@@ -4,6 +4,20 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Stack — Auxiliary Min-Tracking Stack
+
+**Core idea:** Run a second stack (`minStack`) in lockstep with the main one, tracking "the minimum of everything currently in the stack" at its top. Push to both together (`minStack` gets `Math.min(newValue, currentMinTop)`, or just the value if empty), pop from both together. `getMin()` becomes a direct O(1) peek instead of a scan.
+
+**Space-optimized variant:** only push to `minStack` when the value is a new minimum (`<=`, not `<` — needed to correctly handle duplicate minimums). On pop, only pop `minStack` if the value leaving the main stack equals `minStack`'s current top — that equality is exactly the signal that the minimum needs to change.
+
+**When to reach for it:** "Design a stack that also supports O(1) `getMin`/`getMax`."
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 155 — Min Stack | Class-based stack design, curriculum #2 | Two parallel stacks, always same length. New pattern — no fundamentals-module mapping. Video-assisted (disclosed), but a real bug (`pop()` referencing an undefined `value`) was self-caught, and the space-optimized variant's core mechanism was correctly self-derived via Socratic questioning (implementation deferred). |
+
+---
+
 ## Stack — Push/Pop Reversal
 
 **Core idea:** Push a target subset of characters onto a stack on a first pass over the string; on a second pass, pop from the stack whenever a target character is encountered again. LIFO order means the last target character seen comes out first — exactly the reversal needed, with no manual index math.
