@@ -352,6 +352,9 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Breakthrough Moments
 
+### Course-fundamentals pattern transfers cold to a real LeetCode problem — LC 345 (2026-07-15)
+Same session where he built a 5-problem stack fundamentals module (reverseSomeChars → nestingScore), he independently attempted LC 345 (Reverse Vowels of a String) and, unprompted, recognized it as the exact same shape as the first fundamentals problem: push target characters (vowels) onto a stack on a first pass, then pop them back in reverse order on a second pass to place them. Solved clean — no bugs, no hints. This is the first clear instance of a pattern learned from the course-style fundamentals module (not a NeetCode/curriculum problem) transferring directly and independently to an actual interview-style LeetCode problem, in his own words at wrap-up ("same stack pattern from reverseSomeChars"). Worth watching whether this becomes a habit as more fundamentals modules (e.g. bracket matching → LC 20 Valid Parentheses) get built.
+
 ### Independent, unprompted correctness catch mid-debug — LC 3169 (2026-07-12)
 While fixing two structural bugs in a video-assisted solve (bracket-notation typo, unconditional push), the next code paste included an unrequested, unhinted fix: `gap += next[0] - current[1] - 1` (the `-1` wasn't there before). This is a genuinely non-obvious correctness detail — without it, adjacent-but-non-overlapping meetings would be miscounted as having a free day between them when they don't. Verified via trace that the fix was actually necessary and correct. This happened without any coach prompt pointing at the gap formula at all — real evidence that real debugging (not just accepting a video's code verbatim) was happening, even on a video-assisted problem, and even in a session that ended with a declined wrap-up.
 

@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-15 (Find First and Last Position of Element in Sorted Array, LC 34, bonus)
+Last updated: 2026-07-15 (Reverse Vowels of a String, LC 345, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-15 (Find First and Last Position of Element in Sorted Arra
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 180 |
-| ✅ Complete | 63 |
+| Total problems | 181 |
+| ✅ Complete | 64 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 116 |
 
@@ -25,7 +25,7 @@ Last updated: 2026-07-15 (Find First and Last Position of Element in Sorted Arra
 | 1 | Arrays & Hashing | 12 | 10 | 2026-06-05 | 🔄 In Progress |
 | 2 | Two Pointers | 10 | 10 | 2026-06-02 | ✅ Complete |
 | 3 | Sliding Window | 7 | 2 | 2026-06-08 | 🔄 In Progress |
-| 4 | Stack | 7 | 0 | 2026-06-12 | ⏳ |
+| 4 | Stack | 7 | 0 | 2026-06-12 | 🔄 In Progress |
 | 5 | Binary Search | 7 | 1 | 2026-06-16 | 🔄 In Progress |
 | 6 | Linked List | 11 | 0 | 2026-06-22 | ⏳ |
 | 7 | 1D Dynamic Programming | 12 | 0 | 2026-06-29 | ⏳ |
@@ -106,6 +106,7 @@ Last updated: 2026-07-15 (Find First and Last Position of Element in Sorted Arra
 | 5 | Daily Temperatures | Medium | [#739](https://leetcode.com/problems/daily-temperatures/) | Monotonic Stack | ⏳ | — | — |
 | 6 | Car Fleet | Medium | [#853](https://leetcode.com/problems/car-fleet/) | Monotonic Stack | ⏳ | — | — |
 | 7 | Largest Rectangle in Histogram | Hard | [#84](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Monotonic Stack | ⏳ | — | — |
+| — | Reverse Vowels of a String *(bonus)* | Easy | [#345](https://leetcode.com/problems/reverse-vowels-of-a-string/) | Stack | ✅ | 2026-07-15 | [→](stack/345-reverse-vowels-of-a-string/learnings.md) |
 
 ## Phase 5 — Binary Search ⏳
 

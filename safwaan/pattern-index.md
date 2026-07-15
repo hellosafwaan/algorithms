@@ -4,6 +4,19 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Stack — Push/Pop Reversal
+
+**Core idea:** Push a target subset of characters onto a stack on a first pass over the string; on a second pass, pop from the stack whenever a target character is encountered again. LIFO order means the last target character seen comes out first — exactly the reversal needed, with no manual index math.
+
+**When to reach for it:** "Reverse just the [some subset] of characters in a string, leave the rest in place."
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| [stack/fundamentals/1-reverse-some-chars](../stack/fundamentals/1-reverse-some-chars/README.md) | Custom target character array | Set for O(1) membership check; push targets pass 1, pop them (reversed) pass 2 |
+| LC 345 — Reverse Vowels of a String *(bonus)* | Target set = vowels | Direct cold transfer of the fundamentals pattern — self-recognized as identical, no hints needed |
+
+---
+
 ## Binary Search
 
 **Core idea:** Two pointers (`low`/`high`) define the current search boundary. Each step, check the midpoint and discard the half that can't contain the answer. Loop while `low <= high` (inclusive, so a single-element window still gets checked). What changes between variants: what gets compared at `mid` (an array element, or a computed value like `mid*mid`), and what you return on a miss (`-1`, `low` to round up, `high` to round down).
