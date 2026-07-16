@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heaps &amp; Priority Queues — Complete Notes (Greg's Series)</title>
+<style>
+  :root{
+    --bg:#0d1117; --bg2:#161b22; --bg3:#1c2230; --border:#2a3240;
+    --text:#e6edf3; --muted:#8b96a5; --accent:#5fb3f7; --accent2:#f2994a;
+    --good:#4caf7d; --bad:#e5626b; --purple:#b58cf2; --yellow:#e2c86f;
+    --code-bg:#0a0e14;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,-apple-system,sans-serif; line-height:1.65;}
+  .wrap{max-width:980px; margin:0 auto; padding:32px 24px 100px; transition:margin-left .25s ease;}
+  @media(min-width:1000px){ body.sidebar-open .wrap{margin-left:280px; max-width:980px;} }
+
+  header.hero{padding:40px 32px; border-radius:16px; margin-bottom:36px; background:linear-gradient(135deg,#132a2c,#151a36 70%); border:1px solid var(--border);}
+  header.hero h1{margin:0 0 8px; font-size:2.1em; color:#fff;}
+  header.hero p{margin:0; color:var(--muted); font-size:1.05em;}
+  .badges{margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;}
+  .badge{background:var(--bg3); border:1px solid var(--border); padding:4px 12px; border-radius:20px; font-size:.8em; color:var(--accent);}
+
+  section{margin-bottom:52px; scroll-margin-top:20px;}
+  h2.sec-title{font-size:1.5em; color:#fff; border-left:4px solid var(--accent); padding-left:14px; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+  h2.sec-title .n{color:var(--accent); font-family:monospace;}
+  h3{color:var(--accent2); margin-top:28px;}
+  p{color:#c9d1d9;}
+  .callout{background:var(--bg2); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:8px; padding:16px 20px; margin:18px 0;}
+  .callout .label{color:var(--accent); font-weight:600; text-transform:uppercase; font-size:.75em; letter-spacing:.06em; margin-bottom:6px;}
+  .callout.key{border-left-color:var(--yellow);} .callout.key .label{color:var(--yellow);}
+  .callout.warn{border-left-color:var(--bad);} .callout.warn .label{color:var(--bad);}
+
+  table{width:100%; border-collapse:collapse; margin:18px 0; font-size:.93em;}
+  th,td{border:1px solid var(--border); padding:10px 14px; text-align:left;}
+  th{background:var(--bg3); color:var(--accent); font-weight:600;}
+  tr:nth-child(even) td{background:#121822;}
+  td code, li code, p code{background:var(--code-bg); padding:1px 6px; border-radius:4px; color:var(--accent2); font-size:.92em;}
+
+  pre{background:var(--code-bg); border:1px solid var(--border); border-radius:10px; padding:16px 18px; overflow-x:auto; font-size:.87em; line-height:1.55;}
+  code{font-family:'Fira Code','Consolas',monospace;}
+  .kw{color:#ff7b72;} .fn{color:#d2a8ff;} .str{color:#a5d6ff;} .cm{color:#8b96a5; font-style:italic;} .num{color:#79c0ff;} .var{color:#e6edf3;}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr;}}
+
+  .tree{display:flex; flex-direction:column; align-items:center; gap:26px; padding:20px 10px;}
+  .row{display:flex; gap:22px; justify-content:center; position:relative;}
+  .node{width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--bg3); border:2px solid var(--accent); color:#fff; font-weight:600; font-family:monospace; position:relative; z-index:2; flex-shrink:0;}
+  .node.bad{border-color:var(--bad); background:#2a1418;}
+  .node.good{border-color:var(--good); background:#132a1e;}
+  .node.moved{border-color:var(--yellow); background:#2a2413;}
+  .node.ghost{opacity:.25; border-style:dashed;}
+
+  .arr-strip{display:flex; gap:4px; overflow-x:auto; padding:14px 0; justify-content:center; flex-wrap:wrap;}
+  .cell{min-width:44px; text-align:center;}
+  .cell .idx{font-size:.72em; color:var(--muted); margin-bottom:3px;}
+  .cell .val{background:var(--bg3); border:1px solid var(--border); border-radius:6px; padding:8px 4px; font-family:monospace; font-weight:600; color:#fff;}
+  .cell.hi .val{border-color:var(--accent2); background:#2a1e10; color:var(--accent2);}
+  .cell.hi2 .val{border-color:var(--purple); background:#1e1530; color:var(--purple);}
+  .cell.empty .val{opacity:.25; border-style:dashed;}
+
+  .trace-step{display:grid; grid-template-columns:170px 1fr; gap:18px; align-items:center; border-bottom:1px solid var(--border); padding:16px 0;}
+  .trace-step:last-child{border-bottom:none;}
+  .trace-step .desc{color:var(--muted); font-size:.9em;}
+  .trace-step .desc b{color:var(--text);}
+
+  .complexity-pill{display:inline-block; background:var(--bg3); border:1px solid var(--accent); color:var(--accent); padding:2px 10px; border-radius:6px; font-family:monospace; font-size:.9em;}
+
+  .fn-box{background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:14px 0;}
+  .fn-box .formula{font-family:monospace; font-size:1.05em; color:var(--accent2);}
+
+  .qa{background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 18px; margin:10px 0;}
+  .qa .q{color:var(--accent); font-weight:600;}
+
+  footer{margin-top:60px; text-align:center; color:var(--muted); font-size:.85em; border-top:1px solid var(--border); padding-top:20px;}
+
+  .sidebar-toggle{position:fixed; top:22px; left:22px; z-index:60; width:44px; height:44px; border-radius:10px; background:var(--bg2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:4px; cursor:pointer; transition:left .25s ease, background .2s;}
+  .sidebar-toggle:hover{background:var(--bg3);}
+  .sidebar-toggle span{width:20px; height:2px; background:var(--accent); border-radius:2px; transition:transform .25s ease, opacity .2s;}
+  body.sidebar-open .sidebar-toggle{left:302px;}
+  body.sidebar-open .sidebar-toggle span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  body.sidebar-open .sidebar-toggle span:nth-child(2){opacity:0;}
+  body.sidebar-open .sidebar-toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+  #sidebar{position:fixed; top:0; left:0; height:100vh; width:280px; background:var(--bg2); border-right:1px solid var(--border); padding:88px 20px 30px; overflow-y:auto; transform:translateX(-280px); transition:transform .25s ease; z-index:55;}
+  body.sidebar-open #sidebar{transform:translateX(0);}
+  #sidebar h2{margin:0 0 16px; font-size:.78em; text-transform:uppercase; letter-spacing:.1em; color:var(--muted);}
+  #sidebar ol{list-style:none; margin:0; padding:0; counter-reset:sec;}
+  #sidebar li{margin-bottom:2px;}
+  #sidebar a{counter-increment:sec; display:flex; gap:10px; align-items:baseline; color:var(--muted); text-decoration:none; font-size:.9em; padding:9px 10px; border-radius:8px; border-left:2px solid transparent; transition:background .15s, color .15s, border-color .15s;}
+  #sidebar a::before{content:counter(sec,decimal-leading-zero); font-family:monospace; color:var(--accent); font-size:.85em; opacity:.7;}
+  #sidebar a:hover{background:var(--bg3); color:var(--text);}
+  #sidebar a.active{color:#fff; border-left-color:var(--accent); background:var(--bg3);}
+  #sidebar a.active::before{opacity:1;}
+
+  .scrim{position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:50; opacity:0; pointer-events:none; transition:opacity .25s ease;}
+  body.sidebar-open .scrim{opacity:1; pointer-events:auto;}
+  @media(min-width:1000px){ .scrim{display:none;} }
+
+  .back-to-top{position:fixed; bottom:24px; right:24px; z-index:40; width:46px; height:46px; border-radius:50%; background:var(--bg3); border:1px solid var(--border); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:1.2em; text-decoration:none; opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease;}
+  .back-to-top.show{opacity:1; pointer-events:auto;}
+  .back-to-top:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+<div class="scrim" id="scrim"></div>
+
+<nav id="sidebar">
+  <h2>On this page</h2>
+  <ol>
+    <li><a href="#sec1" data-target="sec1">Heap = Priority Queue</a></li>
+    <li><a href="#sec2" data-target="sec2">Array Representation</a></li>
+    <li><a href="#sec3" data-target="sec3">Min Heap &amp; Heap Pop</a></li>
+    <li><a href="#sec4" data-target="sec4">Heap Push (Insert)</a></li>
+    <li><a href="#sec5" data-target="sec5">Heap Peek</a></li>
+    <li><a href="#sec6" data-target="sec6">Heap Sort</a></li>
+    <li><a href="#sec7" data-target="sec7">Heapify — Build Heap in O(n)</a></li>
+    <li><a href="#sec8" data-target="sec8">Max Heap</a></li>
+    <li><a href="#sec9" data-target="sec9">Storing Tuples (Priority + Data)</a></li>
+    <li><a href="#sec10" data-target="sec10">Python heapq — Full Toolkit</a></li>
+    <li><a href="#sec11" data-target="sec11">Complexity Cheat Sheet</a></li>
+    <li><a href="#sec12" data-target="sec12">Mistakes &amp; Interview Tips</a></li>
+  </ol>
+</nav>
+
+<a href="#top" class="back-to-top" id="backToTop">↑</a>
+
+<div class="wrap" id="top">
+
+<header class="hero">
+  <h1>🗻 Heaps &amp; Priority Queues — Complete Notes</h1>
+  <p>Source: Greg's heaps lecture — heap/priority-queue equivalence, array representation, push/pop, heapify in O(n), max heaps, tuple storage, and the Python <code>heapq</code> library.</p>
+  <div class="badges">
+    <span class="badge">Min Heap</span>
+    <span class="badge">Max Heap</span>
+    <span class="badge">Priority Queue</span>
+    <span class="badge">Heapify O(n)</span>
+    <span class="badge">Heap Sort</span>
+    <span class="badge">Python heapq</span>
+  </div>
+  <p style="margin-top:16px;color:var(--muted);font-size:.85em;">☰ Tap the menu icon (top-left) to open the section navigator.</p>
+</header>
+
+<!-- SECTION 1 -->
+<section id="sec1">
+  <h2 class="sec-title"><span class="n">01</span> Heap = Priority Queue</h2>
+  <div class="callout key">
+    <div class="label">The core claim of this lecture</div>
+    A <b>heap</b> and a <b>priority queue</b> are the same data structure. Whether someone says "heap" or "priority queue," they mean the same thing.
+  </div>
+  <p>A heap/priority queue is a particular type of <b>binary tree</b> — specifically one where the elements are organized so the "most important" one (smallest, for a min heap, or largest, for a max heap) is always instantly accessible at the root.</p>
+  <p>The "priority queue" framing: imagine people waiting in line, but instead of first-come-first-served, whoever has the <b>highest priority</b> (lowest number, in this lecture's convention) gets served first — celebrities and VIPs skip the line. A min heap processes items in exactly that order: smallest value first.</p>
+</section>
+
+<!-- SECTION 2 -->
+<section id="sec2">
+  <h2 class="sec-title"><span class="n">02</span> Array Representation</h2>
+  <p>Before even talking about the heap property, any binary tree can be represented as an array. Root at index 0, and for any index <code>i</code>:</p>
+
+  <div class="fn-box">
+    <div class="formula">leftChild(i)&nbsp; = 2·i + 1</div>
+    <div class="formula">rightChild(i) = 2·i + 2</div>
+  </div>
+
+  <p><b>Important distinction made early in the lecture:</b> just representing a binary tree as an array does <i>not</i> make it a heap. A tree only becomes a heap once it satisfies the <b>heap property</b> (parent ≤ children for a min heap) — turning an arbitrary tree/array into one is done via a function called <code>heapify</code>.</p>
+
+  <h3>Worked check</h3>
+  <p>Array: <code>[2, 5, 0, 1, 10, 8, -4, 3, 12, 9]</code> (not yet a heap — just a binary tree laid out in array form).</p>
+  <div class="arr-strip">
+    <div class="cell hi"><div class="idx">0</div><div class="val">2</div></div>
+    <div class="cell"><div class="idx">1</div><div class="val">5</div></div>
+    <div class="cell"><div class="idx">2</div><div class="val">0</div></div>
+    <div class="cell"><div class="idx">3</div><div class="val">1</div></div>
+    <div class="cell hi2"><div class="idx">4</div><div class="val">10</div></div>
+    <div class="cell"><div class="idx">5</div><div class="val">8</div></div>
+    <div class="cell"><div class="idx">6</div><div class="val">-4</div></div>
+    <div class="cell"><div class="idx">7</div><div class="val">3</div></div>
+    <div class="cell"><div class="idx">8</div><div class="val">12</div></div>
+    <div class="cell"><div class="idx">9</div><div class="val">9</div></div>
+  </div>
+  <p>For <code>i = 3</code> (value <code>1</code>): left child index = <code>2·3+1 = 7</code> → value <code>3</code>. Right child index = <code>2·3+2 = 8</code> → value <code>12</code>. Both check out against the tree diagram in the lecture.</p>
+</section>
+
+<!-- SECTION 3 -->
+<section id="sec3">
+  <h2 class="sec-title"><span class="n">03</span> Min Heap &amp; Heap Pop (Extract-Min)</h2>
+  <p>Once the array above is run through <code>minHeapify</code>, it becomes a valid min heap: the root is the minimum, and every node is smaller than both of its children (recursively).</p>
+
+  <h3>Heap Pop — worked trace</h3>
+  <div class="trace-step"><b>Remove root</b><div class="desc">Take <code>-4</code> out (the current minimum) — this is what gets returned.</div></div>
+  <div class="trace-step"><b>Promote smaller child</b><div class="desc">Of the root's two children, promote the smaller one upward. Between the two candidates, the value <code>0</code> is chosen over <code>1</code> because 0 &lt; 1.</div></div>
+  <div class="trace-step"><b>Repeat down the path</b><div class="desc">The gap left behind gets filled by promoting the smaller of <i>its</i> children — continue this down a single path until you reach a node with only one child (or none), then promote whatever's left.</div></div>
+
+  <div class="callout key">
+    <div class="label">Why O(log n)</div>
+    Heap pop only ever fixes <b>one path</b> down the tree — never branches out to fix multiple paths. As long as the tree stays roughly height-balanced (which a complete tree guarantees), that path has length <code>log₂ n</code>. So extract-min is <span class="complexity-pill">O(log n)</span>.
+  </div>
+
+  <p>"Heap pop" and "extract min" refer to the same operation — remove and return the root, then repair the tree along one path.</p>
+</section>
+
+<!-- SECTION 4 -->
+<section id="sec4">
+  <h2 class="sec-title"><span class="n">04</span> Heap Push (Insert)</h2>
+  <p>Also called <b>heap push</b>. Insert makes space for the new value at the next open array slot, then repeatedly checks "are we happy with its position?" — swapping upward until the answer is yes.</p>
+
+  <h3>Worked trace — inserting 7</h3>
+  <div class="trace-step"><b>Place</b><div class="desc">Make space at the next open slot for <code>7</code>.</div></div>
+  <div class="trace-step"><b>Check &amp; swap</b><div class="desc">"Are we happy with its position?" — No: 7 is smaller than its parent <code>9</code>, so it belongs above. Swap.</div></div>
+  <div class="trace-step"><b>Check again</b><div class="desc">Now compare 7 against its new parent <code>2</code>. 7 is bigger than 2, so we <i>are</i> happy — stop.</div></div>
+
+  <h3>Worked trace — inserting 13</h3>
+  <div class="trace-step"><b>Place &amp; check</b><div class="desc">13 is placed, compared to its parent — it's bigger, which is exactly what a min heap wants below a smaller parent. Already happy — no swap needed.</div></div>
+
+  <h3>Worked trace — inserting -2</h3>
+  <div class="trace-step"><b>Place &amp; check</b><div class="desc">-2 is smaller than its parent <code>10</code> — not happy, swap.</div></div>
+  <div class="trace-step"><b>Keep climbing</b><div class="desc">Still smaller than the next parent up — swap again. In the worst case this climbs <b>all the way to the root</b>.</div></div>
+
+  <div class="callout key">
+    <div class="label">Why O(log n)</div>
+    Same reasoning as heap pop: insertion only ever climbs <b>one branch</b> of the tree upward. Each step up effectively halves how much of the tree is left to consider — repeatedly dividing <code>n</code> by 2 — giving a worst case of <span class="complexity-pill">O(log₂ n)</span>.
+  </div>
+</section>
+
+<!-- SECTION 5 -->
+<section id="sec5">
+  <h2 class="sec-title"><span class="n">05</span> Heap Peek</h2>
+  <p>"Heap peek" just means asking what the minimum currently is, <b>without removing it</b>. Since the minimum is always at the root — array index 0 — this is a direct index lookup.</p>
+  <table>
+    <tr><th>Operation</th><th>Time</th><th>Why</th></tr>
+    <tr><td>Heap peek</td><td><span class="complexity-pill">O(1)</span></td><td>Just read <code>array[0]</code> — no restructuring</td></tr>
+  </table>
+</section>
+
+<!-- SECTION 6 -->
+<section id="sec6">
+  <h2 class="sec-title"><span class="n">06</span> Heap Sort</h2>
+  <div class="callout">
+    <div class="label">The whole algorithm</div>
+    Repeatedly pop the minimum off the heap and append it to a results list.
+  </div>
+  <p>Worked trace: popping <code>-2</code> first, then re-fixing the tree (promote <code>0</code>, then <code>1</code>, then <code>10</code> settles into place) — then popping <code>0</code>, re-fixing again — then popping <code>1</code>, and so on. Each pop is O(log n), and there are n elements to pop.</p>
+
+  <table>
+    <tr><th>Metric</th><th>Value</th><th>Why</th></tr>
+    <tr><td>Time</td><td>O(n log n)</td><td>n pops, each O(log n) to repair the tree</td></tr>
+    <tr><td>Space (as taught/coded here)</td><td>O(n)</td><td>Building a new output array</td></tr>
+    <tr><td>Space (theoretical minimum)</td><td>O(1)</td><td>Possible via in-place swapping — noted as correct but "rather complex," not implemented in this lecture</td></tr>
+  </table>
+
+  <div class="callout key">
+    <div class="label">Why heap sort is considered excellent</div>
+    O(n log n) is among the best achievable time complexities for comparison-based sorting — matching merge sort — while heap sort can additionally be done with O(1) extra space in its optimized in-place form (unlike merge sort, which needs O(n)).
+  </div>
+</section>
+
+<!-- SECTION 7 -->
+<section id="sec7">
+  <h2 class="sec-title"><span class="n">07</span> Heapify — Build Heap in O(n)</h2>
+  <p><code>heapify</code> is the function that takes an arbitrary binary tree/array and rearranges it in place to satisfy the heap property. The process: start from the last non-leaf node (leaves are skipped — a single node is trivially a valid heap) and <b>sift down</b> each one into its correct position, working from the bottom of the tree up to the root.</p>
+
+  <h3>Sift down — what it means</h3>
+  <p>For a given node, compare it against its children; if it's not the smallest of the three, swap with whichever child <i>is</i> smallest, then continue checking from that new position further down.</p>
+
+  <h3>Worked trace (matching the lecture's example)</h3>
+  <div class="trace-step"><b>Start at last non-leaf</b><div class="desc">Ignore all leaves. Start with the node <code>2</code> (rightmost non-leaf). Its children include <code>1</code> — the smallest of the three — so swap <code>2</code> and <code>1</code>.</div></div>
+  <div class="trace-step"><b>Next non-leaf: 10</b><div class="desc">Smallest of its three values is <code>-4</code> → swap.</div></div>
+  <div class="trace-step"><b>Next: 3</b><div class="desc">3 is smaller than 7 (good) but bigger than 2 (bad) → swap with 2.</div></div>
+  <div class="trace-step"><b>Next: 5</b><div class="desc">5 ties with another 5 and is smaller than 8 — already in a valid position, no swap needed (a no-op swap would change nothing).</div></div>
+  <div class="trace-step"><b>Next: -7 and -10</b><div class="desc">Both are already smaller than their children — no swaps needed.</div></div>
+  <div class="trace-step"><b>Root: 12</b><div class="desc">Needs the most sifting — swaps down repeatedly, promoting the smallest child at each level, until <code>-10</code> lands at the root.</div></div>
+
+  <p>Final check: every node from leaves up to root is smaller than its children (or tied), and <code>-10</code> sits at the very top — a valid min heap.</p>
+
+  <div class="callout key">
+    <div class="label">Why O(n), not O(n log n)</div>
+    A naive count (n/2 non-leaf calls × O(log n) each) overestimates. Most non-leaf nodes are near the bottom of the tree, where sift-down only travels a short distance — the total work sums to a small constant multiple of <code>n</code>. The lecture states the result directly (O(n)) without deriving the full proof, calling it "an extremely profound part of computer science."
+  </div>
+
+  <table>
+    <tr><th>Metric</th><th>Value</th></tr>
+    <tr><td>Time complexity</td><td>O(n)</td></tr>
+    <tr><td>Space complexity</td><td>O(1) — rearranges the array in place</td></tr>
+  </table>
+</section>
+
+<!-- SECTION 8 -->
+<section id="sec8">
+  <h2 class="sec-title"><span class="n">08</span> Max Heap</h2>
+  <p>Everything above mirrors exactly for a max heap — every node is <b>bigger</b> than its two children instead of smaller, and the maximum sits at the root. Extracting (heap pop / extract-max) promotes the larger child at each step instead of the smaller.</p>
+  <div class="callout">
+    Example from the lecture: root <code>5</code>, children <code>3</code> and <code>2</code>; <code>3</code>'s children <code>1</code> and <code>0</code>; <code>2</code>'s children <code>-1</code> and <code>-5</code>. Every parent is ≥ both of its children — valid max heap.
+  </div>
+</section>
+
+<!-- SECTION 9 -->
+<section id="sec9">
+  <h2 class="sec-title"><span class="n">09</span> Storing Tuples (Priority + Data)</h2>
+  <p>A detail the lecture calls out as commonly glossed over: in real use (and in LeetCode problems), you rarely put bare numbers on a heap — you store <b>(priority, data)</b> tuples so the heap sorts by priority while carrying the actual payload along with it.</p>
+
+  <div class="callout key">
+    <div class="label">Pattern</div>
+    Put the value you want to sort/compare by <b>first</b> in the tuple (e.g. priority number), and the associated data <b>second</b>. Example: <code>(1, "person A")</code>, <code>(2, "person B")</code> — the heap orders by the first element, and ties break by comparing the second.
+  </div>
+
+  <p>Popping then gives you back both the priority <i>and</i> the data associated with it — a "true" priority queue where the thing you retrieve is meaningful application data, not just a bare number.</p>
+</section>
+
+<!-- SECTION 10 -->
+<section id="sec10">
+  <h2 class="sec-title"><span class="n">10</span> Python <code>heapq</code> — Full Toolkit</h2>
+  <p>Python's built-in <code>heapq</code> module only implements a <b>min heap</b> — there is no built-in max-heap mode. The lecture works entirely with plain arrays/lists as the underlying heap storage.</p>
+
+<pre><code><span class="kw">import</span> heapq
+
+<span class="cm"># --- heapify: O(n), rearranges an existing array in place ---</span>
+a = [<span class="num">2</span>, <span class="num">5</span>, <span class="num">0</span>, <span class="num">1</span>, <span class="num">10</span>, <span class="num">8</span>, -<span class="num">4</span>, <span class="num">3</span>, <span class="num">12</span>, <span class="num">9</span>]
+heapq.heapify(a)  <span class="cm"># -4 becomes the root; rest of array is NOT fully sorted</span>
+
+<span class="cm"># --- heap push: O(log n), insert a new value ---</span>
+heapq.heappush(a, <span class="num">4</span>)
+
+<span class="cm"># --- heap pop: O(log n), remove & return the minimum ---</span>
+minimum = heapq.heappop(a)
+
+<span class="cm"># --- heap push+pop combined: O(log n) total (faster than calling both separately) ---</span>
+result = heapq.heappushpop(a, <span class="num">99</span>)  <span class="cm"># pushes 99, then pops & returns the new minimum</span>
+
+<span class="cm"># --- peek at minimum: O(1), no library call needed ---</span>
+smallest = a[<span class="num">0</span>]
+
+<span class="cm"># --- size: O(1) ---</span>
+size = len(a)
+</code></pre>
+
+  <h3>Heap Sort using heapq</h3>
+<pre><code><span class="kw">def</span> <span class="fn">heap_sort</span>(array):
+    heapq.heapify(array)          <span class="cm"># O(n)</span>
+    n = len(array)
+    new_list = [<span class="num">0</span>] * n
+    <span class="kw">for</span> i <span class="kw">in</span> range(n):
+        new_list[i] = heapq.heappop(array)  <span class="cm"># O(log n) each, O(n log n) total</span>
+    <span class="kw">return</span> new_list
+</code></pre>
+
+  <h3>Simulating a Max Heap (negate everything)</h3>
+  <p>Since <code>heapq</code> is always a min heap, the trick to get max-heap behavior is to <b>negate every value</b> before heapifying — the smallest negative number corresponds to the largest original number.</p>
+<pre><code>b = [<span class="num">2</span>, <span class="num">5</span>, <span class="num">0</span>, <span class="num">1</span>, <span class="num">10</span>, <span class="num">8</span>, -<span class="num">4</span>, <span class="num">3</span>, <span class="num">12</span>, <span class="num">9</span>]
+n = len(b)
+<span class="kw">for</span> i <span class="kw">in</span> range(n):
+    b[i] = -b[i]           <span class="cm"># negate everything first</span>
+heapq.heapify(b)            <span class="cm"># now behaves like a max heap on the original values</span>
+
+largest = -heapq.heappop(b) <span class="cm"># negate back on the way out</span>
+
+<span class="cm"># inserting 7 into this "max heap" means pushing its negation:</span>
+heapq.heappush(b, -<span class="num">7</span>)   <span class="cm"># this represents inserting +7</span>
+</code></pre>
+
+  <h3>Building a heap incrementally (vs. heapify)</h3>
+<pre><code>c = [-<span class="num">5</span>, <span class="num">4</span>, <span class="num">2</span>, <span class="num">1</span>, <span class="num">7</span>, <span class="num">0</span>, <span class="num">3</span>]
+heap = []
+<span class="kw">for</span> x <span class="kw">in</span> c:
+    heapq.heappush(heap, x)   <span class="cm"># O(log n) each time, O(n log n) total</span>
+</code></pre>
+  <div class="callout warn">
+    <div class="label">Important distinction</div>
+    Pushing <code>n</code> items one at a time is <b>O(n log n)</b> — noticeably slower than calling <code>heapq.heapify()</code> once on the full array, which is <b>O(n)</b>. Prefer <code>heapify</code> whenever you already have all the data upfront.
+  </div>
+
+  <h3>Tuples on the heap (frequency example)</h3>
+<pre><code><span class="kw">from</span> collections <span class="kw">import</span> Counter
+
+d = [<span class="num">5</span>, <span class="num">5</span>, <span class="num">5</span>, <span class="num">5</span>, <span class="num">4</span>, <span class="num">4</span>, <span class="num">4</span>, <span class="num">3</span>, <span class="num">3</span>]
+counter = Counter(d)   <span class="cm"># {5: 4, 4: 3, 3: 2}</span>
+
+heap = []
+<span class="kw">for</span> key, value <span class="kw">in</span> counter.items():
+    heapq.heappush(heap, (value, key))  <span class="cm"># (frequency, number) — sorts by frequency first</span>
+
+<span class="cm"># smallest frequency now sits at heap[0]</span>
+</code></pre>
+</section>
+
+<!-- SECTION 11 -->
+<section id="sec11">
+  <h2 class="sec-title"><span class="n">11</span> Complexity Cheat Sheet</h2>
+  <table>
+    <tr><th>Operation</th><th>Time</th><th>Space</th></tr>
+    <tr><td>Heap peek (read root)</td><td>O(1)</td><td>O(1)</td></tr>
+    <tr><td>Heap push (insert)</td><td>O(log n)</td><td>O(1) extra</td></tr>
+    <tr><td>Heap pop (extract min/max)</td><td>O(log n)</td><td>O(1) extra</td></tr>
+    <tr><td>Heap push+pop combined</td><td>O(log n)</td><td>O(1) extra</td></tr>
+    <tr><td>Heapify (build from existing array)</td><td><b>O(n)</b></td><td>O(1) — in place</td></tr>
+    <tr><td>Building heap via n individual pushes</td><td>O(n log n)</td><td>—</td></tr>
+    <tr><td>Heap sort</td><td>O(n log n)</td><td>O(n) as taught (O(1) possible, more complex)</td></tr>
+    <tr><td><code>len(heap)</code></td><td>O(1)</td><td>—</td></tr>
+  </table>
+</section>
+
+<!-- SECTION 12 -->
+<section id="sec12">
+  <h2 class="sec-title"><span class="n">12</span> Mistakes &amp; Interview Tips</h2>
+  <div class="qa">
+    <div class="q">❌ Assuming an array is a heap just because it "looks tree-shaped"</div>
+    Any binary tree can be written as an array via the index formulas — that alone does not make it satisfy the heap property. Only after <code>heapify</code> is run does the parent/child ordering actually hold.
+  </div>
+  <div class="qa">
+    <div class="q">❌ Assuming <code>heapq.heapify()</code> produces a fully sorted array</div>
+    It only guarantees the heap property (root is min, parent ≤ children) — the rest of the array is <b>not</b> in ascending order. Don't index into it expecting sorted values beyond position 0.
+  </div>
+  <div class="qa">
+    <div class="q">❌ Pushing elements one at a time instead of heapifying</div>
+    If you already have the full array, call <code>heapify()</code> (O(n)) instead of looping with <code>heappush()</code> n times (O(n log n)).
+  </div>
+  <div class="qa">
+    <div class="q">❌ Forgetting Python's heapq has no native max-heap mode</div>
+    You must negate values going in and negate again coming out — a common LeetCode gotcha.
+  </div>
+  <div class="qa">
+    <div class="q">💡 Tuple trick for real interview problems</div>
+    Whenever you need to track "priority + payload" (e.g. frequency + value, distance + point, task time + task id), push a tuple <code>(priority, payload)</code>. The heap sorts by the first tuple element automatically, with the second breaking ties.
+  </div>
+</section>
+
+<footer>Heaps &amp; Priority Queues Notes — compiled from Greg's lecture · dark theme study notes</footer>
+
+</div>
+
+<script>
+(function(){
+  var body = document.body;
+  var toggle = document.getElementById('sidebarToggle');
+  var scrim = document.getElementById('scrim');
+  var sidebar = document.getElementById('sidebar');
+  var backToTop = document.getElementById('backToTop');
+
+  function openSidebar(){ body.classList.add('sidebar-open'); }
+  function closeSidebar(){ body.classList.remove('sidebar-open'); }
+  function toggleSidebar(){ body.classList.toggle('sidebar-open'); }
+
+  toggle.addEventListener('click', toggleSidebar);
+  scrim.addEventListener('click', closeSidebar);
+
+  if (window.innerWidth >= 1000) { openSidebar(); }
+
+  sidebar.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if (window.innerWidth < 1000) closeSidebar();
+    });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section[id]'));
+  var links = {};
+  sidebar.querySelectorAll('a[data-target]').forEach(function(a){
+    links[a.getAttribute('data-target')] = a;
+  });
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var link = links[entry.target.id];
+      if (!link) return;
+      if (entry.isIntersecting){
+        Object.values(links).forEach(function(l){ l.classList.remove('active'); });
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(function(s){ observer.observe(s); });
+
+  window.addEventListener('scroll', function(){
+    if (window.scrollY > 500) backToTop.classList.add('show');
+    else backToTop.classList.remove('show');
+  });
+})();
+</script>
+
+</body>
+</html>

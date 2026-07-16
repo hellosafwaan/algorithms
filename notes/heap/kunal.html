@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heaps — Complete Notes (Kunal Kushwaha's Series)</title>
+<style>
+  :root{
+    --bg:#0d1117; --bg2:#161b22; --bg3:#1c2230; --border:#2a3240;
+    --text:#e6edf3; --muted:#8b96a5; --accent:#5fb3f7; --accent2:#f2994a;
+    --good:#4caf7d; --bad:#e5626b; --purple:#b58cf2; --yellow:#e2c86f;
+    --code-bg:#0a0e14;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,-apple-system,sans-serif; line-height:1.65;}
+  .wrap{max-width:980px; margin:0 auto; padding:32px 24px 100px; transition:margin-left .25s ease;}
+  @media(min-width:1000px){ body.sidebar-open .wrap{margin-left:280px; max-width:980px;} }
+
+  header.hero{padding:40px 32px; border-radius:16px; margin-bottom:36px; background:linear-gradient(135deg,#1a1230,#0f2436 70%); border:1px solid var(--border);}
+  header.hero h1{margin:0 0 8px; font-size:2.1em; color:#fff;}
+  header.hero p{margin:0; color:var(--muted); font-size:1.05em;}
+  .badges{margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;}
+  .badge{background:var(--bg3); border:1px solid var(--border); padding:4px 12px; border-radius:20px; font-size:.8em; color:var(--accent);}
+
+  section{margin-bottom:52px; scroll-margin-top:20px;}
+  h2.sec-title{font-size:1.5em; color:#fff; border-left:4px solid var(--accent); padding-left:14px; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+  h2.sec-title .n{color:var(--accent); font-family:monospace;}
+  h3{color:var(--accent2); margin-top:28px;}
+  p{color:#c9d1d9;}
+  .callout{background:var(--bg2); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:8px; padding:16px 20px; margin:18px 0;}
+  .callout .label{color:var(--accent); font-weight:600; text-transform:uppercase; font-size:.75em; letter-spacing:.06em; margin-bottom:6px;}
+  .callout.key{border-left-color:var(--yellow);} .callout.key .label{color:var(--yellow);}
+  .callout.warn{border-left-color:var(--bad);} .callout.warn .label{color:var(--bad);}
+
+  table{width:100%; border-collapse:collapse; margin:18px 0; font-size:.93em;}
+  th,td{border:1px solid var(--border); padding:10px 14px; text-align:left;}
+  th{background:var(--bg3); color:var(--accent); font-weight:600;}
+  tr:nth-child(even) td{background:#121822;}
+  td code, li code, p code{background:var(--code-bg); padding:1px 6px; border-radius:4px; color:var(--accent2); font-size:.92em;}
+
+  pre{background:var(--code-bg); border:1px solid var(--border); border-radius:10px; padding:16px 18px; overflow-x:auto; font-size:.87em; line-height:1.55;}
+  code{font-family:'Fira Code','Consolas',monospace;}
+  .kw{color:#ff7b72;} .fn{color:#d2a8ff;} .str{color:#a5d6ff;} .cm{color:#8b96a5; font-style:italic;} .num{color:#79c0ff;} .var{color:#e6edf3;}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr;}}
+
+  .tree{display:flex; flex-direction:column; align-items:center; gap:26px; padding:20px 10px;}
+  .row{display:flex; gap:22px; justify-content:center; position:relative;}
+  .node{width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--bg3); border:2px solid var(--accent); color:#fff; font-weight:600; font-family:monospace; position:relative; z-index:2; flex-shrink:0;}
+  .node.bad{border-color:var(--bad); background:#2a1418;}
+  .node.good{border-color:var(--good); background:#132a1e;}
+  .node.moved{border-color:var(--yellow); background:#2a2413;}
+  .node.ghost{opacity:.25; border-style:dashed;}
+
+  .arr-strip{display:flex; gap:4px; overflow-x:auto; padding:14px 0; justify-content:center; flex-wrap:wrap;}
+  .cell{min-width:44px; text-align:center;}
+  .cell .idx{font-size:.72em; color:var(--muted); margin-bottom:3px;}
+  .cell .val{background:var(--bg3); border:1px solid var(--border); border-radius:6px; padding:8px 4px; font-family:monospace; font-weight:600; color:#fff;}
+  .cell.hi .val{border-color:var(--accent2); background:#2a1e10; color:var(--accent2);}
+  .cell.hi2 .val{border-color:var(--purple); background:#1e1530; color:var(--purple);}
+  .cell.empty .val{opacity:.25; border-style:dashed;}
+
+  .trace-step{display:grid; grid-template-columns:170px 1fr; gap:18px; align-items:center; border-bottom:1px solid var(--border); padding:16px 0;}
+  .trace-step:last-child{border-bottom:none;}
+  .trace-step .desc{color:var(--muted); font-size:.9em;}
+  .trace-step .desc b{color:var(--text);}
+
+  .complexity-pill{display:inline-block; background:var(--bg3); border:1px solid var(--accent); color:var(--accent); padding:2px 10px; border-radius:6px; font-family:monospace; font-size:.9em;}
+
+  .fn-box{background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:14px 0;}
+  .fn-box .formula{font-family:monospace; font-size:1.05em; color:var(--accent2);}
+
+  .qa{background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 18px; margin:10px 0;}
+  .qa .q{color:var(--accent); font-weight:600;}
+
+  footer{margin-top:60px; text-align:center; color:var(--muted); font-size:.85em; border-top:1px solid var(--border); padding-top:20px;}
+
+  .sidebar-toggle{position:fixed; top:22px; left:22px; z-index:60; width:44px; height:44px; border-radius:10px; background:var(--bg2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:4px; cursor:pointer; transition:left .25s ease, background .2s;}
+  .sidebar-toggle:hover{background:var(--bg3);}
+  .sidebar-toggle span{width:20px; height:2px; background:var(--accent); border-radius:2px; transition:transform .25s ease, opacity .2s;}
+  body.sidebar-open .sidebar-toggle{left:302px;}
+  body.sidebar-open .sidebar-toggle span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  body.sidebar-open .sidebar-toggle span:nth-child(2){opacity:0;}
+  body.sidebar-open .sidebar-toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+  #sidebar{position:fixed; top:0; left:0; height:100vh; width:280px; background:var(--bg2); border-right:1px solid var(--border); padding:88px 20px 30px; overflow-y:auto; transform:translateX(-280px); transition:transform .25s ease; z-index:55;}
+  body.sidebar-open #sidebar{transform:translateX(0);}
+  #sidebar h2{margin:0 0 16px; font-size:.78em; text-transform:uppercase; letter-spacing:.1em; color:var(--muted);}
+  #sidebar ol{list-style:none; margin:0; padding:0; counter-reset:sec;}
+  #sidebar li{margin-bottom:2px;}
+  #sidebar a{counter-increment:sec; display:flex; gap:10px; align-items:baseline; color:var(--muted); text-decoration:none; font-size:.9em; padding:9px 10px; border-radius:8px; border-left:2px solid transparent; transition:background .15s, color .15s, border-color .15s;}
+  #sidebar a::before{content:counter(sec,decimal-leading-zero); font-family:monospace; color:var(--accent); font-size:.85em; opacity:.7;}
+  #sidebar a:hover{background:var(--bg3); color:var(--text);}
+  #sidebar a.active{color:#fff; border-left-color:var(--accent); background:var(--bg3);}
+  #sidebar a.active::before{opacity:1;}
+
+  .scrim{position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:50; opacity:0; pointer-events:none; transition:opacity .25s ease;}
+  body.sidebar-open .scrim{opacity:1; pointer-events:auto;}
+  @media(min-width:1000px){ .scrim{display:none;} }
+
+  .back-to-top{position:fixed; bottom:24px; right:24px; z-index:40; width:46px; height:46px; border-radius:50%; background:var(--bg3); border:1px solid var(--border); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:1.2em; text-decoration:none; opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease;}
+  .back-to-top.show{opacity:1; pointer-events:auto;}
+  .back-to-top:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+<div class="scrim" id="scrim"></div>
+
+<nav id="sidebar">
+  <h2>On this page</h2>
+  <ol>
+    <li><a href="#sec1" data-target="sec1">Why Heaps?</a></li>
+    <li><a href="#sec2" data-target="sec2">Heap Structure</a></li>
+    <li><a href="#sec3" data-target="sec3">Insertion — Up-Heap</a></li>
+    <li><a href="#sec4" data-target="sec4">Deletion — Down-Heap</a></li>
+    <li><a href="#sec5" data-target="sec5">Heap Sort</a></li>
+    <li><a href="#sec6" data-target="sec6">Build Heap (Heapify) — O(n)</a></li>
+    <li><a href="#sec7" data-target="sec7">Priority Queue</a></li>
+    <li><a href="#sec8" data-target="sec8">Java Code (from lecture)</a></li>
+    <li><a href="#sec9" data-target="sec9">Complexity Cheat Sheet</a></li>
+    <li><a href="#sec10" data-target="sec10">Mistakes &amp; Interview Tips</a></li>
+    <li><a href="#sec11" data-target="sec11">Kunal vs Alvin — Key Differences</a></li>
+  </ol>
+</nav>
+
+<a href="#top" class="back-to-top" id="backToTop">↑</a>
+
+<div class="wrap" id="top">
+
+<header class="hero">
+  <h1>🗻 Heaps — Complete Notes</h1>
+  <p>Source: Kunal Kushwaha's DSA Bootcamp — motivation, array representation, insertion/deletion, heap sort, build-heap in O(n), and priority queues.</p>
+  <div class="badges">
+    <span class="badge">Min/Max Heap</span>
+    <span class="badge">Array Representation</span>
+    <span class="badge">Up-Heap / Down-Heap</span>
+    <span class="badge">Heap Sort</span>
+    <span class="badge">Build Heap O(n)</span>
+    <span class="badge">Priority Queue</span>
+  </div>
+  <p style="margin-top:16px;color:var(--muted);font-size:.85em;">☰ Tap the menu icon (top-left) to open the section navigator.</p>
+</header>
+
+<!-- SECTION 1 -->
+<section id="sec1">
+  <h2 class="sec-title"><span class="n">01</span> Why Heaps?</h2>
+  <p>Start from the problem, not the data structure. You're given a stream of <code>n</code> items one at a time, and your <b>real</b> requirement is: at any point, <b>instantly</b> (ideally O(1)) hand back the item that matches some condition — the smallest, the largest, whatever "priority" means for the problem.</p>
+
+  <h3>Two naive approaches — and why both fail</h3>
+  <table>
+    <tr><th>Approach</th><th>Get min/max</th><th>Insert new item</th><th>Problem</th></tr>
+    <tr><td>Unsorted array</td><td>O(n) — linear scan</td><td>O(1) — just append</td><td>Query is slow</td></tr>
+    <tr><td>Keep array sorted at all times</td><td>O(1) — it's at index 0</td><td>O(n log n) — must re-sort on every insert</td><td>Insert is slow</td></tr>
+  </table>
+
+  <div class="callout key">
+    <div class="label">The gap heaps fill</div>
+    You want <b>O(1) query</b> for the min/max <i>and</i> a <b>cheap insert</b>. Full sorting is overkill — you don't need the whole array ordered, you only need the top item guaranteed correct. A heap gives you <span class="complexity-pill">O(1) peek</span> and <span class="complexity-pill">O(log n) insert</span> by keeping just enough order (parent vs. children) instead of full order (every pair).
+  </div>
+
+  <p>Example use case from the lecture: given IMDb-style review scores as they stream in, always be able to report the current highest score instantly. That's exactly the shape of problem a heap solves.</p>
+</section>
+
+<!-- SECTION 2 -->
+<section id="sec2">
+  <h2 class="sec-title"><span class="n">02</span> Heap Structure</h2>
+  <p>A heap is stored internally as an <b>array</b>, but visualized/reasoned about as a <b>complete binary tree</b> — every level full except possibly the last, and the last level filled left to right.</p>
+
+  <div class="callout">
+    <div class="label">Convention used in this series</div>
+    The array is <b>1-indexed</b> — index 0 is left empty/unused, and the root lives at index 1. This is a deliberate choice because it makes the parent/child formulas clean.
+  </div>
+
+  <div class="fn-box">
+    <div class="formula">left(i)&nbsp;&nbsp; = 2·i</div>
+    <div class="formula">right(i)&nbsp;= 2·i + 1</div>
+    <div class="formula">parent(i) = ⌊i / 2⌋</div>
+  </div>
+
+  <p>No node objects, no <code>.left</code> / <code>.right</code> pointers needed — the formulas alone locate any parent or child directly from an index.</p>
+
+  <h3>Max Heap property</h3>
+  <div class="callout">
+    Every node's value is <b>greater than or equal to all of its children</b> (recursively). This guarantees the maximum is always at the root — but says nothing about the ordering of the rest of the array. The array does <i>not</i> need to be sorted; only the parent≥children rule matters.
+  </div>
+
+  <h3>Example from the lecture</h3>
+  <p>Array (1-indexed, index 0 unused): <code>[_, 16, 14, 10, 8, 7, 9, 3, 2, 4]</code></p>
+  <div class="arr-strip">
+    <div class="cell empty"><div class="idx">0</div><div class="val">–</div></div>
+    <div class="cell hi"><div class="idx">1</div><div class="val">16</div></div>
+    <div class="cell"><div class="idx">2</div><div class="val">14</div></div>
+    <div class="cell"><div class="idx">3</div><div class="val">10</div></div>
+    <div class="cell"><div class="idx">4</div><div class="val">8</div></div>
+    <div class="cell"><div class="idx">5</div><div class="val">7</div></div>
+    <div class="cell"><div class="idx">6</div><div class="val">9</div></div>
+    <div class="cell"><div class="idx">7</div><div class="val">3</div></div>
+    <div class="cell"><div class="idx">8</div><div class="val">2</div></div>
+    <div class="cell"><div class="idx">9</div><div class="val">4</div></div>
+  </div>
+  <div class="tree">
+    <div class="row"><div class="node good">16</div></div>
+    <div class="row"><div class="node">14</div><div class="node">10</div></div>
+    <div class="row"><div class="node">8</div><div class="node">7</div><div class="node">9</div><div class="node">3</div></div>
+    <div class="row"><div class="node">2</div><div class="node">4</div></div>
+  </div>
+  <p>Check: index 5 (value <code>7</code>) → parent = <code>⌊5/2⌋ = 2</code> → value <code>14</code>. ✔ &nbsp;&nbsp; index 9 (value <code>4</code>) → parent = <code>⌊9/2⌋ = 4</code> → value <code>8</code>. ✔</p>
+
+  <p>Because the tree is complete, its height is <span class="complexity-pill">O(log n)</span> — this is what bounds insert/delete cost.</p>
+</section>
+
+<!-- SECTION 3 -->
+<section id="sec3">
+  <h2 class="sec-title"><span class="n">03</span> Insertion — Up-Heap</h2>
+  <p>Insert always goes to the <b>next open left-most slot</b> (end of array), then bubbles upward while it violates the heap property. This lecture calls this operation <b>up-heap</b>.</p>
+
+  <h3>Worked trace — building a min heap by inserting 8, 7, 9, 10, 11, 12, 14, 13, 5</h3>
+  <div class="trace-step"><b>Insert 8, 7</b><div class="desc">7 &lt; parent(8) → swap. Root becomes 7.</div></div>
+  <div class="trace-step"><b>Insert 9…14</b><div class="desc">Each new value is already ≥ its parent along the insertion path, so no swaps needed — array grows: <code>7, 8, 9, 10, 11, 12, 14</code>.</div></div>
+  <div class="trace-step"><b>Insert 13</b><div class="desc">13 fits without violating order — placed, no swap.</div></div>
+  <div class="trace-step"><b>Insert 5</b><div class="desc">Placed at the next open slot (child of value 10). 5 &lt; 10 → swap. Continue checking upward.</div></div>
+  <div class="trace-step"><b>Key shortcut</b><div class="desc"><b>Once 5 is confirmed smaller than its direct parent, you don't need to re-check the parent's sibling subtree</b> — if 5 &lt; 10, and 13 &gt; 10 already (heap property), then 5 &lt; 13 is guaranteed transitively. Only the direct ancestor chain needs checking.</div></div>
+  <div class="trace-step"><b>Continue up</b><div class="desc">Compare 5 to its new parent (8) → 5 &lt; 8 → swap. Compare to next parent (7) → 5 &lt; 7 → swap. Now at root, or parent ≥ current → stop.</div></div>
+
+  <div class="callout key">
+    <div class="label">Why this is only O(log n)</div>
+    Each step of up-heap does exactly <b>one comparison + at most one swap</b>, and you only ever move up the ancestor chain — never sideways. The ancestor chain length is the tree height, which is <code>log n</code> for a complete tree. So insertion is bounded by <span class="complexity-pill">O(log n)</span>, not <code>O(n)</code>.
+  </div>
+</section>
+
+<!-- SECTION 4 -->
+<section id="sec4">
+  <h2 class="sec-title"><span class="n">04</span> Deletion — Down-Heap</h2>
+  <p>Heaps only support removing the <b>root</b> (the min or max) — that's the whole point of the structure. Steps:</p>
+  <ol>
+    <li>Take the value at the root — this is what gets returned.</li>
+    <li>Move the <b>last element</b> of the array into the root slot (keeps the tree complete).</li>
+    <li><b>Down-heap</b>: compare the new root against its children; if it violates the heap property, swap with the smaller (min heap) / larger (max heap) child, and repeat going downward.</li>
+  </ol>
+
+  <h3>Worked trace</h3>
+  <div class="trace-step"><b>Remove root</b><div class="desc">Save it (this is the answer to return).</div></div>
+  <div class="trace-step"><b>Move last → root</b><div class="desc">Take the last array element, place it at the root index. Tree stays complete.</div></div>
+  <div class="trace-step"><b>Down-heap</b><div class="desc">Compare current node to left and right children; swap with whichever child breaks the ordering, move down, repeat.</div></div>
+  <div class="trace-step"><b>Stop condition</b><div class="desc">Stop when the node has no more children to check, or it's already correctly ordered relative to both children.</div></div>
+
+  <p>Same logarithmic argument as insertion: at most one comparison-set and one swap per level, and there are <code>log n</code> levels → <span class="complexity-pill">O(log n)</span> per deletion.</p>
+</section>
+
+<!-- SECTION 5 -->
+<section id="sec5">
+  <h2 class="sec-title"><span class="n">05</span> Heap Sort</h2>
+  <div class="callout">
+    <div class="label">The entire algorithm</div>
+    While the heap isn't empty: remove the root and append it to a results list.
+  </div>
+  <p>That's it — no separate "sorting logic" needed. Since every removal returns the current min (or max), repeatedly removing produces a fully sorted sequence for free.</p>
+
+  <h3>Complexity</h3>
+  <table>
+    <tr><th>Step</th><th>Cost</th></tr>
+    <tr><td>One removal (down-heap)</td><td>O(log n)</td></tr>
+    <tr><td>n removals total</td><td>O(n log n)</td></tr>
+  </table>
+</section>
+
+<!-- SECTION 6 -->
+<section id="sec6">
+  <h2 class="sec-title"><span class="n">06</span> Build Heap (Heapify) from an Unsorted Array — O(n)</h2>
+  <p>Given a raw unsorted array, you can turn it into a valid heap <b>in place</b> — and surprisingly, it costs only <b>O(n)</b>, not <code>O(n log n)</code> as a naive analysis might suggest.</p>
+
+  <h3>The algorithm</h3>
+  <div class="callout key">
+    <div class="label">Key shortcut</div>
+    Every <b>leaf node</b> is already a trivially valid 1-node heap — nothing to fix. In a complete binary tree, exactly <code>n/2</code> of the <code>n</code> nodes are leaves. So skip them entirely, and only run down-heap starting from the <b>last non-leaf node</b> (index <code>⌊n/2⌋</code>) up to the root.
+  </div>
+
+<pre><code><span class="kw">for</span> (<span class="kw">let</span> i = Math.floor(n / <span class="num">2</span>); i >= <span class="num">1</span>; i--) {
+  downHeap(i);
+}
+</code></pre>
+
+  <h3>Why this is O(n), not O(n log n)</h3>
+  <p>A naive count says "n/2 calls × O(log n) each = O(n log n)" — but that overcounts, because <b>most of those calls happen near the bottom of the tree, where down-heap only has a short distance to travel</b>.</p>
+
+  <table>
+    <tr><th>Level (from bottom)</th><th># of nodes at this level</th><th>Max down-heap distance</th></tr>
+    <tr><td>Leaves</td><td>n/2</td><td>0 (skipped)</td></tr>
+    <tr><td>1 above leaves</td><td>n/4</td><td>1</td></tr>
+    <tr><td>2 above leaves</td><td>n/8</td><td>2</td></tr>
+    <tr><td>...</td><td>...</td><td>...</td></tr>
+    <tr><td>root</td><td>1</td><td>log n</td></tr>
+  </table>
+
+  <p>Summing <code>(nodes at level) × (distance)</code> across all levels gives a series that converges to a small constant multiple of <code>n</code> (a standard result: <code>Σ k / 2^k</code> converges), not <code>n log n</code>. So the total work is bounded by <span class="complexity-pill">O(n)</span>.</p>
+
+  <div class="callout">
+    <div class="label">Practical takeaway</div>
+    You don't need to reproduce the summation proof in an interview — just know the result: <b>building a heap from an unsorted array of n elements is O(n)</b>, faster than inserting n elements one-by-one (which would cost O(n log n)).
+  </div>
+</section>
+
+<!-- SECTION 7 -->
+<section id="sec7">
+  <h2 class="sec-title"><span class="n">07</span> Priority Queue</h2>
+  <p>A priority queue is exactly what a heap gives you for free: "give me the highest-priority item first." Min heap → priority = smallest value; max heap → priority = largest value. There's no separate algorithm to learn here — it's the same insert/extract operations, just relabeled by intent.</p>
+
+  <h3>Alternative: priority queue via linked list</h3>
+  <p>The lecture also walks through maintaining a sorted linked list (smallest at the head) as an alternative:</p>
+  <table>
+    <tr><th>Implementation</th><th>Insert</th><th>Get highest priority</th></tr>
+    <tr><td>Sorted linked list</td><td>O(n) — must traverse to find insertion point</td><td>O(1) — it's the head</td></tr>
+    <tr><td><b>Heap</b></td><td><b>O(log n)</b></td><td><b>O(1)</b></td></tr>
+  </table>
+  <p>The linked-list version trades a slow insert for a fast read — same imbalance problem as the "always keep the array sorted" approach from Section 1. The heap is preferred because it keeps <b>both</b> operations efficient.</p>
+</section>
+
+<!-- SECTION 8 -->
+<section id="sec8">
+  <h2 class="sec-title"><span class="n">08</span> Java Code (from the lecture)</h2>
+  <p>The lecture builds a generic <code>Heap&lt;T extends Comparable&lt;T&gt;&gt;</code> class backed by an <code>ArrayList</code>. Reconstructed here directly from the walkthrough.</p>
+
+<pre><code><span class="kw">class</span> <span class="fn">Heap</span>&lt;T <span class="kw">extends</span> Comparable&lt;T&gt;&gt; {
+  <span class="kw">private</span> ArrayList&lt;T&gt; list = <span class="kw">new</span> ArrayList&lt;&gt;();
+
+  <span class="kw">private</span> <span class="kw">void</span> <span class="fn">swap</span>(<span class="kw">int</span> first, <span class="kw">int</span> second) {
+    T temp = list.get(first);
+    list.set(first, list.get(second));
+    list.set(second, temp);
+  }
+
+  <span class="kw">private</span> <span class="kw">int</span> <span class="fn">parent</span>(<span class="kw">int</span> i) { <span class="kw">return</span> i / <span class="num">2</span>; }
+  <span class="kw">private</span> <span class="kw">int</span> <span class="fn">left</span>(<span class="kw">int</span> i)   { <span class="kw">return</span> <span class="num">2</span> * i; }
+  <span class="kw">private</span> <span class="kw">int</span> <span class="fn">right</span>(<span class="kw">int</span> i)  { <span class="kw">return</span> <span class="num">2</span> * i + <span class="num">1</span>; }
+
+  <span class="cm">// insert: add to end, then up-heap</span>
+  <span class="kw">public</span> <span class="kw">void</span> <span class="fn">insert</span>(T value) {
+    list.add(value);
+    <span class="fn">upHeap</span>(list.size() - <span class="num">1</span>);
+  }
+
+  <span class="kw">private</span> <span class="kw">void</span> <span class="fn">upHeap</span>(<span class="kw">int</span> index) {
+    <span class="kw">if</span> (index == <span class="num">0</span>) <span class="kw">return</span>;
+    <span class="kw">int</span> p = <span class="fn">parent</span>(index);
+    <span class="kw">if</span> (list.get(index).compareTo(list.get(p)) &lt; <span class="num">0</span>) {
+      <span class="fn">swap</span>(index, p);
+      <span class="fn">upHeap</span>(p);
+    }
+  }
+
+  <span class="cm">// remove: root goes out, last element becomes new root, then down-heap</span>
+  <span class="kw">public</span> T <span class="fn">remove</span>() {
+    <span class="kw">if</span> (list.isEmpty()) <span class="kw">throw</span> <span class="kw">new</span> RuntimeException(<span class="str">"Heap is empty"</span>);
+    T top = list.get(<span class="num">0</span>);
+    T last = list.remove(list.size() - <span class="num">1</span>);
+    <span class="kw">if</span> (!list.isEmpty()) {
+      list.set(<span class="num">0</span>, last);
+      <span class="fn">downHeap</span>(<span class="num">0</span>);
+    }
+    <span class="kw">return</span> top;
+  }
+
+  <span class="kw">private</span> <span class="kw">void</span> <span class="fn">downHeap</span>(<span class="kw">int</span> index) {
+    <span class="kw">int</span> min = index;
+    <span class="kw">int</span> l = <span class="fn">left</span>(index), r = <span class="fn">right</span>(index);
+
+    <span class="kw">if</span> (l &lt; list.size() && list.get(l).compareTo(list.get(min)) &lt; <span class="num">0</span>) min = l;
+    <span class="kw">if</span> (r &lt; list.size() && list.get(r).compareTo(list.get(min)) &lt; <span class="num">0</span>) min = r;
+
+    <span class="kw">if</span> (min != index) {
+      <span class="fn">swap</span>(index, min);
+      <span class="fn">downHeap</span>(min);
+    }
+  }
+
+  <span class="cm">// heap sort: drain the heap</span>
+  <span class="kw">public</span> ArrayList&lt;T&gt; <span class="fn">heapSort</span>() {
+    ArrayList&lt;T&gt; data = <span class="kw">new</span> ArrayList&lt;&gt;();
+    <span class="kw">while</span> (!list.isEmpty()) data.add(<span class="fn">remove</span>());
+    <span class="kw">return</span> data;
+  }
+}
+</code></pre>
+
+  <div class="callout">
+    <div class="label">Note on indices</div>
+    This version is written 0-indexed (matching how the code was actually typed in the lecture), even though the theory walkthrough used 1-indexed formulas on the whiteboard — worth double-checking against your own run when you implement it.
+  </div>
+</section>
+
+<!-- SECTION 9 -->
+<section id="sec9">
+  <h2 class="sec-title"><span class="n">09</span> Complexity Cheat Sheet</h2>
+  <table>
+    <tr><th>Operation</th><th>Time</th><th>Space</th></tr>
+    <tr><td>Peek min/max (read root)</td><td>O(1)</td><td>O(1)</td></tr>
+    <tr><td>Insert (up-heap)</td><td>O(log n)</td><td>O(1) extra</td></tr>
+    <tr><td>Remove root (down-heap)</td><td>O(log n)</td><td>O(1) extra</td></tr>
+    <tr><td>Build heap from unsorted array</td><td><b>O(n)</b></td><td>O(1) extra (in place)</td></tr>
+    <tr><td>Heap sort (n removals)</td><td>O(n log n)</td><td>O(n) for output list</td></tr>
+    <tr><td>Naive: insert n items one-by-one</td><td>O(n log n)</td><td>—</td></tr>
+  </table>
+  <div class="callout key">
+    <div class="label">Don't confuse these two</div>
+    "Build heap from an array you already have" = <b>O(n)</b> (heapify, bottom-up). "Insert n items one at a time into a growing heap" = <b>O(n log n)</b>. Same end result, different cost — heapify is strictly better when you have all the data upfront.
+  </div>
+</section>
+
+<!-- SECTION 10 -->
+<section id="sec10">
+  <h2 class="sec-title"><span class="n">10</span> Mistakes &amp; Interview Tips</h2>
+  <div class="qa">
+    <div class="q">❌ Assuming the whole array is sorted</div>
+    A heap only guarantees the root is correct and that every parent≥children (or ≤). Sibling order and deeper relationships are <b>not</b> guaranteed — don't index into the array expecting sorted order anywhere except the root.
+  </div>
+  <div class="qa">
+    <div class="q">❌ Using O(n log n) insert-by-insert when you have all data upfront</div>
+    If you're given the full array at once, heapify it in O(n) rather than looping and calling <code>insert()</code> n times (O(n log n)).
+  </div>
+  <div class="qa">
+    <div class="q">❌ Re-checking subtrees you don't need to</div>
+    During up-heap, once a node is confirmed smaller (min heap) than its direct parent, its parent's sibling subtree doesn't need re-checking — the heap property already guarantees it. Only the direct ancestor chain matters.
+  </div>
+  <div class="qa">
+    <div class="q">💡 Framing for interviews</div>
+    Heaps exist to answer: "give me the top-priority item, repeatedly, as data streams in — as cheaply as possible for both read and write." That one sentence explains why heaps show up constantly in Top-K, scheduling, and merge-style problems.
+  </div>
+</section>
+
+<!-- SECTION 11 -->
+<section id="sec11">
+  <h2 class="sec-title"><span class="n">11</span> Kunal vs Alvin — Key Differences</h2>
+  <p>Since you're studying heaps from both instructors, here's a single reference for where their approaches diverge — everything above this section is Kunal's material only.</p>
+
+  <table>
+    <tr><th>Aspect</th><th>Kunal Kushwaha</th><th>Alvin</th></tr>
+    <tr>
+      <td><b>Array indexing</b></td>
+      <td>1-indexed (index 0 left unused)</td>
+      <td>0-indexed (index 0 is the root)</td>
+    </tr>
+    <tr>
+      <td><b>Formulas</b></td>
+      <td><code>left=2i, right=2i+1, parent=⌊i/2⌋</code></td>
+      <td><code>left=2i+1, right=2i+2, parent=⌊(i−1)/2⌋</code></td>
+    </tr>
+    <tr>
+      <td><b>Terminology: bubble toward root</b></td>
+      <td>"Up-heap"</td>
+      <td>"Sift up"</td>
+    </tr>
+    <tr>
+      <td><b>Terminology: bubble toward leaves</b></td>
+      <td>"Down-heap"</td>
+      <td>"Sift down"</td>
+    </tr>
+    <tr>
+      <td><b>Missing-child handling in down-heap/sift-down</b></td>
+      <td>Bounds-checked explicitly (<code>if index &lt; list.size()</code>)</td>
+      <td>Missing children substituted with <code>+Infinity</code> (min heap) so the comparison logic needs no branching</td>
+    </tr>
+    <tr>
+      <td><b>Build heap from unsorted array (heapify)</b></td>
+      <td>Explicitly covered, including the O(n) proof via the level-by-level summation</td>
+      <td>Not covered in the transcript</td>
+    </tr>
+    <tr>
+      <td><b>Heap sort</b></td>
+      <td>Explicitly covered ("remove until empty" — O(n log n))</td>
+      <td>Not covered in the transcript</td>
+    </tr>
+    <tr>
+      <td><b>Priority queue framing</b></td>
+      <td>Heap = priority queue directly; also shows a sorted-linked-list alternative for contrast</td>
+      <td>Applied via the Top-K pattern (bounded-size heap), rather than named as "priority queue" directly</td>
+    </tr>
+    <tr>
+      <td><b>Signature interview pattern taught</b></td>
+      <td>General motivation (O(1) query + O(log n) insert) and full toolkit (insert, remove, build, sort)</td>
+      <td>Top-K Elements pattern (Kth Largest / K Smallest via a bounded heap)</td>
+    </tr>
+    <tr>
+      <td><b>Language used in lecture</b></td>
+      <td>Java (generic class with <code>Comparable&lt;T&gt;</code>)</td>
+      <td>JavaScript</td>
+    </tr>
+  </table>
+
+  <div class="callout key">
+    <div class="label">Bottom line</div>
+    Same data structure, same core rules (complete tree + parent/child ordering + O(log n) insert/remove) — the differences are cosmetic (indexing, naming) plus a difference in <b>scope</b>: Kunal's lecture goes deeper into heapify and heap sort, while Alvin's goes deeper into the Top-K interview pattern. Treat them as complementary, not conflicting.
+  </div>
+</section>
+
+<footer>Heaps Notes — compiled from Kunal Kushwaha's DSA Bootcamp · dark theme study notes</footer>
+
+</div>
+
+<script>
+(function(){
+  var body = document.body;
+  var toggle = document.getElementById('sidebarToggle');
+  var scrim = document.getElementById('scrim');
+  var sidebar = document.getElementById('sidebar');
+  var backToTop = document.getElementById('backToTop');
+
+  function openSidebar(){ body.classList.add('sidebar-open'); }
+  function closeSidebar(){ body.classList.remove('sidebar-open'); }
+  function toggleSidebar(){ body.classList.toggle('sidebar-open'); }
+
+  toggle.addEventListener('click', toggleSidebar);
+  scrim.addEventListener('click', closeSidebar);
+
+  if (window.innerWidth >= 1000) { openSidebar(); }
+
+  sidebar.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if (window.innerWidth < 1000) closeSidebar();
+    });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section[id]'));
+  var links = {};
+  sidebar.querySelectorAll('a[data-target]').forEach(function(a){
+    links[a.getAttribute('data-target')] = a;
+  });
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var link = links[entry.target.id];
+      if (!link) return;
+      if (entry.isIntersecting){
+        Object.values(links).forEach(function(l){ l.classList.remove('active'); });
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(function(s){ observer.observe(s); });
+
+  window.addEventListener('scroll', function(){
+    if (window.scrollY > 500) backToTop.classList.add('show');
+    else backToTop.classList.remove('show');
+  });
+})();
+</script>
+
+</body>
+</html>
