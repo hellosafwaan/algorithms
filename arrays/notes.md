@@ -1,5 +1,32 @@
 # Arrays — Patterns & Templates
 
+## Intersection of Two Arrays (LeetCode 349)
+
+**Pattern:** Hash Set — Cross-Set Membership (Intersection)
+
+**Core idea:** Convert both arrays to Sets — this removes duplicates for free and gives O(1) membership checks. Iterate one Set, check membership in the other, push matches to the result. Because you're walking a Set (not the raw array), the result is automatically deduplicated.
+
+**Template:**
+```js
+function intersection(nums1, nums2) {
+    const setNums1 = new Set(nums1);
+    const setNums2 = new Set(nums2);
+    const result = [];
+    for (const number of setNums1) {
+        if (setNums2.has(number)) result.push(number);
+    }
+    return result;
+}
+```
+
+**Constraint sensitivity:** The Sets exist specifically to handle duplicate elements within each array. If the problem instead guaranteed no duplicates, a single pass with a membership check would be enough — no dedup step needed.
+
+**Complexity:** O(n + m) time, O(n + m) space — optimal, since every element of both arrays must be looked at at least once.
+
+**Watch out for:** `result = []` needs a `const`/`let` — a bare `result = []` is an implicit global (same recurring gap as pattern #10 in patterns.md).
+
+---
+
 ## Longest Consecutive Sequence (LeetCode 128)
 
 **Pattern:** Hash Set — sequence-start filter + amortized forward walk

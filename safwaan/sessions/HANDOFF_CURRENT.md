@@ -1,38 +1,34 @@
-# Handoff — 2026-07-15 (session 2, continued — 6th problem, curriculum #3)
+# Handoff — 2026-07-16 (Intersection of Two Arrays)
 
 ## What Was Just Completed
 
-**LC 150 — Evaluate Reverse Polish Notation** (Phase 4 curriculum #3). Near one-shot solve — correctly identified the core stack mechanism (push operands, pop right-then-left on an operator, apply, push result) without hints. Self-attributed the speed honestly to prior exposure ("saw this years back... built the formulas for [RPN] anyways"), not overconfidence.
+**LC 349 — Intersection of Two Arrays** (Phase 1 bonus, off-curriculum — part of a self-directed sweep through "missing hashing problems"). Brought a fully correct, self-written solution: convert both arrays to Sets (kills duplicates + gives O(1) lookup), iterate one, check membership in the other. Accepted 57/57, 1ms runtime (78.72nd percentile). No hints needed on the algorithm.
 
-One real bug: used `Math.floor` for integer division, which fails on negative results (`Math.floor` rounds toward negative infinity; the problem needs truncation toward zero). Guided through a concrete trace (`Math.floor(-2.333)` → `-3`, wrong), then a second wrong guess (`Math.round` — also wrong in general, rounds to nearest not toward zero), before asking directly and being given `Math.trunc`. Logged as a new toolkit-recall gap (patterns.md #70) — same category as past Set/Map/`?? 0` gaps: knows *that* something's needed once the failure is shown, just didn't have the specific method name at his fingertips yet.
+One recurring minor bug — `result = []` with no `const`/`let`, an implicit global — same shape as the LC 977 `right` bug from six weeks ago (patterns.md #10), still not self-caught before submission. Session ended with him asking "is there a better way to solve this?" — confirmed the O(n+m) solution is already optimal (can't beat linear, every element must be examined at least once), and mentioned ES2024's native `Set.prototype.intersection` as a modern equivalent. He also unprompted extended the reasoning to a hypothetical constraint change ("if there were no duplicates, I wouldn't need Sets at all") — good constraint-sensitivity instinct.
 
-Note: TRACKER.md had a partially-stale entry for this problem (header/counts already bumped, but the row itself still showed ⏳) — reconciled as part of this wrap-up, now fully consistent.
+Full wrap-up: TRACKER (184 total, 70 complete, Phase 1 bonus row added), CURRICULUM (bonus row + header count), session file, learnings.md, arrays/notes.md, pattern-index.md (new "Hash Set — Cross-Set Membership" section), revisit-queue entry, patterns.md #10 updated with third recurrence, carry-forward.md updated.
 
-Full wrap-up: TRACKER (183 total, 69 complete, Phase 4 now 3/7 curriculum: LC 20, LC 155, LC 150), session file, learnings.md, pattern-index.md (new "Stack — Postfix Expression Evaluation" section), stack/notes.md, revisit-queue entry, patterns.md #70.
+**Per explicit instruction this session: the revisit queue was not raised or discussed at all.** Do not treat this as another deferred-session data point — it was an explicit ask, not an override.
 
 ---
 
 ## Safwaan's Current State
 
-**Today has been the largest single-day Stack push yet**: 5-problem fundamentals module + SIX real LeetCode problems — LC 345, LC 20, LC 394, LC 856 (bonus, all self-connected to fundamentals), LC 155 (curriculum #2, new pattern, video-assisted but well-engaged), LC 150 (curriculum #3, new pattern, near one-shot). TRACKER Phase 4 now stands at 3/7 curriculum + 3 bonus.
+Doing a self-directed sweep of miscellaneous/skipped hashing problems, not following curriculum order today. Solved LC 349 cleanly and independently.
 
-**New toolkit gap:** `Math.trunc` vs `Math.floor` vs `Math.round` for truncation-toward-zero on negative division (patterns.md #70). Worth a cold probe on the next problem involving negative integer division.
+**Recurring gap, 3rd instance in 6 weeks:** declaring a variable with no `const`/`let`/`var` (implicit global) — different variable name each time (`left`/`right` at LC 167, `right` at LC 977, `result` at LC 349). Still an instant catch when pointed out, never proactive. Consider raising this explicitly as a pre-submission checklist item next time it's relevant, rather than waiting for a 4th occurrence.
 
-**Revisit queue: still completely untouched across all six problems today.** Sixteen+ straight sessions deferred, oldest since 2026-06-18. Try the lowest-friction untried tactic ("pick one yourself, no framing") as the literal first message next session, before any new code.
-
-**Deferred work still open:** space-optimized Min Stack (LC 155, reasoning self-derived, not implemented) and LC 394 alternative approaches (recursive descent, two-parallel-stacks) — both in carry-forward.md.
+**Revisit queue: explicitly asked not to be raised this session — respected, not discussed.** Sixteen+ sessions deferred as of the last count (2026-07-15); status unchanged, just not surfaced this time per his direct request.
 
 ---
 
 ## Suggested Next Problems
 
-1. **Revisit queue — the untried lowest-friction tactic**, literal first message: "Pick any one problem off the revisit queue yourself, no explanation needed first."
-2. Continue Phase 4 (Stack) curriculum: **LC 22 — Generate Parentheses** (#4, Backtracking/Stack) is next.
-3. Either deferred item (space-optimized Min Stack, LC 394 alternative approaches) as a focused mini-session.
+1. Whatever "missing hashing problem" he picks next — this was an off-curriculum sweep, follow his lead.
+2. Otherwise, Phase 4 (Stack) curriculum continues at **LC 22 — Generate Parentheses**, or Phase 16 (Intervals) continues at Meeting Rooms II (LC 253) / Non-Overlapping Intervals (LC 435).
 
 ## Coach Notes
 
-- Fundamentals→real-problem transfer: fully confirmed 4/4 earlier today, settled instinct, don't re-verify.
-- Video-assisted engagement: judge per-instance (LC 155 was a positive counter-example to LC 200/3169) — don't treat the flag itself as risk.
-- New toolkit gap (`Math.trunc`) — same shape as prior JS-recall gaps, not a reasoning problem. Probe cold, don't over-teach.
-- Revisit-queue escalation unchanged: four procedural framings tried, none landed, six real problems today with zero mention. Try the plain, low-friction ask first thing next session — this is now overdue for a genuinely different approach.
+- Don't raise the revisit queue unless he brings it up — this was an explicit instruction this session, treat it as standing unless told otherwise for a specific session.
+- The implicit-global pattern (#10) is now well-established across 6 weeks and 3 problems — worth a proactive mention (not a full stop) next time a loop-scoped or result variable comes up, rather than continuing to just note it after the fact.
+- Constraint-sensitivity reasoning (adjusting approach based on problem constraints) showed up again here, echoing the LC 190 "constraint-reading habit" — worth folding into the same "What's Solid" bucket if it recurs once more.

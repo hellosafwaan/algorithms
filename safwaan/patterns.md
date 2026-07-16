@@ -502,10 +502,10 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 ---
 
 ### 10. const on mutable pointer variables
-- **Seen in:** Two Sum II (LC 167, 2026-06-03), LC 977 (2026-06-04)
-- **What happened:** Declared `left` and `right` as `const` — can't decrement/increment them. In 977, also declared `right` without any keyword (implicit global).
-- **How it was caught:** Reminded to look at variable declarations
-- **Status:** Recurring quietly — keep watching
+- **Seen in:** Two Sum II (LC 167, 2026-06-03), LC 977 (2026-06-04), LC 349 (2026-07-16)
+- **What happened:** Declared `left` and `right` as `const` — can't decrement/increment them. In 977, also declared `right` without any keyword (implicit global). Recurred again at LC 349 — `result = []` with no `const`/`let`, also an implicit global. Worked by accident (nothing else in the submission scope collides with a global `result`), but wasn't self-caught; flagged when reviewing the pasted solution.
+- **How it was caught:** Reminded to look at variable declarations, same as the first two instances — six weeks later, still not self-caught before submission.
+- **Status:** Recurring across a six-week span, different variable name each time (`left`/`right`, `right`, `result`) — a general "declared a variable without a keyword" habit, not tied to one specific name. Still catches instantly when pointed out, never proactively. Worth a pre-submission checklist item, same recommendation as the `const`-reassignment pattern (#58).
 
 ### 11. Adding two elements per iteration in two-pointer fill
 - **Seen in:** LC 977 (2026-06-04)

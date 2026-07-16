@@ -183,6 +183,18 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Hash Set — Cross-Set Membership (Intersection)
+
+**Core idea:** Convert both inputs to Sets — kills duplicates within each array for free and gives O(1) membership checks. Walk one Set, check membership in the other, push matches. Walking a Set (not the raw array) means the result comes out deduplicated with no extra work.
+
+**When to reach for it:** "Find the values common to two arrays," where either array may contain duplicates.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 349 — Intersection of Two Arrays *(bonus)* | Two Sets, iterate one, check the other | O(n+m) time/space, already optimal — every element of both arrays must be examined at least once. If duplicates weren't a constraint, a single membership pass (no Sets) would suffice. |
+
+---
+
 ## Hash Set — Consecutive Sequence Detection
 
 **Core idea:** Build a Set for O(1) lookup. Only start counting from elements where `n - 1` is NOT in the Set (sequence starts). Walk forward with a while loop, counting until the chain breaks.

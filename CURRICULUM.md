@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 29 bonus problems = 183 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 30 bonus problems = 184 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349 are bonus)
 
 ---
 
@@ -28,6 +28,7 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | — | Contains Duplicate II *(bonus — Hashmap sprint)* | Easy | [LC #219](https://leetcode.com/problems/contains-duplicate-ii/) | Hash Set — Sliding Window / Hash Map |
 | — | Pascal's Triangle *(bonus)* | Easy | [LC #118](https://leetcode.com/problems/pascals-triangle/) | 2D Array Construction |
 | — | Pascal's Triangle II *(bonus)* | Easy | [LC #119](https://leetcode.com/problems/pascals-triangle-ii/) | Right-to-left In-place Update |
+| — | Intersection of Two Arrays *(bonus — Hashing sprint)* | Easy | [LC #349](https://leetcode.com/problems/intersection-of-two-arrays/) | Hash Set |
 
 ---
 
