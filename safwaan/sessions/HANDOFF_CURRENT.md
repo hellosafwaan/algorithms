@@ -1,34 +1,34 @@
-# Handoff — 2026-07-16 (Intersection of Two Arrays)
+# Handoff — 2026-07-16 (Find the Difference of Two Arrays, 2nd problem of the hashing sweep)
 
 ## What Was Just Completed
 
-**LC 349 — Intersection of Two Arrays** (Phase 1 bonus, off-curriculum — part of a self-directed sweep through "missing hashing problems"). Brought a fully correct, self-written solution: convert both arrays to Sets (kills duplicates + gives O(1) lookup), iterate one, check membership in the other. Accepted 57/57, 1ms runtime (78.72nd percentile). No hints needed on the algorithm.
+**LC 2215 — Find the Difference of Two Arrays** (Phase 1 bonus, second problem of the same "missing hashing problems" sweep as LC 349, same day). Brought a fully correct, self-written solution: Sets for both arrays (dedup + O(1) lookup), walk each Set checking non-membership in the other, in both directions. Accepted 202/202, 7ms runtime (88.49th percentile). No bugs, no hints needed.
 
-One recurring minor bug — `result = []` with no `const`/`let`, an implicit global — same shape as the LC 977 `right` bug from six weeks ago (patterns.md #10), still not self-caught before submission. Session ended with him asking "is there a better way to solve this?" — confirmed the O(n+m) solution is already optimal (can't beat linear, every element must be examined at least once), and mentioned ES2024's native `Set.prototype.intersection` as a modern equivalent. He also unprompted extended the reasoning to a hypothetical constraint change ("if there were no duplicates, I wouldn't need Sets at all") — good constraint-sensitivity instinct.
+Correctly and unprompted identified this as the mirror image of LC 349 (Intersection) — same Set-and-check shape, condition negated. Gave a clean own-words explanation without being pushed. Notably: both result arrays correctly declared with `const` this time, no repeat of the implicit-global slip that showed up on LC 349 immediately before this in the same session — one clean data point, not enough to close that open question yet.
 
-Full wrap-up: TRACKER (184 total, 70 complete, Phase 1 bonus row added), CURRICULUM (bonus row + header count), session file, learnings.md, arrays/notes.md, pattern-index.md (new "Hash Set — Cross-Set Membership" section), revisit-queue entry, patterns.md #10 updated with third recurrence, carry-forward.md updated.
+Full wrap-up: TRACKER (185 total, 71 complete, Phase 1 bonus row added), CURRICULUM (bonus row + header count), session file, learnings.md, arrays/notes.md, pattern-index.md (extended "Hash Set — Cross-Set Membership" section to cover Intersection + Difference), revisit-queue entry, carry-forward.md updated.
 
-**Per explicit instruction this session: the revisit queue was not raised or discussed at all.** Do not treat this as another deferred-session data point — it was an explicit ask, not an override.
+**Revisit queue was again not raised this session — per his explicit instruction from earlier in the day, still being respected.**
 
 ---
 
 ## Safwaan's Current State
 
-Doing a self-directed sweep of miscellaneous/skipped hashing problems, not following curriculum order today. Solved LC 349 cleanly and independently.
+Continuing the self-directed "missing hashing problems" sweep (LC 349 → LC 2215, same session/day), not curriculum order. Both solved cleanly, no hints, no video assistance mentioned.
 
-**Recurring gap, 3rd instance in 6 weeks:** declaring a variable with no `const`/`let`/`var` (implicit global) — different variable name each time (`left`/`right` at LC 167, `right` at LC 977, `result` at LC 349). Still an instant catch when pointed out, never proactive. Consider raising this explicitly as a pre-submission checklist item next time it's relevant, rather than waiting for a 4th occurrence.
+**Open watch item:** implicit-global bug (patterns.md #10) — appeared at LC 349, did NOT recur at LC 2215 immediately after. Single clean instance; watch the next few array/accumulator-style problems before considering this resolved.
 
-**Revisit queue: explicitly asked not to be raised this session — respected, not discussed.** Sixteen+ sessions deferred as of the last count (2026-07-15); status unchanged, just not surfaced this time per his direct request.
+**Revisit queue: still not raised, per explicit request earlier today — respected across both problems.** Status otherwise unchanged from the 2026-07-15 count (sixteen+ sessions deferred).
 
 ---
 
 ## Suggested Next Problems
 
-1. Whatever "missing hashing problem" he picks next — this was an off-curriculum sweep, follow his lead.
+1. Whatever comes next in his "missing hashing problems" sweep — follow his lead, he's driving this off-curriculum.
 2. Otherwise, Phase 4 (Stack) curriculum continues at **LC 22 — Generate Parentheses**, or Phase 16 (Intervals) continues at Meeting Rooms II (LC 253) / Non-Overlapping Intervals (LC 435).
 
 ## Coach Notes
 
-- Don't raise the revisit queue unless he brings it up — this was an explicit instruction this session, treat it as standing unless told otherwise for a specific session.
-- The implicit-global pattern (#10) is now well-established across 6 weeks and 3 problems — worth a proactive mention (not a full stop) next time a loop-scoped or result variable comes up, rather than continuing to just note it after the fact.
-- Constraint-sensitivity reasoning (adjusting approach based on problem constraints) showed up again here, echoing the LC 190 "constraint-reading habit" — worth folding into the same "What's Solid" bucket if it recurs once more.
+- Don't raise the revisit queue unless he brings it up — explicit instruction this session, still standing.
+- Two-problem session (LC 349, LC 2215) both Hash Set — Cross-Set Membership variants; if a third hashing problem comes next session, check whether he spontaneously names the "same shape as before" connection the way he did for LC 2215→LC 349, without prompting.
+- Implicit-global watch: one clean instance right after the bug appeared. Don't declare it resolved — needs to hold across a non-adjacent session too before it's safe to stop tracking.

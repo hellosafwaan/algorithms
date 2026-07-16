@@ -1,5 +1,34 @@
 # Arrays — Patterns & Templates
 
+## Find the Difference of Two Arrays (LeetCode 2215)
+
+**Pattern:** Hash Set — Cross-Set Membership (Difference variant)
+
+**Core idea:** Mirror image of Intersection of Two Arrays (below) — same Set-and-check shape, condition flipped. Walk `nums1Set`, keep what's NOT in `nums2Set`; walk `nums2Set`, keep what's NOT in `nums1Set`. Two passes, one per direction.
+
+**Template:**
+```js
+function findDifference(nums1, nums2) {
+    const nums1Set = new Set(nums1);
+    const nums2Set = new Set(nums2);
+    const nums1Difference = [];
+    const nums2Difference = [];
+    for (const number of nums1Set) {
+        if (!nums2Set.has(number)) nums1Difference.push(number);
+    }
+    for (const number of nums2Set) {
+        if (!nums1Set.has(number)) nums2Difference.push(number);
+    }
+    return [nums1Difference, nums2Difference];
+}
+```
+
+**Complexity:** O(n + m) time, O(n + m) space — optimal.
+
+**Watch out for:** Return order is `[nums1-only, nums2-only]`, not the reverse.
+
+---
+
 ## Intersection of Two Arrays (LeetCode 349)
 
 **Pattern:** Hash Set — Cross-Set Membership (Intersection)

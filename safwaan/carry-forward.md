@@ -96,4 +96,4 @@ Questions to probe at the start of the next session that uses the same pattern.
 | When tracing a bug, use the smallest input that can expose it — did he apply this himself? | Debugging heuristic | 27 | open — heuristic taught 2026-06-06, probe next time he needs to trace |
 | Write the naive push+sort solution for LC 88 | Two pointers — fill backwards | 88 | open — deferred this session |
 | While loop condition `<` vs `<=` — can he identify the edge case without an example? | Two pointers | 977 | open — needed example this session |
-| Implicit global variable (missing declaration keyword) — does he catch it? | JS fundamentals | 977, 349 | open — recurred at LC 349 (`result = []`) six weeks later, still not self-caught (see patterns.md #10) |
+| Implicit global variable (missing declaration keyword) — does he catch it? | JS fundamentals | 977, 349, 2215 | open — recurred at LC 349 (`result = []`), then correctly declared with `const` immediately after at LC 2215 (same session, same day). One clean instance isn't enough to close this — probe again on the next problem with a fresh result/accumulator variable. |

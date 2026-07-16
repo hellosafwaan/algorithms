@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-16 (Intersection of Two Arrays, LC 349)
+Last updated: 2026-07-16 (Find the Difference of Two Arrays, LC 2215)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-16 (Intersection of Two Arrays, LC 349)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 184 |
-| ✅ Complete | 70 |
+| Total problems | 185 |
+| ✅ Complete | 71 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 113 |
 
@@ -65,6 +65,7 @@ Last updated: 2026-07-16 (Intersection of Two Arrays, LC 349)
 | — | Pascal's Triangle *(bonus)* | Easy | [#118](https://leetcode.com/problems/pascals-triangle/) | 2D Array Construction | ✅ | 2026-06-03 | [→](arrays/118-pascal's-triangle/learnings.md) |
 | — | Pascal's Triangle II *(bonus)* | Easy | [#119](https://leetcode.com/problems/pascals-triangle-ii/) | Right-to-left In-place Update | ✅ | 2026-06-03 | [→](arrays/119-pascal's-triangle-two/learnings.md) |
 | — | Intersection of Two Arrays *(bonus — Hashing sprint)* | Easy | [#349](https://leetcode.com/problems/intersection-of-two-arrays/) | Hash Set — Cross-Set Membership | ✅ | 2026-07-16 | [→](arrays/349-intersection-of-two-arrays/learnings.md) |
+| — | Find the Difference of Two Arrays *(bonus — Hashing sprint)* | Easy | [#2215](https://leetcode.com/problems/find-the-difference-of-two-arrays/) | Hash Set — Cross-Set Membership | ✅ | 2026-07-16 | [→](arrays/2215-find-the-difference-of-two-arrays/learnings.md) |
 
 ## Phase 2 — Two Pointers 🔄
 > Notes: [arrays/notes.md](arrays/notes.md)

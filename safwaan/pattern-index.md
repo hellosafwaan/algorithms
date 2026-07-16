@@ -183,15 +183,16 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
-## Hash Set — Cross-Set Membership (Intersection)
+## Hash Set — Cross-Set Membership (Intersection / Difference)
 
-**Core idea:** Convert both inputs to Sets — kills duplicates within each array for free and gives O(1) membership checks. Walk one Set, check membership in the other, push matches. Walking a Set (not the raw array) means the result comes out deduplicated with no extra work.
+**Core idea:** Convert both inputs to Sets — kills duplicates within each array for free and gives O(1) membership checks. Walk one Set, check membership in the other. For intersection, keep matches (IS a member); for difference, keep non-matches (NOT a member), run in both directions for a two-array symmetric difference. Walking a Set (not the raw array) means the result comes out deduplicated with no extra work.
 
-**When to reach for it:** "Find the values common to two arrays," where either array may contain duplicates.
+**When to reach for it:** "Find the values common to two arrays" (intersection) or "find what's in one array but not the other" (difference), where either array may contain duplicates.
 
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
-| LC 349 — Intersection of Two Arrays *(bonus)* | Two Sets, iterate one, check the other | O(n+m) time/space, already optimal — every element of both arrays must be examined at least once. If duplicates weren't a constraint, a single membership pass (no Sets) would suffice. |
+| LC 349 — Intersection of Two Arrays *(bonus)* | Two Sets, iterate one, keep matches | O(n+m) time/space, already optimal — every element of both arrays must be examined at least once. If duplicates weren't a constraint, a single membership pass (no Sets) would suffice. |
+| LC 2215 — Find the Difference of Two Arrays *(bonus)* | Two Sets, walk each checking non-membership in the other | Same Set-and-check shape as LC 349, condition negated and run twice (once per direction) instead of once. `[nums1-only, nums2-only]` — order in the returned pair matters. |
 
 ---
 
