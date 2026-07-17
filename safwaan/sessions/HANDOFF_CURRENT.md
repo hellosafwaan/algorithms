@@ -1,34 +1,41 @@
-# Handoff — 2026-07-16 (Find the Difference of Two Arrays, 2nd problem of the hashing sweep)
+# Handoff — 2026-07-17 (Rotate Array)
 
 ## What Was Just Completed
 
-**LC 2215 — Find the Difference of Two Arrays** (Phase 1 bonus, second problem of the same "missing hashing problems" sweep as LC 349, same day). Brought a fully correct, self-written solution: Sets for both arrays (dedup + O(1) lookup), walk each Set checking non-membership in the other, in both directions. Accepted 202/202, 7ms runtime (88.49th percentile). No bugs, no hints needed.
+**LC 189 — Rotate Array** (Phase 2 bonus, off-curriculum). Brought a brute-force solution (pop + unshift, `k` times) that TLE'd — correctly self-diagnosed the O(n·k) cause (`unshift` is O(n), called `k` times) once asked about `unshift`'s cost, without needing it given. The optimization was a harder climb than recent sessions:
 
-Correctly and unprompted identified this as the mirror image of LC 349 (Intersection) — same Set-and-check shape, condition negated. Gave a clean own-words explanation without being pushed. Notably: both result arrays correctly declared with `const` this time, no repeat of the implicit-global slip that showed up on LC 349 immediately before this in the same session — one clean data point, not enough to close that open question yet.
+- Through guided tracing, arrived at the destination formula `(i+k)%n` himself.
+- Explicitly said the modulo-wraparound concept itself "does not feel familiar" (despite already using `% 10` for digit extraction in Happy Number) — needed full direct teaching with a trace table. Logged as a new conceptual gap (patterns.md #71).
+- **Genuine unprompted breakthrough:** independently identified that writing `nums[(i+k)%n] = nums[i]` directly in place would destroy values before they're read for their own mapping — the real reason naive in-place rotation fails, spotted without being asked.
+- Built and submitted the extra-array O(n)/O(n) solution himself (accepted, 83.91st percentile runtime), self-correcting one bug (returning instead of mutating in place).
+- Explicitly asked to be taught (not questioned) on both O(1)-space follow-ups — three reversals and cyclic replacement — both given as full direct explanations at his request.
+- Declined the wrap-up reflection questions ("you can tell based on the chat") — not treated as a red flag given the strong independent work earlier, but the two taught approaches specifically need a cold check at redo (fuse: 2026-07-27, shorter than standard).
 
-Full wrap-up: TRACKER (185 total, 71 complete, Phase 1 bonus row added), CURRICULUM (bonus row + header count), session file, learnings.md, arrays/notes.md, pattern-index.md (extended "Hash Set — Cross-Set Membership" section to cover Intersection + Difference), revisit-queue entry, carry-forward.md updated.
+Full wrap-up: TRACKER (186 total, 72 complete, Phase 2 bonus row added), CURRICULUM (bonus row + header count), session file, learnings.md (all three approaches logged), arrays/notes.md, pattern-index.md (new "Array Rotation — Index Mapping via Modulo" section), patterns.md (#71 new gap, new breakthrough entry for the aliasing catch), revisit-queue entry.
 
-**Revisit queue was again not raised this session — per his explicit instruction from earlier in the day, still being respected.**
+**Revisit queue was not raised this session** — continuing to respect the standing instruction from 2026-07-16.
 
 ---
 
 ## Safwaan's Current State
 
-Continuing the self-directed "missing hashing problems" sweep (LC 349 → LC 2215, same session/day), not curriculum order. Both solved cleanly, no hints, no video assistance mentioned.
+Continuing a self-directed sweep of off-curriculum array/hashing problems (LC 349, LC 2215, now LC 189), not following curriculum order.
 
-**Open watch item:** implicit-global bug (patterns.md #10) — appeared at LC 349, did NOT recur at LC 2215 immediately after. Single clean instance; watch the next few array/accumulator-style problems before considering this resolved.
+**New watch item:** modulo-for-wraparound as a distinct mental model from modulo-for-digit-extraction — didn't transfer automatically despite prior exposure to the operator. Probe cold on the next cyclic/circular-indexing problem.
 
-**Revisit queue: still not raised, per explicit request earlier today — respected across both problems.** Status otherwise unchanged from the 2026-07-15 count (sixteen+ sessions deferred).
+**Mixed-engagement data point:** this session had real independent reasoning (TLE diagnosis, the aliasing catch) alongside two concepts requiring full direct teaching. Different from a video-assisted disengagement case — he was upfront and asked directly when stuck rather than presenting borrowed work as his own. Still worth the shorter revisit fuse specifically on the two taught approaches.
+
+**Revisit queue: still not raised, per standing instruction.**
 
 ---
 
 ## Suggested Next Problems
 
-1. Whatever comes next in his "missing hashing problems" sweep — follow his lead, he's driving this off-curriculum.
+1. Whatever comes next in his self-directed sweep — follow his lead.
 2. Otherwise, Phase 4 (Stack) curriculum continues at **LC 22 — Generate Parentheses**, or Phase 16 (Intervals) continues at Meeting Rooms II (LC 253) / Non-Overlapping Intervals (LC 435).
 
 ## Coach Notes
 
-- Don't raise the revisit queue unless he brings it up — explicit instruction this session, still standing.
-- Two-problem session (LC 349, LC 2215) both Hash Set — Cross-Set Membership variants; if a third hashing problem comes next session, check whether he spontaneously names the "same shape as before" connection the way he did for LC 2215→LC 349, without prompting.
-- Implicit-global watch: one clean instance right after the bug appeared. Don't declare it resolved — needs to hold across a non-adjacent session too before it's safe to stop tracking.
+- Don't raise the revisit queue unless he brings it up — standing instruction, unchanged.
+- LC 189 redo (2026-07-27) should specifically test the three-reversals and cyclic-replacement approaches cold — those are the parts that were given, not derived. The extra-array approach and the aliasing insight are much better-owned and don't need the same scrutiny.
+- Modulo-wraparound (patterns.md #71) — probe cold, don't over-teach if it resurfaces once more; two clean instances would suggest it just needed one solid exposure.

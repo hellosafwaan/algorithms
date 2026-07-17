@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 31 bonus problems = 185 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 32 bonus problems = 186 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189 are bonus)
 
 ---
 
@@ -50,6 +50,7 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | 8 | Remove Duplicates from Sorted Array II | Medium | [LC #80](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | Two Pointers (read/write, look-back) |
 | 9 | Trapping Rain Water | Hard | [LC #42](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers |
 | — | Next Permutation *(bonus)* | Medium | [LC #31](https://leetcode.com/problems/next-permutation/) | Pivot + Swap + Two-pointer Reverse |
+| — | Rotate Array *(bonus)* | Medium | [LC #189](https://leetcode.com/problems/rotate-array/) | Index Mapping via Modulo / Reversal / Cyclic Replacement |
 
 ---
 

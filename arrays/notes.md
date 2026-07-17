@@ -1,5 +1,77 @@
 # Arrays — Patterns & Templates
 
+## Rotate Array (LeetCode 189)
+
+**Pattern:** Index Mapping via Modulo — three implementation strategies
+
+**Core idea:** Rotating right by `k` sends the element at index `i` to index `(i + k) % n`. The `%` wraps indices that overflow past `n-1` back to the start — same remainder mechanic as digit extraction (`n % 10`), applied to a cyclic range instead of a place value.
+
+**Why naive in-place fails:** Writing `nums[(i+k)%n] = nums[i]` directly overwrites values before they've been read for their own mapping — an aliasing bug, separate from (and more subtle than) the brute-force TLE.
+
+**Three approaches:**
+
+| Approach | Time | Space | Idea |
+|----------|------|-------|------|
+| Brute force (pop + unshift, `k` times) | O(n·k) | O(1) | `unshift` is O(n) per call — TLEs on large inputs |
+| Extra array | O(n) | O(n) | Write into a fresh array by computed index, copy back |
+| Three reversals | O(n) | O(1) | Reverse whole array, then first `k`, then remaining `n-k` |
+| Cyclic replacements | O(n) | O(1) | Carry one value at a time along the destination chain; restart from the next unvisited index if a chain closes early |
+
+**Templates:**
+```js
+// Extra array
+function rotate(nums, k) {
+    const n = nums.length;
+    const rotatedArray = [];
+    for (let i = 0; i < n; i++) {
+        rotatedArray[(i + k) % n] = nums[i];
+    }
+    for (let i = 0; i < n; i++) {
+        nums[i] = rotatedArray[i];
+    }
+}
+
+// Three reversals
+function rotateThreeReversals(nums, k) {
+    const n = nums.length;
+    k = k % n;
+    reverseRange(nums, 0, n - 1);
+    reverseRange(nums, 0, k - 1);
+    reverseRange(nums, k, n - 1);
+}
+function reverseRange(arr, left, right) {
+    while (left < right) {
+        [arr[left], arr[right]] = [arr[right], arr[left]];
+        left++;
+        right--;
+    }
+}
+
+// Cyclic replacements
+function rotateCyclic(nums, k) {
+    const n = nums.length;
+    k = k % n;
+    if (k === 0) return;
+    let movedCount = 0;
+    for (let start = 0; movedCount < n; start++) {
+        let current = start;
+        let carrying = nums[start];
+        do {
+            const dest = (current + k) % n;
+            const saved = nums[dest];
+            nums[dest] = carrying;
+            carrying = saved;
+            current = dest;
+            movedCount++;
+        } while (current !== start);
+    }
+}
+```
+
+**Watch out for:** `k = k % n` before using `k` as a loop bound (the reversal approach) — handles `k > n`. The cyclic approach's chain can close before every element has moved; the `movedCount`/multi-start structure isn't optional.
+
+---
+
 ## Find the Difference of Two Arrays (LeetCode 2215)
 
 **Pattern:** Hash Set — Cross-Set Membership (Difference variant)

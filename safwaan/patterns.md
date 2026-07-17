@@ -6,6 +6,12 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 71. Modulo-for-wraparound didn't feel familiar despite already knowing modulo-for-digit-extraction
+- **Seen in:** LC 189 — Rotate Array (2026-07-17)
+- **What happened:** After correctly tracing the destination-index formula `(i+k)%n` on concrete examples and confirming it worked, explicitly said the underlying wraparound concept "does not feel familiar" — despite having used the exact same operator (`%`) for digit extraction in Happy Number (`n % 10`). The operator itself wasn't the gap; connecting it to a *cyclic-range* use case (as opposed to a place-value use case) was.
+- **How it was caught:** Self-disclosed directly ("this does not feel familiar"). Resolved with a trace table showing `(i+k)%n` for every index of a concrete example, explicitly calling out which indices "overflow" past `n-1` and snap back to 0 — same trace-table-over-verbal-explanation preference established at LC 190.
+- **Status:** New knowledge gap, same family as prior toolkit gaps (Math.trunc, `?? 0`, Set/Map) but conceptual rather than a missing method name — knows the operator, didn't yet have the "cyclic wraparound" application pattern for it. Probe cold on the next problem needing circular/wraparound indexing (circular buffer, Josephus-style problem, day-of-week arithmetic).
+
 ### 70. `Math.floor` reached for instead of `Math.trunc` on negative integer division
 - **Seen in:** LC 150 — Evaluate Reverse Polish Notation (2026-07-15)
 - **What happened:** Used `Math.floor(leftOperand / rightOperand)` for RPN's `/` operator. Fails whenever the division result is negative — `Math.floor` rounds toward negative infinity (`Math.floor(-2.333)` → `-3`), but the problem requires truncation toward zero (`-2`). First guess at a fix was `Math.round` (rounds to nearest, not toward zero — also wrong in general, e.g. `Math.round(2.75)` → `3`, not `2`). Needed the answer given directly for `Math.trunc` after two guesses.
@@ -357,6 +363,9 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 ---
 
 ## Breakthrough Moments
+
+### Independently spotted the read-after-overwrite aliasing bug before writing any in-place code — LC 189 (2026-07-17)
+After deriving (with heavy guided tracing) the destination-index formula `(i+k)%n`, the natural next step is to write `nums[newIndex] = nums[i]` directly. Without being asked, he stopped and identified that this would destroy the value at `newIndex` before it's been read for its own mapping — a genuine, unprompted correctness catch, and the actual reason the naive in-place approach is unsound (not the TLE reason, a different bug entirely). This is the kind of correctness reasoning that mirrors the LC 3169 unprompted `-1` gap-formula catch — real independent verification, not just pattern-matching to a remembered solution. Notably, this happened in the same session where two other concepts (modulo-wraparound, and both O(1)-space follow-up approaches) needed full direct teaching — a good reminder that a session can be a genuine mix: strong independent reasoning on one piece, real unfamiliarity on another, in the same 20 minutes.
 
 ### Video-assisted problem with real debugging AND genuine follow-on reasoning — LC 155 (2026-07-15)
 Disclosed honestly upfront that Min Stack was learned from a NeetCode video. Unlike LC 200 and LC 3169 (video-assisted problems where wrap-up ownership checks were declined outright), this session showed real engagement on two fronts: (1) the code brought had a genuine bug — `pop()` referenced an undefined `value` variable, a leftover from `push`'s parameter — and he self-caught it in one targeted question ("what does `value` refer to inside `pop`?"); (2) when a follow-up space-optimization was raised (only push to `minStack` on a new minimum, pop conditionally), he engaged fully rather than declining, and correctly self-derived the core mechanism ("if the popped value equals the top of minStack, that means it's the current minimum, so pop it from minStack too") through pure Socratic questioning with zero direct answers given. He explicitly deferred *implementing* the optimization to a later session, but the reasoning itself was entirely his own. This is a meaningfully different profile from the LC 200/3169 video-assisted pattern — video origin doesn't predict disengagement by itself; whether he stays engaged through debugging and extension questions is the better signal to watch, not the video-assisted flag alone.

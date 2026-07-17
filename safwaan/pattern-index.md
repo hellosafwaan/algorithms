@@ -4,6 +4,18 @@ When starting a new problem, check here first. Find the pattern, recall what you
 
 ---
 
+## Array Rotation — Index Mapping via Modulo
+
+**Core idea:** Rotating right by `k` sends index `i` to `(i+k) % n` — the `%` wraps indices past `n-1` back to the start (same operator as digit extraction, applied to a cyclic range instead of a place value). Naive in-place writes using this formula corrupt data (aliasing — you overwrite a value before it's been read for its own mapping), so you need either a second array, or a mechanism (reversal / cycle-following) that's provably alias-safe.
+
+**When to reach for it:** "Rotate/shift an array by k positions," or any problem needing values to move to a computed cyclic destination.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 189 — Rotate Array *(bonus)* | Three approaches: extra array, three reversals, cyclic replacement | Extra array (O(n) space) sidesteps aliasing entirely. Three reversals and cyclic replacement both get to O(1) space — reversal is simpler to reason about/recall, cyclic replacement needs a multi-start/moved-count guard since one chain can close before covering every element. |
+
+---
+
 ## Stack — Postfix Expression Evaluation
 
 **Core idea:** Reverse Polish Notation puts operands before their operator, which is exactly what makes a stack the right tool. Push operands as seen; on an operator, pop the two most recent values (first pop = right operand, second pop = left operand — order matters for non-commutative ops), apply, push the result back. One value remains at the end — the answer.

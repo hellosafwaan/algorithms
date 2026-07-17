@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-16 (Find the Difference of Two Arrays, LC 2215)
+Last updated: 2026-07-17 (Rotate Array, LC 189)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-16 (Find the Difference of Two Arrays, LC 2215)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 185 |
-| ✅ Complete | 71 |
+| Total problems | 186 |
+| ✅ Complete | 72 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 113 |
 
@@ -82,6 +82,7 @@ Last updated: 2026-07-16 (Find the Difference of Two Arrays, LC 2215)
 | 8 | Remove Duplicates from Sorted Array II | Medium | [#80](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/) | Two Pointers (read/write, look-back) | ✅ 46th pct | 2026-06-06 | [→](arrays/80-remove-duplicates-from-a-sorted-array/learnings.md) |
 | 9 | Trapping Rain Water | Hard | [#42](https://leetcode.com/problems/trapping-rain-water/) | Prefix Max / Two Pointers | ✅ 100th pct | 2026-06-09 | [→](arrays/42-trapping-rain-water/learnings.md) |
 | — | Next Permutation *(bonus)* | Medium | [#31](https://leetcode.com/problems/next-permutation/) | Pivot + Swap + Two-pointer Reverse | ✅ | 2026-06-03 | [→](arrays/31-next-permutation/learnings.md) |
+| — | Rotate Array *(bonus)* | Medium | [#189](https://leetcode.com/problems/rotate-array/) | Index Mapping via Modulo / Reversal / Cyclic Replacement | ✅ | 2026-07-17 | [→](arrays/189-rotate-array/learnings.md) |
 
 ## Phase 3 — Sliding Window ⏳
 
