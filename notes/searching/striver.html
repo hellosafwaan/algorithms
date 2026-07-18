@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Striver's Binary Search Series — Complete Notes</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --panel: #171a23;
+    --panel-2: #1e2230;
+    --border: #2a2f3f;
+    --text: #e6e8ef;
+    --muted: #9aa1b4;
+    --accent: #6ee7b7;
+    --accent-2: #7dabff;
+    --warn: #f5a97f;
+    --danger: #f28b82;
+    --code-bg: #10131c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", Roboto, -apple-system, sans-serif;
+    line-height: 1.65;
+    padding: 40px 16px 80px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 {
+    font-size: 2.1rem;
+    margin-bottom: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .subtitle { color: var(--muted); margin-bottom: 36px; font-size: 0.95rem; }
+  h2 {
+    font-size: 1.3rem;
+    margin-top: 46px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--accent-2);
+  }
+  h3 { font-size: 1.02rem; color: var(--accent); margin-top: 26px; }
+  p { color: var(--text); }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 14px 0;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--panel-2);
+    color: var(--accent);
+    border: 1px solid var(--border);
+    margin-right: 6px;
+  }
+  code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "Fira Code", Consolas, monospace;
+    font-size: 0.86em;
+    color: var(--accent);
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-family: "Fira Code", Consolas, monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  pre code { background: none; padding: 0; color: #d8dce8; }
+  .kw { color: #c792ea; }
+  .fn { color: #82aaff; }
+  .cm { color: #6b7089; font-style: italic; }
+  .num { color: #f78c6c; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+  th, td { border: 1px solid var(--border); padding: 7px 11px; text-align: left; }
+  th { background: var(--panel-2); color: var(--accent-2); }
+  .problem { border-left: 3px solid var(--accent-2); padding-left: 16px; margin: 30px 0; }
+  .problem h3 { margin-top: 0; }
+  .note {
+    background: var(--panel-2); border-left: 3px solid var(--warn);
+    padding: 9px 15px; border-radius: 6px; font-size: 0.88rem; color: var(--muted); margin: 10px 0;
+  }
+  .insight {
+    background: var(--panel-2); border-left: 3px solid var(--accent);
+    padding: 9px 15px; border-radius: 6px; font-size: 0.9rem; margin: 10px 0;
+  }
+  .danger-note {
+    background: var(--panel-2); border-left: 3px solid var(--danger);
+    padding: 9px 15px; border-radius: 6px; font-size: 0.88rem; margin: 10px 0;
+  }
+  .roadmap-list { columns: 2; column-gap: 24px; font-size: 0.9rem; }
+  .roadmap-list li { margin-bottom: 6px; break-inside: avoid; }
+  .toc { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px 22px; }
+  .toc a { color: var(--accent-2); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ol { margin: 0; padding-left: 20px; columns: 1; font-size: 0.92rem; }
+  footer { color: var(--muted); font-size: 0.85rem; margin-top: 60px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Striver's Binary Search Series — Complete Notes</h1>
+  <p class="subtitle">A separate set of notes for Striver's (Raj Vikramaditya) Binary Search module, part of the A2Z DSA Course — kept in its own file since it's a different instructor with a distinct approach (heavy focus on the "identify what to eliminate" mental model, an <code>answer</code> variable pattern for lower/upper bound, and a dedicated "binary search on the answer" track). Code is written in JS to match your other notes, though the original lectures are language-agnostic pseudocode with C++/Java/Python/JS available separately.</p>
+
+  <div class="toc">
+    <strong>Contents</strong>
+    <ol>
+      <li><a href="#intro">Introduction — Binary Search as Real-Life Search</a></li>
+      <li><a href="#coding-example">The Coding Example — Core Mechanics</a></li>
+      <li><a href="#iterative">Iterative Implementation</a></li>
+      <li><a href="#recursive">Recursive Implementation + Dry Run</a></li>
+      <li><a href="#complexity">Time Complexity — The Log Proof</a></li>
+      <li><a href="#overflow">The Overflow Case</a></li>
+      <li><a href="#lower-bound">Lower Bound</a></li>
+      <li><a href="#upper-bound">Upper Bound</a></li>
+      <li><a href="#insert-position">Search Insert Position</a></li>
+      <li><a href="#floor-ceil">Floor and Ceil in a Sorted Array</a></li>
+      <li><a href="#first-last">First and Last Occurrence</a></li>
+      <li><a href="#count-occurrences">Count Occurrences of a Number</a></li>
+      <li><a href="#rotated-1">Search in a Rotated Sorted Array (Unique)</a></li>
+      <li><a href="#rotated-2">Search in a Rotated Sorted Array II (Duplicates)</a></li>
+      <li><a href="#rotated-min">Find Minimum in a Rotated Sorted Array</a></li>
+      <li><a href="#rotation-count">Find How Many Times an Array Has Been Rotated</a></li>
+      <li><a href="#single-element">Single Element in a Sorted Array</a></li>
+      <li><a href="#peak-element">Find Peak Element</a></li>
+      <li><a href="#nth-root">N-th Root of a Number (Binary Search on the Answer)</a></li>
+      <li><a href="#roadmap">Roadmap — Remaining Videos in This Playlist</a></li>
+      <li><a href="#takeaways">Key Takeaways</a></li>
+    </ol>
+  </div>
+
+  <h2 id="intro">1. Introduction — Binary Search as Real-Life Search</h2>
+  <div class="card">
+    <p><strong>The dictionary analogy:</strong> a dictionary is a "search space" that's sorted (words run A → Z). To find "Raj," linear search would flip page by page from the start — technically correct, but slow. Instead, you naturally split the dictionary in half: if the left half contains words starting with "S," everything on the right is "S" or later, and everything with "Raj" must be on the left — so the right half gets discarded entirely, and you repeat the split on the remaining half.</p>
+    <div class="insight"><strong>The generalized rule:</strong> binary search applies any time you're searching within a <strong>sorted search space</strong> — and "search space" doesn't have to be an array. It can be a range of possible answers, a set of pages, anything sorted.</div>
+  </div>
+
+  <h2 id="coding-example">2. The Coding Example — Core Mechanics</h2>
+  <div class="card">
+    <p>Array: <code>[3, 4, 6, 7, 9, 12, 16, 17]</code> (indices 0–7). Two pointers define the current search space:</p>
+    <ul>
+      <li><code>low</code> starts at index <code>0</code></li>
+      <li><code>high</code> starts at index <code>n - 1</code></li>
+      <li>Everything between <code>low</code> and <code>high</code> (inclusive) is the current search space.</li>
+    </ul>
+    <p><strong>Target = 6:</strong> <code>mid = (0+7)/2 = 3</code> → <code>arr[3] = 7</code>. Since <code>7 ≠ 6</code>, and 6 &lt; 7, discard the right (<code>high = mid - 1 = 2</code>). New <code>mid = (0+2)/2 = 1</code> → <code>arr[1] = 4</code>. Since 6 &gt; 4, discard the left (<code>low = mid + 1 = 2</code>). Now <code>low === high === 2</code> → <code>mid = 2</code> → <code>arr[2] = 6</code>. Match — return index 2.</p>
+    <p><strong>Target = 13 (not present):</strong> the search keeps narrowing — each comparison either bumps <code>low</code> past <code>mid</code> or drops <code>high</code> below <code>mid</code> — until <code>high</code> ends up to the <em>left</em> of <code>low</code>. Once <code>low &gt; high</code>, there's no search space left — return <code>-1</code>.</p>
+    <div class="note">Watch this exact moment carefully: when the target isn't found, <code>high</code> crosses over to sit just left of <code>low</code>. This "crossing" is the signal the whole loop condition (<code>low &lt;= high</code>) is built around, and it comes back constantly in later problems (lower bound, first/last occurrence, insertion point).</div>
+  </div>
+
+  <h2 id="iterative">3. Iterative Implementation</h2>
+  <div class="card">
+<pre><code><span class="kw">function</span> <span class="fn">binarySearch</span>(arr, target) {
+  <span class="kw">let</span> low = <span class="num">0</span>;
+  <span class="kw">let</span> high = arr.length - <span class="num">1</span>;
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = Math.floor((low + high) / <span class="num">2</span>);
+
+    <span class="kw">if</span> (arr[mid] === target) {
+      <span class="kw">return</span> mid;
+    } <span class="kw">else</span> <span class="kw">if</span> (target &gt; arr[mid]) {
+      low = mid + <span class="num">1</span>;
+    } <span class="kw">else</span> {
+      high = mid - <span class="num">1</span>;
+    }
+  }
+  <span class="kw">return</span> <span class="num">-1</span>;
+}</code></pre>
+  </div>
+
+  <h2 id="recursive">4. Recursive Implementation + Dry Run</h2>
+  <div class="card">
+    <p><strong>Why recursion fits here:</strong> every iteration does the exact same three steps — find <code>mid</code>, compare, narrow — just with a different <code>[low, high]</code> window. Repeating identical steps with shrinking parameters is exactly what recursion is for.</p>
+<pre><code><span class="kw">function</span> <span class="fn">binarySearchRecursive</span>(arr, low, high, target) {
+  <span class="kw">if</span> (low &gt; high) <span class="kw">return</span> <span class="num">-1</span>; <span class="cm">// base case: search space exhausted</span>
+
+  <span class="kw">const</span> mid = Math.floor((low + high) / <span class="num">2</span>);
+
+  <span class="kw">if</span> (arr[mid] === target) <span class="kw">return</span> mid;
+  <span class="kw">if</span> (target &gt; arr[mid]) <span class="kw">return</span> binarySearchRecursive(arr, mid + <span class="num">1</span>, high, target);
+  <span class="kw">return</span> binarySearchRecursive(arr, low, mid - <span class="num">1</span>, target);
+}</code></pre>
+    <p><strong>Dry run for target 13</strong> (array as above, indices 0–7): call <code>(0,7)</code> → mid=3, <code>arr[3]=7</code>, 13&gt;7 → call <code>(4,7)</code> → mid=5, <code>arr[5]=12</code>, 13&gt;12 → call <code>(6,7)</code> → mid=6, <code>arr[6]=16</code>, 13&lt;16 → call <code>(6,5)</code> → base case hit (<code>low &gt; high</code>) → returns <code>-1</code>, which bubbles back up through every call frame unchanged, all the way to the original caller.</p>
+    <div class="insight">This is the general shape of "recursion unwinding": once the base case returns a value, every enclosing call simply passes that same value straight back up — none of them do extra work on the way out.</div>
+  </div>
+
+  <h2 id="complexity">5. Time Complexity — The Log Proof</h2>
+  <div class="card">
+    <p>Take an array of size 32. Each comparison eliminates roughly half the remaining elements — sometimes slightly more, sometimes slightly less than exactly half (depending on whether <code>mid</code> itself gets included in the eliminated side), but always <em>approximately</em> half: 32 → 16 → 8 → 4 → 2 → 1, six steps.</p>
+    <p><code>32 = 2⁵</code>, so <code>log₂(32) = 5</code> — close to the six comparisons actually made (the extra step accounts for the final check). Generalizing: for an array of size <code>n</code>, the number of steps to shrink down to 1 element is <code>log₂(n)</code> — because <code>n = 2^k ⟹ log₂(n) = k</code>, and each step is a constant-time comparison.</p>
+    <p><strong>Time:</strong> <code>O(log n)</code>. <strong>Space (iterative):</strong> <code>O(1)</code> — only <code>low</code>, <code>high</code>, <code>mid</code> are used, regardless of array size.</p>
+  </div>
+
+  <h2 id="overflow">6. The Overflow Case</h2>
+  <div class="card">
+    <p>This matters when the "search space" isn't a small array but something like <code>[0, INT_MAX]</code> — relevant once binary search is applied to answer ranges rather than array indices (see the N-th Root section later).</p>
+    <p>If the search space has shrunk down to just its very last element (<code>low = high = INT_MAX</code>), then <code>mid = (low + high) / 2</code> computes <code>INT_MAX + INT_MAX</code> first — which overflows a 32-bit integer <em>before</em> the division even happens.</p>
+    <table>
+      <tr><th>Fix</th><th>How</th></tr>
+      <tr><td>Use a wider type</td><td>Declare <code>low</code>/<code>high</code>/<code>mid</code> as <code>long long</code> (C++) so the sum can't overflow.</td></tr>
+      <tr><td>Reformulate the midpoint formula</td><td><code>mid = low + (high - low) / 2</code> — algebraically identical to <code>(low + high) / 2</code>, but never sums two large numbers together.</td></tr>
+    </table>
+    <div class="note">JavaScript's numeric range makes this a non-issue in practice, but the reformulated <code>low + Math.floor((high - low) / 2)</code> is worth using as a habit — it's the version expected in interviews regardless of language.</div>
+  </div>
+
+  <h2 id="lower-bound">7. Lower Bound</h2>
+  <div class="card">
+    <p><strong>Definition:</strong> the smallest index whose value is <strong>≥</strong> a given number <code>x</code>. If no such value exists, the answer is the array's length (a "hypothetical" index past the end).</p>
+    <p><strong>Naive:</strong> linear scan, <code>O(n)</code>.</p>
+    <h3>The <code>answer</code> variable pattern</h3>
+    <p>Unlike classic binary search's three-way branch (equal / greater / less), lower bound only has two real outcomes at each <code>mid</code>: <em>"this could be my answer"</em> (value ≥ x) or <em>"this can't be"</em> (value &lt; x). Track the best candidate seen so far in a separate <code>answer</code> variable, initialized to <code>n</code> (the fallback if nothing qualifies):</p>
+<pre><code><span class="kw">function</span> <span class="fn">lowerBound</span>(arr, x) {
+  <span class="kw">let</span> low = <span class="num">0</span>;
+  <span class="kw">let</span> high = arr.length - <span class="num">1</span>;
+  <span class="kw">let</span> answer = arr.length;
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+    <span class="kw">if</span> (arr[mid] &gt;= x) {
+      answer = mid;       <span class="cm">// possible answer — but keep looking left for a smaller index</span>
+      high = mid - <span class="num">1</span>;
+    } <span class="kw">else</span> {
+      low = mid + <span class="num">1</span>;  <span class="cm">// definitely not the answer — go right</span>
+    }
+  }
+  <span class="kw">return</span> answer;
+}</code></pre>
+    <div class="insight">Since binary search always eliminates the side it moves away from, and lower bound always moves <em>left</em> on a valid candidate, whatever gets stored in <code>answer</code> only ever gets replaced by something smaller. That's what guarantees the final stored value is the smallest valid index — no need to separately compare "is this better than my last answer."</div>
+    <p class="note"><strong>C++ note:</strong> the STL provides this built-in — <code>lower_bound(array, array + n, x)</code> returns an iterator; subtract the begin iterator to get the index. No equivalent standard function in Java per the lecture, so the manual implementation is needed there.</p>
+    <p>Time: <code>O(log n)</code>. Space: <code>O(1)</code>.</p>
+  </div>
+
+  <h2 id="upper-bound">8. Upper Bound</h2>
+  <div class="card">
+    <p><strong>Definition:</strong> the smallest index whose value is <strong>strictly greater than</strong> <code>x</code> (no "or equal to"). Everything else is identical to lower bound — same <code>answer</code> pattern, same loop shape:</p>
+<pre><code><span class="kw">function</span> <span class="fn">upperBound</span>(arr, x) {
+  <span class="kw">let</span> low = <span class="num">0</span>;
+  <span class="kw">let</span> high = arr.length - <span class="num">1</span>;
+  <span class="kw">let</span> answer = arr.length;
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+    <span class="kw">if</span> (arr[mid] &gt; x) {         <span class="cm">// only the comparison operator changes</span>
+      answer = mid;
+      high = mid - <span class="num">1</span>;
+    } <span class="kw">else</span> {
+      low = mid + <span class="num">1</span>;
+    }
+  }
+  <span class="kw">return</span> answer;
+}</code></pre>
+    <p class="note">C++ STL equivalent: <code>upper_bound(...)</code>. Time: <code>O(log n)</code>, Space: <code>O(1)</code> — identical to lower bound.</p>
+  </div>
+
+  <h2 id="insert-position">9. Search Insert Position</h2>
+  <div class="card">
+    <p><strong>Problem:</strong> given a sorted array of distinct values and a target, return its index if present — otherwise return the index where it would need to be inserted to keep the array sorted.</p>
+    <div class="insight">This <strong>is</strong> lower bound, verbatim. If the value exists, lower bound's "smallest index ≥ x" lands exactly on it. If it doesn't exist, lower bound's fallback position is exactly the correct insertion point. No new algorithm needed — just call <code>lowerBound(arr, target)</code>.</div>
+  </div>
+
+  <h2 id="floor-ceil">10. Floor and Ceil in a Sorted Array</h2>
+  <div class="card">
+    <p><strong>Ceil(x):</strong> smallest number in the array ≥ x → exactly the <em>value</em> at the lower-bound index (not the index itself).</p>
+    <p><strong>Floor(x):</strong> largest number in the array ≤ x → the mirror image, found with the reversed comparison:</p>
+<pre><code><span class="kw">function</span> <span class="fn">findFloor</span>(arr, x) {
+  <span class="kw">let</span> low = <span class="num">0</span>;
+  <span class="kw">let</span> high = arr.length - <span class="num">1</span>;
+  <span class="kw">let</span> answer = <span class="num">-1</span>; <span class="cm">// no floor exists by default</span>
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+    <span class="kw">if</span> (arr[mid] &lt;= x) {
+      answer = arr[mid];   <span class="cm">// store the VALUE, not the index</span>
+      low = mid + <span class="num">1</span>;  <span class="cm">// keep looking right for something even closer to x</span>
+    } <span class="kw">else</span> {
+      high = mid - <span class="num">1</span>;
+    }
+  }
+  <span class="kw">return</span> answer;
+}</code></pre>
+    <div class="insight"><strong>Why no "is this bigger than my last answer" check is needed:</strong> since floor always moves <em>right</em> after a valid candidate, and the array is sorted ascending, every subsequent candidate found is guaranteed to be larger than the last. The direction of movement itself enforces the "keep the biggest" invariant — same logic mirrored from lower bound, just flipped.</div>
+    <p class="note">Read the problem statement carefully — some variants want the returned index, others the returned value. This implementation returns the value; swap <code>answer = arr[mid]</code> for <code>answer = mid</code> if an index is required.</p>
+  </div>
+
+  <h2 id="first-last">11. First and Last Occurrence of an Element</h2>
+  <div class="card">
+    <p><strong>Naive:</strong> linear scan tracking the first and last index where <code>arr[i] === target</code>. <code>O(n)</code>.</p>
+    <h3>Approach A — reuse lower bound + upper bound</h3>
+    <p>First occurrence = <code>lowerBound(arr, x)</code>, <em>provided</em> that index actually contains <code>x</code> (it might not, if <code>x</code> isn't in the array at all). Last occurrence = <code>upperBound(arr, x) - 1</code>, for the same reason — upper bound finds the first index <em>past</em> all occurrences of <code>x</code>, so stepping back one lands on the last actual occurrence.</p>
+<pre><code><span class="kw">function</span> <span class="fn">firstAndLast</span>(arr, x) {
+  <span class="kw">const</span> lb = lowerBound(arr, x);
+  <span class="kw">if</span> (lb === arr.length || arr[lb] !== x) <span class="kw">return</span> [<span class="num">-1</span>, <span class="num">-1</span>]; <span class="cm">// x isn't in the array at all</span>
+  <span class="kw">return</span> [lb, upperBound(arr, x) - <span class="num">1</span>];
+}</code></pre>
+    <div class="danger-note"><strong>Edge case that trips people up:</strong> always check the lower-bound result first. If it points past the end of the array, or the value there doesn't match <code>x</code>, <code>x</code> simply isn't present — return <code>[-1, -1]</code> immediately rather than also computing the upper bound (which wastes a second <code>log n</code> pass and, more importantly, would be meaningless).</div>
+    <h3>Approach B — two independent binary searches, no helper functions</h3>
+    <p>Some interviewers specifically want to see binary search written from scratch rather than composed from lower/upper bound helpers. The idea: run binary search twice, biasing the direction after a match each time.</p>
+<pre><code><span class="kw">function</span> <span class="fn">findFirst</span>(arr, x) {
+  <span class="kw">let</span> low = <span class="num">0</span>, high = arr.length - <span class="num">1</span>, first = <span class="num">-1</span>;
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+    <span class="kw">if</span> (arr[mid] === x) { first = mid; high = mid - <span class="num">1</span>; } <span class="cm">// keep searching LEFT for an earlier one</span>
+    <span class="kw">else</span> <span class="kw">if</span> (arr[mid] &lt; x) low = mid + <span class="num">1</span>;
+    <span class="kw">else</span> high = mid - <span class="num">1</span>;
+  }
+  <span class="kw">return</span> first;
+}
+
+<span class="kw">function</span> <span class="fn">findLast</span>(arr, x) {
+  <span class="kw">let</span> low = <span class="num">0</span>, high = arr.length - <span class="num">1</span>, last = <span class="num">-1</span>;
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+    <span class="kw">if</span> (arr[mid] === x) { last = mid; low = mid + <span class="num">1</span>; }  <span class="cm">// keep searching RIGHT for a later one</span>
+    <span class="kw">else</span> <span class="kw">if</span> (arr[mid] &lt; x) low = mid + <span class="num">1</span>;
+    <span class="kw">else</span> high = mid - <span class="num">1</span>;
+  }
+  <span class="kw">return</span> last;
+}</code></pre>
+    <p>Time: two binary searches back to back is <code>2 · O(log n) = O(log n)</code> (constants dropped). Space: <code>O(1)</code>.</p>
+    <p class="note">Always call <code>findFirst</code> before <code>findLast</code>, and short-circuit: if <code>findFirst</code> returns <code>-1</code>, return <code>[-1, -1]</code> immediately without running <code>findLast</code> at all — if the element isn't present, there's no last occurrence to find either, and skipping the second search saves a full <code>log n</code> pass.</p>
+  </div>
+
+  <h2 id="count-occurrences">12. Count Occurrences of a Number in a Sorted Array</h2>
+  <div class="card">
+    <p>Direct extension of the previous problem: with duplicates guaranteed grouped together (sorted array), the count is simply:</p>
+<pre><code><span class="kw">function</span> <span class="fn">countOccurrences</span>(arr, x) {
+  <span class="kw">const</span> [first, last] = firstAndLast(arr, x);
+  <span class="kw">if</span> (first === <span class="num">-1</span>) <span class="kw">return</span> <span class="num">0</span>;
+  <span class="kw">return</span> last - first + <span class="num">1</span>;
+}</code></pre>
+    <p>Time: <code>O(log n)</code>. Space: <code>O(1)</code>.</p>
+  </div>
+
+  <h2 id="rotated-1">13. Search in a Rotated Sorted Array (Unique Elements)</h2>
+  <div class="card">
+    <p>A sorted array rotated at some pivot — e.g. <code>[1,2,3,4,5]</code> rotated at index 2 becomes <code>[4,5,1,2,3]</code>. Elements are distinct. Find a target's index.</p>
+    <h3>Why comparing just one side isn't enough</h3>
+    <p>In plain binary search, checking whether the target is less than <code>arr[mid]</code> alone was enough to know which half to eliminate, because <em>both</em> halves were sorted. In a rotated array only <strong>one</strong> half is guaranteed sorted at any point — the other might straddle the rotation point. So the first, mandatory step every time is: <strong>identify which half is sorted.</strong></p>
+    <div class="insight">How to identify the sorted half: compare <code>arr[low]</code> with <code>arr[mid]</code>. If <code>arr[low] &lt;= arr[mid]</code>, the left half is sorted (no rotation break in it). Otherwise, the right half must be the sorted one — it's guaranteed that <em>at least</em> one half is always fully sorted, since the rotation point can only fall in one of them.</div>
+    <p>Once the sorted half is known, check whether the target falls within its value range. If yes, search that half (eliminate the other). If not, the target must be in the other half — eliminate the sorted one instead.</p>
+<pre><code><span class="kw">function</span> <span class="fn">searchRotated</span>(arr, target) {
+  <span class="kw">let</span> low = <span class="num">0</span>;
+  <span class="kw">let</span> high = arr.length - <span class="num">1</span>;
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+    <span class="kw">if</span> (arr[mid] === target) <span class="kw">return</span> mid;
+
+    <span class="kw">if</span> (arr[low] &lt;= arr[mid]) { <span class="cm">// left half is sorted</span>
+      <span class="kw">if</span> (arr[low] &lt;= target && target &lt; arr[mid]) {
+        high = mid - <span class="num">1</span>;  <span class="cm">// target is inside the sorted left half</span>
+      } <span class="kw">else</span> {
+        low = mid + <span class="num">1</span>;   <span class="cm">// target must be on the right</span>
+      }
+    } <span class="kw">else</span> {                    <span class="cm">// right half is sorted</span>
+      <span class="kw">if</span> (arr[mid] &lt; target && target &lt;= arr[high]) {
+        low = mid + <span class="num">1</span>;   <span class="cm">// target is inside the sorted right half</span>
+      } <span class="kw">else</span> {
+        high = mid - <span class="num">1</span>;  <span class="cm">// target must be on the left</span>
+      }
+    }
+  }
+  <span class="kw">return</span> <span class="num">-1</span>;
+}</code></pre>
+    <p>Time: <code>O(log n)</code> — still a single binary search, just with an extra classification step per iteration. Space: <code>O(1)</code>.</p>
+    <div class="insight">General principle stated explicitly in the lecture: <strong>elimination is the core skill.</strong> Once you can reliably identify which chunk of the search space is safe to discard, binary search "writes itself" for almost any variant.</div>
+  </div>
+
+  <h2 id="rotated-2">14. Search in a Rotated Sorted Array II (Duplicates)</h2>
+  <div class="card">
+    <p>Same problem, but duplicates are now allowed. You only need to answer <em>whether</em> the target exists (true/false) — not its index, since with duplicates the index wouldn't be unique anyway.</p>
+    <h3>Why the unique-elements approach breaks</h3>
+    <p>The sorted-half identification relied on comparing <code>arr[low]</code> and <code>arr[mid]</code>. With duplicates, a case like <code>[3,3,3,1,3,3,3,3]</code> — searching for <code>1</code> — can land <code>low</code>, <code>mid</code>, and <code>high</code> all on the same value (<code>3</code>). At that point the comparison <code>arr[low] &lt;= arr[mid]</code> is uselessly true regardless of which side is actually rotated — there's no information left to classify either half as sorted.</p>
+    <div class="danger-note"><strong>The fix:</strong> when <code>arr[low] === arr[mid] === arr[high]</code>, this ambiguous case can't be resolved by comparison — so don't try. Just shrink the search space by one from each end (<code>low++</code>, <code>high--</code>) and retry. This never loses the answer, since only known-duplicate boundary values are being trimmed.</div>
+<pre><code><span class="kw">function</span> <span class="fn">searchRotatedWithDuplicates</span>(arr, target) {
+  <span class="kw">let</span> low = <span class="num">0</span>;
+  <span class="kw">let</span> high = arr.length - <span class="num">1</span>;
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+    <span class="kw">if</span> (arr[mid] === target) <span class="kw">return</span> <span class="kw">true</span>;
+
+    <span class="kw">if</span> (arr[low] === arr[mid] && arr[mid] === arr[high]) {
+      low++;
+      high--;
+      <span class="kw">continue</span>; <span class="cm">// re-evaluate from scratch with the shrunk space</span>
+    }
+
+    <span class="kw">if</span> (arr[low] &lt;= arr[mid]) {
+      <span class="kw">if</span> (arr[low] &lt;= target && target &lt; arr[mid]) high = mid - <span class="num">1</span>;
+      <span class="kw">else</span> low = mid + <span class="num">1</span>;
+    } <span class="kw">else</span> {
+      <span class="kw">if</span> (arr[mid] &lt; target && target &lt;= arr[high]) low = mid + <span class="num">1</span>;
+      <span class="kw">else</span> high = mid - <span class="num">1</span>;
+    }
+  }
+  <span class="kw">return</span> <span class="kw">false</span>;
+}</code></pre>
+    <p><strong>Complexity:</strong> average case is still <code>O(log n)</code>. Worst case (e.g. an array of near-uniform duplicates like <code>[3,3,1,3,3,3,3]</code>) degrades to <code>O(n/2) ≈ O(n)</code>, since the ambiguous case can only shrink the space by one element at a time instead of halving it. Space: <code>O(1)</code>.</p>
+    <div class="insight"><strong>A generalizable strategy for "with duplicates" follow-ups:</strong> solve the unique-elements version first, then look specifically for the test case where your classification comparison becomes ambiguous due to duplicates, and patch exactly that case. This pattern (solve unique → find the duplicate-breaking case → patch it) reapplies directly to Find Minimum in a Rotated Sorted Array as well.</div>
+  </div>
+
+  <h2 id="rotated-min">15. Find Minimum in a Rotated Sorted Array</h2>
+  <div class="card">
+    <p>Same rotated-array setup; this time return the minimum <em>value</em>, not an index, and there's no target to search for.</p>
+    <h3>Core insight</h3>
+    <p>At every step, identify the sorted half (same technique as Q13). <strong>The sorted half's minimum is always its leftmost element</strong> — so grab that as a candidate answer, then discard the entire sorted half (it's already been fully accounted for) and keep searching the unsorted half, which is where the true rotation point — and therefore the true minimum — must still be hiding.</p>
+<pre><code><span class="kw">function</span> <span class="fn">findMin</span>(arr) {
+  <span class="kw">let</span> low = <span class="num">0</span>;
+  <span class="kw">let</span> high = arr.length - <span class="num">1</span>;
+  <span class="kw">let</span> answer = Infinity;
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+
+    <span class="cm">// optimization: if this whole remaining chunk is already sorted, its</span>
+    <span class="cm">// leftmost element IS the minimum — no need to keep searching further</span>
+    <span class="kw">if</span> (arr[low] &lt;= arr[high]) {
+      answer = Math.min(answer, arr[low]);
+      <span class="kw">break</span>;
+    }
+
+    <span class="kw">if</span> (arr[low] &lt;= arr[mid]) {       <span class="cm">// left half is sorted</span>
+      answer = Math.min(answer, arr[low]);
+      low = mid + <span class="num">1</span>;                 <span class="cm">// eliminate the (already-accounted-for) sorted left half</span>
+    } <span class="kw">else</span> {                            <span class="cm">// right half is sorted</span>
+      answer = Math.min(answer, arr[mid]);
+      high = mid - <span class="num">1</span>;                <span class="cm">// eliminate the sorted right half</span>
+    }
+  }
+  <span class="kw">return</span> answer;
+}</code></pre>
+    <div class="insight"><strong>Why the "already fully sorted" optimization is safe:</strong> when <code>arr[low] &lt;= arr[high]</code> for the <em>entire current window</em>, it means the rotation point isn't inside this window at all — the whole remaining chunk is one contiguous sorted run, so its first element is trivially the minimum, and further binary search steps would be redundant work.</div>
+    <p>Time: <code>O(log n)</code> for unique elements. Space: <code>O(1)</code>. (Duplicates: apply the same shrink-by-one patch from Q14 as a follow-up exercise.)</p>
+  </div>
+
+  <h2 id="rotation-count">16. Find How Many Times an Array Has Been Rotated</h2>
+  <div class="card">
+    <p><strong>Key realization:</strong> the number of rotations equals the <em>index</em> at which the minimum element sits. If the minimum is at index 3, the array has been rotated exactly 3 times.</p>
+<pre><code><span class="kw">function</span> <span class="fn">countRotations</span>(arr) {
+  <span class="kw">let</span> low = <span class="num">0</span>;
+  <span class="kw">let</span> high = arr.length - <span class="num">1</span>;
+  <span class="kw">let</span> minValue = Infinity;
+  <span class="kw">let</span> minIndex = <span class="num">0</span>;
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+
+    <span class="kw">if</span> (arr[low] &lt;= arr[high]) {
+      <span class="kw">if</span> (arr[low] &lt; minValue) { minValue = arr[low]; minIndex = low; }
+      <span class="kw">break</span>;
+    }
+
+    <span class="kw">if</span> (arr[low] &lt;= arr[mid]) {
+      <span class="kw">if</span> (arr[low] &lt; minValue) { minValue = arr[low]; minIndex = low; }
+      low = mid + <span class="num">1</span>;
+    } <span class="kw">else</span> {
+      <span class="kw">if</span> (arr[mid] &lt; minValue) { minValue = arr[mid]; minIndex = mid; }
+      high = mid - <span class="num">1</span>;
+    }
+  }
+  <span class="kw">return</span> minIndex;
+}</code></pre>
+    <p class="note">This is a two-line diff from Find Minimum — just track the index alongside the value whenever <code>answer</code> gets updated, and return the index instead of the value.</p>
+  </div>
+
+  <h2 id="single-element">17. Single Element in a Sorted Array</h2>
+  <div class="card">
+    <p>Every number appears exactly twice except one, which appears once — find it. Array is sorted, so duplicate pairs sit adjacent.</p>
+    <p><strong>Naive:</strong> for each index, check whether its left or right neighbor matches (careful with the array boundaries at index 0 and <code>n-1</code>) — <code>O(n)</code>.</p>
+    <h3>The even/odd index pattern</h3>
+    <p>Before the single element, every pair starts at an <strong>even</strong> index (0,1 then 2,3 then 4,5...). After the single element throws things off by one, every pair instead starts at an <strong>odd</strong> index. That shift is the signal:</p>
+    <ul>
+      <li>At an even index: if <code>arr[i] === arr[i+1]</code>, you're still in the "before" region — the single element is to the <strong>right</strong>.</li>
+      <li>At an odd index: if <code>arr[i] === arr[i-1]</code>, you're already in the "after" region — the single element is to the <strong>left</strong>.</li>
+    </ul>
+    <h3>Avoiding edge-case boilerplate</h3>
+    <p>Handle the size-1 array, and the first/last elements, as separate explicit checks up front — then run binary search only on the trimmed range <code>[1, n-2]</code>, so <code>mid ± 1</code> inside the loop can never go out of bounds.</p>
+<pre><code><span class="kw">function</span> <span class="fn">singleNonDuplicate</span>(arr) {
+  <span class="kw">const</span> n = arr.length;
+  <span class="kw">if</span> (n === <span class="num">1</span>) <span class="kw">return</span> arr[<span class="num">0</span>];
+  <span class="kw">if</span> (arr[<span class="num">0</span>] !== arr[<span class="num">1</span>]) <span class="kw">return</span> arr[<span class="num">0</span>];
+  <span class="kw">if</span> (arr[n - <span class="num">1</span>] !== arr[n - <span class="num">2</span>]) <span class="kw">return</span> arr[n - <span class="num">1</span>];
+
+  <span class="kw">let</span> low = <span class="num">1</span>;
+  <span class="kw">let</span> high = n - <span class="num">2</span>;
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+
+    <span class="kw">if</span> (arr[mid] !== arr[mid + <span class="num">1</span>] && arr[mid] !== arr[mid - <span class="num">1</span>]) {
+      <span class="kw">return</span> arr[mid]; <span class="cm">// matches neither neighbor — this is the single element</span>
+    }
+
+    <span class="kw">const</span> isEvenIndex = mid % <span class="num">2</span> === <span class="num">0</span>;
+    <span class="kw">const</span> onLeftHalf = (isEvenIndex && arr[mid] === arr[mid + <span class="num">1</span>]) ||
+                       (!isEvenIndex && arr[mid] === arr[mid - <span class="num">1</span>]);
+
+    <span class="kw">if</span> (onLeftHalf) {
+      low = mid + <span class="num">1</span>; <span class="cm">// still in the "before" region — single element is to the right</span>
+    } <span class="kw">else</span> {
+      high = mid - <span class="num">1</span>; <span class="cm">// already past it — single element is to the left</span>
+    }
+  }
+  <span class="kw">return</span> <span class="num">-1</span>; <span class="cm">// unreachable given problem guarantees; satisfies return type</span>
+}</code></pre>
+    <p>Time: <code>O(log n)</code>. Space: <code>O(1)</code>.</p>
+  </div>
+
+  <h2 id="peak-element">18. Find Peak Element</h2>
+  <div class="card">
+    <p><strong>Definition:</strong> <code>arr[i]</code> is a peak if it's strictly greater than both neighbors. The array's boundaries are treated as bordered by <code>-Infinity</code> on both sides — so the very first or last element can qualify as a peak by being greater than just its one real neighbor.</p>
+    <p>The array may have <strong>multiple peaks</strong> — any one of them is an acceptable answer.</p>
+    <div class="insight"><strong>Visualize it as a curve:</strong> think of the array as alternating increasing/decreasing runs. If <code>arr[mid] &gt; arr[mid+1]</code>, <code>mid</code> sits on a <em>decreasing</em> slope, which guarantees a peak exists somewhere to the left (including possibly at <code>mid</code> itself). If <code>arr[mid] &lt; arr[mid+1]</code>, <code>mid</code> is on an <em>increasing</em> slope, guaranteeing a peak to the right. Either way, eliminating the opposite half never eliminates a guaranteed peak.</div>
+    <h3>Handling the boundaries cleanly</h3>
+    <p>Check the size-1 case and the "peak at index 0" / "peak at index n-1" cases explicitly up front, then run binary search only on the interior range <code>[1, n-2]</code> — avoiding any need to special-case <code>mid - 1 &lt; 0</code> or <code>mid + 1 &gt;= n</code> inside the loop.</p>
+<pre><code><span class="kw">function</span> <span class="fn">findPeakElement</span>(arr) {
+  <span class="kw">const</span> n = arr.length;
+  <span class="kw">if</span> (n === <span class="num">1</span>) <span class="kw">return</span> <span class="num">0</span>;
+  <span class="kw">if</span> (arr[<span class="num">0</span>] &gt; arr[<span class="num">1</span>]) <span class="kw">return</span> <span class="num">0</span>;
+  <span class="kw">if</span> (arr[n - <span class="num">1</span>] &gt; arr[n - <span class="num">2</span>]) <span class="kw">return</span> n - <span class="num">1</span>;
+
+  <span class="kw">let</span> low = <span class="num">1</span>;
+  <span class="kw">let</span> high = n - <span class="num">2</span>;
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+
+    <span class="kw">if</span> (arr[mid] &gt; arr[mid - <span class="num">1</span>] && arr[mid] &gt; arr[mid + <span class="num">1</span>]) {
+      <span class="kw">return</span> mid; <span class="cm">// found a peak</span>
+    } <span class="kw">else</span> <span class="kw">if</span> (arr[mid] &gt; arr[mid - <span class="num">1</span>]) {
+      low = mid + <span class="num">1</span>;   <span class="cm">// increasing slope — a peak is guaranteed to the right</span>
+    } <span class="kw">else</span> {
+      high = mid - <span class="num">1</span>;  <span class="cm">// decreasing slope (or a "valley" case) — a peak is guaranteed to the left</span>
+    }
+  }
+  <span class="kw">return</span> <span class="num">-1</span>; <span class="cm">// unreachable given the problem's guarantees</span>
+}</code></pre>
+    <div class="danger-note"><strong>The single-peak-only bug:</strong> an earlier, more "careful"-looking version explicitly checked three cases — "is a peak," "on increasing slope," "on decreasing slope" — with no <code>else</code> fallback. That works when the array has exactly one peak, but breaks (infinite loop) on arrays with multiple peaks, because a <em>local valley</em> point (smaller than both neighbors) satisfies none of the three explicit conditions. The fix is using a plain <code>if / else if / else</code> — whenever <code>mid</code> isn't a peak and isn't strictly on an increasing slope, it's always safe to go left, because a peak is guaranteed on <em>both</em> sides whenever you're discarding one — the eliminated side is never the only side that could hold a peak.</div>
+    <p>Time: <code>O(log n)</code>. Space: <code>O(1)</code>.</p>
+  </div>
+
+  <h2 id="nth-root">19. N-th Root of a Number (Binary Search on the Answer)</h2>
+  <div class="card">
+    <p><strong>Problem:</strong> given integers <code>n</code> and <code>m</code>, find <code>x</code> such that <code>xⁿ = m</code>. If no such integer exists, return <code>-1</code>. (Finding a square root is just the special case <code>n = 2</code>.)</p>
+    <p><strong>Naive:</strong> try every integer from 1 upward, computing <code>iⁿ</code> each time, until it matches <code>m</code>, exceeds it (impossible from here on — stop and return <code>-1</code>), or the loop runs out. <code>O(m)</code>, times whatever the exponentiation itself costs.</p>
+    <div class="insight"><strong>Why this is binary-search-shaped despite having no array:</strong> as the candidate <code>x</code> increases, <code>xⁿ</code> increases monotonically. That monotonic relationship — small guesses undershoot, large guesses overshoot, and the "correct" zone is somewhere continuous in between — is exactly what binary search needs. The "search space" here is the range of <em>possible answer values</em>, from <code>1</code> to <code>m</code>, not an array.</div>
+<pre><code><span class="kw">function</span> <span class="fn">nthRoot</span>(n, m) {
+  <span class="kw">let</span> low = <span class="num">1</span>;
+  <span class="kw">let</span> high = m;
+
+  <span class="kw">while</span> (low &lt;= high) {
+    <span class="kw">const</span> mid = low + Math.floor((high - low) / <span class="num">2</span>);
+    <span class="kw">const</span> cmp = <span class="fn">compareToPowerN</span>(mid, n, m);
+
+    <span class="kw">if</span> (cmp === <span class="num">0</span>) <span class="kw">return</span> mid;         <span class="cm">// mid^n === m exactly</span>
+    <span class="kw">else</span> <span class="kw">if</span> (cmp &lt; <span class="num">0</span>) low = mid + <span class="num">1</span>;   <span class="cm">// mid^n < m — try a bigger candidate</span>
+    <span class="kw">else</span> high = mid - <span class="num">1</span>;                <span class="cm">// mid^n > m — try a smaller candidate</span>
+  }
+  <span class="kw">return</span> <span class="num">-1</span>; <span class="cm">// no exact n-th root exists</span>
+}</code></pre>
+    <h3>The overflow trap — and why the fix isn't "just use a bigger int type"</h3>
+    <p>Naively computing <code>mid ** n</code> directly can explode enormously — e.g. finding the 10th root of <code>10⁹</code> puts <code>mid</code> around <code>5×10⁸</code>, and raising that to the 10th power lands around <code>10⁹⁰</code>, which overflows even 64-bit integers by a wide margin. Switching to a larger numeric type doesn't actually solve this — the number itself is just too big to represent.</p>
+    <div class="danger-note"><strong>The real fix:</strong> don't compute the full power at all. Multiply <code>mid</code> by itself one factor at a time, and bail out the moment the running product exceeds <code>m</code> — at that point you already know the comparison result and don't need to keep multiplying toward an astronomically large, useless final number.</div>
+<pre><code><span class="cm">// returns -1 if mid^n < m, 0 if mid^n === m, 1 if mid^n > m — without ever computing the full power</span>
+<span class="kw">function</span> <span class="fn">compareToPowerN</span>(mid, n, m) {
+  <span class="kw">let</span> product = <span class="num">1</span>;
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= n; i++) {
+    product *= mid;
+    <span class="kw">if</span> (product &gt; m) <span class="kw">return</span> <span class="num">1</span>; <span class="cm">// already exceeded — stop early, no need to keep multiplying</span>
+  }
+  <span class="kw">if</span> (product === m) <span class="kw">return</span> <span class="num">0</span>;
+  <span class="kw">return</span> <span class="num">-1</span>;
+}</code></pre>
+    <p><strong>Complexity:</strong> the outer binary search runs <code>O(log m)</code> times; each call to the comparison helper costs up to <code>O(n)</code> multiplications. Total: <code>O(n · log m)</code>. Space: <code>O(1)</code>.</p>
+    <p class="note">The lecture also mentions a faster binary-exponentiation method for computing powers in <code>O(log n)</code> instead of <code>O(n)</code> — useful, but the early-exit multiplication loop above is preferred here specifically <em>because</em> it sidesteps the overflow problem, which binary exponentiation alone does not.</p>
+  </div>
+
+  <h2 id="roadmap">20. Roadmap — Remaining Videos in This Playlist</h2>
+  <div class="card">
+    <p>These titles appeared in the source material but without transcript content — flagging them here so the topic list stays complete and you can track what's left to cover in this series. They continue the "binary search on the answer" track (Q19 above being the first of this family) plus a 2D-array track:</p>
+    <ul class="roadmap-list">
+      <li>Koko Eating Bananas</li>
+      <li>Minimum Days to Make M Bouquets</li>
+      <li>Find the Smallest Divisor Given a Threshold</li>
+      <li>Capacity to Ship Packages Within D Days</li>
+      <li>K'th Missing Positive Number</li>
+      <li>Aggressive Cows</li>
+      <li>Allocate Books / Book Allocation</li>
+      <li>Painter's Partition and Split Array</li>
+      <li>Minimise Maximum Distance Between Gas Stations</li>
+      <li>Median of Two Sorted Arrays of Different Sizes</li>
+      <li>K'th Element of Two Sorted Arrays</li>
+      <li>Row with the Maximum Number of 1s (Binary Search on 2D Arrays)</li>
+      <li>Search in a 2D Matrix I</li>
+      <li>Search in a 2D Matrix II</li>
+    </ul>
+    <p class="note">Also worth noting: the source transcript for "BS 10 — Finding Sqrt of a Number Using Binary Search" was, in the provided material, an exact duplicate of the Find Peak Element transcript (Q18) rather than actual sqrt content — likely a transcript-extraction mix-up at the source. The real square-root logic is covered above as the <code>n = 2</code> special case of N-th Root (Q19), which is the video that immediately follows it in the playlist. Worth re-pasting the correct BS10 transcript later if you want a dedicated sqrt-only writeup.</p>
+  </div>
+
+  <h2 id="takeaways">21. Key Takeaways</h2>
+  <div class="card">
+    <ul>
+      <li><strong>The one skill underlying everything:</strong> at each step, identify exactly which chunk of the search space is safe to eliminate. Every variant in this series — lower/upper bound, rotated arrays, peak finding, binary search on answers — reduces to this.</li>
+      <li><strong>The <code>answer</code> variable pattern:</strong> whenever a problem isn't a clean "find the exact match" search (lower bound, upper bound, floor, ceil), track the best candidate seen so far in a separate variable rather than trying to force it into classic binary search's three-way branch.</li>
+      <li><strong>Rotated arrays:</strong> always identify the sorted half first (compare <code>arr[low]</code> vs <code>arr[mid]</code>) before deciding where the target/minimum could be. Duplicates break this comparison when <code>arr[low] === arr[mid] === arr[high]</code> — shrink by one from each end in that case.</li>
+      <li><strong>Boundary-heavy problems</strong> (Single Element, Peak Element): handle index-0 and index-(n-1) as explicit special cases up front, then binary search only the safe interior range — this avoids scattering <code>mid ± 1</code> bounds-checks throughout the main loop.</li>
+      <li><strong>Binary search on the answer:</strong> applicable whenever candidate answers have a monotonic relationship to a check function (bigger guess → check gets easier or harder in one consistent direction) — even with no array in sight, as in N-th Root.</li>
+      <li><strong>Overflow:</strong> use <code>mid = low + Math.floor((high - low) / 2)</code> instead of <code>Math.floor((low + high) / 2)</code>, and when comparing computed values against a target (e.g. a power), bail out early the moment a running computation exceeds the target rather than computing the full (potentially enormous) result.</li>
+    </ul>
+  </div>
+
+  <footer>Source: Striver's (Raj Vikramaditya) Binary Search module, A2Z DSA Course — auto-transcript cleaned and restructured into notes on 15 Jul 2026. Kept as its own file since it's a distinct instructor from your other searching-algorithms notes.</footer>
+</div>
+</body>
+</html>
