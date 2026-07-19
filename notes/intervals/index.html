@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interval Pattern — Complete Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0f14;
+    --surface: #121821;
+    --surface-2: #171f2b;
+    --border: #26303f;
+    --text: #e7edf5;
+    --text-muted: #8a97a8;
+    --text-dim: #5b6779;
+    --amber: #f0a868;
+    --teal: #5fd4c4;
+    --coral: #ef8397;
+    --violet: #b5a8f0;
+    --mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  ::selection { background: var(--amber); color: #0b0f14; }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px 120px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 90px 24px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(240,168,104,0.10), transparent),
+      var(--bg);
+  }
+  .hero .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 .bracket { color: var(--text-dim); }
+  .hero p.sub {
+    max-width: 560px;
+    margin: 0 auto;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+  }
+  .hero .ruler-hero {
+    max-width: 460px;
+    margin: 44px auto 0;
+  }
+
+  /* ---------- Table of contents ---------- */
+  .toc {
+    margin: 56px 0 64px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+  }
+  .toc h2 {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 32px;
+  }
+  .toc a {
+    display: block;
+    color: var(--text);
+    font-size: 0.94rem;
+    padding: 5px 0;
+    border-bottom: 1px dotted transparent;
+  }
+  .toc a:hover { color: var(--teal); text-decoration: none; border-bottom-color: var(--teal); }
+  .toc .part-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+    margin: 14px 0 4px;
+    text-transform: uppercase;
+  }
+  @media (max-width: 640px) { .toc-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- Section structure ---------- */
+  section { margin: 72px 0; }
+  section.part-divider {
+    margin: 96px 0 56px;
+    text-align: center;
+  }
+  .part-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    text-transform: uppercase;
+    border: 1px solid var(--amber);
+    border-radius: 999px;
+    padding: 5px 16px;
+    margin-bottom: 14px;
+  }
+  .part-divider h1 {
+    font-family: var(--mono);
+    font-size: clamp(1.5rem, 4vw, 2.1rem);
+    margin: 0;
+  }
+  .part-divider p { color: var(--text-muted); max-width: 560px; margin: 12px auto 0; }
+
+  h2.sec-title {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+  h2.sec-title .num { color: var(--text-dim); margin-right: 10px; }
+  h3 {
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 32px 0 12px;
+  }
+  h3.pin { color: var(--amber); }
+  p { color: #cdd6e3; }
+  strong { color: var(--text); }
+  code {
+    font-family: var(--mono);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 5px;
+    font-size: 0.88em;
+    color: var(--teal);
+  }
+
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+  .callout strong { color: var(--amber); }
+  .callout.warn { border-left-color: var(--coral); }
+  .callout.warn strong { color: var(--coral); }
+  .callout.key { border-left-color: var(--teal); }
+  .callout.key strong { color: var(--teal); }
+
+  /* ---------- Formula box ---------- */
+  .formula {
+    font-family: var(--mono);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 26px;
+    margin: 18px 0;
+    font-size: 1.05rem;
+    text-align: center;
+    color: var(--teal);
+    overflow-x: auto;
+  }
+  .formula .op { color: var(--amber); }
+  .formula.small { font-size: 0.92rem; text-align: left; }
+
+  /* ---------- Tables ---------- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 0.92rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--surface);
+  }
+  td { color: #cdd6e3; }
+  td code { white-space: nowrap; }
+
+  /* ---------- Code blocks ---------- */
+  pre {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--teal);
+    border-radius: 10px;
+    padding: 18px 22px;
+    overflow-x: auto;
+    margin: 18px 0;
+  }
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #d6dde8;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  .code-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 24px 0 -6px;
+  }
+
+  /* ---------- Diagram card ---------- */
+  .diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 28px 20px;
+    margin: 26px 0;
+  }
+  .diagram .diagram-title {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 22px;
+  }
+  .diagram .diagram-caption {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+  }
+  .diagram .diagram-caption b { color: var(--text); }
+
+  /* ---------- Timeline component ---------- */
+  .timeline { position: relative; padding: 6px 0 30px; }
+  .ruler {
+    position: relative;
+    height: 2px;
+    background: var(--border);
+    margin: 0 0 6px;
+  }
+  .tick {
+    position: absolute;
+    top: -3px;
+    width: 1px;
+    height: 8px;
+    background: var(--text-dim);
+  }
+  .tick-label {
+    position: absolute;
+    top: 8px;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    color: var(--text-dim);
+  }
+  .bar-row {
+    position: relative;
+    height: 40px;
+    margin-bottom: 4px;
+  }
+  .row-label {
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    transform: translate(-100%, -50%);
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .bar {
+    position: absolute;
+    top: 4px;
+    height: 26px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #0b0f14;
+    white-space: nowrap;
+    overflow: visible;
+  }
+  .bar.amber { background: var(--amber); }
+  .bar.teal { background: var(--teal); }
+  .bar.violet { background: var(--violet); }
+  .bar.ghost {
+    background: transparent;
+    border: 1.5px dashed var(--text-dim);
+    color: var(--text-muted);
+  }
+  .bar.point {
+    width: 10px !important;
+    border-radius: 50%;
+    background: var(--coral);
+  }
+  .highlight-region {
+    position: absolute;
+    top: -6px;
+    bottom: -6px;
+    background: rgba(239,131,151,0.14);
+    border-left: 1.5px dashed var(--coral);
+    border-right: 1.5px dashed var(--coral);
+  }
+  .highlight-region .region-label {
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    color: var(--coral);
+    white-space: nowrap;
+  }
+  .gap-region {
+    position: absolute;
+    top: 4px;
+    height: 26px;
+    border: 1.5px dashed var(--coral);
+    border-radius: 13px;
+    background: rgba(239,131,151,0.08);
+  }
+  .gap-region .gap-label {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    color: var(--coral);
+    white-space: nowrap;
+  }
+
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 18px; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 0.78rem; color: var(--text-muted); font-family: var(--mono); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  /* ---------- Pass diagram (brute force) ---------- */
+  .pass-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+  .pass-tag-label { font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); width: 76px; flex-shrink: 0; }
+  .pill {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .pill.merged { border-color: var(--teal); color: var(--teal); }
+  .pill.dead { text-decoration: line-through; color: var(--text-dim); border-style: dashed; opacity: 0.55; }
+  .arrow { color: var(--text-dim); font-family: var(--mono); }
+
+  /* ---------- Venn diagram ---------- */
+  .venn-wrap { display: flex; justify-content: center; padding: 12px 0; }
+
+  /* ---------- Split (two-up) diagrams ---------- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 640px) { .split { grid-template-columns: 1fr; } }
+  .split .diagram { margin: 0; }
+
+  /* ---------- Takeaway list ---------- */
+  .takeaways { list-style: none; padding: 0; margin: 20px 0; counter-reset: tk; }
+  .takeaways li {
+    counter-increment: tk;
+    position: relative;
+    padding: 14px 0 14px 46px;
+    border-bottom: 1px solid var(--border);
+    color: #cdd6e3;
+  }
+  .takeaways li::before {
+    content: counter(tk);
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .checklist { list-style: none; padding: 0; margin: 16px 0; }
+  .checklist li {
+    padding: 8px 0 8px 30px;
+    position: relative;
+    color: #cdd6e3;
+    font-size: 0.95rem;
+  }
+  .checklist li::before {
+    content: "▢";
+    position: absolute;
+    left: 0;
+    color: var(--amber);
+    font-size: 1rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 50px 24px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    border-top: 1px solid var(--border);
+    margin-top: 80px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">DSA Patterns Course · Day 19 &amp; Day 20</div>
+  <h1><span class="bracket">[</span>Interval Pattern<span class="bracket">]</span></h1>
+  <p class="sub">Theory, intuition, and two worked interview problems — with the visual timelines that make interval reasoning click.</p>
+  <div class="ruler-hero">
+    <div class="timeline" style="padding-bottom:6px;">
+      <div class="bar-row" style="height:34px;">
+        <div class="bar amber" style="left:8%; width:38%; top:4px;">free — you</div>
+        <div class="bar teal" style="left:34%; width:42%; top:4px; opacity:0.88;">free — them</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <nav class="toc">
+    <h2>Contents</h2>
+    <div class="part-label">Part A — Foundations</div>
+    <div class="toc-grid">
+      <a href="#what-is">1. What is the interval pattern?</a>
+      <a href="#relationships">2. Types of interval relationships</a>
+      <a href="#overlap-derive">3. Deriving the overlap condition</a>
+      <a href="#demorgan">4. De Morgan's Law</a>
+      <a href="#formulas">5. Formula reference sheet</a>
+      <a href="#sort-why">6. Why sort by start time?</a>
+      <a href="#recognize">7. When to recognize this pattern</a>
+    </div>
+    <div class="part-label">Part B — Worked Problems</div>
+    <div class="toc-grid">
+      <a href="#lc986">8. LC 986 — Interval List Intersections</a>
+      <a href="#lc3169">9. LC 3169 — Count Days Without Meetings</a>
+      <a href="#bruteforce">10. Brute force: Merge Intervals</a>
+      <a href="#takeaways">11. Consolidated takeaways</a>
+      <a href="#practice">12. Suggested practice</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- PART A -->
+  <!-- ============================================================ -->
+  <section class="part-divider">
+    <div class="part-tag">Part A · Foundations</div>
+    <h1>What is an interval, really?</h1>
+    <p>Before any LeetCode problem — the mental model, the formulas, and why sorting by start time is almost always step one.</p>
+  </section>
+
+  <section id="what-is">
+    <h2 class="sec-title"><span class="num">01</span>Building the intuition</h2>
+    <p>Two people are trying to find overlapping free time. Person A is free 3:00–8:00. Person B is free 4:00–9:00. Visually, their <strong>shared window</strong> is 4:00–8:00 — that shared window is an <strong>interval</strong>, and finding it is the core operation this whole pattern is built around.</p>
+
+    <div class="diagram">
+      <div class="diagram-title">Scenario 1 — Overlapping intervals</div>
+      <div class="timeline">
+        <div class="bar-row">
+          <span class="row-label">You</span>
+          <div class="bar amber" style="left:30%; width:50%;">3:00 – 8:00</div>
+        </div>
+        <div class="bar-row">
+          <span class="row-label">Them</span>
+          <div class="bar teal" style="left:40%; width:50%;">4:00 – 9:00</div>
+        </div>
+        <div class="highlight-region" style="left:40%; width:40%;">
+          <div class="region-label">overlap: 4:00–8:00</div>
+        </div>
+        <div class="ruler" style="margin-top:26px;">
+          <div class="tick" style="left:0%"></div><div class="tick-label" style="left:0%">0</div>
+          <div class="tick" style="left:20%"></div><div class="tick-label" style="left:20%">2</div>
+          <div class="tick" style="left:40%"></div><div class="tick-label" style="left:40%">4</div>
+          <div class="tick" style="left:60%"></div><div class="tick-label" style="left:60%">6</div>
+          <div class="tick" style="left:80%"></div><div class="tick-label" style="left:80%">8</div>
+          <div class="tick" style="left:100%"></div><div class="tick-label" style="left:100%">10</div>
+        </div>
+      </div>
+      <div class="diagram-caption">The coral dashed region is what interval problems usually ask you to compute: the shared range between two intervals.</div>
+    </div>
+
+    <div class="split">
+      <div class="diagram">
+        <div class="diagram-title">Scenario 2 — No overlap</div>
+        <div class="timeline">
+          <div class="bar-row">
+            <span class="row-label">You</span>
+            <div class="bar amber" style="left:30%; width:20%;">3–5</div>
+          </div>
+          <div class="bar-row">
+            <span class="row-label">Them</span>
+            <div class="bar teal" style="left:70%; width:20%;">7–9</div>
+          </div>
+          <div class="ruler" style="margin-top:26px;">
+            <div class="tick" style="left:0%"></div><div class="tick-label" style="left:0%">0</div>
+            <div class="tick" style="left:50%"></div><div class="tick-label" style="left:50%">5</div>
+            <div class="tick" style="left:100%"></div><div class="tick-label" style="left:100%">10</div>
+          </div>
+        </div>
+        <div class="diagram-caption">No shared time — <strong>non-overlapping</strong>.</div>
+      </div>
+      <div class="diagram">
+        <div class="diagram-title">Scenario 3 — Full containment</div>
+        <div class="timeline">
+          <div class="bar-row">
+            <span class="row-label">You</span>
+            <div class="bar amber" style="left:25%; width:58%;">3 – 10</div>
+          </div>
+          <div class="bar-row">
+            <span class="row-label">Them</span>
+            <div class="bar teal" style="left:42%; width:25%;">5–8</div>
+          </div>
+          <div class="ruler" style="margin-top:26px;">
+            <div class="tick" style="left:0%"></div><div class="tick-label" style="left:0%">0</div>
+            <div class="tick" style="left:50%"></div><div class="tick-label" style="left:50%">6</div>
+            <div class="tick" style="left:100%"></div><div class="tick-label" style="left:100%">12</div>
+          </div>
+        </div>
+        <div class="diagram-caption">Their entire window sits inside yours — <strong>contained</strong>.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Formal definition.</strong> Many real-world problems reduce to <em>ranges</em>: time ranges, numeric ranges, memory ranges, geometric ranges. Whenever the input looks like an array of <code>[start, end]</code> pairs, think "interval pattern." An interval by itself isn't interesting — it becomes useful once compared against <em>another</em> interval. That comparison is the whole pattern.
+    </div>
+  </section>
+
+  <section id="relationships">
+    <h2 class="sec-title"><span class="num">02</span>Types of interval relationships</h2>
+    <table>
+      <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+      <tr><td><strong style="color:var(--teal)">Overlapping</strong></td><td>The two intervals share some common range</td><td><code>[3,8]</code> &amp; <code>[4,9]</code> → share <code>[4,8]</code></td></tr>
+      <tr><td><strong style="color:var(--coral)">Non-overlapping</strong></td><td>No shared range at all</td><td><code>[3,5]</code> &amp; <code>[7,9]</code></td></tr>
+      <tr><td><strong style="color:var(--violet)">Contained</strong></td><td>One interval lies entirely inside the other</td><td><code>[3,10]</code> contains <code>[5,8]</code></td></tr>
+    </table>
+  </section>
+
+  <section id="overlap-derive">
+    <h2 class="sec-title"><span class="num">03</span>When do two intervals <em>not</em> overlap?</h2>
+    <p>It's easier to reason about <strong>non-overlap</strong> first, then negate it. Given <code>I1 = [s1, e1]</code> and <code>I2 = [s2, e2]</code>, they do <strong>not</strong> overlap if either interval starts strictly after the other has already ended:</p>
+    <div class="formula">s2 <span class="op">&gt;</span> e1 &nbsp;&nbsp;<span class="op">OR</span>&nbsp;&nbsp; s1 <span class="op">&gt;</span> e2</div>
+
+    <div class="diagram">
+      <div class="diagram-title">Generic two-interval setup</div>
+      <div class="timeline">
+        <div class="bar-row">
+          <span class="row-label">I1</span>
+          <div class="bar amber" style="left:20%; width:40%;">s1 ⟶ e1</div>
+        </div>
+        <div class="bar-row">
+          <span class="row-label">I2</span>
+          <div class="bar teal" style="left:40%; width:50%;">s2 ⟶ e2</div>
+        </div>
+        <div class="highlight-region" style="left:40%; width:20%;">
+          <div class="region-label">overlap</div>
+        </div>
+        <div class="ruler" style="margin-top:26px;"></div>
+      </div>
+      <div class="diagram-caption">Here <code>e1 ≥ s2</code> (I2 started before I1 ended) <b>and</b> <code>e2 ≥ s1</code> (I1 started before I2 ended) — both true, so they overlap.</div>
+    </div>
+  </section>
+
+  <section id="demorgan">
+    <h2 class="sec-title"><span class="num">04</span>Deriving the overlap formula via De Morgan's Law</h2>
+    <p><strong>De Morgan's Law:</strong> <code>NOT(A OR B) = (NOT A) AND (NOT B)</code>. A point outside both circles below satisfies "not in A" <em>and</em> "not in B" simultaneously — that's the equivalence.</p>
+
+    <div class="diagram">
+      <div class="diagram-title">A ∪ B vs. ¬A ∧ ¬B (De Morgan visualized)</div>
+      <div class="venn-wrap">
+        <svg width="380" height="220" viewBox="0 0 380 220">
+          <circle cx="150" cy="110" r="80" fill="var(--amber)" opacity="0.28" stroke="var(--amber)" stroke-width="1.5"/>
+          <circle cx="230" cy="110" r="80" fill="var(--teal)" opacity="0.28" stroke="var(--teal)" stroke-width="1.5"/>
+          <text x="105" y="70" fill="var(--amber)" font-family="IBM Plex Mono" font-size="15" font-weight="600">A</text>
+          <text x="265" y="70" fill="var(--teal)" font-family="IBM Plex Mono" font-size="15" font-weight="600">B</text>
+          <text x="190" y="200" text-anchor="middle" fill="var(--text-muted)" font-family="IBM Plex Mono" font-size="11">outer region = ¬A ∧ ¬B = ¬(A ∨ B)</text>
+        </svg>
+      </div>
+      <div class="diagram-caption">Everything <em>outside</em> both circles is where De Morgan's equivalence lives — the region this course used to flip the "definitely non-overlapping" condition into the overlap formula.</div>
+    </div>
+
+    <p>Applying De Morgan's Law to the non-overlap condition and negating both sides:</p>
+    <div class="formula small">
+      overlapping&nbsp; = &nbsp;NOT[(s2 &gt; e1) OR (s1 &gt; e2)]<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = &nbsp;NOT(s2 &gt; e1) &nbsp;<span class="op">AND</span>&nbsp; NOT(s1 &gt; e2) &nbsp;&nbsp;<span style="color:var(--text-dim)">// De Morgan's Law</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = &nbsp;(e1 &gt;= s2) &nbsp;<span class="op">AND</span>&nbsp; (e2 &gt;= s1)
+    </div>
+    <div class="callout key">
+      <strong>⭐ The overlap formula</strong><br>
+      <code style="font-size:1.05em;">e1 &gt;= s2 &amp;&amp; e2 &gt;= s1</code> — the single most reused formula in interval problems.
+    </div>
+  </section>
+
+  <section id="formulas">
+    <h2 class="sec-title"><span class="num">05</span>Formula reference sheet</h2>
+    <table>
+      <tr><th>Operation</th><th>Formula</th><th>When to use</th></tr>
+      <tr><td>Overlap check</td><td><code>e1&gt;=s2 && e2&gt;=s1</code></td><td>Do two intervals intersect at all?</td></tr>
+      <tr><td>Intersection range</td><td><code>[max(s1,s2), min(e1,e2)]</code></td><td>Portion active in <em>both</em></td></tr>
+      <tr><td>Merge range</td><td><code>[min(s1,s2), max(e1,e2)]</code></td><td>Full combined span</td></tr>
+      <tr><td>Gap (non-overlap)</td><td><code>max(s1,s2) - min(e1,e2)</code></td><td>Empty space between two disjoint intervals</td></tr>
+      <tr><td>Containment</td><td><code>s2&gt;=s1 && e2&lt;=e1</code></td><td>Is I2 fully inside I1?</td></tr>
+    </table>
+
+    <div class="callout warn">
+      <strong>⚠ Easy to confuse:</strong> Intersection uses <code>[max(start), min(end)]</code>; Merge uses <code>[min(start), max(end)]</code> — opposite operations. Mixing these up is one of the most common interval-problem mistakes.
+    </div>
+
+    <div class="split">
+      <div class="diagram">
+        <div class="diagram-title">Intersection — [max(s), min(e)]</div>
+        <div class="timeline">
+          <div class="bar-row">
+            <span class="row-label">I1</span>
+            <div class="bar amber" style="left:20%; width:40%;">2–6</div>
+          </div>
+          <div class="bar-row">
+            <span class="row-label">I2</span>
+            <div class="bar teal" style="left:40%; width:50%;">4–9</div>
+          </div>
+          <div class="highlight-region" style="left:40%; width:20%;">
+            <div class="region-label">[4, 6]</div>
+          </div>
+          <div class="ruler" style="margin-top:26px;"></div>
+        </div>
+      </div>
+      <div class="diagram">
+        <div class="diagram-title">Merge — [min(s), max(e)]</div>
+        <div class="timeline">
+          <div class="bar-row">
+            <span class="row-label">I1</span>
+            <div class="bar amber" style="left:20%; width:40%; opacity:0.5;">2–6</div>
+          </div>
+          <div class="bar-row">
+            <span class="row-label">I2</span>
+            <div class="bar teal" style="left:40%; width:50%; opacity:0.5;">4–9</div>
+          </div>
+          <div class="bar-row">
+            <span class="row-label">merged</span>
+            <div class="bar violet" style="left:20%; width:70%;">[2, 9]</div>
+          </div>
+          <div class="ruler" style="margin-top:26px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Worked example — gap formula</h3>
+    <div class="diagram">
+      <div class="diagram-title">Gap between [3,5] and [7,10]</div>
+      <div class="timeline">
+        <div class="bar-row">
+          <span class="row-label">A</span>
+          <div class="bar amber" style="left:25%; width:17%;">3–5</div>
+        </div>
+        <div class="bar-row">
+          <span class="row-label">B</span>
+          <div class="bar teal" style="left:58%; width:25%;">7–10</div>
+        </div>
+        <div class="gap-region" style="left:42%; width:16%;">
+          <div class="gap-label">gap = 2</div>
+        </div>
+        <div class="ruler" style="margin-top:26px;">
+          <div class="tick" style="left:0%"></div><div class="tick-label" style="left:0%">0</div>
+          <div class="tick" style="left:50%"></div><div class="tick-label" style="left:50%">6</div>
+          <div class="tick" style="left:100%"></div><div class="tick-label" style="left:100%">12</div>
+        </div>
+      </div>
+      <div class="diagram-caption"><code>gap = max(3,7) - min(5,10) = 7 - 5 = 2</code> — matches the "-1" adjustment style seen later in LC 3169's day-counting.</div>
+    </div>
+  </section>
+
+  <section id="sort-why">
+    <h2 class="sec-title"><span class="num">06</span>Why sort by start time first?</h2>
+    <p>This is <strong>the single most important first step</strong> in nearly every interval problem. If intervals arrive unordered, comparing arbitrary pairs to find overlaps/gaps/merges becomes chaotic — you can't reliably tell what's "done."</p>
+
+    <h3 class="pin">Counter-example: why NOT end time</h3>
+    <div class="diagram">
+      <div class="diagram-title">[1,10] · [2,3] · [4,5] — the trap</div>
+      <div class="timeline">
+        <div class="bar-row">
+          <span class="row-label">[1,10]</span>
+          <div class="bar violet" style="left:10%; width:80%;">1 – 10</div>
+        </div>
+        <div class="bar-row">
+          <span class="row-label">[2,3]</span>
+          <div class="bar amber" style="left:20%; width:10%;">2–3</div>
+        </div>
+        <div class="bar-row">
+          <span class="row-label">[4,5]</span>
+          <div class="bar teal" style="left:40%; width:10%;">4–5</div>
+        </div>
+        <div class="ruler" style="margin-top:26px;">
+          <div class="tick" style="left:0%"></div><div class="tick-label" style="left:0%">0</div>
+          <div class="tick" style="left:50%"></div><div class="tick-label" style="left:50%">5</div>
+          <div class="tick" style="left:100%"></div><div class="tick-label" style="left:100%">10</div>
+        </div>
+      </div>
+      <div class="diagram-caption">
+        Sorted by <strong>end time</strong>: <code>[2,3]</code>, <code>[4,5]</code>, <code>[1,10]</code> — <code>[4,5]</code> sits between them in the scan order, so by the time <code>[1,10]</code> is reached, the valid merge with <code>[2,3]</code> has already been "stepped past" and gets missed.<br><br>
+        Sorted by <strong>start time</strong>: <code>[1,10]</code>, <code>[2,3]</code>, <code>[4,5]</code> — both later bars get correctly absorbed into <code>[1,10]</code> in a clean left-to-right scan.
+      </div>
+    </div>
+
+    <div class="callout key">
+      <strong>Takeaway:</strong> sorting by start time guarantees once an interval is processed, nothing <em>earlier</em> in order can retroactively need to merge with something <em>later</em> — comparison proceeds strictly left-to-right. End-time sort doesn't give this guarantee.
+    </div>
+  </section>
+
+  <section id="recognize">
+    <h2 class="sec-title"><span class="num">07</span>When to recognize the interval pattern</h2>
+    <p>Reach for this pattern whenever the input contains <strong>time ranges, numeric ranges, memory ranges, or coordinate ranges</strong>, and the question asks about <strong>overlaps, gaps, ordering, capacity, merging, or total coverage</strong>.</p>
+    <div class="callout">
+      <strong>Sorting by start time solves the biggest part of the problem</strong> in the vast majority of interval questions. (Sorting by <em>end</em> time occasionally matters for a different class — e.g. greedy interval scheduling — but for merge/overlap/gap-style problems, start-time sort is the default.)
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PART B -->
+  <!-- ============================================================ -->
+  <section class="part-divider">
+    <div class="part-tag">Part B · Worked Problems</div>
+    <h1>Two interview problems, solved</h1>
+    <p>LC 986 (two-pointer intersection) and LC 3169 (merge + gap counting) — plus a full brute-force detour on Merge Intervals.</p>
+  </section>
+
+  <section id="lc986">
+    <h2 class="sec-title"><span class="num">08</span>LC 986 — Interval List Intersections</h2>
+    <p><strong>Problem:</strong> given two lists of closed intervals, each <em>pairwise disjoint</em> and <em>sorted</em>, return their intersection.</p>
+    <div class="callout key">
+      <strong>Key insight:</strong> because intervals within one list never overlap each other, <strong>any intersection can only happen between an interval from A and an interval from B</strong> — never A-with-A or B-with-B.
+    </div>
+
+    <h3>Two-pointer walkthrough</h3>
+    <div class="diagram">
+      <div class="diagram-title">A = [[1,3],[5,7]] &nbsp;·&nbsp; B = [[2,5]]</div>
+      <div class="timeline">
+        <div class="bar-row">
+          <span class="row-label">A[0]</span>
+          <div class="bar amber" style="left:10%; width:20%;">1–3</div>
+        </div>
+        <div class="bar-row">
+          <span class="row-label">A[1]</span>
+          <div class="bar amber" style="left:50%; width:20%;">5–7</div>
+        </div>
+        <div class="bar-row">
+          <span class="row-label">B[0]</span>
+          <div class="bar teal" style="left:20%; width:30%;">2–5</div>
+        </div>
+        <div class="bar-row" style="margin-top:10px;">
+          <span class="row-label">result</span>
+          <div class="bar violet" style="left:20%; width:10%;">[2,3]</div>
+          <div class="bar point" style="left:50%;"></div>
+        </div>
+        <div class="ruler" style="margin-top:26px;">
+          <div class="tick" style="left:0%"></div><div class="tick-label" style="left:0%">0</div>
+          <div class="tick" style="left:50%"></div><div class="tick-label" style="left:50%">5</div>
+          <div class="tick" style="left:100%"></div><div class="tick-label" style="left:100%">10</div>
+        </div>
+      </div>
+      <div class="diagram-caption">
+        Step 1: A[0]=[1,3] vs B[0]=[2,5] → overlap <b>[2,3]</b> pushed. Since <code>e1(3) &lt; e2(5)</code>, advance <code>i</code>.<br>
+        Step 2: A[1]=[5,7] vs B[0]=[2,5] → overlap <b>[5,5]</b> (the coral dot — a single-point intersection) pushed. Since <code>e1(7) &gt; e2(5)</code>, advance <code>j</code> — loop ends.
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Pointer-advance rule:</strong> regardless of whether the current pair overlapped, always advance whichever interval <em>ends first</em> — by the disjoint+sorted guarantee, it can never contribute a further intersection.
+    </div>
+
+    <div class="code-label">JavaScript</div>
+    <pre><code>function intervalIntersection(firstList, secondList) {
+  const result = [];
+  let i = 0, j = 0;
+
+  while (i &lt; firstList.length && j &lt; secondList.length) {
+    const [s1, e1] = firstList[i];
+    const [s2, e2] = secondList[j];
+
+    const start = Math.max(s1, s2);
+    const end = Math.min(e1, e2);
+    if (start &lt;= end) result.push([start, end]);
+
+    // advance whichever interval ends first
+    if (e1 &lt; e2) i++; else j++;
+  }
+  return result;
+}</code></pre>
+
+    <table>
+      <tr><th></th><th>Complexity</th><th>Reasoning</th></tr>
+      <tr><td>Time</td><td><code>O(m + n)</code></td><td>Each step advances <code>i</code> or <code>j</code> by 1</td></tr>
+      <tr><td>Space</td><td><code>O(m + n)</code></td><td>Worst case: every interval produces its own piece</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Mistake</th><th>Why it's wrong</th></tr>
+      <tr><td>Using merge formula instead of intersection formula</td><td>Merge and intersection are opposite operations</td></tr>
+      <tr><td>Advancing by start time instead of end time</td><td>The "exhausted" guarantee is about <em>end</em> times, not starts</td></tr>
+      <tr><td>Only advancing when an overlap is found</td><td>Must advance even on no-overlap — the finishing interval is still "done"</td></tr>
+    </table>
+  </section>
+
+  <section id="lc3169">
+    <h2 class="sec-title"><span class="num">09</span>LC 3169 — Count Days Without Meetings</h2>
+    <p><strong>Problem:</strong> given <code>days</code> total available days and a list of (possibly overlapping) meetings, count days with no meeting scheduled.</p>
+    <div class="callout key"><strong>Builds directly on Merge Intervals:</strong> sort → merge overlapping meetings → sum the gaps between merged blocks, <em>plus</em> the gap before the first block and after the last.</div>
+
+    <div class="diagram">
+      <div class="diagram-title">days = 10 &nbsp;·&nbsp; meetings = [[1,3],[5,7],[9,10]]</div>
+      <div class="timeline">
+        <div class="bar-row">
+          <span class="row-label">meetings</span>
+          <div class="bar amber" style="left:0%; width:30%;">1–3</div>
+          <div class="bar amber" style="left:40%; width:30%;">5–7</div>
+          <div class="bar amber" style="left:80%; width:20%;">9–10</div>
+        </div>
+        <div class="bar-row">
+          <span class="row-label">status</span>
+          <div class="gap-region" style="left:30%; width:10%; top:4px;"><div class="gap-label">day 4</div></div>
+          <div class="gap-region" style="left:70%; width:10%; top:4px;"><div class="gap-label">day 8</div></div>
+        </div>
+        <div class="ruler" style="margin-top:26px;">
+          <div class="tick" style="left:0%"></div><div class="tick-label" style="left:0%">1</div>
+          <div class="tick" style="left:20%"></div><div class="tick-label" style="left:20%">3</div>
+          <div class="tick" style="left:40%"></div><div class="tick-label" style="left:40%">5</div>
+          <div class="tick" style="left:60%"></div><div class="tick-label" style="left:60%">7</div>
+          <div class="tick" style="left:80%"></div><div class="tick-label" style="left:80%">9</div>
+          <div class="tick" style="left:100%"></div><div class="tick-label" style="left:100%">10</div>
+        </div>
+      </div>
+      <div class="diagram-caption">No overlaps here, so merge changes nothing. Free days (coral): <b>day 4</b> and <b>day 8</b> → gap total = <b>2</b>.</div>
+    </div>
+
+    <div class="callout warn">
+      <strong>⚠ The classic gotcha:</strong> a naive version only sums the <em>internal</em> gaps between merged blocks and forgets the edges: <code>gap += result[0].start - 1</code> (before the first meeting) and <code>gap += days - result[last].end</code> (after the last meeting). Missing either gives a too-small answer.
+    </div>
+
+    <div class="code-label">JavaScript</div>
+    <pre><code>function countDays(days, meetings) {
+  meetings.sort((a, b) => a[0] - b[0]);
+
+  const merged = [meetings[0]];
+  for (let i = 1; i &lt; meetings.length; i++) {
+    const [start, end] = meetings[i];
+    const last = merged[merged.length - 1];
+    if (start &lt;= last[1]) last[1] = Math.max(last[1], end);
+    else merged.push([start, end]);
+  }
+
+  let gap = 0;
+  for (let i = 1; i &lt; merged.length; i++) {
+    gap += merged[i][0] - merged[i - 1][1] - 1;
+  }
+  gap += merged[0][0] - 1;                          // before first block
+  gap += days - merged[merged.length - 1][1];        // after last block
+  return gap;
+}</code></pre>
+
+    <table>
+      <tr><th></th><th>Complexity</th><th>Reasoning</th></tr>
+      <tr><td>Time</td><td><code>O(n log n)</code></td><td>Dominated by the sort; merge + gap-sum is <code>O(n)</code></td></tr>
+      <tr><td>Space</td><td><code>O(n)</code></td><td>Worst case, no merges happen</td></tr>
+    </table>
+  </section>
+
+  <section id="bruteforce">
+    <h2 class="sec-title"><span class="num">10</span>Brute force: Merge Intervals (pairwise comparison)</h2>
+    <p>Having already solved Merge Intervals with sort + linear-merge (<code>O(n log n)</code>), this explores the brute-force alternative — useful for the interview question <em>"why is your approach better than brute force?"</em></p>
+
+    <h3>The idea: compare every pair, merge, repeat</h3>
+    <p>Without sorting, compare every pair of intervals; whenever two overlap, merge them and delete the redundant one. <strong>A single full pass isn't enough</strong> — merging can grow an interval into overlap range it was never compared against.</p>
+
+    <div class="diagram">
+      <div class="diagram-title">Input: [5,7] · [1,4] · [12,15] · [3,5] · [9,11] · [2,6]</div>
+
+      <div class="pass-row">
+        <span class="pass-tag-label">Pass 1</span>
+        <span class="pill merged">[2,7]</span>
+        <span class="pill">[1,4]</span>
+        <span class="pill">[12,15]</span>
+        <span class="pill">[9,11]</span>
+        <span class="pill dead">[3,5]</span>
+        <span class="pill dead">[2,6]</span>
+      </div>
+      <div class="pass-row">
+        <span class="pass-tag-label">Pass 2</span>
+        <span class="pill merged">[1,7]</span>
+        <span class="pill">[12,15]</span>
+        <span class="pill">[9,11]</span>
+        <span class="pill dead">[2,7]</span>
+        <span class="pill dead">[1,4]</span>
+      </div>
+      <div class="pass-row">
+        <span class="pass-tag-label">Pass 3</span>
+        <span class="pill">[1,7]</span>
+        <span class="pill">[12,15]</span>
+        <span class="pill">[9,11]</span>
+        <span class="arrow">← no merges → done</span>
+      </div>
+      <div class="diagram-caption">
+        <b>Pass 1:</b> [5,7] merges with [3,5] → [3,7], then with [2,6] → [2,7]. But [2,7] and [1,4] genuinely overlap and are <em>never compared</em> in this pass — [2,7] formed too late in the scan order.<br><br>
+        <b>Pass 2:</b> catches the missed merge → [2,7] + [1,4] → [1,7]. A merge happened, so run again.<br><br>
+        <b>Pass 3:</b> zero merges found → algorithm terminates. Final: <code>[[1,7],[12,15],[9,11]]</code> ✓
+      </div>
+    </div>
+
+    <div class="code-label">Pseudocode</div>
+    <pre><code>list = copy of all intervals
+isMergeHappened = true
+
+while isMergeHappened:
+    isMergeHappened = false
+    i = 0
+    while i &lt; list.size:
+        j = i + 1
+        while j &lt; list.size:
+            if isOverlap(list[i], list[j]):
+                list[i].start = min(list[i].start, list[j].start)
+                list[i].end   = max(list[i].end,   list[j].end)
+                list.remove(j)      # do NOT increment j
+                isMergeHappened = true
+            else:
+                j = j + 1
+        i = i + 1
+return list</code></pre>
+
+    <div class="code-label">JavaScript</div>
+    <pre><code>function isOverlap(a, b) {
+  return a[1] >= b[0] && b[1] >= a[0];
+}
+
+function mergeIntervalsBruteForce(intervals) {
+  const list = intervals.map(iv => [...iv]);
+  let isMergeHappened = true;
+
+  while (isMergeHappened) {
+    isMergeHappened = false;
+    for (let i = 0; i &lt; list.length; i++) {
+      let j = i + 1;
+      while (j &lt; list.length) {
+        if (isOverlap(list[i], list[j])) {
+          list[i][0] = Math.min(list[i][0], list[j][0]);
+          list[i][1] = Math.max(list[i][1], list[j][1]);
+          list.splice(j, 1);   // remove; do NOT advance j
+          isMergeHappened = true;
+        } else {
+          j++;
+        }
+      }
+    }
+  }
+  return list;
+}</code></pre>
+
+    <h3 class="pin">Debugging notes (real bugs hit building this)</h3>
+    <table>
+      <tr><th>Bug</th><th>Cause</th><th>Fix</th></tr>
+      <tr><td><code>IndexOutOfBounds</code></td><td>Inner loop checked the <em>original</em> array's length while removing from a shrinking working list</td><td>Always check the live/mutating list's length, not the original input's</td></tr>
+      <tr><td>Wrong output (extra un-merged intervals)</td><td>Outer loop bound had the same mismatch</td><td>Same fix — outer bound must track the shrinking list too</td></tr>
+      <tr><td>Un-merged pairs in final result</td><td>Was reading values from the original array instead of the mutating working list</td><td>Always index into the live structure, never back into the original mid-algorithm</td></tr>
+    </table>
+
+    <table>
+      <tr><th></th><th>Brute Force</th><th>Sort + Merge</th></tr>
+      <tr><td>Time</td><td><code>O(n³)</code>–<code>O(n⁴)</code></td><td><code>O(n log n)</code></td></tr>
+      <tr><td>Space</td><td><code>O(n)</code></td><td><code>O(n)</code></td></tr>
+      <tr><td>Intuitiveness</td><td>Low — "re-run until stable" isn't obvious upfront</td><td>High — one linear pass after sorting</td></tr>
+    </table>
+  </section>
+
+  <section id="takeaways">
+    <h2 class="sec-title"><span class="num">11</span>Consolidated takeaways</h2>
+    <ol class="takeaways">
+      <li>Two intervals overlap iff <code>e1 &gt;= s2 && e2 &gt;= s1</code> — derived via De Morgan's Law from the "definitely non-overlapping" condition.</li>
+      <li><strong>Merge</strong> <code>[min(s), max(e)]</code> vs. <strong>Intersection</strong> <code>[max(s), min(e)]</code> — opposite operations, easy to swap by mistake.</li>
+      <li>Always sort by start time first for merge/overlap/gap problems — it converts chaotic pairwise reasoning into a clean left-to-right scan.</li>
+      <li>Brute-force pairwise comparison needs repeated full passes until a pass produces zero merges — a single pass misses merges formed late in the scan.</li>
+      <li>When mutating a working copy of an array mid-algorithm, audit <em>every</em> bound check and read for consistent reference to the live structure.</li>
+    </ol>
+  </section>
+
+  <section id="practice">
+    <h2 class="sec-title"><span class="num">12</span>Suggested follow-up practice</h2>
+    <ul class="checklist">
+      <li>LeetCode 56 — Merge Intervals (submit the <code>O(n log n)</code> version if not already done)</li>
+      <li>LeetCode 57 — Insert Interval</li>
+      <li>LeetCode 252 / 253 — Meeting Rooms I &amp; II</li>
+      <li>LeetCode 435 — Non-overlapping Intervals</li>
+      <li>Implement the brute-force "re-run until stable" approach independently before checking this doc's version</li>
+      <li>Revisit LC 3169's optimized (sweep-line / difference-array) approach — cut short in the original lecture due to a platform issue</li>
+    </ul>
+  </section>
+
+</div>
+
+<footer>interval-pattern-notes · Day 19 &amp; Day 20 · NeetCode 150 prep</footer>
+
+</body>
+</html>
