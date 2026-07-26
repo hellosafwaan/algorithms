@@ -107,6 +107,7 @@ When starting a new problem, check here first. Find the pattern, recall what you
 | LC 69 — Sqrt(x) *(bonus)* | Binary search on the answer, round down | No real array — search `[0, x]`, compare `mid*mid` to `x`; return `high`/`right` — it only ever moves past elements too big, landing on the last valid (floor) candidate |
 | LC 34 — Find First and Last Position of Element in Sorted Array *(bonus)* | Leftmost/Rightmost boundary search, composed | Search past a match instead of stopping (`right = mid - 1` after a match to keep finding leftmost; `left = mid + 1` to keep finding rightmost). Run both, combine into `[leftIndex, rightIndex]`. Only one needs an existence check — both searches see the same array/target, so one is `-1` iff the other is too. |
 | LC 33 — Search in Rotated Sorted Array | Rotated array — sorted-half detection | At least one half of `[left, mid]`/`[mid, right]` is always fully sorted. Use `nums[left] <= nums[mid]` (not `<` — breaks at `left === mid`) to find which half; check if target falls inside that half's range before deciding direction. |
+| LC 81 — Search in Rotated Sorted Array II *(bonus)* | Rotated array with duplicates | Same as LC 33, plus one guard: when `nums[left] === nums[mid] === nums[right]`, the sorted-half comparison is uninformative — shrink both ends by one (`left++`, `right--`) instead of halving. Degrades worst case to O(n) (e.g. all-identical array), best/average case stays O(log n). |
 
 ---
 

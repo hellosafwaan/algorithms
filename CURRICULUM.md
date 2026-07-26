@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 32 bonus problems = 186 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 33 bonus problems = 187 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189, #81 are bonus)
 
 ---
 
@@ -110,6 +110,7 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | — | Search Insert Position *(bonus)* | Easy | [LC #35](https://leetcode.com/problems/search-insert-position/) | Binary Search |
 | — | Sqrt(x) *(bonus)* | Easy | [LC #69](https://leetcode.com/problems/sqrtx/) | Binary Search on Answer |
 | — | Find First and Last Position of Element in Sorted Array *(bonus)* | Medium | [LC #34](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | Binary Search — Leftmost/Rightmost Boundary |
+| — | Search in Rotated Sorted Array II *(bonus)* | Medium | [LC #81](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | Binary Search — Rotated Array with Duplicates |
 
 ---
 

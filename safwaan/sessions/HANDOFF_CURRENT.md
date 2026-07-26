@@ -1,15 +1,14 @@
-# Handoff — 2026-07-26 (Search in Rotated Sorted Array)
+# Handoff — 2026-07-26 (Search in Rotated Sorted Array II)
 
 ## What Was Just Completed
 
-**LC 33 — Search in Rotated Sorted Array** (Phase 5 curriculum #5). Learned the approach from a video (Striver's notes), disclosed honestly and unprompted. This session is a **clear positive counterpoint** to the recent LC 704/35/69/34 declined-explanation streak:
+**LC 81 — Search in Rotated Sorted Array II** (Phase 5 bonus, off-curriculum), same-session follow-up to LC 33. Watched Striver's video for the duplicates-case reasoning, implemented as a small addition on top of the already-working LC 33 solution — one guard clause: when `nums[left] === nums[mid] === nums[right]`, the sorted-half comparison is uninformative, so shrink both ends by one and continue instead of halving.
 
-- Two real bugs were present in the code he brought — an operator precedence error in the `mid` formula (`right - left / 2` instead of `(right - left) / 2`) and a `<` vs `<=` bug comparing `nums[left]` to `nums[mid]` that breaks specifically when `left === mid`.
-- Both were found and fixed **entirely through his own tracing**, guided by narrow questions ("what does JS evaluate first here," "what are the actual index values in this failing case") — never given a direct fix for either.
-- At wrap-up, he gave the own-words explanation **unprompted, first try**, no redirect to "write it in the notes" (contrast with LC 34) and no outright decline (contrast with LC 704/35/69).
-- Accepted 196/196, 100th percentile runtime.
+Clean, correct on arrival — self-described as "a smaller edit." At wrap-up, gave the own-words explanation unprompted, correctly explaining *why* the degenerate case is ambiguous and *why* shrinking both ends is the safe fix. One minor imprecision: labeled the degraded worst case "n/2" instead of "O(n)" (right reasoning, wrong Big-O convention) — corrected in the moment.
 
-Full wrap-up done: TRACKER (73/186 complete, Phase 5 now 2/7 curriculum + 3 bonus), progress.md, patterns.md (#72 operator precedence, #73 `<`/`<=` boundary bug, plus a breakthrough entry), pattern-index.md (new Binary Search — Rotated Array row), session file, learnings.md, carry-forward.md, revisit-queue.md (standard fuse — ownership genuinely demonstrated, not shortened).
+This continues directly from **LC 33 — Search in Rotated Sorted Array** earlier the same session, which was itself a strong positive counter-example to the recent LC 704/35/69/34 declined-explanation streak (both real bugs found and fixed via his own tracing, unprompted own-words explanation).
+
+Full wrap-up done for both LC 33 and LC 81: TRACKER (74/187 complete, Phase 5 now 2/7 curriculum + 4 bonus), CURRICULUM, progress.md, patterns.md (#72, #73 for LC 33's bugs), pattern-index.md, session files, learnings.md for both, revisit-queue (standard fuse on both — ownership genuinely demonstrated, not shortened).
 
 **Revisit queue was not raised**, per the standing 2026-07-16 instruction.
 
@@ -17,9 +16,7 @@ Full wrap-up done: TRACKER (73/186 complete, Phase 5 now 2/7 curriculum + 3 bonu
 
 ## Safwaan's Current State
 
-Continuing a self-directed, multi-phase sweep rather than strict curriculum order — currently touching Phase 5 (Binary Search), Phase 4 (Stack), Phase 1 (Arrays & Hashing bonus sweep), Phase 2 (bonus), and Phase 16 (Intervals) in parallel.
-
-**Key data point this session:** video-assisted origin continues to not reliably predict disengagement (now three counter-examples: LC 155, and now LC 33 even more strongly). What actually matters is whether he's asked to trace the specific bug in front of him rather than just recall or re-narrate the approach — when he traces, he owns it.
+Two-problem winning streak in the same session (LC 33, LC 81) — both video-assisted in origin but both handled with real engagement: traced his own bugs on LC 33, gave unprompted correct explanations on both. Reinforces that video-assisted origin doesn't reliably predict disengagement; what matters is whether he's asked to trace/reason through the specific thing in front of him.
 
 **Revisit queue: standing instruction remains — do not raise it unless he brings it up.**
 
@@ -27,12 +24,12 @@ Continuing a self-directed, multi-phase sweep rather than strict curriculum orde
 
 ## Suggested Next Problems
 
-1. Follow his self-directed lead — no fixed order lately.
-2. **LC 153 — Find Minimum in Rotated Sorted Array** is a natural next step: same sorted-half detection idea as LC 33, good test of whether the `<=`-at-`left===mid` lesson transfers.
+1. Follow his self-directed lead.
+2. **LC 153 — Find Minimum in Rotated Sorted Array** is a natural next step in this same thread — same sorted-half detection core, good test of whether the LC 33 bug lessons (`<=` not `<` at `left===mid`) transfer.
 3. Otherwise: Phase 5 continues at LC 74 (Search a 2D Matrix) or LC 875 (Koko Eating Bananas); Phase 16 continues at LC 253 (Meeting Rooms II) or LC 435 (Non-Overlapping Intervals).
 
 ## Coach Notes
 
 - Don't raise the revisit queue unless he brings it up — standing instruction, unchanged.
-- Two new bug patterns from this session (#72, #73) are worth a light cold-check at LC 153, not a big deal if they don't resurface — one clean self-corrected instance each so far.
-- Keep noting whether "asked to trace the actual bug" vs "asked to recall/narrate" is the real variable behind engagement — it's looking more like the operative distinction than video-assisted-or-not.
+- Minor Big-O labeling slip (n/2 vs O(n)) — not worth dwelling on, but if it recurs, worth a quick "Big-O drops constants" reminder.
+- Two-problem clean streak reinforces: the operative variable for engagement is being asked to trace/derive the specific thing in front of him, not whether a video was involved upstream.

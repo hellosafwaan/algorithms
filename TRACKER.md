@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-26 (Search in Rotated Sorted Array, LC 33)
+Last updated: 2026-07-26 (Search in Rotated Sorted Array II, LC 81, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-26 (Search in Rotated Sorted Array, LC 33)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 186 |
-| ✅ Complete | 73 |
+| Total problems | 187 |
+| ✅ Complete | 74 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 112 |
 
@@ -123,6 +123,7 @@ Last updated: 2026-07-26 (Search in Rotated Sorted Array, LC 33)
 | 4 | Find Minimum in Rotated Sorted Array | Medium | [#153](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | Binary Search | ⏳ | — | — |
 | 5 | Search in Rotated Sorted Array | Medium | [#33](https://leetcode.com/problems/search-in-rotated-sorted-array/) | Binary Search — Rotated Array (sorted-half detection) | ✅ 100th pct | 2026-07-26 | [→](binary-search/33-search-in-rotated-sorted-array/learnings.md) |
 | 6 | Time Based Key-Value Store | Medium | [#981](https://leetcode.com/problems/time-based-key-value-store/) | Binary Search | ⏳ | — | — |
+| — | Search in Rotated Sorted Array II *(bonus)* | Medium | [#81](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | Binary Search — Rotated Array with Duplicates | ✅ | 2026-07-26 | [→](binary-search/81-search-in-rotated-sorted-array-ii/learnings.md) |
 | 7 | Median of Two Sorted Arrays | Hard | [#4](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary Search | ⏳ | — | — |
 | — | Search Insert Position *(bonus)* | Easy | [#35](https://leetcode.com/problems/search-insert-position/) | Binary Search — round up (`return low`) | ✅ | 2026-07-14 | [→](binary-search/35-search-insert-position/learnings.md) |
 | — | Sqrt(x) *(bonus)* | Easy | [#69](https://leetcode.com/problems/sqrtx/) | Binary Search on Answer — round down (`return high`) | ✅ | 2026-07-14 | [→](binary-search/69-sqrtx/learnings.md) |
