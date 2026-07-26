@@ -1,41 +1,38 @@
-# Handoff — 2026-07-17 (Rotate Array)
+# Handoff — 2026-07-26 (Search in Rotated Sorted Array)
 
 ## What Was Just Completed
 
-**LC 189 — Rotate Array** (Phase 2 bonus, off-curriculum). Brought a brute-force solution (pop + unshift, `k` times) that TLE'd — correctly self-diagnosed the O(n·k) cause (`unshift` is O(n), called `k` times) once asked about `unshift`'s cost, without needing it given. The optimization was a harder climb than recent sessions:
+**LC 33 — Search in Rotated Sorted Array** (Phase 5 curriculum #5). Learned the approach from a video (Striver's notes), disclosed honestly and unprompted. This session is a **clear positive counterpoint** to the recent LC 704/35/69/34 declined-explanation streak:
 
-- Through guided tracing, arrived at the destination formula `(i+k)%n` himself.
-- Explicitly said the modulo-wraparound concept itself "does not feel familiar" (despite already using `% 10` for digit extraction in Happy Number) — needed full direct teaching with a trace table. Logged as a new conceptual gap (patterns.md #71).
-- **Genuine unprompted breakthrough:** independently identified that writing `nums[(i+k)%n] = nums[i]` directly in place would destroy values before they're read for their own mapping — the real reason naive in-place rotation fails, spotted without being asked.
-- Built and submitted the extra-array O(n)/O(n) solution himself (accepted, 83.91st percentile runtime), self-correcting one bug (returning instead of mutating in place).
-- Explicitly asked to be taught (not questioned) on both O(1)-space follow-ups — three reversals and cyclic replacement — both given as full direct explanations at his request.
-- Declined the wrap-up reflection questions ("you can tell based on the chat") — not treated as a red flag given the strong independent work earlier, but the two taught approaches specifically need a cold check at redo (fuse: 2026-07-27, shorter than standard).
+- Two real bugs were present in the code he brought — an operator precedence error in the `mid` formula (`right - left / 2` instead of `(right - left) / 2`) and a `<` vs `<=` bug comparing `nums[left]` to `nums[mid]` that breaks specifically when `left === mid`.
+- Both were found and fixed **entirely through his own tracing**, guided by narrow questions ("what does JS evaluate first here," "what are the actual index values in this failing case") — never given a direct fix for either.
+- At wrap-up, he gave the own-words explanation **unprompted, first try**, no redirect to "write it in the notes" (contrast with LC 34) and no outright decline (contrast with LC 704/35/69).
+- Accepted 196/196, 100th percentile runtime.
 
-Full wrap-up: TRACKER (186 total, 72 complete, Phase 2 bonus row added), CURRICULUM (bonus row + header count), session file, learnings.md (all three approaches logged), arrays/notes.md, pattern-index.md (new "Array Rotation — Index Mapping via Modulo" section), patterns.md (#71 new gap, new breakthrough entry for the aliasing catch), revisit-queue entry.
+Full wrap-up done: TRACKER (73/186 complete, Phase 5 now 2/7 curriculum + 3 bonus), progress.md, patterns.md (#72 operator precedence, #73 `<`/`<=` boundary bug, plus a breakthrough entry), pattern-index.md (new Binary Search — Rotated Array row), session file, learnings.md, carry-forward.md, revisit-queue.md (standard fuse — ownership genuinely demonstrated, not shortened).
 
-**Revisit queue was not raised this session** — continuing to respect the standing instruction from 2026-07-16.
+**Revisit queue was not raised**, per the standing 2026-07-16 instruction.
 
 ---
 
 ## Safwaan's Current State
 
-Continuing a self-directed sweep of off-curriculum array/hashing problems (LC 349, LC 2215, now LC 189), not following curriculum order.
+Continuing a self-directed, multi-phase sweep rather than strict curriculum order — currently touching Phase 5 (Binary Search), Phase 4 (Stack), Phase 1 (Arrays & Hashing bonus sweep), Phase 2 (bonus), and Phase 16 (Intervals) in parallel.
 
-**New watch item:** modulo-for-wraparound as a distinct mental model from modulo-for-digit-extraction — didn't transfer automatically despite prior exposure to the operator. Probe cold on the next cyclic/circular-indexing problem.
+**Key data point this session:** video-assisted origin continues to not reliably predict disengagement (now three counter-examples: LC 155, and now LC 33 even more strongly). What actually matters is whether he's asked to trace the specific bug in front of him rather than just recall or re-narrate the approach — when he traces, he owns it.
 
-**Mixed-engagement data point:** this session had real independent reasoning (TLE diagnosis, the aliasing catch) alongside two concepts requiring full direct teaching. Different from a video-assisted disengagement case — he was upfront and asked directly when stuck rather than presenting borrowed work as his own. Still worth the shorter revisit fuse specifically on the two taught approaches.
-
-**Revisit queue: still not raised, per standing instruction.**
+**Revisit queue: standing instruction remains — do not raise it unless he brings it up.**
 
 ---
 
 ## Suggested Next Problems
 
-1. Whatever comes next in his self-directed sweep — follow his lead.
-2. Otherwise, Phase 4 (Stack) curriculum continues at **LC 22 — Generate Parentheses**, or Phase 16 (Intervals) continues at Meeting Rooms II (LC 253) / Non-Overlapping Intervals (LC 435).
+1. Follow his self-directed lead — no fixed order lately.
+2. **LC 153 — Find Minimum in Rotated Sorted Array** is a natural next step: same sorted-half detection idea as LC 33, good test of whether the `<=`-at-`left===mid` lesson transfers.
+3. Otherwise: Phase 5 continues at LC 74 (Search a 2D Matrix) or LC 875 (Koko Eating Bananas); Phase 16 continues at LC 253 (Meeting Rooms II) or LC 435 (Non-Overlapping Intervals).
 
 ## Coach Notes
 
 - Don't raise the revisit queue unless he brings it up — standing instruction, unchanged.
-- LC 189 redo (2026-07-27) should specifically test the three-reversals and cyclic-replacement approaches cold — those are the parts that were given, not derived. The extra-array approach and the aliasing insight are much better-owned and don't need the same scrutiny.
-- Modulo-wraparound (patterns.md #71) — probe cold, don't over-teach if it resurfaces once more; two clean instances would suggest it just needed one solid exposure.
+- Two new bug patterns from this session (#72, #73) are worth a light cold-check at LC 153, not a big deal if they don't resurface — one clean self-corrected instance each so far.
+- Keep noting whether "asked to trace the actual bug" vs "asked to recall/narrate" is the real variable behind engagement — it's looking more like the operative distinction than video-assisted-or-not.

@@ -6,6 +6,21 @@ This file tracks recurring patterns in how Safwaan thinks, makes mistakes, and l
 
 ## Mistake Patterns
 
+### 72. Operator precedence bug in a midpoint formula — `right - left / 2` instead of `(right - left) / 2`
+- **Seen in:** LC 33 — Search in Rotated Sorted Array (2026-07-26)
+- **What happened:** Wrote `left + Math.floor((right - left / 2))`. JavaScript evaluates `/` before `-`, so this computes `right - (left / 2)`, not the intended `(right - left) / 2`. For `left=0` it happens to be harmless (division by zero contribution), which is likely why a small early test case passed — but for any window where `left > 0`, the midpoint comes out wildly wrong.
+- **How it was caught:** Guided to trace `mid` specifically on `nums=[4,5,6,7,0,1,2]`, `left=0, right=6`, following JS operator precedence literally rather than what he intended the expression to mean. Self-identified the wrong result and the missing parentheses.
+- **Status:** New shape of bug (not a prior recurrence) — worth a general checklist item: when a formula "looks right" but has multiple operators, trace the literal evaluation order, don't just read intent.
+
+### 73. `<` instead of `<=` when comparing `nums[left]` to `nums[mid]` — breaks only at `left === mid`
+- **Seen in:** LC 33 (2026-07-26)
+- **What happened:** Used `nums[left] < nums[mid]` to decide which half of a rotated array is sorted. This is correct for windows larger than one element, but breaks specifically when `left === mid` (a two-element window) — `nums[left] < nums[mid]` compares a value to itself, always false, sending the code into the `else` branch which wrongly assumes the *right* half is sorted.
+- **How it was caught:** A LeetCode wrong-answer test case (`nums=[3,1], target=1`) surfaced it first; then guided to trace `left`, `mid` as actual index values in that case and notice they were equal, then reasoned out loud that `nums[left] < nums[left]` is always false and that the left half (even as a single element) is trivially sorted, so `<=` is the correct comparison.
+- **Status:** Classic boundary-condition trap in rotated binary search — self-corrected once the equal-index case was made concrete via trace, no direct answer given. Worth checking cold on LC 153 (Find Minimum in Rotated Sorted Array), which uses the same sorted-half detection idea.
+
+### Breakthrough: strong self-driven debugging + unprompted own-words explanation on a video-assisted solve — LC 33 (2026-07-26)
+Disclosed the video-assisted origin (Striver's notes) honestly and unprompted, same as usual. But this session is a clear positive counterpoint to the recent LC 704/35/69/34 pattern of declined explanations: both real bugs in the code he brought (patterns.md #72, #73) were found and fixed entirely through his own tracing under narrow guiding questions — never given a direct fix — and at wrap-up he produced the own-words explanation unprompted, without being asked a second time or redirecting it to be written for him. Video-assisted origin continues to not reliably predict disengagement (echoes the LC 155 counter-example); what predicts it is whether he's actually asked to trace and reason through the specific bug in front of him, not just whether he watched a video beforehand.
+
 ### 71. Modulo-for-wraparound didn't feel familiar despite already knowing modulo-for-digit-extraction
 - **Seen in:** LC 189 — Rotate Array (2026-07-17)
 - **What happened:** After correctly tracing the destination-index formula `(i+k)%n` on concrete examples and confirming it worked, explicitly said the underlying wraparound concept "does not feel familiar" — despite having used the exact same operator (`%`) for digit extraction in Happy Number (`n % 10`). The operator itself wasn't the gap; connecting it to a *cyclic-range* use case (as opposed to a place-value use case) was.
