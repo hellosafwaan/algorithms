@@ -68,7 +68,7 @@ Window size is a fixed `k`. Seed the first window with an O(k) pass, then slide 
       compare seed against target/best
   ```
 - **Key:** Only valid when "undo" is safe — division breaks on a `0` element; this is why the product variant assumes no zeros.
-- **Examples:** `fundamentals/1-maximum-subarray-size-k`, `fundamentals/2-maximum-subarray-product-size-k`, `fundamentals/3-subarray-size-target-sum-k`
+- **Examples:** `fundamentals/1-maximum-subarray-size-k`, `fundamentals/2-maximum-subarray-product-size-k`, `fundamentals/3-subarray-size-target-sum-k`, LC 643 (Maximum Average Subarray I — same seed-then-slide shape, plus one division by `k` at the end)
 
 ### 6. Fixed Window — Set/Map Composition Match (anagrams)
 Window size is fixed (`pattern.length`). The window's *state* is a Set (membership only) or Map (exact frequency) of characters, compared against the target pattern's Set/Map after every slide.

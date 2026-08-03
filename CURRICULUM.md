@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 33 bonus problems = 187 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189, #81 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 34 bonus problems = 188 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189, #81, #643 are bonus)
 
 ---
 
@@ -70,6 +70,7 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | — | Minimum Size Subarray Sum *(bonus)* | Medium | [LC #209](https://leetcode.com/problems/minimum-size-subarray-sum/) | Sliding Window — Variable Size (minimize) |
 | — | Substring with Concatenation of All Words *(bonus)* | Hard | [LC #30](https://leetcode.com/problems/substring-with-concatenation-of-all-words/) | Sliding Window — Fixed Size, word frequency |
 | — | Find the Index of the First Occurrence in a String *(bonus)* | Easy | [LC #28](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/) | String Matching |
+| — | Maximum Average Subarray I *(bonus)* | Easy | [LC #643](https://leetcode.com/problems/maximum-average-subarray-i/) | Sliding Window — Fixed Size (numeric slide) |
 
 ---
 

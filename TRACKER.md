@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-07-26 (Search in Rotated Sorted Array II, LC 81, bonus)
+Last updated: 2026-08-04 (Maximum Average Subarray I, LC 643, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-07-26 (Search in Rotated Sorted Array II, LC 81, bonus)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 187 |
-| ✅ Complete | 74 |
+| Total problems | 188 |
+| ✅ Complete | 75 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 112 |
 
@@ -97,6 +97,7 @@ Last updated: 2026-07-26 (Search in Rotated Sorted Array II, LC 81, bonus)
 | — | Minimum Size Subarray Sum *(bonus)* | Medium | [#209](https://leetcode.com/problems/minimum-size-subarray-sum/) | Sliding Window — Variable Size (minimize) | ✅ 67th pct | 2026-06-24 | [→](sliding-window/209-minimum-size-subarray/learnings.md) |
 | — | Substring with Concatenation of All Words *(bonus)* | Hard | [#30](https://leetcode.com/problems/substring-with-concatenation-of-all-words/) | Sliding Window — Fixed Size, word frequency | ✅ 41st pct | 2026-06-25 | [→](sliding-window/30-substring-with-concatenation-of-all-words/learnings.md) |
 | — | Find the Index of the First Occurrence in a String *(bonus)* | Easy | [#28](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/) | String Matching | ✅ | 2026-07-13 | [→](strings/28-find-the-index-of-the-first-occurrence-in-a-string/learnings.md) |
+| — | Maximum Average Subarray I *(bonus)* | Easy | [#643](https://leetcode.com/problems/maximum-average-subarray-i/) | Sliding Window — Fixed Size (numeric slide) | ✅ | 2026-08-04 | [→](sliding-window/643-maximum-average-subarray-I/learnings.md) |
 
 ## Phase 4 — Stack ⏳
 
