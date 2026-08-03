@@ -1,10 +1,10 @@
 // Approach 1 - Naive Sliding Window (timeout)
-const maxSubarraySumSizeK = (nums, k) => {
+function maxSubarraySumSizeKNaive(nums, k) {
   let maxSum = -Infinity;
   for (let i = 0; i <= nums.length - k; i += 1) {
     let sum = 0
     for (let j = i; j < i + k; j += 1) {
-      sum += nums[j]; 
+      sum += nums[j];
     }
     if (sum > maxSum) {
       maxSum = sum;
@@ -14,7 +14,7 @@ const maxSubarraySumSizeK = (nums, k) => {
 };
 
 // Approach 2 - The Optimised Sliding Window
-const maxSubarraySumSizeK = (nums, k) => {
+function maxSubarraySumSizeK(nums, k) {
   let currentSum = 0;
   for (let i = 0; i < k; i += 1) {
     currentSum += nums[i]
