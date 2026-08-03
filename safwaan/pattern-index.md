@@ -369,6 +369,7 @@ while (n > 0) {
 | LC 209 — Minimum Size Subarray Sum | Variable window, sum — minimize | Add always; shrink while `sum >= target`; record inside while loop; return 0 if never hit |
 | LC 30 — Substring with Concatenation of All Words | Fixed window, word frequency maps | Window = `words.length * wordLen`; slide by 1; inner loop extracts words via `s.substring(i + j*wordLen, i + j*wordLen + wordLen)`; compare two Maps entry by entry |
 | LC 643 — Maximum Average Subarray I *(bonus)* | Fixed window, numeric slide | Seed first window's sum once, then slide by subtracting the outgoing element and adding the incoming one; divide by `k` exactly once at the end, not every iteration. Direct cold transfer of `sliding-window/fundamentals/1-maximum-subarray-size-k` (`maxSubarraySumSizeK`), confirmed when asked directly rather than offered unprompted. |
+| LC 1343 — Number of Sub-arrays of Size K and Average ≥ Threshold *(bonus)* | Fixed window, numeric slide + count | Same seed-then-slide shape as LC 643, unprompted self-connected this time ("very similar to the last problem"); check every window against `threshold` individually and count it, since a fixed window has no bulk-counting shortcut. Slide loop bound must be `arr.length - k`, not `arr.length` — an out-of-bounds `arr[i+k]` silently becomes `NaN` in JS rather than crashing, which can mask an incorrect bound (patterns.md #75). |
 
 ---
 

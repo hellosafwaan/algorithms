@@ -607,6 +607,14 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 - **How it was caught:** After finishing the trace, was told the heuristic: use the smallest input that can expose the bug.
 - **Status:** Heuristic taught — probe next time he needs to trace a bug.
 
+### 75. Fixed-window slide loop bound overshoots, masked by NaN propagation
+- **Seen in:** LC 1343 (2026-08-04)
+- **What happened:** Wrote the slide loop as `for (let i = 0; i < arr.length; i++)` instead of `arr.length - k`. The first loop already consumes one window, so the slide loop only needs `arr.length - k` more iterations; running it for the full `arr.length` reads `arr[i + k]` out of bounds for the last few iterations, which is `undefined` in JS.
+- **Root cause:** Didn't re-derive the slide loop's bound from "how many windows are left" — reused a loop bound (`arr.length`) that felt generically safe rather than the one that's actually correct.
+- **Why it didn't fail on LeetCode:** `undefined` arithmetic poisons `currentSum` to `NaN`, and `NaN >= threshold` is always `false` in JS — so the extra out-of-bounds iterations are silently harmless rather than silently wrong. The bug never produced an incorrect final count on any tested input, but it's still a real correctness bug (relies on a language-specific quirk, not on the loop actually being bounded correctly) — in a language without this exact `NaN` propagation behavior (e.g. an out-of-bounds read throwing in Java), this would crash instead of quietly working.
+- **How it was caught:** Asked directly how many windows were left to slide through after the first loop, and whether `arr.length` matched that count — self-corrected to `arr.length - k` in one step, referencing the identical bound already used in `maxSubarraySumSizeK`/LC 643 without being told to look there.
+- **Status:** First occurrence of this specific shape (correct-by-accident via language quirk, not correct-by-construction). Worth probing on the next fixed-window problem: does he re-derive the slide bound from "windows remaining," or default to `arr.length`?
+
 ### 74. Big-O labeling imprecise even when the underlying reasoning is correct
 - **Seen in:** LC 81 (2026-07-26, said "n/2" instead of "O(n)"), LC 643 (2026-08-04, said O(N²) for a naive nested loop bounded by `N` and `k`, not `N` and `N`)
 - **What happened:** At LC 643, correctly identified the naive approach re-sums each window from scratch, but labeled it O(N²) without accounting for `k` as an independent variable in the loop bounds — the outer loop runs `N-k` times, the inner loop runs `k` times, giving O(Nk), which only degenerates to O(N²) if `k` scales with `N`.

@@ -68,7 +68,8 @@ Window size is a fixed `k`. Seed the first window with an O(k) pass, then slide 
       compare seed against target/best
   ```
 - **Key:** Only valid when "undo" is safe — division breaks on a `0` element; this is why the product variant assumes no zeros.
-- **Examples:** `fundamentals/1-maximum-subarray-size-k`, `fundamentals/2-maximum-subarray-product-size-k`, `fundamentals/3-subarray-size-target-sum-k`, LC 643 (Maximum Average Subarray I — same seed-then-slide shape, plus one division by `k` at the end)
+- **Examples:** `fundamentals/1-maximum-subarray-size-k`, `fundamentals/2-maximum-subarray-product-size-k`, `fundamentals/3-subarray-size-target-sum-k`, LC 643 (Maximum Average Subarray I — same seed-then-slide shape, plus one division by `k` at the end), LC 1343 (Number of Sub-arrays of Size K and Average ≥ Threshold — same shape, but count every qualifying window instead of tracking one max)
+- **Watch out:** the slide loop bound is `arr.length - k`, not `arr.length` — the seed pass already consumed the first window. An out-of-bounds read (`arr[i+k]` past the end) silently becomes `NaN` in JS rather than crashing, which can mask this bug rather than surface it (see `safwaan/patterns.md` #75).
 
 ### 6. Fixed Window — Set/Map Composition Match (anagrams)
 Window size is fixed (`pattern.length`). The window's *state* is a Set (membership only) or Map (exact frequency) of characters, compared against the target pattern's Set/Map after every slide.
