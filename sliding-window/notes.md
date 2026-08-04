@@ -6,6 +6,12 @@ Two indices marking a window. Expand right on every step. The question is only *
 
 ---
 
+## Recognizing Disguised Problems
+
+Not every sliding-window problem *looks* like one. Watch for this shape: a problem about removing/discarding elements only from the two ends of an array (LC 1658 — reduce `x` to zero by deleting from the left or right). Since operations that only touch the ends always leave one contiguous remainder, "minimize what's removed" is the complement of "maximize the contiguous chunk that's kept" — which is a completely standard variable-window problem once reframed. The tell: can removals only happen from the boundary (not the middle)? If so, check whether the problem is really about the complement.
+
+---
+
 ## Flavors
 
 ### 1. Running Min / Single Pass (degenerate case — no explicit window)

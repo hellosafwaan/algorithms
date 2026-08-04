@@ -114,7 +114,7 @@ Safwaan is a self-directed learner working through NeetCode 150 in JavaScript/Ty
 - Can reason about complexity once prompted
 - Pushes back when something seems impractical (called out that recursive string reversal is O(n²) and pointless in production — he was right)
 - Recognizes when he's hit his toolbox limit and asks for help rather than thrashing — good metacognition
-- Strong metacognitive awareness — knows when he's stuck and why; explicitly asks for brutal-honest assessment of his level
+- Strong metacognitive awareness — knows when he's stuck and why; explicitly asks for brutal-honest assessment of his level. Confirmed sharply at LC 1658 (2026-08-05): before attempting anything, correctly self-diagnosed that his gap was specifically the *reframing* ("I really don't know how to apply sliding window here") rather than the window mechanics themselves — and that self-assessment held up exactly through the session (mechanics were solid, reframing needed real guidance).
 - Articulates insights in his own words when he lands on them
 - Decomposes problems well — independently reduced 3Sum to "fix one element + two-sum the rest" (k-sum reduction) with no prompting
 - Now leads on complexity unprompted (called O(n³) and O(n²) himself on 3Sum)

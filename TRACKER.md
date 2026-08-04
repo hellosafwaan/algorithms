@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-08-04 (Find All Anagrams in a String, LC 438, bonus)
+Last updated: 2026-08-05 (Minimum Operations to Reduce X to Zero, LC 1658, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-08-04 (Find All Anagrams in a String, LC 438, bonus)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 191 |
-| ✅ Complete | 79 |
+| Total problems | 192 |
+| ✅ Complete | 80 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 111 |
 
@@ -101,6 +101,7 @@ Last updated: 2026-08-04 (Find All Anagrams in a String, LC 438, bonus)
 | — | Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold *(bonus)* | Medium | [#1343](https://leetcode.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/) | Sliding Window — Fixed Size (numeric slide + count) | ✅ | 2026-08-04 | [→](sliding-window/1343-number-of-subarrays-of-size-k-avg-greater-than-or-equal-to-threshold/learnings.md) |
 | — | Maximum Number of Vowels in a Substring of Given Length *(bonus)* | Medium | [#1456](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/) | Sliding Window — Fixed Size (Set lookup + count slide) | ✅ | 2026-08-04 | [→](sliding-window/1456-maximum-number-of-vowels-in-a-substring-of-given-length/learnings.md) |
 | — | Find All Anagrams in a String *(bonus)* | Medium | [#438](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | Sliding Window — Fixed Size, exact-frequency Map match (multi-result) | ✅ | 2026-08-04 | [→](sliding-window/438-find-all-anagrams-in-the-string/learnings.md) |
+| — | Minimum Operations to Reduce X to Zero *(bonus)* | Medium | [#1658](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/) | Sliding Window — Variable Size (complement reframing) | ✅ | 2026-08-05 | [→](sliding-window/1658-minimum-operations-to-reduc-x-to-zero/learnings.md) |
 
 ## Phase 4 — Stack ⏳
 

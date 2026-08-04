@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 37 bonus problems = 191 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189, #81, #643, #1343, #1456, #438 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 38 bonus problems = 192 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189, #81, #643, #1343, #1456, #438, #1658 are bonus)
 
 ---
 
@@ -74,6 +74,7 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | — | Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold *(bonus)* | Medium | [LC #1343](https://leetcode.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/) | Sliding Window — Fixed Size (numeric slide + count) |
 | — | Maximum Number of Vowels in a Substring of Given Length *(bonus)* | Medium | [LC #1456](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/) | Sliding Window — Fixed Size (Set lookup + count slide) |
 | — | Find All Anagrams in a String *(bonus)* | Medium | [LC #438](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | Sliding Window — Fixed Size, exact-frequency Map match (multi-result) |
+| — | Minimum Operations to Reduce X to Zero *(bonus)* | Medium | [LC #1658](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/) | Sliding Window — Variable Size (complement reframing) |
 
 ---
 
