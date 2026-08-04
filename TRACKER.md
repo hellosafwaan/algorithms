@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-08-04 (Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold, LC 1343, bonus)
+Last updated: 2026-08-04 (Maximum Number of Vowels in a Substring of Given Length, LC 1456, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-08-04 (Number of Sub-arrays of Size K and Average Greater tha
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 189 |
-| ✅ Complete | 76 |
+| Total problems | 190 |
+| ✅ Complete | 77 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 112 |
 
@@ -99,6 +99,7 @@ Last updated: 2026-08-04 (Number of Sub-arrays of Size K and Average Greater tha
 | — | Find the Index of the First Occurrence in a String *(bonus)* | Easy | [#28](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/) | String Matching | ✅ | 2026-07-13 | [→](strings/28-find-the-index-of-the-first-occurrence-in-a-string/learnings.md) |
 | — | Maximum Average Subarray I *(bonus)* | Easy | [#643](https://leetcode.com/problems/maximum-average-subarray-i/) | Sliding Window — Fixed Size (numeric slide) | ✅ | 2026-08-04 | [→](sliding-window/643-maximum-average-subarray-I/learnings.md) |
 | — | Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold *(bonus)* | Medium | [#1343](https://leetcode.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/) | Sliding Window — Fixed Size (numeric slide + count) | ✅ | 2026-08-04 | [→](sliding-window/1343-number-of-subarrays-of-size-k-avg-greater-than-or-equal-to-threshold/learnings.md) |
+| — | Maximum Number of Vowels in a Substring of Given Length *(bonus)* | Medium | [#1456](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/) | Sliding Window — Fixed Size (Set lookup + count slide) | ✅ | 2026-08-04 | [→](sliding-window/1456-maximum-number-of-vowels-in-a-substring-of-given-length/learnings.md) |
 
 ## Phase 4 — Stack ⏳
 

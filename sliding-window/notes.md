@@ -68,7 +68,7 @@ Window size is a fixed `k`. Seed the first window with an O(k) pass, then slide 
       compare seed against target/best
   ```
 - **Key:** Only valid when "undo" is safe — division breaks on a `0` element; this is why the product variant assumes no zeros.
-- **Examples:** `fundamentals/1-maximum-subarray-size-k`, `fundamentals/2-maximum-subarray-product-size-k`, `fundamentals/3-subarray-size-target-sum-k`, LC 643 (Maximum Average Subarray I — same seed-then-slide shape, plus one division by `k` at the end), LC 1343 (Number of Sub-arrays of Size K and Average ≥ Threshold — same shape, but count every qualifying window instead of tracking one max)
+- **Examples:** `fundamentals/1-maximum-subarray-size-k`, `fundamentals/2-maximum-subarray-product-size-k`, `fundamentals/3-subarray-size-target-sum-k`, LC 643 (Maximum Average Subarray I — same seed-then-slide shape, plus one division by `k` at the end), LC 1343 (Number of Sub-arrays of Size K and Average ≥ Threshold — same shape, but count every qualifying window instead of tracking one max), LC 1456 (Maximum Number of Vowels in a Substring — same shape, but the window tracks a `Set`-membership count instead of a sum; use a `Set` for the lookup, not `string.includes()`, and don't mistake the lookup structure's fixed size for something that scales with `k`)
 - **Watch out:** the slide loop bound is `arr.length - k`, not `arr.length` — the seed pass already consumed the first window. An out-of-bounds read (`arr[i+k]` past the end) silently becomes `NaN` in JS rather than crashing, which can mask this bug rather than surface it (see `safwaan/patterns.md` #75).
 
 ### 6. Fixed Window — Set/Map Composition Match (anagrams)
