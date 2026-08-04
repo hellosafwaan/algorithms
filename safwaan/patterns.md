@@ -529,11 +529,11 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 
 ---
 
-### 10. const on mutable pointer variables
-- **Seen in:** Two Sum II (LC 167, 2026-06-03), LC 977 (2026-06-04), LC 349 (2026-07-16)
-- **What happened:** Declared `left` and `right` as `const` — can't decrement/increment them. In 977, also declared `right` without any keyword (implicit global). Recurred again at LC 349 — `result = []` with no `const`/`let`, also an implicit global. Worked by accident (nothing else in the submission scope collides with a global `result`), but wasn't self-caught; flagged when reviewing the pasted solution.
-- **How it was caught:** Reminded to look at variable declarations, same as the first two instances — six weeks later, still not self-caught before submission.
-- **Status:** Recurring across a six-week span, different variable name each time (`left`/`right`, `right`, `result`) — a general "declared a variable without a keyword" habit, not tied to one specific name. Still catches instantly when pointed out, never proactively. Worth a pre-submission checklist item, same recommendation as the `const`-reassignment pattern (#58).
+### 10. const on mutable pointer variables / missing declaration keyword
+- **Seen in:** Two Sum II (LC 167, 2026-06-03), LC 977 (2026-06-04), LC 349 (2026-07-16), LC 567 (2026-08-04)
+- **What happened:** Declared `left` and `right` as `const` — can't decrement/increment them. In 977, also declared `right` without any keyword (implicit global). Recurred again at LC 349 — `result = []` with no `const`/`let`, also an implicit global. Recurred a fourth time at LC 567 — `for(key of mapB.keys())` inside `isSameMap`, missing `let`/`const` on the loop variable, an implicit global. All four instances "worked by accident" (nothing else in scope collides with the accidental global) rather than causing a visible bug — none were self-caught before being flagged.
+- **How it was caught:** Reminded to look at variable declarations each time — two months later (LC 567), still not self-caught before submission or before asking for help.
+- **Status:** Recurring across a two-month span, different variable name each time (`left`/`right`, `right`, `result`, `key`) — a general "declared a variable without a keyword" habit, not tied to one specific name or context (main function body and a separate helper function both affected). Still catches instantly when pointed out, never proactively. Worth a pre-submission checklist item, same recommendation as the `const`-reassignment pattern (#58).
 
 ### 11. Adding two elements per iteration in two-pointer fill
 - **Seen in:** LC 977 (2026-06-04)

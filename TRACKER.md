@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-08-04 (Maximum Number of Vowels in a Substring of Given Length, LC 1456, bonus)
+Last updated: 2026-08-04 (Permutation in String, LC 567)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -13,9 +13,9 @@ Last updated: 2026-08-04 (Maximum Number of Vowels in a Substring of Given Lengt
 | Metric | Count |
 |--------|-------|
 | Total problems | 190 |
-| ✅ Complete | 77 |
+| ✅ Complete | 78 |
 | ⚠️ Needs revisit | 1 |
-| ⏳ Not started | 112 |
+| ⏳ Not started | 111 |
 
 ---
 
@@ -24,7 +24,7 @@ Last updated: 2026-08-04 (Maximum Number of Vowels in a Substring of Given Lengt
 |---|-------|----------|------|-------------|--------|
 | 1 | Arrays & Hashing | 12 | 10 | 2026-06-05 | 🔄 In Progress |
 | 2 | Two Pointers | 10 | 10 | 2026-06-02 | ✅ Complete |
-| 3 | Sliding Window | 7 | 2 | 2026-06-08 | 🔄 In Progress |
+| 3 | Sliding Window | 7 | 3 | 2026-06-08 | 🔄 In Progress |
 | 4 | Stack | 7 | 3 | 2026-06-12 | 🔄 In Progress |
 | 5 | Binary Search | 7 | 2 | 2026-06-16 | 🔄 In Progress |
 | 6 | Linked List | 11 | 0 | 2026-06-22 | ⏳ |
@@ -91,7 +91,7 @@ Last updated: 2026-08-04 (Maximum Number of Vowels in a Substring of Given Lengt
 | 1 | Best Time to Buy and Sell Stock | Easy | [#121](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | Running Min / Single Pass | ✅ 80th pct | 2026-06-13 | [→](arrays/121-best-time-to-buy-and-sell-a-stock/learnings.md) |
 | 2 | Longest Substring Without Repeating Characters | Medium | [#3](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | Sliding Window — HashMap + left pointer | ✅ 27th pct | 2026-06-14 | [→](strings/3-longest-substring-without-repeating-characters/learnings.md) |
 | 3 | Longest Repeating Character Replacement | Medium | [#424](https://leetcode.com/problems/longest-repeating-character-replacement/) | Sliding Window | ⏳ | — | — |
-| 4 | Permutation in String | Medium | [#567](https://leetcode.com/problems/permutation-in-string/) | Sliding Window | ⏳ | — | — |
+| 4 | Permutation in String | Medium | [#567](https://leetcode.com/problems/permutation-in-string/) | Sliding Window — Fixed Size, exact-frequency Map match | ✅ | 2026-08-04 | [→](sliding-window/567-permutation-in-a-string/learnings.md) |
 | 5 | Minimum Window Substring | Hard | [#76](https://leetcode.com/problems/minimum-window-substring/) | Sliding Window | ⏳ | — | — |
 | 6 | Sliding Window Maximum | Hard | [#239](https://leetcode.com/problems/sliding-window-maximum/) | Sliding Window + Deque | ⏳ | — | — |
 | — | Minimum Size Subarray Sum *(bonus)* | Medium | [#209](https://leetcode.com/problems/minimum-size-subarray-sum/) | Sliding Window — Variable Size (minimize) | ✅ 67th pct | 2026-06-24 | [→](sliding-window/209-minimum-size-subarray/learnings.md) |
