@@ -71,3 +71,37 @@ function lengthOfLongestSubstring(s) {
     }
     return maxLength;
 }
+
+// Cold Redo (2026-08-04) — frequency-count + while-shrink, instead of the last-seen-index
+// jump above. Answers this file's own June "Open Questions": yes, this can be done with a
+// Map-based count (not a Set) using the same while-loop shrink shape as the fundamentals
+// module's longestUniqueSubstring. See learnings.md "Cold Redo" section for the bugs hit
+// along the way (return placed inside the for loop; decrementing only the current element
+// instead of whatever character was actually leaving the window).
+function lengthOfLongestSubstring(s) {
+    const windowMap = new Map();
+    let start  = 0;
+    let longestStringLen = 0;
+
+    for (let end = 0; end < s.length; end++) {
+        const currentElement = s[end];
+
+        if(windowMap.has(currentElement)) {
+            windowMap.set(currentElement, windowMap.get(currentElement) + 1);
+        } else {
+            windowMap.set(currentElement, 1);
+        }
+
+        while(windowMap.get(currentElement) > 1) {
+            const startElement = s[start];
+            windowMap.set(startElement, windowMap.get(startElement) - 1);
+            if(windowMap.get(startElement) === 0) windowMap.delete(startElement);
+            start++
+        }
+
+        const currentStringLength = end - start + 1;
+        longestStringLen = Math.max(currentStringLength, longestStringLen);
+
+    }
+    return longestStringLen;
+}

@@ -66,7 +66,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 | LC 290 — Word Pattern | Hash Map — Bijection (Two Maps) | 2026-06-15 | 2026-07-06 | ⏳ |
 | LC 205 — Isomorphic Strings | Hash Map — Bijection (Two Maps) | 2026-06-15 | 2026-07-06 | ⏳ |
 | LC 383 — Ransom Note | Hash Map — frequency counting (increment/decrement) | 2026-06-14 | 2026-07-05 | ⏳ |
-| LC 3 — Longest Substring Without Repeating Characters | Sliding Window — HashMap + left pointer | 2026-06-14 | 2026-06-18 (Wednesday — cold redo planned) | ⏳ |
+| LC 3 — Longest Substring Without Repeating Characters | Sliding Window — HashMap + left pointer | 2026-06-14 | 2026-08-25 — redone 2026-08-04, not clean. Started stuck from a blank file, rebuilt the whole thing (frequency-count Map + while-shrink, a different technique than the original last-seen-index jump) through several guided questions — but every individual bug was self-corrected, no direct answer given for any of them, a stronger outcome than the LC 209 redo the same day. Bugs: decrementing only when `s[start] === currentElement` instead of whatever character was actually leaving; `return` placed inside the `for` loop. Not moved to Done given how much scaffolding the overall rebuild needed; fresh 3-week fuse. | ⏳ |
 | LC 49 — Group Anagrams | Hash Map — sorted string as key | 2026-06-14 | 2026-07-05 | ⏳ |
 | LC 242 — Valid Anagram | Hash Map — character frequency (two-map + one-map) | 2026-06-14 | 2026-07-05 | ⏳ |
 | LC 42 — Trapping Rain Water (two-pointer only) | Two pointers — running max / bottleneck processing | 2026-06-09 | after interview (2026-06-20+) | ⚠️ deferred |

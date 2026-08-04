@@ -133,12 +133,31 @@ Returns 2. Correct. The `Math.max` at i=3 is what saves it — `map['a']+1=1` bu
 
 **Optimal:** O(n) time — `i` visits each character once; `left` only moves forward (can't total more than n moves). O(n) space for the map (bounded by alphabet size — O(26) = O(1) for lowercase letters, O(n) for arbitrary chars).
 
+## Cold Redo — 2026-08-04
+
+Self-initiated, unprompted, well past the original revisit date (was due 2026-06-18). Started from a blank file (not looking at the original solution) and used a genuinely different technique this time: frequency-count `Map` + `while`-shrink, instead of the last-seen-index jump above — the same shape used earlier the same day on LC 1343 and LC 1456, and the shape from the fundamentals module's `longestUniqueSubstring`.
+
+**Started stuck** — "I'm confused... stuck and unable to proceed," with an incomplete skeleton (`else { window }`, no return, no shrink logic). Rebuilt it piece by piece through guided questions rather than being given the answer at any point:
+
+1. What should `windowMap` store? → correctly landed on a frequency count (a valid alternative to the last-seen-index approach above).
+2. Should the current character be added before or after any checks? → correctly identified: unconditionally, every iteration.
+3. First shrink-loop draft had a real bug: `if(s[start] === currentElement) windowMap.set(...)` — only decremented when the character leaving the window happened to match the character that just caused the duplicate. Traced through `"abba"` and self-corrected to decrementing whatever `s[start]` actually is, regardless of `currentElement`.
+4. Final bug: placed `return longestStringLen` *inside* the `for` loop, so the function returned after the very first iteration. Self-caught by running it on `"abcabcbb"` and seeing `1` instead of `3`, then moved the `return` outside the loop.
+
+**Result:** every bug was self-corrected from a guided question, not handed a direct answer — a meaningfully stronger outcome than the LC 209 cold redo the same day, which needed one full direct fix. Still needed several rounds of scaffolding to get there, so this isn't logged as a fully independent cold solve.
+
+**Own assessment given afterward:** felt this version was "much better" than the original jump-based solution. Worth being honest about: it's not actually faster — the jump-based version does strictly less work (one `Math.max` jump vs. a character-by-character `while` shrink), both still O(n) overall. What the new version *does* have is consistency — it's the identical expand/shrink-while-invalid template used across every other sliding-window problem that day, rather than a jump-trick specific to "no repeated characters." It also generalizes more directly to variants like "at most k distinct characters," which the direct-jump trick doesn't.
+
+**Status:** Not moved to "Done" — needed multiple guided questions throughout, even though no direct answer was given for any individual bug. Fresh revisit date set.
+
 ## Submissions
 
 - Naive: [submission](https://leetcode.com/problems/longest-substring-without-repeating-characters/submissions/2032886622) — 27th percentile
 - Optimized: [submission](https://leetcode.com/problems/longest-substring-without-repeating-characters/submissions/2032886622) — 27th percentile
+- Cold redo (frequency-count + while-shrink): [submission](https://leetcode.com/problems/longest-substring-without-repeating-characters/submissions/2094140203) — 2026-08-04
 
 ## Open Questions
 
-- Can you do this with a Set instead? What does the while-loop shrink look like? When is Set cleaner vs HashMap?
+- **ANSWERED 2026-08-04 (cold redo)** — Can you do this with a Set instead? What does the while-loop shrink look like? When is Set cleaner vs HashMap? — Used a frequency-count `Map` (not a Set) with a `while`-loop shrink; functionally the Set-based version would look identical except storing membership instead of counts. Both are O(n) overall; the count-based Map is what's needed once the constraint generalizes past a simple duplicate check (e.g. "at most k distinct").
 - What changes when the window constraint is "at most k distinct characters" instead of "no repeats"?
+- Does writing this pattern from a *blank file* keep needing this much scaffolding, or does it get faster now that it's been rebuilt twice (fundamentals `longestUniqueSubstring`, then here) in the same day? Notably, adapting *existing* code (LC 438 from LC 567) needed far less help today than writing this one from scratch, despite using the identical mechanism — see patterns.md #78.
