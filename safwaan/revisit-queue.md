@@ -56,7 +56,7 @@ Problems to redo cold — no looking at previous solutions. The goal is to confi
 | LC 100 — Same Tree | DFS recursive lockstep | 2026-06-27 | 2026-07-18 | ⏳ |
 | LC 104 — Maximum Depth of Binary Tree | DFS (iterative pairs + recursive) | 2026-06-27 | 2026-07-18 | ⏳ |
 | LC 30 — Substring with Concatenation of All Words | Sliding Window — Fixed Size, word frequency maps | 2026-06-25 | 2026-07-16 | ⏳ |
-| LC 209 — Minimum Size Subarray Sum | Sliding Window — Variable Size (minimize) | 2026-06-24 | 2026-07-15 | ⏳ |
+| LC 209 — Minimum Size Subarray Sum | Sliding Window — Variable Size (minimize) | 2026-06-24 | 2026-08-25 — redone 2026-08-04, not clean. Two bugs: `start` never incremented inside the shrink loop (self-caught in one question), and validity checked after the shrink instead of during it — the exact mistake already documented in this problem's own `learnings.md` "Watch Out For" section, forgotten anyway. Needed the direct answer for the second bug before it landed. Not moved to Done; fresh 3-week fuse to try a genuinely cold, unguided attempt next time. | ⏳ |
 | LC 190 — Reverse Bits | Bit Manipulation — Mask & Shift (build variant) | 2026-06-16 | 2026-07-07 | ⏳ |
 | LC 136 — Single Number | XOR Self-Cancellation | 2026-06-16 | 2026-07-07 | ⏳ |
 | LC 191 — Number of 1 Bits | Bit Manipulation — Mask & Shift | 2026-06-16 | 2026-07-07 | ⏳ |

@@ -95,10 +95,46 @@ Return 2. ✓
 
 The problem mentions O(n log n) as a target, which is the binary search approach (prefix sum array + binary search for each start index). The sliding window beats it.
 
+## Cold Redo — 2026-08-04
+
+Attempted cold, past the revisit-queue date (was due 2026-07-15). Did not come back clean — two real bugs surfaced, the second of which needed the direct answer given after getting stuck.
+
+**First attempt brought:**
+
+```js
+function minSubArrayLen(target, nums) {
+    let minWindowLength = Infinity;
+    let currentWindowSum = 0;
+    let start = 0;
+    for(let end = 0; end < nums.length; end++) {
+        currentWindowSum += nums[end];
+        while(currentWindowSum > target) {
+            currentWindowSum -= nums[start];   // bug 1: start never incremented
+        }
+        if(currentWindowSum === target) {      // bug 2: exact match only, checked after the shrink
+            minWindowLength = Math.min(minWindowLength, end - start + 1);
+        }
+    }
+    return minWindowLength === Infinity ? 0 : minWindowLength;
+};
+```
+
+**Bug 1 — `start` never advanced inside the `while` loop.** Every shrink subtracted `nums[start]` without moving `start` forward, so the "window" being tracked and the actual sum being computed drifted out of sync — same element removed repeatedly instead of the window sliding. Self-caught in one question ("does `start` ever change inside that loop?").
+
+**Bug 2 — validity checked after the shrink instead of during it.** This is the exact mistake this file's own "Watch Out For" section already warns about ("Record inside the while, not after") — forgotten on the cold redo despite being documented. Concretely: the `while(currentWindowSum > target)` loop can only ever exit with `currentWindowSum <= target`, so checking `=== target` (or even `>= target`, tried as an intermediate fix) right after the loop can only ever match the exact-equality case — it can never catch a window that was valid (`sum >= target`) partway through the shrink but then got shrunk past that point before anything checked it. Concrete failing case: `target=11, nums=[1,2,3,4,5]` — the valid window `[3,4,5]` (sum 12) exists mid-shrink but was never recorded, since the shrink kept going (`12 > 11` is still true) until sum dropped to 9, and `9 === 11` (or `9 >= 11`) is false. Correct answer is `3`; the buggy version returned `0`.
+
+Got stuck on *why* moving the `>=` check outside the loop didn't fix bug 2 — needed the direct fix given (move the recording line to the top of the `while` body, and flip the condition to `while (currentWindowSum >= target)`), then verified it against the failing case and a broad random stress test before it clicked.
+
+**Own-words explanation, given after the fix landed:** "We start with both pointers at the zeroth index... we accumulate the current window sum... for every window size we increase, we check whether the current window sum is meeting the condition (greater than or equal to target)... once a window meets the condition, we find its length and compute the minimum, then shrink the window from the left, incrementing `start`... the shrinking needs to happen continuously — as long as the condition is still met, keep shrinking and computing the minimum length. The previous solution wasn't shrinking iteratively like that, which is where the mistake was."
+
+**Status:** Not a clean cold pass — two bugs, one needing the direct answer. Given a fresh revisit date rather than moved to "Done" (see `safwaan/revisit-queue.md`).
+
 ## Submissions
 
-- [Accepted — 3ms, beats 67.65%](https://leetcode.com/problems/minimum-size-subarray-sum/submissions/2044208823) — 2026-06-24
+- [Accepted — 3ms, beats 67.65%](https://leetcode.com/problems/minimum-size-subarray-sum/submissions/2044208823) — 2026-06-24 (original solve)
+- [Accepted](https://leetcode.com/problems/minimum-size-subarray-sum/submissions/2093654869) — 2026-08-04 (cold redo, after fixing both bugs above)
 
 ## Open Questions
 
 - Can you apply this template cold to LC 424 (Longest Repeating Character Replacement)? The shrink condition is different but the expand-always structure is the same.
+- Does "record inside the while loop, before shrinking" stick on a third attempt, given it was explicitly documented in this very file's "Watch Out For" section and still didn't surface on the 2026-08-04 cold redo? Worth a genuinely cold retry rather than another guided walkthrough next time.

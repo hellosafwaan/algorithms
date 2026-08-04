@@ -27,7 +27,7 @@ function minSubArrayLen(target, nums) {
     return subArrayLen;
 };
 
-// Correct solution - you were confused. This is bad. 
+// Correct solution - you were confused. This is bad.
 function minSubArrayLen(target, nums) {
     const n = nums.length
     let subArrayLen = Infinity;
@@ -43,4 +43,28 @@ function minSubArrayLen(target, nums) {
         }
     }
     return subArrayLen === Infinity ? 0 : subArrayLen;
+};
+
+// Cold Redo Attempt (2026-08-04) — see learnings.md "Cold Redo" section for the two bugs
+// hit along the way (missing start++, and checking validity after the shrink instead of
+// during it) before arriving back at this version.
+function minSubArrayLen(target, nums) {
+    let minWindowLength = Infinity;
+    let currentWindowSum = 0;
+    let start = 0;
+
+    for(let end = 0; end < nums.length; end++) {
+        const currentElement = nums[end];
+        currentWindowSum += currentElement;
+
+        while(currentWindowSum >= target) {
+            const currentWindowLength = end - start + 1;
+            minWindowLength = Math.min(minWindowLength, currentWindowLength);
+            const startElement = nums[start];
+            currentWindowSum -= startElement;
+            start++
+        }
+    }
+    if(minWindowLength === Infinity) return 0;
+    else return minWindowLength;
 };
