@@ -109,8 +109,8 @@ Once the window `[start, end]` is valid, every shorter suffix of it — `[start+
 - **Examples:** `fundamentals/13-count-substring-exactly-k-distinct`
 
 ### "At most one exception" window (single flip)
-Instead of a size/count threshold, the window state is a single boolean flag marking whether the one allowed exception (e.g. a `0` in a binary string) is currently "spent" inside the window. On a new exception arriving while the flag is set, shrink specifically until the *old* exception exits (not just one step) before spending the flag again.
-- **Examples:** `fundamentals/10-max-ones-with-single-flip`
+Instead of a size/count threshold, the window state is a single boolean flag marking whether the one allowed exception (e.g. a `0` in a binary string) is currently "spent" inside the window. On a new exception arriving while the flag is set, shrink specifically until the *old* exception exits (not just one step) before spending the flag again. A plain count (shrink while `count > 1`) works just as well as a boolean flag and is arguably simpler to reason about.
+- **Examples:** `fundamentals/10-max-ones-with-single-flip`, LC 1493 (Longest Subarray of 1's After Deleting One Element — reframed from "delete one element" to "longest window with at most one 0"; the answer is `windowLength - 1`, which already covers the zero-zeros edge case without a special check)
 
 ---
 

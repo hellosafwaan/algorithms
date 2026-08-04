@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-08-05 (Minimum Operations to Reduce X to Zero, LC 1658, bonus)
+Last updated: 2026-08-05 (Longest Subarray of 1's After Deleting One Element, LC 1493, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-08-05 (Minimum Operations to Reduce X to Zero, LC 1658, bonus
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 192 |
-| ✅ Complete | 80 |
+| Total problems | 193 |
+| ✅ Complete | 81 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 111 |
 
@@ -102,6 +102,7 @@ Last updated: 2026-08-05 (Minimum Operations to Reduce X to Zero, LC 1658, bonus
 | — | Maximum Number of Vowels in a Substring of Given Length *(bonus)* | Medium | [#1456](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/) | Sliding Window — Fixed Size (Set lookup + count slide) | ✅ | 2026-08-04 | [→](sliding-window/1456-maximum-number-of-vowels-in-a-substring-of-given-length/learnings.md) |
 | — | Find All Anagrams in a String *(bonus)* | Medium | [#438](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | Sliding Window — Fixed Size, exact-frequency Map match (multi-result) | ✅ | 2026-08-04 | [→](sliding-window/438-find-all-anagrams-in-the-string/learnings.md) |
 | — | Minimum Operations to Reduce X to Zero *(bonus)* | Medium | [#1658](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/) | Sliding Window — Variable Size (complement reframing) | ✅ | 2026-08-05 | [→](sliding-window/1658-minimum-operations-to-reduc-x-to-zero/learnings.md) |
+| — | Longest Subarray of 1's After Deleting One Element *(bonus)* | Medium | [#1493](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) | Sliding Window — Variable Size (at-most-one-exception) | ✅ | 2026-08-05 | [→](sliding-window/1493-longest-subarray-of-1s-after-deleting-one-element/learnings.md) |
 
 ## Phase 4 — Stack ⏳
 

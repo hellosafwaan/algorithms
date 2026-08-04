@@ -1,12 +1,16 @@
-# Handoff — 2026-08-05 (Minimum Operations to Reduce X to Zero)
+# Handoff — 2026-08-05 (Longest Subarray of 1's After Deleting One Element)
 
 ## What Was Just Completed
 
-**LC 1658 — Minimum Operations to Reduce X to Zero** (Phase 3 bonus). New day, one problem — a contrast in scale after 2026-08-04's nine-piece marathon session (see that date's history in `progress.md`/`patterns.md` for the fundamentals module wrap, LC 560/1248 explorations, five new solves, and two revisit-queue redos).
+**Two problems today, both Phase 3 (Sliding Window) bonus: LC 1658 → LC 1493.**
 
-Opened by self-diagnosing his own gap before attempting anything: "I've solved so many sliding window problems, but I really don't know how to apply sliding window here." This is a **new and distinct gap** from anything logged before — not window mechanics (solid across 7 problems this week), but recognizing that a problem *is* a window problem when it's phrased as "remove from the ends" rather than "find a subarray." Needed 4 sequential guided questions to reach the reframing (removals only touch the ends → remainder is always contiguous → minimize removed = maximize a kept subarray summing to `totalSum - x`). Once reframed, wrote the entire implementation independently, correctly, with one small self-caught bug (leftover placeholder `return -1`). Verified against all LC examples plus 3,000 random stress tests, including edge cases (`x > totalSum`, `target = 0`). New pattern logged: patterns.md #79.
+**LC 1658 (Minimum Operations to Reduce X to Zero):** Self-diagnosed his own gap before attempting — not window mechanics, but recognizing a "remove from the ends" problem as a disguised window problem at all. Reframing needed 4 guided questions; execution was fully independent. New pattern: patterns.md #79.
 
-Full wrap-up done: TRACKER (80/192 complete, Phase 3 now 3/7 curriculum + 7 bonus), CURRICULUM, progress.md, patterns.md, pattern-index.md, session file (079), learnings.md, `sliding-window/notes.md` (new "Recognizing Disguised Problems" section), revisit-queue (standard fuse), carry-forward (2 new threads).
+**LC 1493 (Longest Subarray of 1's After Deleting One Element):** Brought via an external recommendation, asked for upfront confirmation that sliding window applied before thinking it through. Once confirmed, derived the entire reframing himself via guided questions with **zero direct answers given** — cleaner than LC 1658 in that specific respect. Reframed "delete one element" into "longest window with at most one `0`," correctly extended the `windowLength - 1` formula to the all-1s edge case. One bug (recording gated behind `zeroCount === 1`, silently excluding the zero-zero case he'd already reasoned through correctly moments earlier) — self-corrected in one question. Same mechanism as `fundamentals/10-max-ones-with-single-flip`, not connected unprompted.
+
+**Notable, worth raising directly next time it comes up:** he called the LC 1493 session "a failure" because he needed guided questions to find the initial insight, despite flawless independent execution once the plan was set (zero direct answers for any implementation step). This conflates "needed guidance to see a novel reframing" with "failed" — the actual session was strong. Logged in carry-forward.md as something to address honestly, not just track.
+
+Full wrap-up done for both: TRACKER (81/193 complete, Phase 3 now 3/7 curriculum + 8 bonus), CURRICULUM, progress.md, patterns.md, pattern-index.md, session files (079-080), learnings.md for both, revisit-queue (standard fuse on both), carry-forward.
 
 **Revisit queue was not raised**, per the standing 2026-07-16 instruction.
 
@@ -14,15 +18,13 @@ Full wrap-up done: TRACKER (80/192 complete, Phase 3 now 3/7 curriculum + 7 bonu
 
 ## Safwaan's Current State
 
-Strong self-diagnostic accuracy continues — same as the LC 1658 pre-attempt self-assessment, he's shown a consistent pattern this week of correctly locating exactly where his own gaps are (edge-case discovery at LC 560, the reframing gap here) rather than over- or under-claiming ownership.
+Two-for-two on "disguised sliding window" problems this week (LC 1658, LC 1493) — the reframing step is clearly a real, distinct skill from window execution (which remains consistently solid), and he's getting faster/cleaner at it: LC 1493 needed no direct answers at all, an improvement over LC 1658.
 
-Carrying forward from 2026-08-04 (still relevant, not stale):
-- **LC 560 (Subarray Sum Equals K) is unfinished, not abandoned.** Restart from a concrete trace, not the algebra again.
-- **LC 1248 (Count Number of Nice Subarrays) is deliberately deferred** — he knows the technique needed (atMost(k) − atMost(k−1)) but chose to set it aside.
-- **LC 209 and LC 3 redos both got fresh fuses** (not marked Done) — worth a third, genuinely unguided attempt at each eventually.
-
-New from today:
-- **Complement-reframing gap (patterns.md #79)** — does the "removals from the ends → contiguous remainder → complement problem" recognition transfer to the next disguised sliding-window problem, or does it need to be re-derived each time?
+Carrying forward, still relevant:
+- **LC 560 (Subarray Sum Equals K) is unfinished, not abandoned.** Restart from a concrete trace.
+- **LC 1248 (Count Number of Nice Subarrays) is deliberately deferred** — knows the technique (atMost(k) − atMost(k−1)) but set it aside.
+- **LC 209 and LC 3 redos both got fresh fuses** (not marked Done) from 2026-08-04 — a third, genuinely unguided attempt at each would be the real test.
+- **New: his self-critical "failure" framing at LC 1493** doesn't match what actually happened in the session — worth a direct conversation, not just a logged observation.
 
 **Revisit queue: standing instruction remains — do not raise it unless he brings it up.**
 
@@ -39,5 +41,5 @@ New from today:
 
 - Don't raise the revisit queue unless he brings it up — standing instruction, unchanged.
 - `learnings.md` now always includes "Alternative Approaches" — keep filling it in on every wrap-up.
-- Watch for the complement-reframing recognition (patterns.md #79) on the next disguised problem — this is a genuinely new skill category, separate from window execution mechanics, which are not in question at this point.
-- Note: he edited `sliding-window/1658-minimum-operations-to-reduc-x-to-zero/index.js` directly after the coach's cleaned-up version was written, replacing it with his own original (unembellished) code — respected as intentional, no action needed, but worth knowing he prefers his own code as-submitted over a coach-added docstring/comment version in his solution files.
+- If the "that was a failure" self-framing recurs, address it directly and specifically (point at the concrete evidence — zero direct answers needed for execution) rather than a generic "don't be hard on yourself."
+- Two disguised-window problems in a row is a good pairing for testing whether the recognition transfers — watch the next one for whether it needs fewer guided questions than these two did.
