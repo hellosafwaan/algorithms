@@ -607,6 +607,13 @@ Without prompting, he saw that the two-pointer optimization meant "fix one eleme
 - **How it was caught:** After finishing the trace, was told the heuristic: use the smallest input that can expose the bug.
 - **Status:** Heuristic taught — probe next time he needs to trace a bug.
 
+### 76. Copy-paste-and-adapt leaves real logic under the source problem's function name
+- **Seen in:** LC 438 (2026-08-04)
+- **What happened:** Adapted LC 567's solution for LC 438 by copying the whole function body over and building out the real logic — but the function was still named `checkInclusion` (LC 567's required name), while `findAnagrams` (LC 438's actual required name) was left as the empty stub from the starter template. LeetCode would call the empty `findAnagrams` and get nothing back, regardless of how correct the logic inside `checkInclusion` was.
+- **Root cause:** When reusing a previous solution as a starting point, the function *signature/name* wasn't checked against the new problem's requirement — only the logic was transplanted, not verified to land inside the right container.
+- **How it was caught:** Asked directly which function LeetCode actually calls (based on the given signature) and what that specific function currently does — self-identified immediately: "findAnagrams is empty, I forgot to move the logic there."
+- **Status:** First occurrence of this specific shape. Fast catch once asked the right question, but not self-noticed before submitting/asking for help. Worth a fast pre-submission check whenever a solution is adapted from a prior problem: does the required function name actually contain the logic?
+
 ### 75. Fixed-window slide loop bound overshoots, masked by NaN propagation
 - **Seen in:** LC 1343 (2026-08-04)
 - **What happened:** Wrote the slide loop as `for (let i = 0; i < arr.length; i++)` instead of `arr.length - k`. The first loop already consumes one window, so the slide loop only needs `arr.length - k` more iterations; running it for the full `arr.length` reads `arr[i + k]` out of bounds for the last few iterations, which is `undefined` in JS.

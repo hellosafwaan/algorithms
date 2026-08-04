@@ -75,7 +75,7 @@ Window size is a fixed `k`. Seed the first window with an O(k) pass, then slide 
 Window size is fixed (`pattern.length`). The window's *state* is a Set (membership only) or Map (exact frequency) of characters, compared against the target pattern's Set/Map after every slide.
 - **When:** "Does this window contain the same characters as X" (Set) vs. "is this window a true anagram of X" (Map — order-independent, count-exact).
 - **Key:** Delete a key the moment its count hits 0 — a stale zero-count entry silently breaks `map.size` comparisons.
-- **Examples:** `fundamentals/4-has-substring-anagram` (Set), `fundamentals/5-count-substring-anagrams` (Map), LC 567 (Permutation in String — Map variant, duplicates present so a Set alone isn't enough; structurally matches `count-substring-anagrams`, not `has-substring-anagram`)
+- **Examples:** `fundamentals/4-has-substring-anagram` (Set), `fundamentals/5-count-substring-anagrams` (Map), LC 567 (Permutation in String — Map variant, duplicates present so a Set alone isn't enough; structurally matches `count-substring-anagrams`, not `has-substring-anagram`), LC 438 (Find All Anagrams in a String — identical to LC 567, but collect every matching start index instead of returning on the first; new window's start after a slide at loop index `i` is `i + 1`)
 
 ---
 
