@@ -72,6 +72,10 @@ Loop bound `arr.length - k = 5`, so `i` runs 0-4 only. Return `3`. ✓ (matches 
 
 **Space: O(1).** A running sum, a running count, no extra structures.
 
+## Alternative Approaches
+
+**Prefix sum.** Build `prefix[i]` = sum of `arr[0..i-1]` in one O(N) pass, then any window's sum is `prefix[i+k] - prefix[i]` — check each one against `threshold * k` (avoids repeated division) and count. Same O(N) time overall as the sliding window, different mechanism. Not implemented this session — flagged 2026-08-04 alongside the same note on LC 643.
+
 ## Submissions
 
 - [Accepted](https://leetcode.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/submissions/2093169075) — 2026-08-04 (after fixing the loop-bound bug)

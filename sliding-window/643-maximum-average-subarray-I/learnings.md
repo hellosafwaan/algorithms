@@ -75,6 +75,10 @@ Loop ends (`nums.length - k = 2`, so `i` runs 0 and 1 only). `maxSum = 51`, retu
 
 The naive approach is O(N·k): `N - k + 1` starting positions, each requiring an O(k) inner sum. Only degrades to O(N²) if `k` grows proportionally with `N`.
 
+## Alternative Approaches
+
+**Prefix sum.** Build `prefix[i]` = sum of `nums[0..i-1]` in one O(N) pass, then any window's sum is `prefix[i+k] - prefix[i]` in O(1) — scan all starting positions and track the max. Same O(N) time overall, just a precomputed array instead of incremental slide/unslide. Not implemented this session — flagged 2026-08-04 during a discussion of LC 560, which genuinely needs prefix sum (sliding window can't handle its negative numbers), unlike this problem where it's an optional alternative, not a requirement.
+
 ## Submissions
 
 - [Accepted](https://leetcode.com/problems/maximum-average-subarray-i/submissions/2086112510) — 2026-08-04

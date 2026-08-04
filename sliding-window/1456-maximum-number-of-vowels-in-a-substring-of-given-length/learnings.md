@@ -77,6 +77,10 @@ Return `3`. ✓ (matches LC 1456's example)
 
 **Space: O(1).** The vowels `Set` always holds exactly 5 characters, regardless of `s` or `k` — initially mislabeled as O(k) before self-correcting.
 
+## Alternative Approaches
+
+**Prefix sum.** Build `prefix[i]` = count of vowels in `s[0..i-1]` in one O(N) pass (each step adds 1 if `s[i-1]` is a vowel, else 0), then any window's vowel count is `prefix[i+k] - prefix[i]` — scan all starting positions and track the max. Same O(N) time overall as the sliding window, different mechanism. Not implemented this session — flagged 2026-08-04 alongside the same note on LC 643 and LC 1343 (this was the specific problem where he asked which sliding-window problems could also be solved this way).
+
 ## Submissions
 
 - [Accepted](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/submissions/2093188492) — 2026-08-04, one submission

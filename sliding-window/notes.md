@@ -79,6 +79,17 @@ Window size is fixed (`pattern.length`). The window's *state* is a Set (membersh
 
 ---
 
+## Alternative: Prefix Sum
+
+Every **fixed-window numeric slide** problem (flavor 5) can also be solved by precomputing a prefix array — `prefix[i]` = running total up to index `i-1` — and reading any window's value as `prefix[i+k] - prefix[i]` in O(1), instead of incrementally sliding. Same O(N) time overall, different mechanism. Not always simpler, but worth knowing as a second tool, and it's the technique that generalizes to problems sliding window *can't* handle (see below).
+
+- **Can be redone this way (optional, not required):** LC 643 (Maximum Average Subarray I), LC 1343 (Number of Sub-arrays of Size K and Average ≥ Threshold), LC 1456 (Maximum Number of Vowels in a Substring) — all flagged in their own `learnings.md` under "Alternative Approaches," not yet implemented.
+- **Already effectively prefix-sum based:** LC 209 (Minimum Size Subarray Sum) — the problem's own O(n log n) target is prefix sum + binary search; the sliding window solution beats it at O(n).
+- **Doesn't apply:** LC 30 (Substring with Concatenation of All Words) — matches word-frequency compositions, not a numeric range sum, so there's no meaningful prefix array to build.
+- **Genuinely *needs* prefix sum, not sliding window:** LC 560 (Subarray Sum Equals K) — variable window sums aren't monotonic once negative numbers are allowed, so the two-pointer shrink logic breaks down entirely. `prefix[i-1] = prefix[j] - k` + a hashmap of prefix-sum counts is the real fix, not an optional alternative. Still open as of 2026-08-04 — see `safwaan/carry-forward.md`.
+
+---
+
 ## Counting Techniques
 
 These aren't new window shapes — they're closing moves layered on top of the variable-window pattern, for when the question is "how many windows" instead of "the longest/shortest window."

@@ -237,6 +237,7 @@ Session: [link to session file]
 ## Template
 ## Trace Through
 ## Complexity
+## Alternative Approaches
 ## Submissions
 ## Open Questions
 ```
@@ -244,6 +245,8 @@ Session: [link to session file]
 **Solution Walkthrough** is mandatory. Write it in a conversational tone — like explaining to a friend, not writing documentation. Use "So...", rhetorical questions, explain the *why* before the *what*. Drop into precise technical language only when a concept genuinely requires it. Every abstract claim needs a concrete example. Cover every nuance — every `break`, `continue`, edge case, and the reasoning behind it.
 
 **Complexity** must include reasoning, not just Big-O labels. Explain *why* it's O(n²) not just *that* it is.
+
+**Alternative Approaches** (added 2026-08-04, standing instruction) — whenever a genuinely different valid method exists for this problem (different technique, even if same or worse complexity — e.g. prefix sum instead of sliding window, binary search instead of two pointers), name it here, in one or two sentences, even if it wasn't implemented or explored this session. This is for Safwaan to come back to later, not a prompt to implement it now. If no meaningfully different approach exists, say so briefly rather than omitting the section.
 
 Before writing this file, ask Safwaan:
 1. How did this problem feel? (difficulty, what clicked, what didn't)
