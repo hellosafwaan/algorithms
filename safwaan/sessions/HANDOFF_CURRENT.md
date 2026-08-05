@@ -1,16 +1,16 @@
-# Handoff — 2026-08-05 (Longest Subarray of 1's After Deleting One Element)
+# Handoff — 2026-08-05 (Subarray Product Less Than K)
 
 ## What Was Just Completed
 
-**Two problems today, both Phase 3 (Sliding Window) bonus: LC 1658 → LC 1493.**
+**Three problems today, all Phase 3 (Sliding Window) bonus: LC 1658 → LC 1493 → LC 713.**
 
-**LC 1658 (Minimum Operations to Reduce X to Zero):** Self-diagnosed his own gap before attempting — not window mechanics, but recognizing a "remove from the ends" problem as a disguised window problem at all. Reframing needed 4 guided questions; execution was fully independent. New pattern: patterns.md #79.
+**LC 1658 (Minimum Operations to Reduce X to Zero):** Self-diagnosed his own gap before attempting — recognizing a "remove from the ends" problem as a disguised window problem. Needed 4 guided questions for the reframing; execution independent. Patterns.md #79.
 
-**LC 1493 (Longest Subarray of 1's After Deleting One Element):** Brought via an external recommendation, asked for upfront confirmation that sliding window applied before thinking it through. Once confirmed, derived the entire reframing himself via guided questions with **zero direct answers given** — cleaner than LC 1658 in that specific respect. Reframed "delete one element" into "longest window with at most one `0`," correctly extended the `windowLength - 1` formula to the all-1s edge case. One bug (recording gated behind `zeroCount === 1`, silently excluding the zero-zero case he'd already reasoned through correctly moments earlier) — self-corrected in one question. Same mechanism as `fundamentals/10-max-ones-with-single-flip`, not connected unprompted.
+**LC 1493 (Longest Subarray of 1's After Deleting One Element):** Reframed "delete one element" into "longest window with at most one `0`," derived entirely via guided questions with zero direct answers given — cleaner than LC 1658. He called the session "a failure" despite this; directly pushed back on that framing (the execution was flawless, the insight-finding needed help, those are different things). At his request, explicitly documented the connection to `fundamentals/10-max-ones-with-single-flip` — he named it himself at wrap-up.
 
-**Notable, worth raising directly next time it comes up:** he called the LC 1493 session "a failure" because he needed guided questions to find the initial insight, despite flawless independent execution once the plan was set (zero direct answers for any implementation step). This conflates "needed guidance to see a novel reframing" with "failed" — the actual session was strong. Logged in carry-forward.md as something to address honestly, not just track.
+**LC 713 (Subarray Product Less Than K):** Unprompted self-connected to `fundamentals/11-count-subarray-product` before any code was shown. **Notable event:** his submitted code was missing a `start <= end` guard on the shrink loop — a real bug (negative counts on small-`k` inputs, e.g. `nums=[7,2,7,8,6], k=1` gives `-4` instead of `0`) — and it was **Accepted by LeetCode anyway**. Found via the coach's stress testing, not self-caught. He confirmed the Accepted status, then chose to file a bug report with LeetCode's GitHub issue tracker; the coach drafted the report content (code, description, expected behavior) for him to review and submit himself. Also asked a good follow-up question afterward (`start < end` vs `start <= end`) — both work, `start <= end` is the cleaner invariant and was used for the final fix.
 
-Full wrap-up done for both: TRACKER (81/193 complete, Phase 3 now 3/7 curriculum + 8 bonus), CURRICULUM, progress.md, patterns.md, pattern-index.md, session files (079-080), learnings.md for both, revisit-queue (standard fuse on both), carry-forward.
+Full wrap-up done for all three: TRACKER (82/194 complete, Phase 3 now 3/7 curriculum + 9 bonus), CURRICULUM, progress.md, patterns.md, pattern-index.md, session files (079-081), learnings.md for all three, revisit-queue (standard fuse on all), carry-forward.
 
 **Revisit queue was not raised**, per the standing 2026-07-16 instruction.
 
@@ -18,13 +18,15 @@ Full wrap-up done for both: TRACKER (81/193 complete, Phase 3 now 3/7 curriculum
 
 ## Safwaan's Current State
 
-Two-for-two on "disguised sliding window" problems this week (LC 1658, LC 1493) — the reframing step is clearly a real, distinct skill from window execution (which remains consistently solid), and he's getting faster/cleaner at it: LC 1493 needed no direct answers at all, an improvement over LC 1658.
+Strong, high-engagement day: two disguised-window reframings handled well (increasingly cleanly — zero direct answers by the second one), a real external bug found and responsibly reported (verified Accepted status, checked for duplicates before filing), and continued unprompted fundamentals-transfer across every problem today.
 
 Carrying forward, still relevant:
 - **LC 560 (Subarray Sum Equals K) is unfinished, not abandoned.** Restart from a concrete trace.
-- **LC 1248 (Count Number of Nice Subarrays) is deliberately deferred** — knows the technique (atMost(k) − atMost(k−1)) but set it aside.
-- **LC 209 and LC 3 redos both got fresh fuses** (not marked Done) from 2026-08-04 — a third, genuinely unguided attempt at each would be the real test.
-- **New: his self-critical "failure" framing at LC 1493** doesn't match what actually happened in the session — worth a direct conversation, not just a logged observation.
+- **LC 1248 (Count Number of Nice Subarrays) is deliberately deferred** — knows the technique, set it aside.
+- **LC 325 (Maximum Size Subarray Sum Equals k) is shelved** — confirmed needs prefix sum + hashmap (negatives break sliding window, same lesson as LC 560), explicitly deferred to a dedicated prefix-sum session.
+- **LC 209 and LC 3 redos both got fresh fuses** from 2026-08-04 — a third, unguided attempt at each would be the real test.
+- **New: "Accepted isn't proof of correctness"** — worth reinforcing that stress-testing against a brute-force reference is worth doing even after acceptance, especially on boundary-sensitive shrink loops. This instance was coach-found, not self-found.
+- **His self-critical "failure" framing at LC 1493** was addressed directly this session — worth watching if it recurs.
 
 **Revisit queue: standing instruction remains — do not raise it unless he brings it up.**
 
@@ -35,11 +37,13 @@ Carrying forward, still relevant:
 1. Follow his self-directed lead.
 2. **LC 560 (Subarray Sum Equals K)** — still open, best re-entry point is a concrete trace.
 3. **LC 1248 (Count Number of Nice Subarrays)** — deliberately deferred, not urgent.
-4. Otherwise: Phase 3 has three curriculum problems left — LC 424 (Longest Repeating Character Replacement), LC 76 (Minimum Window Substring, Hard), LC 239 (Sliding Window Maximum, Hard); Phase 5 continues at LC 153; Phase 16 continues at LC 253 or LC 435.
+4. **LC 325 (Maximum Size Subarray Sum Equals k)** — shelved for a dedicated prefix-sum session.
+5. Otherwise: Phase 3 has three curriculum problems left — LC 424 (Longest Repeating Character Replacement), LC 76 (Minimum Window Substring, Hard), LC 239 (Sliding Window Maximum, Hard); Phase 5 continues at LC 153; Phase 16 continues at LC 253 or LC 435.
 
 ## Coach Notes
 
 - Don't raise the revisit queue unless he brings it up — standing instruction, unchanged.
 - `learnings.md` now always includes "Alternative Approaches" — keep filling it in on every wrap-up.
-- If the "that was a failure" self-framing recurs, address it directly and specifically (point at the concrete evidence — zero direct answers needed for execution) rather than a generic "don't be hard on yourself."
-- Two disguised-window problems in a row is a good pairing for testing whether the recognition transfers — watch the next one for whether it needs fewer guided questions than these two did.
+- A dedicated prefix-sum session is now explicitly wanted by him — LC 560 and LC 325 are both natural candidates to open with when that happens.
+- Fundamentals-transfer instinct for sliding window is holding strong across every bonus problem this week (643 prompted, then 1343/1456/438/713 all unprompted) — safe to treat as settled for this topic, similar to the stack-fundamentals precedent.
+- Worth reinforcing "Accepted ≠ correct" as a verification habit — this session's LC 713 bug was a clean, concrete example of a real gap in LeetCode's own test coverage that stress testing caught and the official judge didn't.

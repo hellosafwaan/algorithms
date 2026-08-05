@@ -102,7 +102,7 @@ These aren't new window shapes — they're closing moves layered on top of the v
 
 ### Count all valid subarrays ending at `end`
 Once the window `[start, end]` is valid, every shorter suffix of it — `[start+1, end]`, `[start+2, end]`, ..., `[end, end]` — is valid too, *if* validity is monotonic under shrinking (true for "sum/product below a positive threshold," "at most K distinct," etc.). So instead of counting `1` per valid window, add `end - start + 1` once per `end` — this counts every valid window ending there in one shot.
-- **Examples:** `fundamentals/11-count-subarray-product`, `fundamentals/12-count-substring-atmost-k-distinct`
+- **Examples:** `fundamentals/11-count-subarray-product`, `fundamentals/12-count-substring-atmost-k-distinct`, LC 713 (Subarray Product Less Than K — identical to `fundamentals/11`; **always guard the shrink loop with `start <= end`** when a single element could already violate the constraint on its own, otherwise `start` can overshoot `end` and silently corrupt the count with negative values — this exact bug was Accepted by LeetCode's judge, caught only by stress-testing against a brute-force reference)
 
 ### "At most K" → "exactly K" via subtraction
 `exactly(k) = atMost(k) - atMost(k - 1)`. If tracking "exactly K" directly inside one window is awkward (it would need separate invalid states for both "too many" and "too few"), solve the easier "at most K" twice and subtract — everything counted in `atMost(k)` but not `atMost(k-1)` has precisely `k` distinct elements.

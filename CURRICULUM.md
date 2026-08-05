@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 39 bonus problems = 193 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189, #81, #643, #1343, #1456, #438, #1658, #1493 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 40 bonus problems = 194 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189, #81, #643, #1343, #1456, #438, #1658, #1493, #713 are bonus)
 
 ---
 
@@ -76,6 +76,7 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | — | Find All Anagrams in a String *(bonus)* | Medium | [LC #438](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | Sliding Window — Fixed Size, exact-frequency Map match (multi-result) |
 | — | Minimum Operations to Reduce X to Zero *(bonus)* | Medium | [LC #1658](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/) | Sliding Window — Variable Size (complement reframing) |
 | — | Longest Subarray of 1's After Deleting One Element *(bonus)* | Medium | [LC #1493](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) | Sliding Window — Variable Size (at-most-one-exception) |
+| — | Subarray Product Less Than K *(bonus)* | Medium | [LC #713](https://leetcode.com/problems/subarray-product-less-than-k/) | Sliding Window — Variable Size (count-all-valid-subarrays) |
 
 ---
 
