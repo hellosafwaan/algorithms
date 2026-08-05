@@ -73,3 +73,15 @@ Each "equation" style input (`a op b = value`) often models as **two** directed 
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 399 — Evaluate Division | Weighted graph, search + accumulate product | Each equation → 2 directed edges (value + reciprocal); DFS multiplies weights along the path; `-1` sentinel for dead ends; return immediately on success, don't keep looping. Canonical alternative: Weighted Union-Find (near-O(1) queries after graph build) — not yet implemented, flagged for when Union-Find is formally introduced (Redundant Connection, Connected Components, Graph Valid Tree). |
+
+## Directed Graph Reachability + Boundary-Edge Check
+
+When a problem asks "can this set of nodes be safely removed/isolated," the shape is usually: (1) find the set reachable from some starting node via DFS/BFS — that's the group in question; (2) check whether **any single edge** crosses from outside that group into it. Step 2 needs no traversal at all — a `Set.has()` check on each edge's endpoints in one pass over the raw edge list is enough, since "does an outside node directly point in" is a one-hop question, not a multi-hop reachability question. Don't reach for DFS/BFS a second time here.
+
+**Directed vs undirected, again:** an edge `[a, b]` meaning "a calls/invokes b" is one-directional — only push `graph[a].push(b)`, never `graph[b].push(a)` too. "a invokes b" doesn't imply "b invokes a," the same way `main()` calling `helper()` doesn't mean `helper()` calls `main()`.
+
+**The isolated-node trap shows up again here, in a new form.** Same root issue as LC 997's "loop 1..n, not map keys" — but this time it can bite even the *starting* node of a traversal: if `graph[currentNode]` was never seeded (e.g., the whole edge list is empty, so the start node `k` never appears anywhere), a DFS/BFS reading `graph[currentNode].length` crashes on `undefined`. Seeding every node that appears in the edge list (as source or target) fixes the common case, but the fully general fix is a **read-time guard**, not a **write-time seed**: `const neighbors = graph[node] || []` inside the traversal itself, so it's safe no matter which specific scenario caused the missing entry.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 2685 — Remove Methods From Project | Directed reachability + single-pass boundary check | DFS from `k` for the "suspicious" set; one pass over the raw edge list checking `!suspicious.has(a) && suspicious.has(b)` for the boundary violation — no second traversal needed. Directed graph: only push one direction. Guard `graph[node] || []` at read-time in the traversal, not just at write-time in graph-building, to survive every "node never seeded" scenario (leaf nodes, and even the start node itself on a fully empty edge list). |
