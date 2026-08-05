@@ -30,7 +30,7 @@ Expand right every step. Shrink left *while invalid*. Track max size seen.
           remove s[left], left++
       update max
   ```
-- **Examples:** LC 3 (no repeating chars), LC 424 (longest repeating char replacement)
+- **Examples:** LC 3 (no repeating chars), LC 424 (longest repeating char replacement), `fundamentals/9-longest-two-char-substring` / LC 904 (Fruit Into Baskets — at most 2 distinct values; the "fruit and baskets" framing is a disguise for this, decode it before reaching for the technique)
 
 ### 3. Variable Window — Minimize
 Expand right every step. Shrink left *while valid*. Record *inside* the while loop.

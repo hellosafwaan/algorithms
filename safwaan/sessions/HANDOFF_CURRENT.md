@@ -1,16 +1,18 @@
-# Handoff — 2026-08-05 (Subarray Product Less Than K)
+# Handoff — 2026-08-05 (Fruit Into Baskets)
 
 ## What Was Just Completed
 
-**Three problems today, all Phase 3 (Sliding Window) bonus: LC 1658 → LC 1493 → LC 713.**
+**Five problems today. Four in Claude Code (Phase 3 Sliding Window bonus: LC 1658 → LC 1493 → LC 713 → LC 904), plus one logged retroactively from a separate claude.ai session (Phase 13 Graphs bonus: LC 2685, LeetCode's daily challenge).**
 
-**LC 1658 (Minimum Operations to Reduce X to Zero):** Self-diagnosed his own gap before attempting — recognizing a "remove from the ends" problem as a disguised window problem. Needed 4 guided questions for the reframing; execution independent. Patterns.md #79.
+**LC 904 (Fruit Into Baskets):** Clean, fast solve — decoded the "fruit and baskets" cover story into "at most 2 distinct values in the window" himself, same shape as `fundamentals/9-longest-two-char-substring`. One typo (`start[end]` vs `fruits[end]`), self-caught in one question. Notable: didn't name the fundamentals connection unprompted this time, unlike LC 1343/1456/713 earlier the same week — first miss, worth watching whether the transfer instinct is fully settled or still somewhat recency-sensitive.
 
-**LC 1493 (Longest Subarray of 1's After Deleting One Element):** Reframed "delete one element" into "longest window with at most one `0`," derived entirely via guided questions with zero direct answers given — cleaner than LC 1658. He called the session "a failure" despite this; directly pushed back on that framing (the execution was flawless, the insight-finding needed help, those are different things). At his request, explicitly documented the connection to `fundamentals/10-max-ones-with-single-flip` — he named it himself at wrap-up.
+**LC 1658 / LC 1493:** Two disguised-window reframings, increasingly clean (zero direct answers by the second). Patterns.md #79. Directly addressed his "that was a failure" self-framing at LC 1493 — the actual session was strong, not a failure.
 
-**LC 713 (Subarray Product Less Than K):** Unprompted self-connected to `fundamentals/11-count-subarray-product` before any code was shown. **Notable event:** his submitted code was missing a `start <= end` guard on the shrink loop — a real bug (negative counts on small-`k` inputs, e.g. `nums=[7,2,7,8,6], k=1` gives `-4` instead of `0`) — and it was **Accepted by LeetCode anyway**. Found via the coach's stress testing, not self-caught. He confirmed the Accepted status, then chose to file a bug report with LeetCode's GitHub issue tracker; the coach drafted the report content (code, description, expected behavior) for him to review and submit himself. Also asked a good follow-up question afterward (`start < end` vs `start <= end`) — both work, `start <= end` is the cleaner invariant and was used for the final fix.
+**LC 713:** Unprompted fundamentals-transfer, plus a real bug (missing `start <= end` guard) that had already been Accepted by LeetCode — found via the coach's stress testing, not self-caught. Helped him draft a LeetCode bug report; he's submitting it himself.
 
-Full wrap-up done for all three: TRACKER (82/194 complete, Phase 3 now 3/7 curriculum + 9 bonus), CURRICULUM, progress.md, patterns.md, pattern-index.md, session files (079-081), learnings.md for all three, revisit-queue (standard fuse on all), carry-forward.
+**LC 2685 (Remove Methods From Project) — solved in a separate claude.ai chat, not Claude Code.** Logged here retroactively from a shared transcript link, at his request. **This is the most important item to follow up on next session:** after a heavily-scaffolded session (two explicit "tell me straight" direct-answer requests, several bugs pointed out rather than self-found, a 5th occurrence of the recurring missing-declaration-keyword bug), he said "I genuinely did not understand shit lol" right after all tests passed. The other session invited him to re-explain the whole thing in his own words as the real ownership test — **the shared transcript ends right there, so whether that re-explanation happened, and whether it landed, is unknown.** This is the first confirmed instance that "recognition, not ownership" (previously only logged for video-assisted solves) can also happen from a heavily-scaffolded non-video session. Treating it with the same protocol: shortened revisit fuse (2026-08-19), require the verbal walkthrough before coding at redo. New pattern also logged: patterns.md #80 (fixed a bug's specific trigger without generalizing to the root cause, then hit a different trigger of the same root cause minutes later).
+
+Full wrap-up done for all five: TRACKER (84/196 complete, Phase 3 now 3/7 curriculum + 10 bonus, Phase 13 Graphs +1 bonus), CURRICULUM, progress.md, patterns.md, pattern-index.md, session files (079-083), learnings.md for all five, revisit-queue, carry-forward, `graphs/notes.md` (new "Directed Graph Reachability + Boundary-Edge Check" section), `sliding-window/notes.md`.
 
 **Revisit queue was not raised**, per the standing 2026-07-16 instruction.
 
@@ -18,15 +20,18 @@ Full wrap-up done for all three: TRACKER (82/194 complete, Phase 3 now 3/7 curri
 
 ## Safwaan's Current State
 
-Strong, high-engagement day: two disguised-window reframings handled well (increasingly cleanly — zero direct answers by the second one), a real external bug found and responsibly reported (verified Accepted status, checked for duplicates before filing), and continued unprompted fundamentals-transfer across every problem today.
+Very high-volume, high-engagement day across two different topics (Sliding Window, Graphs) and two different tools (Claude Code, claude.ai). Strong independent debugging on most of today's bugs, but the LC 2685 session is a real flag: enough direct answers were given that ownership is genuinely in question, unlike the cleaner LC 1493/713 sessions the same day.
 
-Carrying forward, still relevant:
-- **LC 560 (Subarray Sum Equals K) is unfinished, not abandoned.** Restart from a concrete trace.
-- **LC 1248 (Count Number of Nice Subarrays) is deliberately deferred** — knows the technique, set it aside.
-- **LC 325 (Maximum Size Subarray Sum Equals k) is shelved** — confirmed needs prefix sum + hashmap (negatives break sliding window, same lesson as LC 560), explicitly deferred to a dedicated prefix-sum session.
-- **LC 209 and LC 3 redos both got fresh fuses** from 2026-08-04 — a third, unguided attempt at each would be the real test.
-- **New: "Accepted isn't proof of correctness"** — worth reinforcing that stress-testing against a brute-force reference is worth doing even after acceptance, especially on boundary-sensitive shrink loops. This instance was coach-found, not self-found.
-- **His self-critical "failure" framing at LC 1493** was addressed directly this session — worth watching if it recurs.
+**Top priority for next session — ask directly, don't assume:**
+- Did he give the re-explanation invited at the end of the LC 2685 session? Did it land?
+- Does he want graph/daily-challenge problems solved in Claude Code going forward (full toolkit access) or does claude.ai stay his preferred surface for those?
+
+Also carrying forward:
+- **LC 560 (Subarray Sum Equals K)** — unfinished, restart from a concrete trace.
+- **LC 1248 (Count Number of Nice Subarrays)** — deliberately deferred.
+- **LC 325 (Maximum Size Subarray Sum Equals k)** — shelved for a dedicated prefix-sum session.
+- **LC 209 and LC 3 redos** (2026-08-04) — fresh fuses, not marked Done.
+- **Missing-declaration-keyword bug (patterns.md #10)** — now 5 occurrences across 2+ months and two different tools, still never self-caught.
 
 **Revisit queue: standing instruction remains — do not raise it unless he brings it up.**
 
@@ -38,12 +43,12 @@ Carrying forward, still relevant:
 2. **LC 560 (Subarray Sum Equals K)** — still open, best re-entry point is a concrete trace.
 3. **LC 1248 (Count Number of Nice Subarrays)** — deliberately deferred, not urgent.
 4. **LC 325 (Maximum Size Subarray Sum Equals k)** — shelved for a dedicated prefix-sum session.
-5. Otherwise: Phase 3 has three curriculum problems left — LC 424 (Longest Repeating Character Replacement), LC 76 (Minimum Window Substring, Hard), LC 239 (Sliding Window Maximum, Hard); Phase 5 continues at LC 153; Phase 16 continues at LC 253 or LC 435.
+5. Otherwise: Phase 3 has three curriculum problems left — LC 424, LC 76 (Hard), LC 239 (Hard); Phase 5 continues at LC 153; Phase 16 continues at LC 253 or LC 435; Phase 13 continues at LC 417, 994, 286, 207, 210, 684, 323, 261, or 127.
 
 ## Coach Notes
 
+- **Ask directly about LC 2685 ownership before anything else next session** — don't let this slide into "assumed fine" just because he moved on.
 - Don't raise the revisit queue unless he brings it up — standing instruction, unchanged.
 - `learnings.md` now always includes "Alternative Approaches" — keep filling it in on every wrap-up.
-- A dedicated prefix-sum session is now explicitly wanted by him — LC 560 and LC 325 are both natural candidates to open with when that happens.
-- Fundamentals-transfer instinct for sliding window is holding strong across every bonus problem this week (643 prompted, then 1343/1456/438/713 all unprompted) — safe to treat as settled for this topic, similar to the stack-fundamentals precedent.
-- Worth reinforcing "Accepted ≠ correct" as a verification habit — this session's LC 713 bug was a clean, concrete example of a real gap in LeetCode's own test coverage that stress testing caught and the official judge didn't.
+- If he continues solving problems outside Claude Code (claude.ai, LeetCode's own editor, etc.), the "share the link, I'll read and log it" workflow used today for LC 2685 worked well — reuse it.
+- Fundamentals-transfer instinct for sliding window is holding strong and consistent — safe to treat as settled for that topic.

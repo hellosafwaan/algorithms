@@ -366,6 +366,7 @@ while (n > 0) {
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 3 — Longest Substring Without Repeating Characters | Variable window, HashMap — maximize | Store char → last index; jump left to `Math.max(left, map[char]+1)`; never reset to 0 |
+| LC 904 — Fruit Into Baskets *(bonus)* | Variable window, at-most-2-distinct | Same shape as `fundamentals/9-longest-two-char-substring` — decode "two baskets, one fruit type each" into "at most 2 distinct values in the window" before coding. One bug: `start[end]` instead of `fruits[end]` (indexed the pointer, not the array) — self-caught in one question. Fundamentals connection not named unprompted this time, unlike several other transfers earlier the same week. |
 | LC 209 — Minimum Size Subarray Sum | Variable window, sum — minimize | Add always; shrink while `sum >= target`; record inside while loop; return 0 if never hit |
 | LC 30 — Substring with Concatenation of All Words | Fixed window, word frequency maps | Window = `words.length * wordLen`; slide by 1; inner loop extracts words via `s.substring(i + j*wordLen, i + j*wordLen + wordLen)`; compare two Maps entry by entry |
 | LC 643 — Maximum Average Subarray I *(bonus)* | Fixed window, numeric slide | Seed first window's sum once, then slide by subtracting the outgoing element and adding the incoming one; divide by `k` exactly once at the end, not every iteration. Direct cold transfer of `sliding-window/fundamentals/1-maximum-subarray-size-k` (`maxSubarraySumSizeK`), confirmed when asked directly rather than offered unprompted. |
@@ -530,6 +531,20 @@ function dp(n, cache = {}) {
 | Problem | Flavor | Key Insight |
 |---------|--------|-------------|
 | LC 399 — Evaluate Division | Weighted graph, search + accumulate product | 2 directed edges per equation (value + reciprocal); DFS multiplies weights; `-1` sentinel for dead ends; return immediately on success. Canonical alternative: Weighted Union-Find. |
+
+---
+
+## Directed Graph Reachability + Single-Pass Boundary Check
+
+**Core idea:** For "can this set be safely removed/isolated" problems: (1) DFS/BFS from the given start node to find the reachable set; (2) check whether any single edge crosses from outside that set into it — a **one-hop** question, answered with a single pass over the raw edge list, not a second traversal.
+
+**Directed, not undirected:** an edge `[a, b]` meaning "a invokes b" is one-directional — only push one way into the adjacency list.
+
+**Isolated-node trap, general form:** seeding nodes when building the graph covers common cases (leaf/target-only nodes), but the fully general fix is a **read-time guard** in the traversal (`graph[node] || []`) — this survives even a completely empty edge list, where even the traversal's own starting node never gets seeded.
+
+| Problem | Flavor | Key Insight |
+|---------|--------|-------------|
+| LC 2685 — Remove Methods From Project *(bonus)* | Directed reachability + boundary check | DFS from `k` for the reachable ("suspicious") set; single pass over raw edges checking `!suspicious.has(a) && suspicious.has(b)` for a violation. Real bugs: accidentally built undirected graph, DFS infinite loop (checked `visited` after pushing neighbors instead of before), missing declaration keyword (5th occurrence, patterns.md #10), inverted filter condition, and the same "undefined neighbors" root cause recurring from a different trigger (empty edge list) minutes after being fixed for a different trigger (patterns.md #80). Solved via a separate claude.ai session, not Claude Code. |
 
 ---
 

@@ -1,6 +1,6 @@
 # DSA Master Tracker
 
-Last updated: 2026-08-05 (Subarray Product Less Than K, LC 713, bonus)
+Last updated: 2026-08-05 (Fruit Into Baskets, LC 904, bonus)
 
 ## Pace
 **Target:** 2 problems/day · 6 days/week · 12/week
@@ -12,8 +12,8 @@ Last updated: 2026-08-05 (Subarray Product Less Than K, LC 713, bonus)
 ## Summary
 | Metric | Count |
 |--------|-------|
-| Total problems | 194 |
-| ✅ Complete | 82 |
+| Total problems | 196 |
+| ✅ Complete | 84 |
 | ⚠️ Needs revisit | 1 |
 | ⏳ Not started | 111 |
 
@@ -104,6 +104,7 @@ Last updated: 2026-08-05 (Subarray Product Less Than K, LC 713, bonus)
 | — | Minimum Operations to Reduce X to Zero *(bonus)* | Medium | [#1658](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/) | Sliding Window — Variable Size (complement reframing) | ✅ | 2026-08-05 | [→](sliding-window/1658-minimum-operations-to-reduc-x-to-zero/learnings.md) |
 | — | Longest Subarray of 1's After Deleting One Element *(bonus)* | Medium | [#1493](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) | Sliding Window — Variable Size (at-most-one-exception) | ✅ | 2026-08-05 | [→](sliding-window/1493-longest-subarray-of-1s-after-deleting-one-element/learnings.md) |
 | — | Subarray Product Less Than K *(bonus)* | Medium | [#713](https://leetcode.com/problems/subarray-product-less-than-k/) | Sliding Window — Variable Size (count-all-valid-subarrays) | ✅ | 2026-08-05 | [→](sliding-window/713-subarray-product-less-than-k/learnings.md) |
+| — | Fruit Into Baskets *(bonus)* | Medium | [#904](https://leetcode.com/problems/fruit-into-baskets/) | Sliding Window — Variable Size (at-most-2-distinct) | ✅ | 2026-08-05 | [→](sliding-window/904-fruits-into-baskets/learnings.md) |
 
 ## Phase 4 — Stack ⏳
 
@@ -265,6 +266,7 @@ Last updated: 2026-08-05 (Subarray Product Less Than K, LC 713, bonus)
 | 13 | Word Ladder | Hard | [#127](https://leetcode.com/problems/word-ladder/) | BFS | ⏳ | — | — |
 | *(bonus)* | Find the Town Judge | Easy | [#997](https://leetcode.com/problems/find-the-town-judge/) | Graph — In-degree / Out-degree Counting | ✅ | 2026-07-05 | [→](graphs/997-find-the-town-judge/learnings.md) |
 | *(bonus)* | Evaluate Division | Medium | [#399](https://leetcode.com/problems/evaluate-division/) | Weighted Graph DFS | ✅ | 2026-07-05 | [→](graphs/399-evaluate-division/learnings.md) |
+| *(bonus)* | Remove Methods From Project | Medium | [#2685](https://leetcode.com/problems/remove-methods-from-project/) | Directed Graph — Reachability + Boundary-Edge Check | ✅ | 2026-08-05 | [→](graphs/2685-remove-methods-from-project/learnings.md) |
 
 ## Phase 14 — Advanced Graphs ⏳
 

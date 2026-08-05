@@ -2,7 +2,7 @@
 
 Language: JavaScript / TypeScript
 Goal: Interview-ready in 3 months
-Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 40 bonus problems = 194 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189, #81, #643, #1343, #1456, #438, #1658, #1493, #713 are bonus)
+Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 problems + 42 bonus problems = 196 total (LC #383, #205, #290, #219, #118, #119, #31, #169, #209, #30, #111, #144, #94, #145, #997, #399, #986, #3169, #28, #1672, #35, #69, #34, #345, #394, #856, #349, #2215, #189, #81, #643, #1343, #1456, #438, #1658, #1493, #713, #2685, #904 are bonus)
 
 ---
 
@@ -77,6 +77,7 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | — | Minimum Operations to Reduce X to Zero *(bonus)* | Medium | [LC #1658](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/) | Sliding Window — Variable Size (complement reframing) |
 | — | Longest Subarray of 1's After Deleting One Element *(bonus)* | Medium | [LC #1493](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) | Sliding Window — Variable Size (at-most-one-exception) |
 | — | Subarray Product Less Than K *(bonus)* | Medium | [LC #713](https://leetcode.com/problems/subarray-product-less-than-k/) | Sliding Window — Variable Size (count-all-valid-subarrays) |
+| — | Fruit Into Baskets *(bonus)* | Medium | [LC #904](https://leetcode.com/problems/fruit-into-baskets/) | Sliding Window — Variable Size (at-most-2-distinct) |
 
 ---
 
@@ -285,6 +286,7 @@ Total: 18 phases (17b — Matrix — split out from Math & Geometry), 154 proble
 | 13 | Word Ladder | Hard | [LC #127](https://leetcode.com/problems/word-ladder/) | BFS |
 | *(bonus)* | Find the Town Judge | Easy | [LC #997](https://leetcode.com/problems/find-the-town-judge/) | Graph |
 | *(bonus)* | Evaluate Division | Medium | [LC #399](https://leetcode.com/problems/evaluate-division/) | Graph |
+| *(bonus)* | Remove Methods From Project | Medium | [LC #2685](https://leetcode.com/problems/remove-methods-from-project/) | Graph |
 
 ---
 
